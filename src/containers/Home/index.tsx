@@ -29,8 +29,6 @@ const Home = () => {
     page: 1,
   });
 
-  console.log('products', products);
-
   const dispatch = useAppDispatch();
 
   useEffect(() => {

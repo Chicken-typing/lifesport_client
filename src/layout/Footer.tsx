@@ -227,10 +227,10 @@ const Footer = () => {
         </div>
       </div>
 
-      <div className="middle">
+      {/* <div className="middle">
         <span className="title">PAYMENTS WE ACCEPT</span>
         <KaImage src="/images/payment.png" className="image" objectFit="cover" alt="image" />
-      </div>
+      </div> */}
 
       <div className="kl-container wrapper">
         <div className="bottom">

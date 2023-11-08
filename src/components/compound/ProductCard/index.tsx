@@ -4,8 +4,8 @@ import { IProduct } from '@interfaces/product';
 import Skeleton from '@mui/material/Skeleton';
 import { routes } from '@utils/routes';
 import classNames from 'classnames';
-import { get, trim } from 'lodash';
-import { FC } from 'react';
+import { get, trim, isEmpty } from 'lodash';
+import { FC, useEffect } from 'react';
 import { useAppDispatch } from '../../../store/hooks';
 import { addProduct } from '@/store/cart/slice';
 export interface IProductCardProps {
@@ -15,6 +15,10 @@ export interface IProductCardProps {
 
 export const ProductCard: FC<IProductCardProps> = ({ data, isLoading = false }) => {
   const dispatch = useAppDispatch();
+
+  if (!data) {
+    return null;
+  }
 
   return (
     <div className={classNames('ks-product-card', { '-loading': isLoading })}>
@@ -110,7 +114,7 @@ export const ProductCard: FC<IProductCardProps> = ({ data, isLoading = false }) 
                   iconOnly
                   variant="outlined"
                   noBorder
-                  // onClick={() => dispatch(addProduct({ product: data, quantity: 1 }))}
+                  onClick={() => dispatch(addProduct({ product: data, quantity: 1 }))}
                 >
                   <Tooltip title="Mua ngay" placement="top" arrow>
                     <i className="fa-light fa-bag-shopping icon" />

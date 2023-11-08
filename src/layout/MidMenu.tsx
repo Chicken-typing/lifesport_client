@@ -135,7 +135,6 @@ export default function MidMenu() {
                     onChange={handleChange}
                   />
                   <Button fullWidth type="submit">
-                    {' '}
                     {t('popper.login')}
                   </Button>
                   <div className="forgot">

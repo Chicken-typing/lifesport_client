@@ -9,7 +9,7 @@ import { FC } from 'react';
 import { useAppDispatch } from '../../../store/hooks';
 import { addProduct } from '@/store/cart/slice';
 export interface IProductCardProps {
-  data: IProduct;
+  data?: IProduct;
   isLoading?: boolean;
 }
 
@@ -110,7 +110,7 @@ export const ProductCard: FC<IProductCardProps> = ({ data, isLoading = false }) 
                   iconOnly
                   variant="outlined"
                   noBorder
-                  onClick={() => dispatch(addProduct({ product: data, quantity: 1 }))}
+                  // onClick={() => dispatch(addProduct({ product: data, quantity: 1 }))}
                 >
                   <Tooltip title="Mua ngay" placement="top" arrow>
                     <i className="fa-light fa-bag-shopping icon" />

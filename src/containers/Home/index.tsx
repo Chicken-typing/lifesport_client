@@ -7,7 +7,7 @@ import { getCartList } from '@/store/cart/slice';
 import { useAppDispatch } from '@/store/hooks';
 import { breakpoints } from '@/utils/constants';
 import { routes } from '@/utils/routes';
-import { BlogSlide, ProductSlides } from '@components/compound';
+import { ProductSlides } from '@components/compound';
 import { Button, KaImage, Link } from '@components/primitive';
 import { Skeleton } from '@mui/material';
 import { LIMIT } from '@utils/limit';
@@ -289,7 +289,7 @@ const Home = () => {
                 </div>
               </div>
 
-              <BlogSlide blogs={blogs?.items || []} />
+              {/* <BlogSlide blogs={blogs?.items || []} /> */}
             </div>
           </section>
         )}

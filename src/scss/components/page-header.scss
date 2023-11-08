@@ -1,0 +1,82 @@
+$colors: (
+  primary: $color-primary,
+  secondary: $color-secondary,
+  success: $color-success,
+  black: $black,
+  white: $white,
+);
+
+.kl-page-header {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  max-width: 100%;
+  position: relative;
+
+  > .overlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba($black, 0.5);
+  }
+
+  > .wrapper {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  > .wrapper > .title {
+    color: $color-success;
+    font-size: 64px;
+    font-weight: $fw-semibold;
+    line-height: 1.08rem;
+    letter-spacing: -1px;
+    margin-bottom: 136px;
+    z-index: 20;
+
+    @each $color, $value in $colors {
+      &.-#{$color} {
+        color: $value !important;
+      }
+    }
+
+    @include breakpoint-down(tablet) {
+      margin-bottom: 60px;
+      font-size: 46px;
+    }
+
+    @include breakpoint-down(phone) {
+      font-size: 32px;
+      line-height: 35px;
+    }
+  }
+
+  > .wrapper > .breadcrumbs {
+    z-index: 10;
+    margin-top: 30px;
+    margin-bottom: 90px;
+    font-weight: $fw-medium;
+    @each $color, $value in $colors {
+      &.-#{$color} {
+        color: $value !important;
+      }
+    }
+    @include breakpoint-down(tablet) {
+      margin: 40px 0;
+      font-weight: $fw-medium;
+    }
+
+    @include breakpoint-down(phone) {
+      margin: 30px 0;
+      font-weight: $fw-medium;
+    }
+  }
+
+  .MuiBreadcrumbs-ol {
+    color: inherit;
+    @each $color, $value in $colors {
+      &.-#{$color} {
+        color: $value !important;
+      }
+    }
+  }
+}

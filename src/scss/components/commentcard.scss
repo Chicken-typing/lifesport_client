@@ -1,0 +1,74 @@
+.kl-comment-card {
+  display: flex;
+  position: relative;
+  gap: 20px;
+
+  &.-reply {
+    padding-left: 90px;
+
+    @include breakpoint-down(phone) {
+      padding-left: 20px;
+    }
+  }
+
+  > .avatar {
+    @include square(70px);
+    border-radius: 50%;
+    display: block;
+    flex-shrink: 0;
+
+    @include breakpoint-down(tablet) {
+      display: none;
+    }
+
+    @include breakpoint-down(phone) {
+      @include position(absolute, 0, null, null, 0);
+      @include square(50px);
+    }
+  }
+
+  > .avatar > .image {
+    border-radius: 50%;
+    @include square(60px);
+  }
+
+  > .content {
+    gap: 10px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid $color-light-gray;
+  }
+
+  > .content > .title {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 7px;
+  }
+
+  > .content > .title > .name {
+    font-size: $fs-normal;
+    text-transform: uppercase;
+    font-weight: $fw-semibold;
+  }
+
+  > .content > .title > .date {
+    display: block;
+    font-size: $fs-normal;
+    color: $color-gray-500;
+  }
+
+  > .content > .comment {
+    font-size: 16px;
+    color: $color-success;
+  }
+
+  > .content > .link {
+    padding-block: 10px;
+    font-size: $fs-normal;
+    color: $color-danger;
+
+    &:hover {
+      color: $black;
+    }
+  }
+}

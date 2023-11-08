@@ -1,0 +1,310 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+
+  &:before,
+  &:after {
+    box-sizing: border-box;
+  }
+}
+
+html {
+  font-family: sans-serif;
+  -webkit-tap-highlight-color: rgba(#000, 0);
+  -webkit-text-size-adjust: 100%;
+
+  &.wf-loading {
+    opacity: 0;
+  }
+
+  &.wf-active,
+  &.wf-inactive {
+    opacity: 1;
+  }
+
+  &:not(.fonts-loaded) {
+    .material-symbols-outlined {
+      max-width: 24px;
+      opacity: 0;
+      overflow: hidden;
+    }
+  }
+}
+
+article,
+aside,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+nav,
+section {
+  display: block;
+}
+
+body {
+  @include flex-column;
+  @include text-break;
+  line-height: 1.5;
+  min-height: 100vh;
+
+  @media print {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  @include breakpoint-down(phone) {
+    -webkit-text-size-adjust: none;
+    text-size-adjust: none;
+  }
+}
+
+[tabindex='-1']:focus:not(:focus-visible) {
+  outline: 0;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid #000;
+  box-sizing: content-box;
+  height: 0;
+  overflow: visible;
+}
+
+a {
+  background: transparent;
+  text-decoration: none;
+
+  &:not([href]) {
+    color: inherit;
+  }
+}
+
+img {
+  border-style: none;
+  max-width: 100%;
+  vertical-align: middle;
+}
+
+.img-fluid {
+  height: auto;
+  max-width: 100%;
+}
+
+svg {
+  overflow: hidden;
+  vertical-align: middle;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit;
+  font-size: 100%;
+  line-height: inherit;
+}
+
+button,
+input {
+  overflow: visible;
+}
+
+button,
+select {
+  text-transform: none;
+}
+
+select {
+  word-wrap: normal;
+}
+
+button {
+  background: none;
+  border: 0;
+  color: inherit;
+}
+
+button,
+[type='button'],
+[type='reset'],
+[type='submit'] {
+  -webkit-appearance: button;
+}
+
+button:not(:disabled),
+[type='button']:not(:disabled),
+[type='reset']:not(:disabled),
+[type='submit']:not(:disabled) {
+  cursor: pointer;
+}
+
+button::-moz-focus-inner,
+[type='button']::-moz-focus-inner,
+[type='reset']::-moz-focus-inner,
+[type='submit']::-moz-focus-inner {
+  border-style: none;
+  padding: 0;
+}
+
+input {
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+body.ios {
+  input:disabled,
+  textarea:disabled {
+    opacity: 1;
+    -webkit-text-fill-color: #000;
+  }
+}
+
+input[type='radio'],
+input[type='checkbox'] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px #000 inset !important;
+  -webkit-text-fill-color: #fff;
+}
+
+input:-webkit-autofill {
+  &,
+  &:focus {
+    -webkit-background-clip: text;
+  }
+}
+
+fieldset {
+  border: 0;
+  min-width: 0;
+  padding: 0.35em 0.75em 0.625em;
+}
+
+textarea {
+  overflow: auto;
+  resize: none;
+}
+
+[type='checkbox'],
+[type='radio'] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+[type='number'] {
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    height: auto;
+  }
+}
+
+[type='search'] {
+  -webkit-appearance: none;
+
+  &::-webkit-search-decoration {
+    -webkit-appearance: none;
+  }
+}
+
+::-webkit-file-upload-button {
+  -webkit-appearance: button;
+  font: inherit;
+}
+
+[hidden] {
+  display: none;
+}
+
+.has-click {
+  cursor: pointer;
+  user-select: none;
+}
+
+@font-face {
+  font-family: Ellipsis;
+  src: local('Helvetica');
+  unicode-range: U+2026;
+}
+
+h1,
+.h1 {
+  font-size: 34px;
+}
+
+h2,
+.h2 {
+  font-size: 32px;
+}
+
+h3,
+.h3 {
+  font-size: 20px;
+}
+
+h4,
+.h4 {
+  font-size: 16px;
+}
+
+h5,
+.h5 {
+  font-size: 15px;
+}
+
+h6,
+.h6 {
+  font-size: 14px;
+}
+
+::-webkit-scrollbar {
+  @include square(4px);
+
+  &-track {
+    border-radius: 4px;
+    background: #f1f1f1;
+  }
+
+  &-thumb {
+    background: #000;
+  }
+}
+
+#__next {
+  @include flex-column;
+  flex-grow: 1;
+}
+
+.kl-container {
+  @include flex-column;
+  flex-grow: 1;
+  padding-inline: $grid-gutter-width;
+  max-width: 1570px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+
+  &.-fluid {
+    max-width: 100%;
+  }
+}
+
+.kl-content {
+  margin-inline: auto;
+  max-width: 1920px;
+  width: 100%;
+}

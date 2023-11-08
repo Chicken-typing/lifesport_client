@@ -1,0 +1,17 @@
+.kl-accordion {
+  .accordion-root {
+    box-shadow: none;
+  }
+
+  .accordion-summary {
+    font-size: 20px;
+    font-weight: $fw-bold;
+    border-bottom: 1px solid $color-light-gray;
+    line-height: 1.2;
+  }
+
+  .accordion-details {
+    margin-top: 16px;
+    font-size: $fs-normal;
+  }
+}

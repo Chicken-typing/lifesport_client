@@ -1,0 +1,41 @@
+.kl-pagination {
+  margin-bottom: 30px;
+  ._text-font {
+    @include flex-inline-center;
+    @include caption;
+  }
+
+  > .list {
+    @include flex-space-between-hoz;
+    margin: 0 auto;
+    max-width: 300px;
+    list-style-type: none;
+    user-select: none;
+  }
+
+  > .list > .item {
+    @include caption;
+  }
+
+  > .list > .item > .page {
+    color: $color-gray;
+    transition: all ease 0.3s;
+
+    &.-selected {
+      color: $black;
+      font-weight: $fw-bold;
+      pointer-events: none;
+      cursor: text;
+    }
+
+    &:hover {
+      color: $color-primary !important;
+    }
+  }
+
+  > .list > .item > .action {
+    &:hover {
+      color: $color-primary;
+    }
+  }
+}

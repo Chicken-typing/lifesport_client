@@ -1,0 +1,74 @@
+@mixin caption {
+  font-size: 12px;
+  line-height: 1.333;
+  letter-spacing: 2px;
+  font-weight: $fw-semibold;
+}
+
+@mixin text-body-small {
+  font-size: 14px;
+  line-height: 1.6;
+  font-weight: $fw-normal;
+}
+
+@mixin text-body-large {
+  font-size: 24px;
+  line-height: 28px;
+  font-weight: $fw-normal;
+}
+
+@mixin text-body {
+  font-size: $fs-normal;
+  line-height: 28px;
+  font-weight: $fw-normal;
+}
+
+@mixin title {
+  color: $color-success;
+  font-size: 30px;
+  line-height: 1.2;
+  font-weight: $fw-semibold;
+}
+
+@mixin subtitle {
+  color: $color-gray-500;
+  font-size: 16px;
+  line-height: 28px;
+  font-weight: $fw-semibold;
+}
+
+@mixin heading-1 {
+  font-size: 48px;
+  font-weight: $fw-bold;
+  line-height: 1.2;
+}
+
+@mixin heading-2 {
+  font-size: 44px;
+  font-weight: $fw-bold;
+  line-height: 1.2;
+}
+
+@mixin heading-3 {
+  font-size: 36px;
+  font-weight: $fw-bold;
+  line-height: 1.2;
+}
+
+@mixin heading-4 {
+  font-size: 30px;
+  font-weight: $fw-bold;
+  line-height: 1.2;
+}
+
+@mixin heading-5 {
+  font-size: 24px;
+  font-weight: $fw-bold;
+  line-height: 1.2;
+}
+
+@mixin heading-6 {
+  font-size: 20px;
+  font-weight: $fw-bold;
+  line-height: 1.2;
+}

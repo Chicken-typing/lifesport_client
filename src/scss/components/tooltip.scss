@@ -1,0 +1,13 @@
+.kl-tooltip {
+  padding: 20px;
+
+  &-content {
+    font-size: $fs-normal;
+    background: $black;
+    color: $white;
+    padding-inline: 20px;
+  }
+  &-arrow {
+    color: $black;
+  }
+}

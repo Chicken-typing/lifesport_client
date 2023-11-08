@@ -1,0 +1,35 @@
+.kl-menu-bottom {
+  width: 100%;
+  z-index: 1000;
+  @include position(fixed, null, null, 0, null);
+  background-color: $white;
+
+  @include breakpoint-up(desktop) {
+    display: none;
+  }
+
+  > .wrapper {
+    background-color: $white;
+    display: grid;
+    align-items: center;
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  > .wrapper > .action {
+    @include flex-center-column;
+    padding: 10px 5px;
+    border-top: 1px solid $color-light-gray;
+    border-right: 1px solid $color-light-gray;
+  }
+
+  > .wrapper > .action > .title {
+    font-size: 12px;
+    font-weight: $fw-semibold;
+    line-height: 14px;
+
+    &:hover {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+}

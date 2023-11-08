@@ -1,0 +1,35 @@
+$positions: left, right, center, justify, start, end !default;
+
+@each $value in $positions {
+  .text-#{$value} {
+    text-align: $value !important;
+  }
+}
+
+.text-pre-wrap {
+  white-space: pre-wrap !important;
+}
+
+.text-nowrap {
+  white-space: nowrap !important;
+}
+
+@for $i from 12 through 128 {
+  @if $i % 2 == 0 {
+    .fs-#{$i} {
+      font-size: #{$i}px !important;
+    }
+  }
+}
+
+@for $i from 1 through 9 {
+  .fw-#{100*$i} {
+    font-weight: #{100 * $i};
+  }
+}
+
+@for $i from 1 through 10 {
+  .line-clamp-#{$i} {
+    @include truncate-multiline-new($i);
+  }
+}

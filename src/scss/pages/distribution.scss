@@ -1,0 +1,82 @@
+.kl-distribution {
+  &-layout {
+    @include flex-space-between-hoz;
+    margin-block: 70px;
+
+    @include breakpoint-down(phone) {
+      margin-block: 30px;
+    }
+
+    > .sidebar {
+      @include flex-column;
+      gap: 50px;
+
+      @include breakpoint-down(tablet) {
+        width: 300px;
+      }
+
+      @include breakpoint-down(phone) {
+        display: none;
+      }
+    }
+
+    > .content > .title {
+      @include heading-2;
+      color: $color-success;
+      margin-bottom: 26px;
+
+      @include breakpoint-down(smallphone) {
+        font-size: 32px;
+      }
+    }
+  }
+
+  .city-detail {
+    margin: 0;
+  }
+
+  .city-summary-root {
+    border: none;
+  }
+
+  .city-summary-content {
+    gap: 10px;
+    font-size: 24px;
+    color: $color-success;
+    margin: 0;
+  }
+
+  .city-summary-content > .label {
+    cursor: pointer;
+  }
+
+  .districts-detail {
+    font-size: 16px;
+    margin: 0 0 0 100px;
+
+    > .branch {
+      color: $color-success;
+      margin-block: 16px;
+      font-weight: $fw-bold;
+    }
+
+    @include breakpoint-down(smallphone) {
+      margin-left: 60px;
+    }
+  }
+
+  .districts-summary-root {
+    border: none;
+  }
+
+  .districts-summary-content {
+    gap: 10px;
+    margin-left: 24px;
+    font-size: 20px;
+    color: $color-success;
+  }
+
+  .districts-summary-content > .label {
+    cursor: pointer;
+  }
+}

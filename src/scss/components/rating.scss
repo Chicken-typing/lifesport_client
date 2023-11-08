@@ -1,0 +1,24 @@
+$rating-variants: (
+  primary: $color-primary,
+  danger: $color-danger,
+  warning: $color-warning,
+);
+
+.kl-rating {
+  @each $color, $value in $rating-variants {
+    &.-#{$color} {
+      color: $value;
+    }
+  }
+  &.-sm {
+    font-size: 16px;
+  }
+
+  &.-md {
+    font-size: 18px;
+  }
+
+  &.-lg {
+    font-size: 20px;
+  }
+}

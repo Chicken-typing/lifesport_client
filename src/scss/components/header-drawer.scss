@@ -1,0 +1,94 @@
+.kl-menu-drawer {
+  ._link-size {
+    display: block;
+    font-size: 14px;
+    letter-spacing: 0;
+    color: $color-success;
+    font-weight: $fw-medium;
+    border-bottom: 1px solid $color-light-gray;
+    padding: 4px 0;
+    transition: none;
+    &:hover {
+      color: $color-primary;
+    }
+  }
+
+  > .header {
+    float: right;
+    clear: both;
+    @include position(absolute, 22px, 24px, null, null);
+    line-height: 1;
+    padding: 0;
+    text-align: center;
+    z-index: 99;
+  }
+
+  > .menu {
+    padding: 15px 30px;
+    list-style-type: none;
+  }
+
+  > .menu > .item {
+    position: relative;
+  }
+
+  > .menu > .item > .link {
+    @include flex-center;
+    justify-content: space-between;
+    padding: 12px 0;
+    font-size: 12px;
+    position: relative;
+    line-height: 1.3333333333;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border-bottom: unset;
+  }
+
+  > .menu > .item > .link > .overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    width: 100%;
+  }
+
+  > .menu > .item > .link > .btn {
+    font-size: 18px;
+  }
+
+  &-content {
+    margin-bottom: 20px;
+  }
+
+  &-content > .sub > .item {
+    position: relative;
+  }
+
+  &-content > .sub > .item > .link {
+    text-transform: unset;
+    line-height: 1.7142857143;
+  }
+
+  &-content > .sub > .item > .btn {
+    @include position(absolute, 0, 5px, null, null);
+    display: block;
+    padding: 7px 0;
+    line-height: 1;
+    width: 30px;
+    text-align: right;
+    border: none;
+  }
+
+  &-content > .sub > .item > .btn > .chevron {
+    font-size: 18px;
+  }
+
+  &-children > .child {
+    margin-left: 15px;
+    margin-bottom: 20px;
+  }
+
+  &-children > .child > .item > .link {
+    text-transform: unset;
+    line-height: 1.7142857143;
+  }
+}

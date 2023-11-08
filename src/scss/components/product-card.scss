@@ -1,0 +1,211 @@
+.ks-product-card {
+  @include flex-column;
+  @include square(100%);
+  background-color: $color-gray-400;
+  user-select: none;
+  border-radius: 5px;
+  border: 1px solid transparent;
+  overflow: hidden;
+
+  &.-loading {
+    border: 1px solid $color-light-gray;
+    pointer-events: none;
+  }
+
+  &.-loading > .content {
+    padding: 0;
+  }
+
+  &:hover {
+    border: 1px solid $color-light-gray;
+  }
+
+  &:hover > .thumbnail > .actions {
+    @include visible;
+  }
+
+  &:hover > .content > .buy > .button {
+    background-color: $color-primary;
+  }
+
+  &:hover > .content > .buy > .button > .icon {
+    color: $white;
+  }
+
+  > .thumbnail {
+    position: relative;
+    aspect-ratio: 1;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  > .thumbnail > .images {
+    @include square(100%);
+    display: block;
+  }
+
+  > .thumbnail > .images > .image {
+    transition: 0.3s linear;
+
+    &.-secondary {
+      @include hidden;
+      position: absolute;
+      inset: 0;
+      transition: all 0.5s ease;
+    }
+  }
+
+  &:hover > .thumbnail > .images > .image {
+    &.-secondary {
+      transform: scale(1.1);
+    }
+  }
+
+  &:hover > .thumbnail > .images > .image {
+    &.-main {
+      @include hidden;
+    }
+
+    &.-secondary {
+      @include visible;
+    }
+  }
+
+  > .thumbnail > .badge {
+    padding: 3px 8px;
+    display: inline-block;
+    font-weight: $fw-medium;
+    font-size: 12px;
+    line-height: 16px;
+    border-radius: 3px;
+    text-align: center;
+    text-transform: uppercase;
+    background: #e38b8b;
+    color: $white;
+    @include position(absolute, 10px, null, null, 10px);
+
+    &.-start {
+      left: 10px;
+      right: unset;
+    }
+  }
+
+  > .thumbnail > .actions {
+    @include flex-column;
+    @include position(absolute, 10%, 15px, null, null);
+    transition: 0.3s;
+    gap: 6px;
+    @include hidden;
+  }
+
+  > .thumbnail > .actions > .button {
+    background: $white;
+    @include flex-center;
+    @include circle(44px);
+
+    &:hover {
+      @include visible;
+      background-color: $color-success;
+    }
+    &:hover > .icon {
+      color: $white;
+    }
+  }
+
+  > .thumbnail > .actions > .button > .icon {
+    @include square(25px);
+    @include flex-center;
+    color: rgb(8, 8, 10);
+    margin: auto;
+    font-size: 16px;
+    font-weight: $fw-normal;
+    line-height: 16px;
+    box-sizing: border-box;
+  }
+
+  > .content > .rating {
+    gap: 4px;
+    font-size: 12px;
+    color: $color-text;
+    margin-bottom: 4px;
+  }
+
+  > .content {
+    @include flex-column;
+    font-size: 16px;
+    font-weight: $fw-semibold;
+    line-height: 1.25;
+    position: relative;
+    padding: 17px 30px 25px;
+    flex: 1;
+    min-height: 140px;
+
+    @include breakpoint-down(tablet) {
+      padding: 12px;
+    }
+  }
+
+  > .content > .name {
+    font-family: $font-family;
+    font-size: 16px;
+    margin-bottom: 8px;
+    font-weight: $fw-semibold;
+
+    &:hover {
+      color: $color-primary;
+    }
+
+    @include breakpoint-down(tablet) {
+      font-size: 14px;
+    }
+  }
+
+  > .content > .name > .link {
+    @include truncate-multiline-new(2);
+    color: $color-success;
+
+    &:hover {
+      color: $color-primary;
+    }
+  }
+
+  > .content > .footer {
+    @include flex-center-ver;
+    justify-content: space-between;
+    margin-right: -10px;
+    margin-top: auto;
+  }
+
+  > .content > .footer > .buy > .button {
+    @include flex-center;
+    @include circle(44px);
+  }
+
+  > .content > .footer > .buy > .button > .icon {
+    @include flex-center;
+    @include square(18px);
+    font-size: 16px;
+    line-height: 16px;
+    box-sizing: border-box;
+  }
+
+  > .content > .footer > .price {
+    font-family: $font-family;
+    font-size: 16px;
+    line-height: 1.5;
+    color: $color-success;
+    font-weight: $fw-normal;
+  }
+
+  > .content > .footer > .price > .normal {
+    color: $black;
+  }
+
+  > .content > .footer > .price > .new {
+    color: $color-danger;
+  }
+
+  > .content > .footer > .price > .old {
+    text-decoration-line: line-through;
+  }
+}

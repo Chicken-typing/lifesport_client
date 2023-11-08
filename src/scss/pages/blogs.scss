@@ -1,0 +1,356 @@
+.kl-blogs {
+  @include flex-column;
+  gap: 60px;
+
+  > .filter {
+    @include flex-center-ver;
+    gap: 10px;
+    display: none;
+    padding-top: 20px;
+
+    @include breakpoint-down(desktop) {
+      display: flex;
+    }
+  }
+
+  &-layout {
+    margin-top: 100px;
+    display: flex;
+    gap: 130px;
+
+    @include breakpoint-down(desktop) {
+      margin-top: 0;
+    }
+
+    > .content {
+      width: 80%;
+      @include flex-column;
+      gap: 60px;
+
+      @include breakpoint-down(desktop) {
+        width: 100%;
+      }
+    }
+
+    > .content > .blog > .thumbnail {
+      overflow: hidden;
+      position: relative;
+      border-radius: 5px;
+      margin-bottom: 20px;
+    }
+
+    > .content > .blog > .thumbnail > .skeleton {
+      aspect-ratio: 16 / 9;
+      @include square(100%);
+    }
+
+    > .content > .blog > .thumbnail > .link {
+      width: 100%;
+    }
+
+    > .content > .blog > .thumbnail > .link > .image {
+      aspect-ratio: 16 / 9;
+      width: 100%;
+    }
+
+    > .content > .blog > .thumbnail > .poster {
+      @include position(absolute, 0, null, null, 30px);
+    }
+
+    > .content > .blog > .thumbnail > .poster > .link {
+      z-index: 3;
+      color: $white;
+      font-size: $fs-sm;
+      line-height: 18px;
+      letter-spacing: 2px;
+      @include square(80px);
+      font-weight: $fw-medium;
+      text-transform: uppercase;
+      border-radius: 0 0 5px 5px;
+      @include flex-center-column;
+      background-color: $color-primary;
+    }
+
+    > .content > .blog > .thumbnail > .poster > .link > .strong {
+      display: block;
+      line-height: 1;
+      font-size: 40px;
+      font-weight: $fw-semibold;
+      letter-spacing: -2px;
+    }
+
+    > .content > .blog > .content {
+      margin-bottom: 17px;
+    }
+
+    > .content > .blog > .content > .meta {
+      gap: 11px;
+      flex-wrap: wrap;
+      font-size: $fs-sm;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: $fw-semibold;
+      @include flex-center-ver;
+    }
+
+    > .content > .blog > .content > .meta > .inner {
+      gap: 11px;
+      display: flex;
+    }
+
+    > .content > .blog > .content > .meta > .inner > .dash {
+      font-weight: $fw-medium;
+      color: $color-light-gray;
+    }
+
+    > .content > .blog > .content > .meta > .author {
+      color: $color-gray-500;
+    }
+
+    > .content > .blog > .content > .meta > .author > .strong {
+      color: $black;
+      cursor: pointer;
+
+      &:hover {
+        color: $color-primary;
+      }
+    }
+
+    > .content > .blog > .content > .text > .link {
+      cursor: pointer;
+      font-size: 40px;
+      line-height: 1.1;
+      letter-spacing: -1px;
+      color: $color-success;
+      text-transform: capitalize;
+      @include truncate-multiline-new(2);
+      transition: none;
+
+      @include breakpoint-down(phone) {
+        font-size: 30px;
+      }
+
+      &:hover {
+        color: $color-primary;
+      }
+    }
+
+    > .content > .blog > .description {
+      font-size: 16px;
+      white-space: normal;
+      margin-bottom: 17px;
+      color: $color-success;
+      @include truncate-multiline-new(2);
+    }
+
+    > .content > .blog > .button {
+      color: $black;
+      padding: 10px 30px;
+      font-size: $fs-normal;
+      font-weight: $fw-semibold;
+
+      &:hover {
+        color: $white;
+      }
+    }
+
+    > .content > .blog > .button > .icon {
+      font-size: 9px;
+      font-weight: $fw-bold;
+    }
+
+    > .sidebar {
+      width: 20%;
+
+      @include breakpoint-down(desktop) {
+        display: none;
+      }
+    }
+
+    &-tags {
+      > .text {
+        color: $color-gray-500;
+      }
+
+      > .text > .tag {
+        position: relative;
+        display: inline-block;
+        color: $color-gray-500 !important;
+
+        &:hover {
+          color: $color-primary !important;
+        }
+      }
+    }
+  }
+
+  &-sidebar {
+    position: sticky;
+    top: -70vh;
+
+    > .header {
+      display: none;
+
+      @include breakpoint-down(desktop) {
+        display: block;
+        margin-bottom: 10px;
+      }
+    }
+
+    > .search > .container {
+      padding: 0;
+    }
+
+    > .search > .container > .field {
+      height: 46px;
+      border-radius: 5px;
+      border-color: $color-light-gray;
+      box-shadow: none;
+      margin-bottom: 30px;
+    }
+
+    > .search > .container > .field > .-end {
+      margin: 0;
+      width: 0;
+      background-color: transparent;
+      color: $black;
+      cursor: pointer;
+    }
+
+    > .title {
+      @include heading-6;
+      padding-block: 8px;
+      margin: 40px 0 15px 0;
+      border-bottom: 1px solid rgba($border-color, 0.3);
+    }
+
+    &-categories {
+      @include flex-inline-column;
+      margin-bottom: 40px;
+      gap: 5px;
+      width: 70%;
+    }
+
+    &-categories > .item > .link {
+      cursor: pointer;
+      transition: color 0.1s linear;
+      &:hover {
+        color: $color-primary;
+      }
+    }
+
+    > .banner > .wrapper > .info > .inner > .title {
+      @include heading-6;
+      color: $color-primary;
+    }
+
+    > .banner > .wrapper > .info > .inner > .description {
+      @include heading-5;
+      color: $black;
+      margin-bottom: 10px;
+    }
+
+    > .banner > .wrapper > .info > .inner > .link:hover {
+      color: $black;
+    }
+
+    > .tags {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      margin-right: 50px;
+      gap: 6px;
+    }
+
+    > .tags > .action {
+      padding: 0;
+      color: $color-gray-500;
+      font-size: 11px;
+      border: 1px solid $color-gray-500;
+      height: 26px;
+
+      &:hover {
+        color: $white;
+        border: transparent;
+      }
+    }
+
+    &-cards {
+      @include flex-column;
+      gap: 20px;
+    }
+
+    &-cards > .item > .link {
+      @include flex-center-ver;
+      gap: 12px;
+    }
+
+    &-cards > .item > .link > .image {
+      @include square(80px);
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    &-cards > .item > .link > .skeleton {
+      width: 70%;
+    }
+
+    &-cards > .item > .link > .info {
+      width: 70%;
+    }
+
+    &-cards > .item > .link > .info > .title {
+      @include truncate-multiline-new(2);
+      font-size: 15px;
+      font-weight: $fw-semibold;
+      color: $color-success;
+      cursor: pointer;
+      transition: color 0.2s linear;
+      margin-bottom: 5px;
+
+      &:hover {
+        color: $color-primary;
+      }
+    }
+
+    &-cards > .item > .link > .info > .date {
+      @include caption;
+      font-size: 10px;
+      color: $color-text;
+    }
+
+    &.-static {
+      display: block;
+
+      > .header {
+        display: none;
+      }
+
+      @include breakpoint-down(desktop) {
+        display: none;
+      }
+    }
+
+    &.-drawer {
+      display: none;
+      @include size(414px, 100vh);
+      max-width: 100%;
+      overflow: auto;
+      padding: 20px;
+
+      > .header {
+        display: flex;
+        justify-content: flex-end;
+      }
+
+      > .header > .action {
+        font-size: 22px;
+      }
+
+      @include breakpoint-down(desktop) {
+        display: block;
+      }
+    }
+  }
+}

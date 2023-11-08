@@ -1,0 +1,179 @@
+{
+  "top_menu": {
+    "title": "Welcome to the electric motobike world!"
+  },
+  "mid_menu": {
+    "search": {
+      "label": "What are you looking for?",
+      "submit": "Search"
+    },
+    "login": {
+      "label": "Login/ Register"
+    }
+  },
+  "main_menu": {},
+  "navigation": [
+    {
+      "title": "HOME",
+      "route": "/"
+    },
+    {
+      "title": "BRAND",
+      "route": "/products",
+      "subMenu": [
+        {
+          "title": "VINFAST",
+          "route": "/products"
+        },
+        {
+          "title": "DIBAO",
+          "route": "/products"
+        },
+        {
+          "title": "HONDA",
+          "route": "/products"
+        }
+      ]
+    },
+    {
+      "title": "PRODUCT",
+      "route": "/products"
+    },
+    {
+      "title": "BLOG",
+      "route": "/blogs"
+    },
+    {
+      "title": "PAGES",
+      "route": "",
+      "subMenu": [
+        {
+          "title": "LOGIN / REGISTER",
+          "route": "/auth"
+        },
+        {
+          "title": "CONTACT",
+          "route": "/contact"
+        },
+        {
+          "title": "ABOUT US",
+          "route": "/about"
+        }
+      ]
+    }
+  ],
+
+  "popper": {
+    "title": "Sign In",
+    "action": "Create an Account",
+    "username": {
+      "title": "Username or Email",
+      "placeholder": "Username"
+    },
+    "password": {
+      "title": "Password",
+      "placeholder": "Password"
+    },
+    "link": "Forgot password",
+    "login": "Login"
+  },
+
+  "cart": {
+    "title": "Cart",
+    "button": "Close",
+    "notice": "Cart is empty"
+  },
+
+  "footer": {
+    "get_info": {
+      "title": "Follow new information",
+      "description": "Subscribe to receive notifications of new products from us",
+      "placeholder": "Enter your Email address",
+      "button": "Subscribe"
+    },
+    "services": [
+      {
+        "classname": "fa-light fa-dolly",
+        "title": "Free Shipping",
+        "description": "For the first order"
+      },
+      {
+        "classname": "fa-light fa-box-check",
+        "title": "Return Support",
+        "description": "Due to manufacturing defects"
+      },
+      {
+        "classname": "fa-light fa-headphones",
+        "title": "24/7 Customer Support",
+        "description": "0932.369.776 / 0559.270.701"
+      },
+      {
+        "classname": "fa-light fa-money-check",
+        "title": "Flexible Payment",
+        "description": "Your choice"
+      }
+    ],
+    "about_us": {
+      "title": "About Us",
+      "content": [
+        {
+          "label": "Introduction",
+          "route": "/about"
+        },
+        {
+          "label": "Customer Reviews",
+          "route": "/"
+        },
+        {
+          "label": "Contact",
+          "route": "/contact"
+        }
+      ]
+    },
+    "shop": {
+      "title": "Shop",
+      "content": [
+        {
+          "label": "Vinfast",
+          "route": "#"
+        },
+        {
+          "label": "Honda",
+          "route": "#"
+        },
+        {
+          "label": "Dibao",
+          "route": "#"
+        }
+      ]
+    },
+    "help_center": {
+      "title": "Help Center",
+      "content": [
+        {
+          "label": "Return Policy",
+          "route": "#"
+        },
+        {
+          "label": "Privacy Policy",
+          "route": "#"
+        },
+        {
+          "label": "FAQs",
+          "route": "#"
+        }
+      ]
+    },
+    "contact_link": {
+      "title": "Contact Information",
+      "content": [
+        {
+          "address": "Return Policy",
+          "phone1": "0932369776",
+          "phone2": "0559270701",
+          "web": "lifetravel.vn"
+        }
+      ]
+    }
+  }
+}

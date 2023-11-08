@@ -1,0 +1,146 @@
+.kl-contact {
+  &-info {
+    margin-top: 70px;
+    margin-bottom: 40px;
+    padding-inline: 30px;
+
+    @include breakpoint-down(phone) {
+      padding-inline: 0;
+    }
+
+    .item {
+      flex: 1;
+      overflow: hidden;
+      padding: 36px 60px;
+      position: relative;
+      background-color: $color-gray-400;
+      border-radius: 5px;
+
+      @include breakpoint-down(phone) {
+        padding: 30px;
+      }
+    }
+
+    .title {
+      color: $color-success;
+      font-weight: $fw-semibold;
+      font-size: 24px;
+    }
+
+    .text {
+      font-weight: $fw-medium;
+      color: $color-success;
+    }
+
+    .icon {
+      @include position(absolute, 30px, -30px, null, null);
+    }
+
+    .heading {
+      text-align: center;
+      color: $color-success;
+      font-weight: $fw-semibold;
+      font-size: 45px;
+      margin-bottom: 10px;
+
+      @include breakpoint-down(tablet) {
+        font-size: 32px;
+        line-height: 1;
+      }
+    }
+
+    > .details {
+      @include flex-space-between-hoz;
+      column-gap: 20px;
+
+      @include breakpoint-down(phone) {
+        @include flex-column;
+        row-gap: 25px;
+      }
+    }
+
+    > .details > .hours > .text > .day {
+      color: #909090;
+      margin-right: 5px;
+    }
+
+    > .map {
+      margin-top: 40px;
+      margin-bottom: 60px;
+      width: 100%;
+    }
+
+    > .map > .frame {
+      @include size(100%, 420px);
+      aspect-ratio: 16/9;
+      border: 0;
+      border-radius: 5px;
+    }
+
+    > .message {
+      @include flex-center-column;
+      margin: 0 350px 30px;
+
+      @include breakpoint-down(mediumdesktop) {
+        margin-inline: 0;
+      }
+    }
+
+    > .message > .text {
+      color: #909090;
+      margin-bottom: 35px;
+      text-align: center;
+    }
+
+    > .message > .form {
+      @include flex-column;
+      align-items: center;
+      width: 100%;
+    }
+
+    > .message > .form > .container {
+      @include flex-column;
+      padding-inline: 0;
+      row-gap: 20px;
+      width: 100%;
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+
+    > .message > .form > .container > .group > .textarea {
+      border-radius: 5px;
+      border: 1px solid $color-light-gray;
+    }
+
+    > .message > .form > .container > .group > .field {
+      box-shadow: unset;
+      border-radius: 5px;
+      border: 1px solid $color-light-gray;
+    }
+
+    > .message > .form > .container > .group > .invalid {
+      left: 0;
+      bottom: -2px;
+      font-size: 16px;
+
+      &::first-letter {
+        text-transform: uppercase;
+      }
+    }
+
+    > .message > .form > .container > .group > .field > .input {
+      color: $color-success;
+    }
+
+    > .message > .form > .button {
+      color: $white;
+      padding: 15px 30px;
+      font-size: $fs-normal;
+      font-weight: $fw-semibold;
+      max-width: fit-content;
+      height: fit-content;
+      background: $color-primary;
+      display: flex;
+    }
+  }
+}

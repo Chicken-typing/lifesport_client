@@ -1,0 +1,404 @@
+.kl-footer {
+  @include breakpoint-down(desktop) {
+    padding-bottom: 50px;
+  }
+
+  @include breakpoint-down(tablet) {
+    padding-bottom: 50px;
+  }
+
+  > .bottom {
+    border-top: 1px solid #e7e7e7;
+    padding-block: 20px;
+
+    @include breakpoint-down(phone) {
+      padding-bottom: 60px;
+    }
+  }
+
+  &-contact {
+    // background-image: url(https://keymoto.templines.info/moto/wp-content/uploads/2020/11/mailchimp-bg-min.jpg);
+    background-color: rgba($color-success, 0.06);
+    background-size: cover;
+    padding: 20px;
+    max-width: 100%;
+    display: flex;
+
+    > .wrapper {
+      display: flex;
+      flex-direction: row;
+      gap: 40px;
+      width: 100%;
+      max-width: 970px;
+      padding: 20px;
+      position: relative;
+
+      @include breakpoint-down(tablet) {
+        padding-block: 20px;
+        padding-inline: 0;
+      }
+
+      @include breakpoint-down(phone) {
+        @include flex-column;
+        padding-block: 20px;
+        padding-inline: 0;
+      }
+    }
+
+    > .wrapper > .images {
+      position: absolute;
+      margin-left: -300px;
+      top: -50px;
+      overflow: visible;
+
+      @include breakpoint-down(mediumdesktop) {
+        margin-left: -500px;
+      }
+    }
+
+    > .wrapper > .images > .image {
+      vertical-align: middle;
+      display: inline-block;
+    }
+
+    > .wrapper > .title {
+      @include flex-center-column;
+      gap: 5px;
+      width: 30%;
+
+      @include breakpoint-down(tablet) {
+        @include flex-column;
+        width: 100%;
+        text-align: center;
+      }
+    }
+
+    > .wrapper > .title > .heading {
+      font-size: 24px;
+      font-weight: $fw-semibold;
+      line-height: 24px;
+      flex-wrap: wrap;
+      color: $color-success;
+    }
+
+    > .wrapper > .title > .description {
+      font-size: $fs-normal;
+      font-weight: $fw-medium;
+      line-height: 24px;
+      color: $color-success;
+    }
+
+    > .wrapper > .search {
+      @include flex-center-column;
+      width: 65%;
+
+      @include breakpoint-down(phone) {
+        width: 100%;
+      }
+    }
+
+    > .wrapper > .search > .container {
+      padding-inline: 0;
+    }
+
+    > .wrapper > .search > .container > .field {
+      background-color: $white;
+      height: 55px;
+      border-radius: 5px 0 5px 5px;
+      padding: 12px 30px;
+      border: 1px solid $white;
+    }
+
+    > .wrapper > .search > .container > .field > .input {
+      color: $black;
+
+      @include breakpoint-down(desktop) {
+        width: 430px;
+      }
+
+      @include breakpoint-down(phone) {
+        width: 100%;
+      }
+    }
+
+    > .wrapper > .search > .container > .field > .adornment.-end {
+      @include size(150px, 44px);
+      border-radius: 0 5px 5px 0;
+      margin-right: -31px;
+
+      @include breakpoint-down(phone) {
+        width: 100px;
+      }
+    }
+
+    > .wrapper > .search > .container > .field > .adornment > .btn {
+      @include size(100%, 55px);
+      border-radius: 0 0 5px 0 !important;
+      white-space: nowrap;
+    }
+  }
+
+  &-services {
+    max-width: 100%;
+    background: $white;
+    display: flex;
+    position: relative;
+    overflow: hidden;
+
+    > .wrapper {
+      border-style: solid;
+      border-width: 0 0 1px 0;
+      border-color: #e0e0e0;
+      padding: 25px;
+    }
+
+    > .images {
+      position: absolute;
+      right: -140px;
+      transition: right 1s linear;
+      z-index: 10;
+
+      @include breakpoint-down(mediumdesktop) {
+        right: -270px;
+      }
+
+      @include breakpoint-down(tablet) {
+        right: -270px;
+      }
+
+      @include breakpoint-down(phone) {
+        right: -270px;
+      }
+    }
+
+    > .show {
+      right: -100px;
+    }
+
+    > .wrapper > .row > .info {
+      border: none;
+      border-right: 1px solid $color-light-gray;
+      &:last-child {
+        border: none;
+      }
+
+      @include breakpoint-down(phone) {
+        border: none;
+        border-bottom: 1px solid $color-light-gray;
+      }
+    }
+  }
+
+  &-service {
+    @include flex-center-column;
+    text-align: center;
+    margin-bottom: 15px;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+
+    > .icon {
+      @include square(50px);
+      color: $color-primary;
+      fill: $color-primary;
+      display: block;
+      margin-bottom: 20px;
+      font-size: 40px;
+      transition: all 1s ease;
+
+      &:hover {
+        transform: scale(0.8);
+      }
+    }
+
+    > .heading {
+      margin-bottom: 7px;
+      text-transform: uppercase;
+      font-size: $fs-sm;
+      font-weight: $fw-bold;
+      letter-spacing: 2px;
+      line-height: 16px;
+    }
+
+    > .description {
+      font-size: $fs-normal;
+      color: $color-primary;
+    }
+  }
+
+  > .top {
+    padding-block: 50px;
+    flex-wrap: wrap;
+
+    @include breakpoint-down(phone) {
+      padding-block: 5px;
+    }
+  }
+
+  > .wrapper {
+    gap: 20px;
+    padding: 20px;
+  }
+
+  > .middle {
+    @include flex-center-column;
+    max-width: 100%;
+    background-color: rgba($color-success, 0.06);
+    gap: 10px;
+    padding: 10px 0;
+  }
+
+  > .middle > .title {
+    text-align: center;
+    color: $color-gray;
+    font-size: $fs-sm;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  > .middle > .image {
+    margin-bottom: 10px;
+    width: auto;
+    @include flex-center-column;
+  }
+
+  > .wrapper > .bottom {
+    @include flex-space-between-hoz;
+    flex-wrap: wrap;
+
+    @include breakpoint-down(phone) {
+      @include flex-center;
+      text-align: center;
+    }
+  }
+
+  > .wrapper > .bottom > .item {
+    @include flex-space-between-hoz;
+    margin-bottom: 2px;
+    font-size: $fs-normal;
+    gap: 10px;
+
+    @include breakpoint-down(phone) {
+      width: 100%;
+    }
+  }
+
+  > .wrapper > .bottom > .item .brand {
+    @include flex-center;
+    gap: 10px;
+
+    @include breakpoint-down(phone) {
+    }
+  }
+
+  > .wrapper > .bottom > .item > .brand > .button {
+    @include size(30px, 30px);
+    color: $color-gray-500;
+    background-color: $color-gray-400;
+
+    &:hover {
+      color: $white;
+      background: $color-primary;
+    }
+  }
+
+  > .wrapper > .bottom > .item > .scroll {
+    @include flex-center;
+    gap: 10px;
+
+    &:hover {
+      color: $color-primary;
+      cursor: pointer;
+    }
+
+    &:hover > .icon {
+      border: none;
+      color: $white;
+      background: $color-primary;
+    }
+  }
+
+  > .wrapper > .bottom > .item > .scroll > .icon {
+    @include size(30px, 30px);
+    border: 1px solid $black;
+  }
+
+  > .wrapper > .bottom > .item > .scroll > .title {
+    color: $color-gray-500;
+    text-transform: uppercase;
+    font-size: $fs-sm;
+    font-weight: $fw-medium;
+
+    &:hover {
+      color: $color-primary;
+    }
+  }
+
+  .footer-widget {
+    @include flex-center-column;
+    margin-bottom: 0;
+
+    @include breakpoint-up(phone) {
+      align-items: flex-start;
+    }
+
+    @include breakpoint-down(phone) {
+      margin-top: 35px;
+    }
+
+    > .heading {
+      margin-bottom: 20px;
+      font-size: $fs-sm;
+      line-height: 16px;
+      letter-spacing: 1px;
+      font-weight: $fw-semibold;
+      text-transform: uppercase;
+      color: $color-gray-500;
+    }
+
+    > .address {
+      margin-bottom: 20px;
+      line-height: 31px;
+      font-weight: $fw-medium;
+      display: block;
+      text-align: center;
+
+      @include breakpoint-up(phone) {
+        text-align: left;
+      }
+    }
+
+    > .contact {
+      font-size: 18px;
+      color: $color-primary;
+      font-weight: $fw-medium;
+    }
+
+    > .contact > .phone {
+      font-size: $fs-normal;
+      color: $color-gray-500;
+    }
+
+    > .menu > .item > .link {
+      display: block;
+      color: $color-success;
+      font-weight: $fw-medium;
+      text-align: center;
+      margin-bottom: 2px;
+      line-height: 31px;
+
+      @include breakpoint-up(phone) {
+        display: flex;
+        text-align: left;
+      }
+
+      &:hover {
+        color: $color-primary;
+      }
+    }
+
+    > .logo {
+      width: 200px;
+    }
+  }
+}

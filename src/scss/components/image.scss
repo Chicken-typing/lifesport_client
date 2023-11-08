@@ -1,0 +1,31 @@
+$ratio: (
+  video: 16/9,
+  square: 1/1,
+  unset: unset,
+  inherit: inherit,
+);
+$object-fit: (cover, contain, fill, none, scale-down);
+
+.kl-image {
+  @include size(100%, 100%);
+
+  @each $name, $value in $ratio {
+    &.-#{$name} {
+      aspect-ratio: $value;
+    }
+  }
+
+  @each $value in $object-fit {
+    &.-#{$value} {
+      object-fit: $value;
+    }
+  }
+
+  &.-loading {
+    background: $white;
+  }
+
+  &.-circle {
+    border-radius: 100rem;
+  }
+}

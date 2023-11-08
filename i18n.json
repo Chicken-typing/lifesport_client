@@ -1,0 +1,11 @@
+{
+  "locales": ["vi", "en"],
+  "defaultLocale": "vi",
+  "logBuild": false,
+  "loader": true,
+  "pages": {
+    "*": ["common"],
+    "/": ["home"],
+    "/about": ["about"]
+  }
+}

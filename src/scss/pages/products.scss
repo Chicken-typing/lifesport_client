@@ -1,0 +1,342 @@
+.kl-products {
+  > .content > .wrapper {
+    margin-top: 80px;
+  }
+
+  &-sidebar {
+    &.-static {
+      display: block;
+
+      > .header {
+        display: none;
+      }
+
+      @include breakpoint-down(desktop) {
+        display: none;
+      }
+    }
+
+    &.-drawer {
+      overflow: auto;
+      padding: 20px;
+
+      > .header {
+        display: flex;
+        justify-content: flex-end;
+      }
+
+      > .header > .action {
+        font-size: 22px;
+      }
+
+      @include breakpoint-down(smalldesktop) {
+        display: block;
+      }
+    }
+
+    &-categories {
+      > .category {
+        margin-bottom: 16px;
+      }
+
+      > .category > .item {
+        line-height: 30px;
+        cursor: pointer;
+        transition: color 0.1s linear;
+        text-transform: uppercase;
+
+        &.-active,
+        &:hover {
+          color: $color-primary;
+        }
+      }
+
+      > .category > .subcategory {
+        margin-left: 10px;
+      }
+
+      > .category > .subcategory > .item {
+        text-transform: capitalize;
+        cursor: pointer;
+        width: 70%;
+
+        &.-active,
+        &:hover {
+          color: $color-primary;
+        }
+      }
+    }
+
+    &-price {
+      padding: 0 10px;
+      > .slider {
+        width: 100%;
+      }
+
+      > .wrapper {
+        @include flex-center;
+        flex-wrap: wrap;
+        justify-content: space-between;
+      }
+
+      > .wrapper > .price {
+        color: $color-gray-500;
+      }
+
+      > .wrapper > .price > .range {
+        color: $black;
+      }
+
+      > .wrapper > .action {
+        font-size: 12px;
+        font-weight: $fw-semibold;
+        letter-spacing: 1px;
+        cursor: pointer;
+      }
+    }
+
+    .price-slider-rail {
+      color: $border-color;
+      height: 1px;
+    }
+
+    .price-slider-track {
+      height: 1px;
+      color: $color-primary;
+    }
+
+    .price-slider-thumb {
+      @include circle(13px);
+      background-color: $white;
+      border: 2px solid $color-primary;
+    }
+
+    &-type {
+      > .item {
+        display: flex;
+        margin-bottom: 10px;
+      }
+
+      > .item > .count {
+        color: #86938d;
+        font-size: 14px;
+      }
+    }
+
+    &-ingredients {
+      > .item {
+        display: flex;
+        margin-bottom: 10px;
+      }
+
+      > .item > .count {
+        color: #86938d;
+        font-size: 14px;
+      }
+    }
+
+    &-rating {
+      > .item {
+        display: flex;
+        margin-bottom: 10px;
+      }
+
+      > .item > .rating {
+        @include flex-center-ver;
+      }
+
+      > .item > .count {
+        color: #86938d;
+        font-size: 14px;
+        margin-left: 5px;
+      }
+    }
+
+    > .option {
+      margin-bottom: 40px;
+    }
+
+    > .option > .header {
+      @include flex-center;
+      justify-content: space-between;
+      position: relative;
+      cursor: pointer;
+      border-bottom: 1px solid rgba($border-color, 0.3);
+      padding-block: 10px;
+      margin-bottom: 18px;
+    }
+
+    > .option > .header > .title {
+      @include heading-6;
+    }
+
+    > .option > .header > .overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      color: transparent;
+    }
+
+    > .option > .header > .icon {
+      transition: transform 0.1s linear;
+
+      &.-down {
+        transform: rotate(-180deg);
+      }
+    }
+  }
+
+  &-banners {
+    > .content > .description {
+      font-size: 16px;
+      line-height: 24px;
+      margin-bottom: 30px;
+    }
+
+    > .content > .wrapper {
+      margin-bottom: 30px;
+    }
+
+    > .content > .wrapper > .info {
+      padding: 70px 70px 70px 130px;
+    }
+  }
+
+  &-filters {
+    margin-bottom: 15px;
+
+    > .content > .sorts {
+      @include flex-center-ver;
+      padding: 15px 30px;
+      border-radius: 5px;
+      margin-bottom: 15px;
+      font-size: $fs-normal;
+      font-weight: $fw-medium;
+      justify-content: space-between;
+      border: 1px solid $color-light-gray;
+    }
+
+    > .content > .sorts > .actions {
+      gap: 20px;
+      cursor: pointer;
+      flex-wrap: wrap;
+      @include flex-center-ver;
+      justify-content: space-between;
+    }
+
+    > .content > .sorts > .actions > .filter {
+      display: none;
+      cursor: pointer;
+      align-items: center;
+      justify-content: space-between;
+
+      @include breakpoint-down(desktop) {
+        display: flex;
+      }
+    }
+
+    > .content > .sorts > .actions > .filter > .icon {
+      font-size: 24px;
+      margin-right: 8px;
+    }
+
+    > .content > .sorts > .actions > .filter > .text {
+      height: 100%;
+      font-weight: $fw-bold;
+      text-transform: uppercase;
+    }
+
+    > .content > .sorts > .actions > .sort,
+    > .content > .sorts > .actions > .show {
+      gap: 3px;
+      @include flex-center-ver;
+      justify-content: space-between;
+    }
+
+    > .content > .sorts > .actions > .sort > .icon,
+    > .content > .sorts > .actions > .show > .icon {
+      font-size: $fs-sm;
+    }
+
+    > .content > .sorts > .actions > .sort > .text {
+      color: $color-success;
+    }
+
+    > .content > .sorts > .actions > .show > .text {
+      color: $color-gray-500;
+      font-size: inherit;
+    }
+
+    > .content > .sorts > .actions > .show > .text > .number {
+      opacity: 0.7;
+      color: $black;
+      font-weight: $fw-semibold;
+    }
+
+    > .content > .sorts > .info {
+      @include breakpoint-down(desktop) {
+        display: none;
+      }
+    }
+
+    > .content > .sorts > .info > .text {
+      color: $color-gray-500;
+    }
+
+    > .content > .filter > .list {
+      display: inline-block;
+    }
+
+    > .content > .filter > .list > .tags {
+      gap: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      padding-block: 5px;
+      margin-bottom: 15px;
+      margin-right: 10px;
+    }
+
+    > .content > .filter > .list > .tags > .tag {
+      gap: 10px;
+      width: auto;
+      font-size: 13px;
+      cursor: pointer;
+      padding: 4px 12px;
+      @include flex-center;
+      text-transform: capitalize;
+      border: 1px solid $color-light-gray;
+
+      &:hover {
+        border-color: $color-danger;
+      }
+
+      &:hover > .text,
+      &:hover > .icon {
+        color: $color-primary;
+      }
+    }
+
+    > .content > .filter > .link {
+      padding-top: 2px;
+      margin-left: 10px;
+      font-size: $fs-normal;
+    }
+  }
+
+  &-result-filter {
+    .content > .wrapper > .item {
+      margin-bottom: 30px;
+    }
+    .empty-result {
+      text-transform: capitalize;
+      font-size: 30px;
+      color: $color-primary;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+  }
+
+  &-menu-item {
+    font-size: 14px;
+  }
+}

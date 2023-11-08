@@ -1,0 +1,27 @@
+.kl-label {
+  color: $color-success;
+  font-size: 16px;
+  display: block;
+  margin-bottom: 15px;
+
+  &-required {
+    color: $color-danger;
+    padding-inline: 3px;
+  }
+
+  &.-unset {
+    text-transform: none;
+  }
+
+  &.-uppercase {
+    text-transform: uppercase;
+  }
+
+  &.-lowercase {
+    text-transform: lowercase;
+  }
+
+  &.-capitalized {
+    text-transform: capitalize;
+  }
+}

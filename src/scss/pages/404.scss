@@ -1,0 +1,99 @@
+.kl-page-not-found {
+  margin-block: 105px;
+
+  > .content > .wrapper {
+    display: flex;
+    justify-content: center;
+
+    @include breakpoint-down(phone) {
+      @include flex-inline-center-column;
+      gap: 30px;
+    }
+  }
+
+  > .content > .wrapper > .images {
+    max-width: 500px;
+    width: 100%;
+    padding-right: 15px;
+
+    @include breakpoint-down(tablet) {
+      max-width: 360px;
+      width: 100%;
+    }
+  }
+
+  > .content > .wrapper > .images > .image {
+    object-fit: contain;
+  }
+
+  > .content > .wrapper > .error-content {
+    max-width: 600px;
+    width: 100%;
+    padding-left: 30px;
+
+    @include breakpoint-down(phone) {
+      padding-left: 0;
+    }
+  }
+
+  > .content > .wrapper > .error-content > .page-title > .title {
+    font-size: 240px;
+    line-height: 200px;
+    color: #a82832;
+    margin-bottom: 20px;
+
+    @include breakpoint-down(tablet) {
+      font-size: 120px;
+      line-height: 80px;
+    }
+
+    @include breakpoint-down(phone) {
+      @include flex-center;
+    }
+  }
+
+  > .content > .wrapper > .error-content > .error-text {
+    margin-bottom: 30px;
+  }
+
+  > .content > .wrapper > .error-content > .error-text > .description {
+    font-size: 50px;
+    line-height: 54px;
+    color: $color-success;
+    font-weight: 600;
+    letter-spacing: -1px;
+
+    @include breakpoint-down(tablet) {
+      font-size: 32px;
+      line-height: 36px;
+    }
+
+    @include breakpoint-down(phone) {
+      @include flex-center;
+      text-align: center;
+    }
+  }
+
+  > .content > .wrapper > .error-content > .error-button {
+    @include breakpoint-down(phone) {
+      @include flex-center;
+    }
+  }
+
+  > .content > .wrapper > .error-content > .error-button > .link > .button {
+    color: $white;
+    padding: 18px 30px;
+    font-size: $fs-normal;
+    font-weight: $fw-semibold;
+    background: $color-primary;
+    display: flex;
+
+    &:hover {
+      background: $color-secondary;
+    }
+  }
+  > .content > .wrapper > .error-content > .error-button > .link > .button > .icon {
+    font-size: 10px;
+    font-weight: $fw-bold;
+  }
+}

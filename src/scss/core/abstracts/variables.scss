@@ -1,0 +1,27 @@
+@use 'sass:map';
+
+$bs-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+) !default;
+
+$grid-gutter-width: 15px;
+
+$spacer: 8px !default;
+$spacers: () !default;
+$spacers: map.merge(
+  (
+    0: $spacer * 0,
+    4: $spacer * 0.5,
+    8: $spacer * 1,
+    16: $spacer * 2,
+    24: $spacer * 3,
+    32: $spacer * 4,
+    40: $spacer * 5,
+  ),
+  $spacers
+);
+$color-text: #868686;

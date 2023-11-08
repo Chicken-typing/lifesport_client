@@ -1,0 +1,211 @@
+.kl-top-menu {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  @include breakpoint-down(tablet) {
+    display: none;
+  }
+
+  ._text-sm {
+    font-size: 14px;
+    font-weight: $fw-medium;
+    line-height: 22px;
+  }
+
+  .kl-top-menu-wrapper {
+    display: flex;
+    padding-block: 10px;
+    justify-content: space-between;
+
+    > .left {
+      @include flex-center;
+      z-index: 500;
+    }
+
+    > .left > .link {
+      color: $color-primary;
+      margin-left: 5px;
+      text-transform: capitalize;
+      position: relative;
+
+      &::after {
+        content: '';
+        background-color: $color-primary;
+        @include size(90%, 1px);
+        display: block;
+        @include position(absolute, null, 0, 0, 0);
+        transition: 0.3s all ease-in-out;
+        transform: translateY(-5px);
+      }
+
+      &:hover::after {
+        width: 0%;
+      }
+    }
+
+    > .left > .title {
+      color: $white;
+    }
+
+    > .right {
+      display: flex;
+      color: $white;
+    }
+
+    > .right > .language {
+      list-style-type: none;
+      display: flex;
+      position: relative;
+    }
+
+    > .right > .language:hover > .menu {
+      z-index: 999;
+      display: block;
+
+      &::before {
+        content: '';
+        display: block;
+        @include size(100%, 25px);
+        @include position(absolute, -25px, null, null, null);
+      }
+    }
+
+    > .right > .language > .selected {
+      &:hover,
+      &:hover ._icon-hover {
+        color: $color-primary !important;
+        cursor: pointer;
+      }
+    }
+
+    > .right > .language > .selected > .chevron {
+      margin-left: 5px;
+    }
+
+    > .right > .language > .selected > .chevron > .icon {
+      &.-font-icon {
+        font-weight: $fw-bold;
+      }
+    }
+
+    > .right > .language > .selected > .label {
+      font-size: 12px;
+    }
+
+    > .right > .language > .menu {
+      list-style-type: none;
+      @include size(130px, 146px);
+      @include position(absolute, calc(100% + 15px), 0, null, null);
+      transform: translateX(-2%);
+      text-align: left;
+      padding: 10px 0;
+      background-color: $white;
+      box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.05);
+      border: 1px solid $color-light-gray;
+      color: black;
+      font-size: 12px;
+      display: none;
+      height: fit-content;
+    }
+
+    > .right > .language > .menu > .list {
+      &:hover {
+        background-color: rgba($black, 0.05);
+        z-index: 999;
+        cursor: pointer;
+      }
+    }
+
+    > .right > .language > .menu > .list > .choices {
+      @include flex-center-ver;
+      padding: 7px 15px;
+      min-width: 126px;
+      white-space: nowrap;
+    }
+
+    > .right > .language > .menu > .list > .choices > .image {
+      display: inline-block;
+      margin-right: 5px;
+      @include size(20px, 12px);
+    }
+
+    > .right > .monetary {
+      list-style-type: none;
+      margin-left: 20px;
+      display: flex;
+      position: relative;
+    }
+
+    > .right > .monetary > .selected {
+      z-index: 500;
+      &:hover,
+      &:hover ._icon-hover {
+        color: $color-primary !important;
+        cursor: pointer;
+      }
+    }
+
+    > .right > .monetary > .selected > .chevron {
+      margin-left: 5px;
+    }
+
+    > .right > .monetary > .selected > .chevron > .icon {
+      &.-font-icon {
+        font-weight: $fw-bold;
+      }
+    }
+
+    > .right > .monetary > .selected > .currency {
+      @include position(relative, 3px, null, null, null);
+      margin-right: 3px;
+    }
+
+    > .right > .monetary > .selected > .label {
+      font-size: 12px;
+    }
+
+    > .right > .monetary > .menu {
+      list-style-type: none;
+      @include position(absolute, calc(100% + 15px), 0, null, null);
+      text-align: left;
+      padding: 10px 0;
+      background-color: $white;
+      box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.05);
+      border: 1px solid $color-light-gray;
+      color: black;
+      font-size: 14px;
+      display: none;
+      margin: 0;
+    }
+
+    > .right > .monetary > .menu > .list {
+      cursor: pointer;
+      min-width: 140px;
+    }
+    > .right > .monetary > .menu > .list > .choices {
+      display: flex;
+      align-items: center;
+      padding: 7px 15px;
+    }
+    > .right > .monetary > .menu > .list > .choices > .name {
+      margin-left: 5px;
+    }
+
+    > .right > .monetary > .menu > .list:hover > .choices {
+      background-color: rgba($black, 0.05);
+      z-index: 999;
+      cursor: pointer;
+    }
+
+    > .right > .monetary:hover > .menu {
+      z-index: 999;
+      display: block;
+
+      &::before {
+        content: '';
+        display: block;
+        @include size(100%, 25px);
+        position: absolute;
+        top: -25px;
+      }
+    }
+  }
+}

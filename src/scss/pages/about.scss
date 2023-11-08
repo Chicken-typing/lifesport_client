@@ -1,0 +1,364 @@
+.kl-about {
+  &-experience {
+    padding: 60px 50px;
+    > .wrapper {
+      overflow: hidden;
+      @include breakpoint-down(tablet) {
+        gap: 40px;
+      }
+    }
+
+    > .wrapper > .left {
+      position: relative;
+    }
+
+    > .wrapper > .left > .image {
+      @include breakpoint-down(tablet) {
+        max-height: 440px;
+      }
+    }
+
+    > .wrapper > .left > .widget {
+      @include abs-center-ver;
+      @include breakpoint-down(desktop) {
+        display: none;
+      }
+      right: -60px;
+    }
+
+    > .wrapper > .right {
+      @include flex-column;
+      @include breakpoint-down(tablet) {
+        text-align: center;
+        @include flex-center-column;
+      }
+
+      justify-content: center;
+      position: relative;
+      gap: 15px;
+      padding: 0 9% 0 5%;
+    }
+
+    > .wrapper > .right > .header {
+      font-size: $fs-normal;
+      color: $color-primary;
+      letter-spacing: 1px;
+    }
+
+    > .wrapper > .right > .title {
+      @include heading-1;
+      color: $color-success;
+
+      @include breakpoint-down(desktop) {
+        @include heading-3;
+      }
+    }
+
+    > .wrapper > .right > .action {
+      min-width: 100%;
+      font-size: $fs-normal;
+      color: $black;
+
+      &:hover {
+        color: $white;
+      }
+    }
+
+    > .wrapper > .right > .widget {
+      @include position(absolute, 20px, -120px, null, null);
+      @include breakpoint-down(desktop) {
+        display: none;
+      }
+    }
+  }
+
+  &-process {
+    > .content {
+      background-color: $color-gray-400;
+      padding-inline: 30px;
+      @include breakpoint-down(phone) {
+        padding-inline: 15px;
+      }
+    }
+
+    > .content > .wrapper {
+      padding-block: 85px;
+      justify-content: center;
+      gap: 100px;
+
+      @include breakpoint-down(desktop) {
+        gap: 50px;
+      }
+      @include breakpoint-down(smalldesktop) {
+        padding-block: 60px;
+      }
+    }
+
+    > .content > .wrapper > .item {
+      padding: 0;
+      max-width: 280px;
+      text-align: center;
+    }
+
+    > .content > .wrapper > .item > .icon {
+      margin-bottom: 25px;
+
+      &:hover > .svg {
+        transform: scale(0.9);
+      }
+    }
+
+    > .content > .wrapper > .item > .icon > .svg {
+      transition: all 0.3s ease;
+      @include size(64px, 64px);
+    }
+
+    > .content > .wrapper > .item > .box {
+      @include flex-center-column;
+      gap: 15px;
+    }
+
+    > .content > .wrapper > .item > .box > .title {
+      font-size: 18px;
+      line-height: 20px;
+      color: $color-success;
+      font-weight: $fw-semibold;
+
+      @include truncate-multiline-new(2);
+    }
+
+    > .content > .wrapper > .item > .box > .description {
+      font-size: 16px;
+      line-height: 24px;
+      color: $color-gray-500;
+      font-weight: $fw-medium;
+
+      @include truncate-multiline-new(3);
+    }
+  }
+
+  &-trailer {
+    margin-block: 30px;
+    .content > .wrapper > .images {
+      position: relative;
+      cursor: pointer;
+
+      &:hover > .buttons > .button {
+        background: $color-primary;
+      }
+
+      &:hover > .buttons > .button > .icon {
+        color: $white;
+      }
+    }
+
+    .content > .wrapper > .images > .image {
+      border-radius: 5px;
+      aspect-ratio: 0;
+
+      @include breakpoint-down(tablet) {
+        height: 600px;
+        object-fit: cover;
+      }
+    }
+
+    .content > .wrapper > .images > .buttons {
+      @include abs-center;
+    }
+
+    .content > .wrapper > .images > .buttons > .button {
+      @include square(100px);
+      background-color: $white;
+    }
+
+    .content > .wrapper > .images > .buttons > .button > .icon {
+      font-size: 20px;
+      color: $color-primary;
+    }
+  }
+
+  &-modal {
+    > .box {
+      width: 900px;
+      max-width: 100%;
+      aspect-ratio: 16/9;
+      @include abs-center;
+    }
+
+    > .box > .video {
+      @include square(100%);
+    }
+  }
+
+  &-archivements {
+    max-width: 100%;
+    display: flex;
+    margin-block: 60px;
+
+    .wrapper > .heading {
+      @include flex-center;
+      flex-direction: column-reverse;
+    }
+
+    .wrapper > .heading > .award {
+      @include heading-1;
+      color: $color-success;
+      padding-bottom: 25px;
+
+      @include breakpoint-down(desktop) {
+        @include heading-3;
+        text-align: center;
+      }
+    }
+
+    .wrapper > .heading > .text {
+      text-align: center;
+      color: $color-primary;
+      font-size: $fs-sm;
+      font-weight: $fw-medium;
+      text-transform: uppercase;
+      line-height: 16px;
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+    }
+
+    > .wrapper > .row {
+      @include flex-center;
+      flex-direction: row;
+    }
+
+    > .wrapper > .row > .info {
+      @include flex-center-column;
+      background-image: url('https://demo2.wpopal.com/teapoz/wp-content/uploads/2023/05/award-decor.png');
+      background-repeat: no-repeat;
+      background-size: auto;
+      background-position: top center;
+      padding-top: 15px;
+    }
+
+    > .wrapper > .row > .info > .title > .year {
+      @include flex-center;
+      margin-bottom: 15px;
+      font-size: 18px;
+      font-weight: $fw-semibold;
+      line-height: 16px;
+      color: $color-primary;
+    }
+
+    > .wrapper > .row > .info > .title > .name {
+      font-size: 16px;
+      color: $color-success;
+      margin-bottom: 25px;
+    }
+  }
+
+  &-archivement {
+    @include flex-center-column;
+    text-align: center;
+    margin-bottom: 15px;
+    max-width: 100%;
+
+    > .images {
+      @include square(100%);
+      transition: all 0.5s ease;
+
+      &:hover {
+        transform: scale(0.9);
+      }
+    }
+  }
+
+  &-contact {
+    padding-inline: 30px;
+    margin-top: 60px;
+    margin-bottom: 20px;
+
+    @include breakpoint-down(phone) {
+      padding-inline: 15px;
+    }
+  }
+
+  &-contact > .wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 20px;
+    @include breakpoint-down(tablet) {
+      @include flex-column;
+      gap: 20px;
+    }
+  }
+
+  &-contact > .wrapper > .content {
+    flex: 0 0 calc(50% - 10px);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 5px;
+    padding: 380px 19% 30px 30px;
+
+    @include breakpoint-down(mediumdesktop) {
+      padding-inline: 80px;
+      padding-top: 50px;
+    }
+
+    @include breakpoint-down(phone) {
+      padding-inline: 30px;
+      padding-top: 100px;
+    }
+
+    @include breakpoint-down(xsmallphone) {
+      padding-inline: 20px;
+    }
+  }
+
+  &-contact > .wrapper > .content > .article {
+    background-color: $white;
+    padding: 70px 70px 60px 60px;
+    border-radius: 5px;
+
+    @include breakpoint-down(phone) {
+      padding: 30px;
+    }
+
+    @include breakpoint-down(mediumdesktop) {
+      padding-inline: 20px;
+    }
+  }
+
+  &-contact > .wrapper > .content > .article > .subtitle {
+    max-width: 100%;
+    margin-bottom: 15px;
+    color: $color-primary;
+    font-size: 12px;
+    font-weight: $fw-medium;
+    text-transform: uppercase;
+    line-height: 16px;
+    letter-spacing: 2px;
+  }
+
+  &-contact > .wrapper > .content > .article > .title {
+    margin-bottom: 20px;
+    max-width: 100%;
+    font-size: 40px;
+    font-weight: $fw-semibold;
+    line-height: 1.08em;
+    letter-spacing: -1px;
+    color: $color-success;
+
+    @include breakpoint-down(phone) {
+      font-size: 32px;
+    }
+  }
+
+  &-contact > .wrapper > .content > .article > .description {
+    margin-bottom: 30px;
+    font-size: 16px;
+    font-weight: $fw-medium;
+    line-height: 22px;
+  }
+
+  &-contact > .wrapper > .content > .article > .link {
+    justify-content: flex-start !important;
+    gap: 5px;
+  }
+}

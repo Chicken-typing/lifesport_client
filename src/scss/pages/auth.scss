@@ -1,0 +1,164 @@
+.kl-auth {
+  > .content {
+    margin-block: 105px;
+  }
+
+  > .content > .error {
+    border-radius: 2px;
+    margin-bottom: 15px;
+    padding: 20px 0px 20px 25px;
+    background-color: #e2401c;
+    border-left: 10px solid #c03618;
+  }
+
+  > .content > .error > .message {
+    color: $white;
+    font-size: 16px;
+    font-weight: $fw-medium;
+  }
+
+  > .content > .error > .message > .label {
+    font-weight: $fw-semibold;
+  }
+
+  > .content > .title {
+    font-size: 64px;
+    text-align: center;
+    margin-bottom: 60px;
+    letter-spacing: -1px;
+    color: $color-success;
+    font-weight: $fw-semibold;
+  }
+
+  > .content > .wrapper {
+    justify-content: center;
+
+    @include breakpoint-down(phone) {
+      gap: 25px;
+      padding-inline: 10px;
+    }
+  }
+
+  > .content > .wrapper > .login {
+    padding: 0 35%;
+
+    @include breakpoint-down(tablet) {
+      padding: 0 10%;
+    }
+
+    @include breakpoint-down(phone) {
+      padding: 0 30px;
+    }
+  }
+
+  > .content > .wrapper > .register {
+    padding: 0 35%;
+
+    @include breakpoint-down(tablet) {
+      padding: 0 10%;
+    }
+
+    @include breakpoint-down(phone) {
+      padding: 0 30px;
+    }
+  }
+
+  // > .content > .wrapper > .column {
+  //   @include breakpoint-down(phone) {
+  //     padding: 0;
+  //   }
+  // }
+
+  // > .content > .wrapper > .column > .-left {
+  //   margin-left: auto;
+  //   max-width: 440px;
+
+  //   @include breakpoint-down(phone) {
+  //     margin-inline: auto;
+  //   }
+  // }
+
+  > .content > .wrapper > .login {
+    @include breakpoint-down(phone) {
+      border: none;
+    }
+  }
+
+  > .content > .wrapper > .column > .form > .header {
+    font-size: 28px;
+    margin-bottom: 35px;
+    color: $color-success;
+    font-weight: $fw-semibold;
+  }
+
+  > .content > .wrapper > .column > .form > .group > .label {
+    line-height: 28px;
+    margin-bottom: 5px;
+    font-weight: $fw-medium;
+  }
+
+  > .content > .wrapper > .column > .form > .group > .label > .required {
+    font-size: 16px;
+    margin-left: 6px;
+    color: $color-danger;
+    font-weight: $fw-bold;
+  }
+
+  > .content > .wrapper > .column > .form > .group > .container {
+    padding: 0;
+    margin-bottom: 30px;
+  }
+
+  > .content > .wrapper > .column > .form > .group > .container > .field {
+    border-color: $color-light-gray;
+
+    &:focus-within {
+      border-color: $black-form;
+    }
+  }
+
+  > .content > .wrapper > .column > .form > .group > .container > .field > .input {
+    &::placeholder {
+      color: $color-success;
+    }
+
+    &:focus::placeholder {
+      color: transparent;
+      transition: all 0.8s ease-in-out;
+    }
+  }
+
+  > .content > .wrapper > .column > .form > .group > .actions {
+    margin-bottom: 32px;
+    align-items: center;
+    @include flex-space-between-hoz;
+  }
+
+  > .content > .wrapper > .column > .form > .group > .actions > .link {
+    text-decoration: underline;
+  }
+
+  > .content > .wrapper > .column > .form > .group > .button {
+    height: 50px;
+    font-size: $fs-normal;
+    font-weight: $fw-semibold;
+  }
+
+  > .content > .wrapper > .column > .form > .group > .notice {
+    font-size: 16px;
+    font-weight: $fw-medium;
+    margin-block: 32px 16px;
+    color: $color-success;
+  }
+
+  > .content > .wrapper > .column > .form > .group > .description {
+    font-size: 16px;
+    font-weight: $fw-medium;
+    margin-bottom: 32px;
+  }
+}
+
+// .grecaptcha-badge {
+//   right: 50% !important;
+//   z-index: 40 !important;
+// }

@@ -1,0 +1,31 @@
+.kl-drawer {
+  background: $white;
+  display: none;
+  max-width: 100%;
+  @include size(375px, 100vh);
+
+  @include breakpoint-down(desktop) {
+    display: block;
+  }
+
+  &-cart {
+    display: block;
+    width: 340px;
+
+    @include breakpoint-down(phone) {
+      width: 300px;
+    }
+  }
+
+  &-header {
+    padding-top: 60px;
+    display: block;
+    @include breakpoint-up(mediumphone) {
+      width: 340px;
+    }
+  }
+
+  &-products {
+    width: 320px;
+  }
+}

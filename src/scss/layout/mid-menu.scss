@@ -1,0 +1,266 @@
+.kl-mid-menu {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+
+  .kl-mid-menu-wrapper {
+    justify-content: space-between;
+    @include flex-center-ver;
+    position: relative;
+
+    > .burger {
+      margin-right: 0;
+      @include flex-column;
+
+      @include breakpoint-up(desktop) {
+        display: none;
+      }
+
+      &:hover > .icon:nth-child(1),
+      &:hover > .icon:nth-child(2),
+      &:hover > .icon:nth-child(3) {
+        width: 24px;
+        background-color: $color-primary;
+      }
+    }
+
+    > .burger > .icon {
+      display: inline-block;
+      margin-bottom: 3px;
+      border-radius: 5px;
+      background-color: $white;
+      transition: all 0.3s ease;
+      &:nth-child(1) {
+        @include size(24px, 2.5px);
+      }
+      &:nth-child(2) {
+        @include size(16px, 2.3px);
+      }
+      &:nth-child(3) {
+        @include size(12px, 2px);
+        margin-bottom: 0;
+      }
+    }
+    > .brand {
+      @include square(200px);
+      aspect-ratio: 1/1;
+      cursor: pointer;
+    }
+
+    > .brand > .link {
+      @include square(100%);
+    }
+
+    > .search {
+      margin-top: 2px;
+      display: flex;
+      @include size(57%, 44px);
+      @include breakpoint-down(tablet) {
+        display: none;
+      }
+    }
+    > .search > .container {
+      padding-inline: 0;
+    }
+
+    > .search > .container > .field {
+      background-color: $white;
+      height: 44px;
+      border-radius: 5px 0 0 5px;
+      padding: 12px 30px;
+      border: 1px solid $white;
+    }
+
+    > .search > .container > .field > .input {
+      color: $black;
+
+      @include breakpoint-down(desktop) {
+        width: 430px;
+      }
+    }
+
+    > .search > .container > .field > .adornment.-end {
+      @include size(150px, 44px);
+      border-radius: 0 5px 5px 0;
+      margin-right: -35px;
+    }
+
+    > .search > .container > .field > .adornment > .btn {
+      @include size(100%, 100%);
+      border-radius: 0 5px 5px 0;
+      background-color: #436d99;
+
+      &:hover {
+        background-color: #65a3e6;
+      }
+    }
+
+    > .actions {
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+
+      @include breakpoint-down(tablet) {
+        width: unset;
+      }
+    }
+
+    > .actions > .btn {
+      @include flex-center-ver;
+      text-align: center;
+      color: $white;
+      &:nth-child(1) {
+        width: 120px;
+
+        &:hover > .icon {
+          color: $color-primary;
+        }
+      }
+
+      &:nth-child(1) > .btn-name {
+        @include size(80%, 18px);
+        font-size: 12px;
+      }
+
+      &:nth-child(2) {
+        margin: 0px 8px;
+        &:hover > .icon {
+          color: $color-primary;
+        }
+      }
+      &:nth-child(2) > .icon {
+        margin-right: 3px;
+      }
+
+      &:nth-child(2) > .quantity {
+        font-size: 12px;
+        height: 18px;
+      }
+
+      &:nth-child(3) {
+        margin-left: 8px;
+
+        &:hover > .icon {
+          color: $color-primary;
+        }
+        @include breakpoint-down(desktop) {
+          display: flex;
+        }
+      }
+
+      &:nth-child(3) > .icon {
+        margin-right: 3px;
+      }
+
+      &:nth-child(3) > .quantity {
+        font-size: 12px;
+        height: 18px;
+      }
+
+      @include breakpoint-down(desktop) {
+        display: none;
+      }
+    }
+
+    > .actions > .btn > .icon {
+      @include square(24px);
+    }
+
+    @include breakpoint-down(tablet) {
+      padding-block: 20px;
+    }
+  }
+}
+
+.kl-popper {
+  z-index: 5;
+  .kl-popper-auth {
+    margin-top: 18px !important;
+    display: block;
+    border: 1px solid $color-light-gray;
+    height: fit-content;
+    background: $white;
+    box-shadow: 0 0 30px 0 rgba($black, 0.05);
+
+    > .content {
+      display: flex;
+      padding: 20px;
+      width: 320px;
+
+      > .form {
+        width: 100%;
+      }
+
+      > .form > .header {
+        @include flex-center-ver;
+        justify-content: space-between;
+        margin-bottom: 10px;
+      }
+
+      > .form > .header > .title {
+        font-size: 18px;
+        color: $color-success !important;
+      }
+
+      > .form > .header > .action {
+        color: $color-success;
+        font-size: 14px;
+        &:hover {
+          color: $black-form;
+        }
+      }
+
+      > .form > .group > .container {
+        &.-mb-10 {
+          margin-bottom: 10px;
+        }
+        padding: 0;
+      }
+
+      > .form > .group > .container > .label {
+        font-size: 14px;
+        line-height: 1.5;
+        color: $color-success;
+      }
+
+      > .form > .group > .container > .field {
+        border-color: $color-light-gray;
+        border-radius: 5px;
+        color: $color-success;
+        box-shadow: none;
+        &:focus-within {
+          border-color: $black-form;
+        }
+      }
+
+      > .form > .group > .kl-input > .field > .input {
+        caret-color: $color-success;
+        &::placeholder {
+          color: $color-success;
+        }
+        &:focus::placeholder {
+          transition: all 0.55s ease-in-out;
+          color: transparent;
+        }
+      }
+
+      > .form > .group > .forgot {
+        text-align: right;
+        margin-top: 5px;
+        width: 100%;
+      }
+
+      > .form > .group > .forgot > .link {
+        text-decoration: underline;
+        font-size: 14px;
+        font-weight: unset;
+        color: $color-success;
+        &:hover,
+        &:active {
+          color: $black-form;
+        }
+      }
+    }
+    @include breakpoint-down(tablet) {
+      display: none;
+    }
+  }
+}

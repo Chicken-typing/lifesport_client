@@ -1,0 +1,41 @@
+.kl-quantity {
+  @include flex-center;
+  margin-block: 24px;
+  justify-content: space-between;
+
+  > .label {
+    font-weight: $fw-semibold;
+  }
+
+  > .action {
+    border: 1px solid $color-gray;
+    display: flex;
+    width: 144px;
+  }
+
+  > .action > .button {
+    @include square(48px);
+    font-weight: $fw-bold;
+
+    &.-disabled {
+      opacity: 0.4;
+    }
+  }
+
+  > .action > .input {
+    display: block;
+    width: 48px;
+    border: none;
+    outline: none;
+    text-align: center;
+    font-weight: $fw-bold;
+    font-size: 18px;
+    border-inline: 1px solid $color-gray;
+
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+      appearance: none;
+      margin: 0;
+    }
+  }
+}

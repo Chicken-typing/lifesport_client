@@ -1,0 +1,17 @@
+@font-face {
+  font-family: $font-family;
+  src: url('/fonts/teapoz/Teapoz-Regular.woff2') format('woff2');
+  font-weight: $fw-normal;
+}
+
+@font-face {
+  font-family: $font-family;
+  src: url('/fonts/teapoz/Teapoz-Medium.woff2') format('woff2');
+  font-weight: $fw-medium;
+}
+
+@font-face {
+  font-family: $font-family;
+  src: url('/fonts/teapoz/Teapoz-Semibold.woff2') format('woff2');
+  font-weight: $fw-bold;
+}

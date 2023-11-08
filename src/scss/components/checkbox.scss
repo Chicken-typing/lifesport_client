@@ -1,0 +1,31 @@
+.kl-checkbox {
+  @include flex-center-ver;
+  gap: 14px;
+  margin-right: 5px;
+
+  &:hover > .label {
+    color: $color-primary;
+  }
+
+  > .checkbox {
+    border-color: $color-light-gray;
+    box-shadow: 0 0 0 2px inset $color-light-gray;
+    @include square(14px);
+    cursor: pointer;
+
+    &:checked {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      box-shadow: 0 0 0 2px inset $black;
+    }
+  }
+
+  > .label {
+    margin-bottom: 0;
+    color: $color-success;
+    font-size: 16px;
+    line-height: 1.25;
+    cursor: pointer;
+  }
+}

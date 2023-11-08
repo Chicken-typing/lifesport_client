@@ -1,0 +1,505 @@
+.kl-cart {
+  margin-block: 105px;
+
+  > .title {
+    @include heading-4;
+    color: $color-success;
+    margin: 50px 0 20px 0;
+  }
+
+  .rating-lg {
+    font-size: 23px;
+  }
+
+  .swiper-pagination {
+    display: none;
+
+    @include breakpoint-down(phone) {
+      display: block;
+    }
+  }
+
+  .swiper-pagination-bullet-active {
+    background-color: $black;
+  }
+
+  > .heading {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 17px;
+    font-size: 64px;
+    line-height: 1;
+    letter-spacing: -1px;
+    color: $color-success;
+  }
+
+  > .loading > .wrapper > .skeleton {
+    @include flex-center-ver;
+    width: 60%;
+    margin-bottom: 20px;
+    justify-content: space-evenly;
+
+    @include breakpoint-down(tablet) {
+      width: 100%;
+    }
+
+    @include breakpoint-down(phone) {
+      display: none;
+    }
+  }
+
+  > .loading > .empty {
+    @include flex-center-column;
+    padding-block: 30px;
+  }
+
+  > .loading > .empty > .icon {
+    font-size: 70px;
+    margin-bottom: 50px;
+    margin-top: 30px;
+  }
+
+  > .loading > .empty > .title {
+    font-size: 18px;
+    margin-top: 20px;
+    margin-bottom: 50px;
+  }
+
+  > .wrapper {
+    padding-inline: 10px;
+    text-align: left;
+  }
+
+  > .wrapper > .product {
+    padding-right: 50px;
+
+    @include breakpoint-down(phone) {
+      padding-inline: 0;
+    }
+  }
+
+  > .wrapper > .totals {
+    padding: 30px 30px 40px;
+    background-color: $white;
+    border: 6px solid $color-light-gray;
+    border-radius: 5px;
+    max-height: 380px;
+  }
+
+  > .wrapper > .totals > .header {
+    margin-bottom: 15px;
+    color: $color-success;
+    font-size: 28px;
+  }
+
+  > .wrapper > .totals > .btn {
+    @include size(100%, 50px);
+    font-size: $fs-normal;
+  }
+
+  &-table {
+    width: 100%;
+
+    @include breakpoint-down(tablet) {
+      display: none;
+    }
+
+    ._style-rows {
+      padding: 26px 26px 26px 0;
+      font-weight: $fw-medium;
+      color: $color-success;
+    }
+
+    > .head {
+      border-bottom: 1px solid $color-light-gray;
+    }
+
+    > .head > .rows > .remove {
+      @include size(52px, 77px);
+    }
+
+    > .head > .rows > .thumbnail {
+      @include breakpoint-down(mediumdesktop) {
+        width: 15%;
+      }
+
+      @include breakpoint-up(mediumdesktop) {
+        width: 166px;
+      }
+    }
+
+    > .head > .rows > .name {
+      max-width: 230px;
+      @include breakpoint-up(mediumdesktop) {
+        width: 290px;
+      }
+    }
+    > .head > .rows > .price {
+      min-width: 120px;
+    }
+
+    > .head > .rows > .quantity {
+      @include breakpoint-up(mediumdesktop) {
+        width: 170px;
+      }
+    }
+
+    > .head > .rows > .total {
+      min-width: 120px;
+      text-align: center;
+    }
+
+    > .content > .rows > .thumbnail {
+      cursor: pointer;
+      text-align: center;
+    }
+
+    > .content > .rows > .remove > .btn {
+      cursor: pointer;
+    }
+
+    > .content > .rows > .thumbnail > .image {
+      @include square(90px);
+      object-fit: cover;
+    }
+
+    > .content > .rows > .name > .link {
+      font-weight: $fw-semibold;
+      font-size: 14px;
+      line-height: 22px;
+    }
+
+    > .content > .rows > .total {
+      font-weight: $fw-semibold;
+      text-align: center;
+    }
+  }
+
+  &-order {
+    width: 100%;
+    margin-bottom: 25px;
+
+    .-style-totals {
+      font-size: 18px;
+      color: $color-success;
+      padding-block: 18px;
+    }
+
+    > .content > .sub > .cost {
+      text-align: end;
+    }
+
+    > .content > .total {
+      border-top: 1px solid $color-light-gray;
+    }
+
+    > .content > .total > .cost {
+      text-align: end;
+      font-size: 25px;
+      padding-block: 20px;
+    }
+  }
+
+  &-responsive {
+    width: 100%;
+
+    ._style-flex {
+      @include flex-space-between-hoz;
+      padding-block: 10px;
+      border-bottom: 1px solid $color-light-gray;
+
+      &:last-child {
+        border-bottom: unset;
+      }
+    }
+
+    .-text-sm {
+      font-size: 12px;
+      color: $black;
+      font-weight: $fw-normal;
+    }
+
+    @include breakpoint-up(tablet) {
+      display: none;
+    }
+
+    > .content > .rows {
+      position: relative;
+      display: block;
+      padding-left: 120px;
+      border-bottom: 1px solid $color-light-gray;
+      margin-bottom: 16px;
+    }
+
+    > .content > .rows > .thumbnail {
+      padding: 0;
+      @include position(absolute, 15px, null, null, 10px);
+      cursor: pointer;
+    }
+
+    > .content > .rows > .thumbnail > .image {
+      @include square(90px);
+      object-fit: unset;
+    }
+
+    > .content > .rows > .remove {
+      @include position(absolute, 9px, 10px, null, null);
+    }
+
+    > .content > .rows > .name {
+      @include breakpoint-down(xsmallphone) {
+        padding-right: 30px;
+      }
+    }
+
+    > .content > .rows > .name > .link {
+      font-weight: $fw-semibold;
+
+      @include breakpoint-down(phone) {
+        max-width: 400px;
+      }
+
+      @include breakpoint-down(smallphone) {
+        max-width: 200px;
+      }
+    }
+
+    > .content > .rows > .price > .cost {
+      font-size: $fs-normal;
+    }
+
+    > .content > .rows > .quantity > .quantity {
+      flex-direction: column;
+      margin-block: 0;
+      align-self: flex-end;
+    }
+
+    > .content > .rows > .total {
+      padding-bottom: 23px;
+    }
+
+    > .content > .rows > .total > .cost {
+      font-weight: $fw-semibold;
+    }
+  }
+
+  &-modal {
+    @include abs-center;
+    background-color: $white;
+
+    @include breakpoint-down(tablet) {
+      width: 90%;
+      max-height: 90%;
+      @include flex-column;
+      overflow-y: auto;
+    }
+
+    > .header {
+      width: 100%;
+      border: none;
+      display: flex;
+      justify-content: flex-end;
+      padding: 5px 10px 0;
+      color: $color-gray;
+      z-index: 20;
+
+      @include breakpoint-down(tablet) {
+        position: sticky;
+        top: 0;
+      }
+    }
+
+    > .wrapper {
+      display: flex;
+
+      @include breakpoint-down(tablet) {
+        display: block;
+      }
+    }
+
+    > .wrapper > .left {
+      top: 0;
+      position: sticky;
+      width: 460px;
+      max-height: 460px;
+
+      @include breakpoint-down(tablet) {
+        width: 100%;
+        position: relative;
+      }
+    }
+
+    > .wrapper > .left > .action {
+      @include abs-center-ver;
+      z-index: 10;
+      background-color: transparent;
+      border-radius: 0;
+      cursor: pointer;
+
+      &:hover {
+        background-color: $color-gray;
+        color: $white;
+      }
+
+      &.-left {
+        left: -1px;
+      }
+
+      &.-right {
+        right: 0;
+      }
+    }
+
+    > .wrapper > .right {
+      padding: 20px 20px 0;
+      max-height: 460px;
+
+      @include breakpoint-up(tablet) {
+        overflow-y: auto;
+        min-width: 460px;
+      }
+    }
+
+    > .wrapper > .right > .content {
+      position: sticky;
+    }
+
+    > .wrapper > .right > .content > .header {
+      @include flex-space-between-hoz;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    > .wrapper > .right > .content > .rating > .rating {
+      font-size: 17px;
+      color: $color-primary;
+    }
+
+    > .wrapper > .right > .content > .header > .link > .action {
+      font-size: 14px;
+      gap: 6px;
+
+      @include breakpoint-down(phone) {
+        font-size: $fs-sm;
+      }
+    }
+
+    > .wrapper > .right > .content > .header > .group {
+      display: flex;
+      gap: 8px;
+    }
+
+    > .wrapper > .right > .content > .name {
+      font-size: 40px;
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -1px;
+      margin-bottom: 12px;
+      color: $color-success;
+
+      @include breakpoint-down(phone) {
+        font-size: 36px;
+      }
+    }
+
+    > .wrapper > .right > .content > .rating {
+      @include flex-center-ver;
+      padding-bottom: 16px;
+      gap: 6px;
+    }
+
+    > .wrapper > .right > .content > .rating > .count,
+    > .wrapper > .right > .content > .rating > .number {
+      font-size: $fs-normal;
+      color: $color-gray-500;
+    }
+
+    > .wrapper > .right > .content > .rating > .count {
+      &:hover {
+        color: $color-primary;
+      }
+    }
+
+    > .wrapper > .right > .content > .rating > .count > .link {
+      position: relative;
+
+      &:hover::after {
+        display: block;
+      }
+
+      &::after {
+        content: '';
+        @include position(absolute, null, null, 3px, 0);
+        @include size(100%, 2px);
+        background-color: $color-primary;
+        display: none;
+      }
+    }
+
+    > .wrapper > .right > .content > .description {
+      padding-block: 16px;
+    }
+
+    > .wrapper > .right > .content > .price {
+      font-size: 24px;
+    }
+
+    > .wrapper > .right > .content > .add {
+      gap: 12px;
+      font-size: $fs-normal;
+      height: 48px;
+    }
+
+    > .wrapper > .right > .content > .like {
+      @include flex-center;
+      padding-block: 20px;
+      gap: 14px;
+    }
+
+    > .wrapper > .right > .content > .like > .action {
+      padding: 0;
+      font-size: $fs-normal;
+      font-weight: $fw-normal;
+      color: $black;
+
+      &:hover {
+        background-color: transparent;
+        color: $black !important;
+      }
+    }
+
+    > .wrapper > .right > .content > .footer {
+      font-size: 15px;
+      line-height: 28px;
+      color: $color-success;
+    }
+
+    > .wrapper > .right > .content > .footer > .label {
+      color: $color-gray-500;
+
+      @include breakpoint-down(desktop) {
+        margin-top: 8px;
+      }
+    }
+  }
+
+  &-slides > .images {
+    max-height: 460px;
+    object-fit: contain;
+  }
+
+  &-tags {
+    > .label {
+      color: $color-gray-500;
+      min-width: fit-content;
+    }
+
+    > .wrapper {
+      margin-left: 5px;
+    }
+
+    > .wrapper > .tag {
+      color: $color-success;
+    }
+  }
+}

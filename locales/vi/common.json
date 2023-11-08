@@ -1,0 +1,179 @@
+{
+  "top_menu": {
+    "title": "Chào mừng bạn đến với thế giới xe điện"
+  },
+  "mid_menu": {
+    "search": {
+      "label": "Bạn đang tìm kiếm gì?",
+      "submit": "Tìm kiếm"
+    },
+    "login": {
+      "label": "Đăng nhập"
+    }
+  },
+
+  "navigation": [
+    {
+      "title": "TRANG CHỦ",
+      "route": "/"
+    },
+    {
+      "title": "THƯƠNG HIỆU",
+      "route": "#",
+      "subMenu": [
+        {
+          "title": "VINFAST",
+          "route": "/products"
+        },
+        {
+          "title": "DIBAO",
+          "route": "/products"
+        },
+        {
+          "title": "HONDA",
+          "route": "/products"
+        }
+      ]
+    },
+    {
+      "title": "SẢN PHẨM",
+      "route": "/products"
+    },
+    {
+      "title": "TIN TỨC",
+      "route": "/blogs"
+    },
+    {
+      "title": "TRANG",
+      "route": "",
+      "subMenu": [
+        {
+          "title": "ĐĂNG NHẬP / ĐĂNG KÝ",
+          "route": "/auth"
+        },
+        {
+          "title": "LIÊN HỆ",
+          "route": "/contact"
+        },
+        {
+          "title": "THÔNG TIN",
+          "route": "/about"
+        }
+      ]
+    }
+  ],
+
+  "popper": {
+    "title": "Đăng nhập",
+    "action": "Tạo tài khoản",
+    "username": {
+      "title": "Tài khoản hoặc email",
+      "placeholder": "Tài khoản"
+    },
+    "password": {
+      "title": "Mật khẩu",
+      "placeholder": "Mật khẩu"
+    },
+    "link": "Quên mật khẩu",
+    "login": "Đăng nhập"
+  },
+
+  "cart": {
+    "title": "Giỏ hàng",
+    "button": "Đóng",
+    "notice": "Giỏ hàng đang trống"
+  },
+
+  "footer": {
+    "get_info": {
+      "title": "Theo dõi tin tức mới",
+      "description": "Đăng ký để thông báo sản phẩm mới từ phía chúng tôi",
+      "placeholder": "Nhập địa chỉ Email của bạn",
+      "button": "Đăng ký"
+    },
+    "services": [
+      {
+        "classname": "fa-light fa-dolly",
+        "title": "Miễn phí vận chuyển",
+        "description": "Cho đơn hàng đầu tiên"
+      },
+      {
+        "classname": "fa-light fa-box-check",
+        "title": "Hỗ trợ đổi trả hàng",
+        "description": "Lỗi do nhà sẳn suất"
+      },
+      {
+        "classname": "fa-light fa-headphones",
+        "title": "Hỗ trợ 24/7",
+        "description": "0932.369.776 / 0559.270.701"
+      },
+      {
+        "classname": "fa-light fa-money-check",
+        "title": "Thanh Toán Linh Hoạt",
+        "description": "Tùy bạn lựa chọn"
+      }
+    ],
+    "about_us": {
+      "title": "Về chúng tôi",
+      "content": [
+        {
+          "label": "giới thiệu",
+          "route": "/about"
+        },
+        {
+          "label": "Ý kiến khách hàng",
+          "route": "/"
+        },
+        {
+          "label": "Liên hệ",
+          "route": "/contact"
+        }
+      ]
+    },
+    "shop": {
+      "title": "Cửa hàng",
+      "content": [
+        {
+          "label": "Vinfast",
+          "route": "#"
+        },
+        {
+          "label": "Honda",
+          "route": "#"
+        },
+        {
+          "label": "Dibao",
+          "route": "#"
+        }
+      ]
+    },
+    "help_center": {
+      "title": "Help Center",
+      "content": [
+        {
+          "label": "Chính sách đổi trả",
+          "route": "#"
+        },
+        {
+          "label": "Chính sách bảo mật",
+          "route": "#"
+        },
+        {
+          "label": "Câu hỏi thường gặp",
+          "route": "#"
+        }
+      ]
+    },
+    "contact_link": {
+      "title": "Thông tin liên lạc",
+      "content": [
+        {
+          "address": "Chính sách đổi trả",
+          "phone1": "0932369776",
+          "phone2": "0559270701",
+          "web": "lifetravel.vn"
+        }
+      ]
+    }
+  }
+}

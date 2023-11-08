@@ -1,0 +1,102 @@
+.kl-cart-drawer {
+  height: 100vh;
+
+  > .header {
+    @include flex-space-between-hoz;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid $color-light-gray;
+    height: 60.8px;
+  }
+
+  > .header > .title {
+    font-weight: $fw-medium;
+    font-size: 20px;
+  }
+
+  > .header > .close {
+    @include flex-center;
+    gap: 6px;
+    font-size: $fs-normal;
+    cursor: pointer;
+  }
+
+  > .header > .close > .icon {
+    font-size: 18px;
+    font-weight: $fw-bold;
+  }
+
+  > .content {
+    height: calc(100% - 240.8px);
+    overflow: auto;
+    padding-inline: 15px;
+  }
+
+  > .content > .products {
+    @include flex-column;
+  }
+
+  > .content > .products > .empty {
+    padding-block: 16px;
+    font-size: 20px;
+    color: $color-success;
+    text-align: center;
+  }
+
+  > .content > .products > .item {
+    display: flex;
+    gap: 6px;
+    border-bottom: 1px solid $color-light-gray;
+    padding-block: 10px;
+  }
+
+  > .content > .products > .item > .image {
+    @include square(60px);
+  }
+
+  > .content > .products > .item > .info > .name {
+    @include truncate-multiline-new(2);
+    font-size: $fs-normal;
+    font-weight: $fw-bold;
+  }
+
+  > .content > .products > .item > .info > .group {
+    font-size: $fs-normal;
+  }
+
+  > .content > .products > .item > .info > .group > .price {
+    font-weight: $fw-bold;
+  }
+
+  > .content > .products > .item > .close {
+    cursor: pointer;
+  }
+
+  > .footer {
+    @include flex-column;
+    justify-content: center;
+    padding: 15px;
+    height: 180px;
+  }
+
+  > .footer .total {
+    @include flex-space-between-hoz;
+  }
+
+  > .footer .total > .subtotal {
+    font-size: 20px;
+  }
+
+  > .footer .total > .price {
+    @include heading-6;
+  }
+
+  > .footer > .button {
+    font-size: 16px;
+  }
+
+  > .footer > .cart:hover {
+    background-color: transparent;
+    color: $color-success !important;
+  }
+}

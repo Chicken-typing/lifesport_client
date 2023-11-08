@@ -1,0 +1,105 @@
+$severities: (
+  success: (
+    backgroundColor: $color-primary,
+    hoverBackground: $color-secondary,
+  ),
+  error: (
+    backgroundColor: $color-danger,
+    hoverBackground: #b71c1c,
+  ),
+);
+
+.kl-sweet-modal {
+  > .box {
+    @include abs-center;
+    width: 400px;
+    max-height: fit-content;
+    background-color: $white;
+    gap: 30px;
+    padding: 20px;
+    border-radius: 10px;
+    transition: all 0.5s ease;
+
+    @include breakpoint-down(mediumphone) {
+      width: 320px;
+      gap: 15px;
+    }
+    @include breakpoint-down(xsmallphone) {
+      width: 280px;
+    }
+  }
+
+  > .box > .wrapper {
+    padding: 30px;
+    border-radius: 50%;
+    color: $color-primary;
+    @include abs-center;
+    top: 0;
+
+    @each $type, $value in $severities {
+      &.-#{$type} {
+        background-color: map-get($value, backgroundColor);
+      }
+    }
+
+    @include breakpoint-down(mediumphone) {
+      padding: 15px;
+    }
+  }
+
+  > .box > .wrapper > .icon {
+    @include square(40px);
+    font-size: 38px;
+    text-align: center;
+    color: $white;
+
+    @include breakpoint-down(mediumphone) {
+      @include square(30px);
+      font-size: 30px;
+    }
+  }
+
+  > .box > .buttons > .button {
+    font-size: 18px;
+    font-weight: $fw-medium;
+    padding-block: 10px;
+    width: 100%;
+    color: $white !important;
+
+    @each $type, $value in $severities {
+      &.-#{$type} {
+        background-color: map-get($value, backgroundColor) !important;
+        &:hover {
+          background-color: map-get($value, hoverBackground) !important;
+        }
+      }
+    }
+
+    @include breakpoint-down(mediumphone) {
+      font-size: $fs-sm;
+      padding-block: 0px;
+      height: 35px;
+    }
+  }
+
+  > .box > .description {
+    font-size: 18px;
+    text-align: center;
+    color: $color-black-fill;
+    margin-block: 20px;
+    @include breakpoint-down(mediumphone) {
+      font-size: $fs-normal;
+    }
+  }
+
+  > .box > .header {
+    font-size: 28px;
+    color: $color-success;
+    text-align: center;
+    margin-top: 30px;
+
+    @include breakpoint-down(mediumphone) {
+      font-size: 20px;
+    }
+  }
+}

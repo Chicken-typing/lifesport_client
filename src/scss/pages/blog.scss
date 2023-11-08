@@ -1,0 +1,450 @@
+.kl-blog {
+  padding-inline: 10px;
+
+  &-layout {
+    margin-top: 100px;
+    display: flex;
+    gap: 130px;
+
+    @include breakpoint-down(phone) {
+      margin-top: 50px;
+    }
+
+    > .content {
+      width: 80%;
+      @include flex-column;
+      gap: 60px;
+
+      @include breakpoint-down(desktop) {
+        width: 100%;
+      }
+    }
+
+    > .content > .blog > .thumbnail {
+      overflow: hidden;
+      position: relative;
+      border-radius: 5px;
+      margin-bottom: 20px;
+    }
+
+    > .content > .blog > .thumbnail > .link {
+      width: 100%;
+    }
+
+    > .content > .blog > .thumbnail > .link > .image {
+      aspect-ratio: 16 / 9;
+    }
+
+    > .content > .blog > .thumbnail > .poster {
+      @include position(absolute, 0, null, null, 30px);
+    }
+
+    > .content > .blog > .thumbnail > .poster > .link {
+      z-index: 3;
+      color: $white;
+      font-size: $fs-sm;
+      line-height: 18px;
+      letter-spacing: 2px;
+      @include square(80px);
+      font-weight: $fw-medium;
+      text-transform: uppercase;
+      border-radius: 0 0 5px 5px;
+      @include flex-center-column;
+      background-color: $color-primary;
+    }
+
+    > .content > .blog > .thumbnail > .poster > .link > .strong {
+      display: block;
+      line-height: 1;
+      font-size: 40px;
+      font-weight: $fw-semibold;
+      letter-spacing: -2px;
+    }
+
+    > .content > .blog > .content {
+      margin-bottom: 17px;
+    }
+
+    > .content > .blog > .content > .meta {
+      gap: 11px;
+      flex-wrap: wrap;
+      font-size: $fs-sm;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: $fw-semibold;
+      @include flex-center-ver;
+    }
+
+    > .content > .blog > .content > .meta > .inner {
+      gap: 11px;
+      display: flex;
+    }
+
+    > .content > .blog > .content > .meta > .inner > .tags {
+      display: inline-block;
+      color: $color-gray-500;
+    }
+
+    > .content > .blog > .content > .meta > .inner > .dash {
+      font-weight: $fw-medium;
+      color: $color-light-gray;
+    }
+
+    > .content > .blog > .content > .meta > .author {
+      color: $color-gray-500;
+    }
+
+    > .content > .blog > .content > .meta > .author > .strong {
+      color: $black;
+      cursor: pointer;
+
+      &:hover {
+        color: $color-primary;
+      }
+    }
+
+    > .content > .blog > .content > .text > .link {
+      cursor: pointer;
+      font-size: 40px;
+      line-height: 1.1;
+      letter-spacing: -1px;
+      color: $color-success;
+      text-transform: capitalize;
+      @include truncate-multiline-new(2);
+      transition: none;
+
+      &:hover {
+        color: $color-primary;
+      }
+    }
+
+    > .content > .blog > .description {
+      font-size: 16px;
+      white-space: normal;
+      margin-bottom: 17px;
+      color: $color-success;
+      @include truncate-multiline-new(2);
+    }
+
+    > .content > .blog > .button {
+      color: $black;
+      padding: 10px 30px;
+      font-size: $fs-normal;
+      font-weight: $fw-semibold;
+
+      &:hover {
+        color: $white;
+      }
+    }
+
+    > .content > .blog > .button > .icon {
+      font-size: 9px;
+      font-weight: $fw-bold;
+    }
+
+    > .sidebar {
+      width: 20%;
+
+      @include breakpoint-down(desktop) {
+        display: none;
+      }
+    }
+  }
+
+  &-details {
+    .describe {
+      margin-bottom: 16px;
+      color: $color-success;
+    }
+
+    ._heading-style {
+      color: $color-success;
+      font-weight: $fw-semibold;
+      margin-bottom: 15px;
+    }
+
+    > .header {
+      margin-bottom: 20px;
+    }
+
+    > .header > .introduction {
+      display: flex;
+      @include caption;
+      color: $color-gray-500;
+      margin-bottom: 15px;
+
+      @include breakpoint-down(smallphone) {
+        display: block;
+      }
+    }
+
+    > .header > .introduction > .categories {
+      margin-right: 1px;
+      &::after {
+        content: '';
+        display: inline-block;
+        @include size(1px, 10px);
+        margin: -5px 10px 0;
+        vertical-align: middle;
+        background-color: $color-gray-500;
+      }
+    }
+
+    > .header > .introduction > .author > .link {
+      color: $black;
+      &:hover {
+        color: $color-primary;
+      }
+    }
+
+    > .header > .heading {
+      font-size: 50px;
+
+      @include breakpoint-down(tablet) {
+        line-height: 1;
+      }
+    }
+
+    > .content > .image {
+      max-height: 600px;
+      @include square(100%);
+      border-radius: 5px;
+      margin-bottom: 30px;
+
+      @include breakpoint-down(tablet) {
+        max-height: 200px;
+      }
+    }
+
+    > .content > .heading {
+      font-size: 24px;
+    }
+
+    > .content > .article {
+      margin-top: 20px;
+      display: flex;
+
+      @include breakpoint-down(tablet) {
+        display: block;
+      }
+    }
+
+    > .content > .article > .action {
+      @include size(600px, 300px);
+      margin-right: 48px;
+      height: fit-content;
+      flex: 1;
+
+      @include breakpoint-down(tablet) {
+        @include size(100%, auto);
+        margin-right: 0;
+      }
+    }
+
+    > .content > .article > .action > .image {
+      border-radius: 5px;
+
+      @include breakpoint-down(tablet) {
+        cursor: unset;
+      }
+    }
+
+    > .content > .article > .action > .note {
+      padding: 14px 0;
+      font-size: 14px;
+      font-style: italic;
+    }
+
+    > .content > .article > .description {
+      flex: 1;
+    }
+
+    > .content > .quote {
+      margin-block: 40px;
+      display: flex;
+    }
+
+    > .content > .quote > .container {
+      margin-top: -10px;
+      margin-right: 30px;
+      margin-left: -5px;
+      padding: 0;
+    }
+
+    > .content > .quote > .container > .icon {
+      @include square(50px);
+
+      color: $color-primary;
+      fill: currentColor;
+    }
+
+    > .content > .quote > .text {
+      font-size: 26px;
+      line-height: 1.25;
+      font-weight: $fw-normal;
+    }
+
+    > .content > .tags {
+      display: flex;
+      @include text-body-small;
+      letter-spacing: unset;
+      margin-block: 30px;
+    }
+
+    > .content > .tags > .title {
+      margin-right: 5px;
+      font-weight: $fw-semibold;
+      min-width: fit-content;
+    }
+  }
+
+  &-navigation {
+    padding-block: 55px;
+    @include flex-space-between-hoz;
+    position: relative;
+    overflow: hidden;
+    border-top: 1px solid $color-light-gray;
+    border-bottom: 1px solid $color-light-gray;
+
+    @include breakpoint-down(phone) {
+      @include flex-column;
+      align-items: center;
+    }
+
+    > .nav {
+      flex: 1 1;
+      max-width: 260px;
+
+      &:hover > .icon,
+      &:hover > .actions > .label {
+        color: $black;
+      }
+
+      &.-prev {
+        padding-right: 15px;
+        display: flex;
+      }
+
+      &.-next {
+        padding-left: 15px;
+        text-align: right;
+        display: flex;
+        justify-content: flex-end;
+      }
+
+      &.-next > .icon {
+        margin-right: 0;
+        margin-left: 30px;
+      }
+
+      &.-next > .title {
+        text-align: end;
+      }
+
+      @include breakpoint-down(phone) {
+        padding-block: 55px;
+      }
+    }
+
+    > .nav > .icon {
+      @include square(40px);
+      color: $color-light-gray;
+      margin-right: 30px;
+      margin-top: 8px;
+    }
+
+    > .nav > .actions > .label {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 12px;
+      text-transform: uppercase;
+      color: #868686;
+      font-weight: $fw-semibold;
+      margin-bottom: 11px;
+    }
+
+    > .nav > .actions > .title {
+      font-size: 17px;
+      line-height: 1.222;
+      font-weight: $fw-semibold;
+      color: $color-success;
+      transition: all 1s ease;
+
+      &:hover {
+        color: $color-primary;
+      }
+    }
+  }
+
+  &-comments {
+    > .content > .title {
+      font-size: 30px;
+      color: $color-success;
+      padding-bottom: 30px;
+    }
+  }
+
+  &-comment-form {
+    > .wrapper > .title {
+      font-size: 30px;
+      color: $color-success;
+      padding-block: 30px;
+    }
+
+    > .wrapper > .checkbox {
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .MuiFormControlLabel-root {
+      margin-left: -11px;
+    }
+
+    > .wrapper > .note {
+      font-size: 16px;
+      color: $color-success;
+      padding-bottom: 15px;
+      margin-bottom: 30px;
+      font-weight: $fs-sm;
+    }
+
+    > .wrapper > .form {
+      margin-bottom: 30px;
+      padding-inline: 0;
+
+      @include breakpoint-down(phone) {
+        @include flex-center-column;
+      }
+    }
+
+    > .wrapper > .form > .comment {
+      margin-bottom: 30px;
+    }
+
+    > .wrapper > .form {
+      max-width: 100%;
+      display: flex;
+      gap: 30px;
+      margin-bottom: 30px;
+      padding-inline: 0;
+    }
+
+    > .wrapper > .button {
+      margin-bottom: 100px;
+      color: $white;
+      padding: 10px 30px;
+      font-size: $fs-normal;
+      font-weight: $fw-semibold;
+      background: $color-primary;
+      display: flex;
+    }
+    > .wrapper > .button > .icon {
+      font-size: 8px;
+      font-weight: $fw-bold;
+    }
+  }
+}

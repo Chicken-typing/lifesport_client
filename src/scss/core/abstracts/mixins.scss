@@ -1,0 +1,420 @@
+@mixin media-breakpoint-up($name, $breakpoints: $bs-breakpoints) {
+  $min: breakpoint-min($name, $breakpoints);
+  @if $min {
+    @media (min-width: $min) {
+      @content;
+    }
+  } @else {
+    @content;
+  }
+}
+
+/* Responsive breakpoint down (PC -> SP) */
+/* ====================================================== */
+/* Example: */
+/* */
+/* .block { */
+/*   background-color: green; */
+/* */
+/*   @include breakpoint-down(desktop) { */
+/*     background-color: red; */
+/*   } */
+/* } */
+$breakpoints: (
+  'xlargedesktop': (
+    max-width: 1919.98px,
+  ),
+  'largedesktop': (
+    max-width: 1535.98px,
+  ),
+  'mediumdesktop': (
+    max-width: 1439.98px,
+  ),
+  'desktop': (
+    max-width: 1199.98px,
+  ),
+  'smalldesktop': (
+    max-width: 1023.98px,
+  ),
+  'tablet': (
+    max-width: 991.98px,
+  ),
+  'phone': (
+    max-width: 767.98px,
+  ),
+  'smallphone': (
+    max-width: 575.98px,
+  ),
+  'mediumphone': (
+    max-width: 413.98px,
+  ),
+  'xsmallphone': (
+    max-width: 374.98px,
+  ),
+);
+
+@mixin breakpoint-down($breakpoint) {
+  $raw-query: map-get($breakpoints, $breakpoint);
+
+  @if $raw-query {
+    $query: if(type-of($raw-query) == 'string', unquote($raw-query), inspect($raw-query));
+
+    @media #{$query} {
+      @content;
+    }
+  } @else {
+    @error 'No value found for `#{$breakpoint}`. ' + 'Please make sure it is defined in `$breakpoints` map.';
+  }
+}
+
+/* Responsive breakpoint up (SP -> PC) */
+/* ====================================================== */
+/* Example: */
+/* */
+/* .block { */
+/*   background-color: green; */
+/* */
+/*   @include breakpoint-up(desktop) { */
+/*     background-color: red; */
+/*   } */
+/* } */
+$breakpoints-up: (
+  'xlargedesktop': (
+    min-width: 1920px,
+  ),
+  'largedesktop': (
+    min-width: 1536px,
+  ),
+  'mediumdesktop': (
+    min-width: 1440px,
+  ),
+  'desktop': (
+    min-width: 1200px,
+  ),
+  'smalldesktop': (
+    min-width: 1024px,
+  ),
+  'tablet': (
+    min-width: 992px,
+  ),
+  'phone': (
+    min-width: 768px,
+  ),
+  'smallphone': (
+    min-width: 576px,
+  ),
+  'mediumphone': (
+    min-width: 414px,
+  ),
+  'xsmallphone': (
+    min-width: 375px,
+  ),
+);
+
+@mixin breakpoint-up($breakpoint) {
+  $raw-query: map-get($breakpoints-up, $breakpoint);
+
+  @if $raw-query {
+    $query: if(type-of($raw-query) == 'string', unquote($raw-query), inspect($raw-query));
+
+    @media #{$query} {
+      @content;
+    }
+  } @else {
+    @error 'No value found for `#{$breakpoint}`. ' + 'Please make sure it is defined in `$breakpoints` map.';
+  }
+}
+
+/* Position */
+/* ====================================================== */
+/* Example: */
+/* */
+/* .class { */
+/*   @include position(absolute, 10px, 10px, 10px, 10px); */
+/* } */
+@mixin position($position: null, $top: null, $right: null, $bottom: null, $left: null) {
+  bottom: $bottom;
+  left: $left;
+  position: $position;
+  right: $right;
+  top: $top;
+}
+
+/* Width !== Height */
+/* ====================================================== */
+/* Example: */
+/* */
+/* .class { */
+/*   @include size(10px, 20px); */
+/* } */
+@mixin size($width, $height) {
+  height: $height;
+  width: $width;
+}
+
+/* Width === Height */
+/* ====================================================== */
+/* Example: */
+/* */
+/* .class { */
+/*   @include square(10px); */
+/* } */
+@mixin square($size) {
+  @include size($size, $size);
+}
+
+/* Width === Height + Border Radius */
+/* ====================================================== */
+/* Example: */
+/* */
+/* .class { */
+/*   @include circle(10px); */
+/* } */
+@mixin circle($size) {
+  @include size($size, $size);
+  border-radius: 50%;
+}
+
+/* Reset UL OL */
+/* ====================================================== */
+/* Example: */
+/* */
+/* .class { */
+/*   @include list-unstyled; */
+/* } */
+@mixin list-unstyled {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Truncate oneline */
+/* ====================================================== */
+/* Already supported in Bootstrap 4 mixin: @include text-truncate() */
+/* Example: */
+/* */
+/* .class { */
+/*   @include truncate-oneline; */
+/* } */
+@mixin truncate-oneline {
+  font-family:
+    Ellipsis,
+    #{$font-family-base};
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Truncate multiline with CSS3 */
+/* ====================================================== */
+/* Example: */
+/* */
+/* .class { */
+/*   @include truncate-multiline-new(3); */
+/* } */
+@mixin truncate-multiline-new($line-number) {
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  // font-family: Ellipsis, #{$font-family-base};
+  -webkit-line-clamp: $line-number;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Truncate multiline with CSS2 */
+/* Example: */
+/* */
+/* .class { */
+/*   @include truncate-multiline-old($line-number: 2); */
+/* } */
+@mixin truncate-multiline-old($line-height: 1.2em, $line-number: 1, $bg-color: $white) {
+  line-height: $line-height;
+  margin-right: -1em;
+  max-height: $line-height * $line-number;
+  overflow: hidden;
+  padding-right: 1em;
+  position: relative;
+  text-align: justify;
+
+  &:before {
+    bottom: 0;
+    content: '...';
+    position: absolute;
+    right: 0;
+  }
+
+  &:after {
+    background: $bg-color;
+    content: '';
+    height: 1em;
+    margin-top: 0.2em;
+    position: absolute;
+    right: 0;
+    width: 1em;
+  }
+}
+
+/* Set icon for Pseudo-element */
+/* Example: */
+/* */
+/* .class { */
+/*   @include pseudo-icon('\f069', 'Font Awesome 5 Free', 900) */
+/* } */
+@mixin pseudo-icon($content, $fontFamily, $fontWeight: 400) {
+  content: $content;
+  display: inline-block;
+  font-family: $fontFamily;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: $fontWeight;
+  line-height: 1;
+  text-rendering: auto;
+}
+
+/* Position Toolkit */
+@mixin abs-center-ver {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+@mixin abs-center-hoz {
+  left: 50%;
+  position: absolute;
+  transform: translateX(-50%);
+}
+
+@mixin abs-center {
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Flexbox Toolkit */
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin flex-center-ver {
+  align-items: center;
+  display: flex;
+}
+
+@mixin flex-center-hoz {
+  display: flex;
+  justify-content: center;
+}
+
+@mixin flex-center {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+@mixin flex-center-column {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+@mixin flex-space-between-hoz {
+  display: flex;
+  justify-content: space-between;
+}
+
+@mixin flex-space-between-ver {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Flexbox Inline Toolkit */
+@mixin flex-inline-column {
+  display: inline-flex;
+  flex-direction: column;
+}
+
+@mixin flex-inline-center-ver {
+  align-items: center;
+  display: inline-flex;
+}
+
+@mixin flex-inline-center-hoz {
+  display: inline-flex;
+  justify-content: center;
+}
+
+@mixin flex-inline-center {
+  align-items: center;
+  display: inline-flex;
+  justify-content: center;
+}
+
+@mixin flex-inline-center-column {
+  align-items: center;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Triangle with four optional directions with CSS */
+@mixin triangle($direction: down, $size: 5px, $color: $black) {
+  @include square(0);
+
+  @if ($direction == left) {
+    border-bottom: $size solid transparent;
+    border-right: $size solid $color;
+    border-top: $size solid transparent;
+  } @else if ($direction == right) {
+    border-bottom: $size solid transparent;
+    border-left: $size solid $color;
+    border-top: $size solid transparent;
+  } @else if ($direction == down) {
+    border-left: $size solid transparent;
+    border-right: $size solid transparent;
+    border-top: $size solid $color;
+  } @else {
+    border-bottom: $size solid $color;
+    border-left: $size solid transparent;
+    border-right: $size solid transparent;
+  }
+}
+
+@mixin clearfix {
+  &:before,
+  &:after {
+    content: '';
+    display: table;
+  }
+
+  &:after {
+    clear: both;
+  }
+}
+
+@mixin text-break {
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+@mixin hidden {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+@mixin visible {
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
+}
+
+@mixin full-viewport($position: fixed) {
+  @include position($position, 0, 0, 0, 0);
+  @include square(100%);
+}

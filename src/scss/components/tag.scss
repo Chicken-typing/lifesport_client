@@ -1,0 +1,35 @@
+.kl-tag {
+  cursor: pointer;
+  color: $color-text;
+  background: transparent;
+  display: inline-block;
+  line-height: 1;
+  z-index: 1;
+  margin-right: 5px;
+  &::after {
+    content: ',';
+  }
+
+  &:last-child::after {
+    content: '';
+  }
+
+  &:hover {
+    color: $color-primary;
+  }
+
+  &.-underline {
+    position: relative;
+    &::before {
+      content: '';
+      @include size(100%, 1px);
+      @include position(absolute, null, null, 0, 0);
+      background-color: $color-success;
+      display: none;
+    }
+
+    &:hover::before {
+      display: block;
+    }
+  }
+}

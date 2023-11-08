@@ -1,0 +1,43 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+b,
+strong {
+  font-weight: 700;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+a {
+  &:hover,
+  &:focus,
+  &:active {
+    box-shadow: none;
+    outline: 0;
+    outline-offset: 0;
+    text-decoration: none;
+  }
+}
+
+pre {
+  font-family: inherit;
+  white-space: pre-wrap;
+}
+
+button:focus,
+input:focus,
+textarea:focus {
+  box-shadow: none;
+  outline: 0;
+  outline-offset: 0;
+}
+
+*:focus {
+  outline: 0;
+}

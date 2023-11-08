@@ -1,0 +1,52 @@
+.kl-textarea {
+  position: relative;
+  width: 100%;
+
+  // label
+  > .label {
+    display: block;
+    color: $color-success;
+    font-size: $fs-normal;
+    line-height: 22.4px;
+    margin-bottom: 5px;
+  }
+
+  // textarea
+  > .textarea {
+    @include flex-center;
+    width: 100%;
+    padding: 12px 30px;
+    border: 1px solid $color-gray-500;
+    line-height: 1.2;
+    min-height: 150px;
+    resize: vertical;
+    color: $color-success;
+  }
+
+  // invalid
+  > .invalid {
+    @include position(absolute, null, null, 0, 0);
+    font-size: 12px;
+    color: $color-danger;
+    font-weight: $fw-medium;
+    display: block;
+    margin-top: 2px;
+    line-height: 12px;
+    transform: translateY(calc(100% + 4px));
+  }
+
+  &.-invalid > .textarea {
+    border-color: $color-danger;
+  }
+
+  &.-disabled > .textarea {
+    opacity: 0.7;
+    cursor: auto;
+    pointer-events: none;
+  }
+
+  &.fade-placeholder > .textarea:focus::placeholder {
+    transition: all 550ms ease-in-out;
+    color: transparent;
+  }
+}

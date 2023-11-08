@@ -1,0 +1,196 @@
+.kl-checkout {
+  > .content {
+    margin-block: 105px;
+  }
+
+  > .content > .heading > .title {
+    font-size: 64px;
+    line-height: 1;
+    letter-spacing: -1px;
+    color: $color-success;
+    font-weight: $fw-semibold;
+  }
+
+  > .content > .heading > .description {
+    font-size: 16px;
+    color: $color-success;
+    padding-block: 15px;
+  }
+
+  > .content > .heading > .description > .link {
+    font-size: 16px;
+    color: $black;
+    padding-inline: 5px;
+
+    &:hover {
+      color: $color-gray-500;
+    }
+  }
+
+  &-billing-details {
+    padding-left: 0;
+
+    @include breakpoint-down(tablet) {
+      margin-bottom: 20px;
+    }
+
+    > .title {
+      font-size: 28px;
+      color: $color-success;
+      font-weight: $fw-semibold;
+      margin-bottom: 5px;
+      padding-left: 15px;
+    }
+
+    > .additional {
+      padding-inline: 15px;
+    }
+
+    > .additional > .title {
+      font-size: 28px;
+      color: $color-success;
+      font-weight: $fw-semibold;
+      margin-bottom: 5px;
+    }
+
+    > .additional > .label {
+      padding-block: 5px;
+    }
+  }
+
+  &-notes {
+    > .textarea {
+      min-height: 80px;
+      border-radius: 4px;
+      border: 1px solid $color-light-gray;
+    }
+  }
+
+  &-form {
+    > .name {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+
+      @include breakpoint-down(phone) {
+        @include flex-center-column;
+      }
+    }
+
+    > .name > .group > .author > .field {
+      box-shadow: unset;
+      border-color: $color-light-gray;
+      margin-bottom: 30px;
+    }
+
+    > .name > .group > .author > .field > .input {
+      color: $black;
+    }
+
+    > .group {
+      max-width: 100%;
+    }
+
+    > .group > .autocomplete {
+      margin-bottom: 10px;
+    }
+
+    > .group > .author > .field {
+      box-shadow: unset;
+      border-color: $color-light-gray;
+      margin-bottom: 30px;
+    }
+
+    > .group > .address > .author {
+      margin-bottom: 30px;
+    }
+
+    > .group > .address > .author > .field {
+      box-shadow: unset;
+      border-color: $color-light-gray;
+    }
+
+    > .group > .address > .author > .field > .input {
+      color: $black;
+      font-weight: $fw-medium;
+    }
+
+    > .group > .author > .field > .input {
+      color: $black;
+      font-weight: $fw-medium;
+    }
+  }
+
+  &-summary {
+    > .content {
+      border: 6px solid $color-light-gray;
+      padding: 20px 16px;
+    }
+
+    > .content > .title {
+      font-size: 28px;
+      color: $color-success;
+      font-weight: $fw-semibold;
+      margin-bottom: 5px;
+    }
+
+    > .content > .group {
+      @include flex-center-ver;
+      @include flex-space-between-hoz;
+      border-bottom: 1px solid $color-light-gray;
+      padding-block: 14px;
+      font-size: 18px;
+    }
+
+    > .content > .product {
+      font-size: 16px;
+    }
+
+    > .content > .product > .label {
+      @include breakpoint-down(smallphone) {
+        max-width: 170px;
+      }
+    }
+
+    > .content > .subtotal > .price {
+      font-size: 16px;
+    }
+
+    > .content > .total > .price {
+      font-size: 20px;
+      font-weight: $fw-bold;
+    }
+
+    > .content > .note {
+      margin-block: 20px;
+    }
+
+    > .content > .button {
+      font-size: 16px;
+    }
+  }
+
+  .accordion-root {
+    border-bottom: 1px solid $color-light-gray;
+  }
+
+  .accordion-summary-root {
+    border: none;
+    padding: 0;
+  }
+
+  .accordion-summary-content {
+    @include flex-center-ver;
+    font-size: 16px;
+    margin: 6px 0px;
+  }
+
+  .accordion-summary-content > .label {
+    cursor: pointer;
+  }
+
+  .accordion-detail-root {
+    margin: 0;
+    color: $color-success;
+  }
+}

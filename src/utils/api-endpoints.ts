@@ -1,0 +1,18 @@
+export const API_ENDPOINTS = {
+  CATEGORIES: '/client/categories',
+  PRODUCTS: '/products/list',
+  PRODUCT: '/products/list/detail',
+  BLOGS: '/client/blogs',
+  BLOG: '/client/blogs',
+  BANNERS: '/client/banners',
+  BLOG_CATEGORIES: '/client/blog-categories',
+  PRODUCT_CATEGORIES: '/client/product-categories',
+  SUBSCRIBE: '/client/subscribes',
+  SLIDERS: '/client/sliders',
+  CONTACT: '/client/contacts',
+  LOGIN: '/users/login',
+  USERINFO: '/users/info',
+  REGISTER: '/users/register',
+  CONFIRM_OTP: '/users/register/confirm',
+  CREATE_ACCOUNT: '/users/register/create',
+} as const;

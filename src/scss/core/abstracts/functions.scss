@@ -1,0 +1,25 @@
+@use 'sass:map';
+
+/* >> breakpoint-min(sm, $bs-breakpoints) */
+/* 576px */
+@function breakpoint-min($value, $breakpoints: $bs-breakpoints) {
+  $min: map.get($breakpoints, $value);
+  $min: if($min != 0, $min, null);
+  @return $min;
+}
+
+/* >> breakpoint-prefix(xs, $bs-breakpoints) */
+/* "" */
+/* >> breakpoint-prefix(sm, $bs-breakpoints) */
+/* "-sm" */
+@function breakpoint-prefix($value, $breakpoints: $bs-breakpoints) {
+  @return if(breakpoint-min($value, $breakpoints) == null, '', '-#{$value}');
+}
+
+/* >> breakpoint-infix(xs, $bs-breakpoints) */
+/* ""  (Returns a blank string) */
+/* >> breakpoint-infix(sm, $bs-breakpoints) */
+/* "-sm" */
+@function breakpoint-infix($name, $breakpoints: $bs-breakpoints) {
+  @return if(breakpoint-min($name, $breakpoints) == null, '', '-#{$name}');
+}

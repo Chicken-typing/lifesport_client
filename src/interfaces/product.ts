@@ -28,6 +28,7 @@ export interface IProduct {
   deletedAt: string;
   likeNum: number;
   viewNum: number;
+  brand: string;
   quantityCart?: number;
 }
 

@@ -8,12 +8,14 @@ import { get, trim, isEmpty } from 'lodash';
 import { FC, useEffect } from 'react';
 import { useAppDispatch } from '../../../store/hooks';
 import { addProduct } from '@/store/cart/slice';
+import { useRouter } from 'next/router';
 export interface IProductCardProps {
   data?: IProduct;
   isLoading?: boolean;
 }
 
 export const ProductCard: FC<IProductCardProps> = ({ data, isLoading = false }) => {
+  const router = useRouter();
   const dispatch = useAppDispatch();
 
   if (!data) {
@@ -114,9 +116,17 @@ export const ProductCard: FC<IProductCardProps> = ({ data, isLoading = false }) 
                   iconOnly
                   variant="outlined"
                   noBorder
-                  onClick={() => dispatch(addProduct({ product: data, quantity: 1 }))}
+                  // onClick={() => dispatch(addProduct({ product: data, quantity: 1 }))}
+                  onClick={() =>
+                    router.push({
+                      pathname: routes.PRODUCT,
+                      query: {
+                        id: data?.id,
+                      },
+                    })
+                  }
                 >
-                  <Tooltip title="Mua ngay" placement="top" arrow>
+                  <Tooltip title="View Detail" placement="top" arrow>
                     <i className="fa-light fa-bag-shopping icon" />
                   </Tooltip>
                 </Button>

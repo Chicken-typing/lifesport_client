@@ -101,13 +101,33 @@ export const ProductCard: FC<IProductCardProps> = ({ data, isLoading = false }) 
 
             <div className="footer">
               <p className="price">
-                <span className="">
-                  {(data?.price / 100).toLocaleString('en-US', {
-                    style: 'currency',
-                    currency: 'USD',
-                    minimumFractionDigits: 2,
-                  })}
-                </span>
+                {data?.amount_off || data?.percent_off ? (
+                  <>
+                    <span className="primitive">
+                      {(data?.price / 100).toLocaleString('en-US', {
+                        style: 'currency',
+                        currency: 'USD',
+                        minimumFractionDigits: 2,
+                      })}
+                    </span>
+
+                    <span className="sale">
+                      {(data?.price / 100).toLocaleString('en-US', {
+                        style: 'currency',
+                        currency: 'USD',
+                        minimumFractionDigits: 2,
+                      })}
+                    </span>
+                  </>
+                ) : (
+                  <span className="primitive">
+                    {(data?.price / 100).toLocaleString('en-US', {
+                      style: 'currency',
+                      currency: 'USD',
+                      minimumFractionDigits: 2,
+                    })}
+                  </span>
+                )}
               </p>
 
               <div className="buy">

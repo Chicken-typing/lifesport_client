@@ -9,13 +9,16 @@ import { IProduct } from '@interfaces/product';
 import { routes } from '@utils/routes';
 import classNames from 'classnames';
 import { isEmpty, map, size, flatMapDepth, filter } from 'lodash';
-import { ChangeEvent, FocusEvent, ReactNode, useState } from 'react';
+import { ChangeEvent, FocusEvent, ReactNode, useState, useEffect } from 'react';
 import AccordionTab from './AccordionTab';
 import { COMMENTS, IMAGES, INFORMATION, NET_WEIGHT, PRODUCTS, SHARE, TAGS } from './constants';
 import { useProductQuery } from '@/query/products/get-product';
 import { useRouter } from 'next/router';
 import Skeleton from '@mui/material/Skeleton';
 import Quantity from '@components/compound/Quantity';
+import Radio from '@mui/material/Radio';
+import { Theme, withStyles } from '@mui/material';
+import { makeStyles } from 'tss-react/mui';
 
 const breadcrumbs: ReactNode[] = [
   <Link href={routes.HOME} title="homepage" key="homepage" className="kl-page-header-link">
@@ -55,6 +58,42 @@ const Product = () => {
     isFetching: isLoadingProductDetail,
   } = useProductQuery({ id });
 
+  const [selectedValue, setSelectedValue] = useState('');
+
+  useEffect(() => {
+    if (!product?.item[0]?.color[0]) {
+      return;
+    }
+    setSelectedValue(product?.item[0]?.color[0] || '');
+  }, [product]);
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedValue(event.target.value);
+  };
+
+  const controlProps = (item: string) => ({
+    checked: selectedValue === item,
+    onChange: handleChange,
+    value: item,
+    name: 'color-radio-button-demo',
+    inputProps: { 'aria-label': item },
+    // checkedColor: checkedColor,
+    // uncheckedColor: uncheckedColor,
+  });
+
+  // const useStyles = makeStyles()((theme) => {
+  //   return {
+  //     root: {
+  //       color: theme.palette.primary.main,
+  //     },
+  //     apply: {
+  //       marginRight: theme.spacing(2),
+  //     },
+  //   };
+  // });
+
+  const test = map(flatMapDepth(map(product?.item, (item) => item?.color)), (color, idx) => color);
+  console.log(test);
   return (
     <KsLayout title="Sản phẩm" hasPageHeader breadcrumbs={breadcrumbs}>
       <div className="kl-product kl-container">
@@ -143,33 +182,43 @@ const Product = () => {
                     )} `}
                   </span>
 
-                  {/* <div className="weight ks-product-weight">
-                    {product?.attributes && (
-                      <>
-                        <Label className="title">Lựa chọn</Label>
-                        <ul className="options">
-                          {map(product.attributes, (attribute) => (
-                            <li
-                              className={classNames('option', {
-                                '-active': isEqual(attribute.id, attributeSelected?.id),
-                              })}
-                              onClick={() => setAttributeSelected(attribute)}
-                              key={attribute.id}
-                            >
-                              <div className="info">
-                                <span className="value">
-                                  {attribute.options[0] ? attribute.options[0] : ''}
-                                </span>
-                                <span className="label">
-                                  {attribute.options[1] ? attribute.options[1] : ''}
-                                </span>
-                              </div>
-                            </li>
-                          ))}
-                        </ul>
-                      </>
-                    )}
-                  </div> */}
+                  <div className="weight ks-product-weight">
+                    <span style={{ marginRight: '20px', fontSize: '20px', fontWeight: '400' }}>
+                      Colours:
+                    </span>
+                    {map(flatMapDepth(map(product?.item, (item) => item?.color)), (color, idx) => (
+                      <Radio
+                        {...controlProps(color)}
+                        color="secondary"
+                        sx={{
+                          marginRight: '10px',
+
+                          '& .MuiTouchRipple-root': {
+                            backgroundColor: `#${color}`,
+                          },
+                          '& .MuiSvgIcon-root': {
+                            height: 20,
+                            width: 20,
+                          },
+                          ' &.Mui-checked': {
+                            color: `#${color}`,
+                            padding: '0',
+
+                            '&.Mui-checked .MuiTouchRipple-root': {
+                              backgroundColor: 'unset',
+                              // height: 30,
+                              // width: 30,
+                            },
+                            ' .MuiSvgIcon-root': {
+                              backgroundColor: 'unset',
+                              height: 45,
+                              width: 45,
+                            },
+                          },
+                        }}
+                      />
+                    ))}
+                  </div>
 
                   <Quantity
                     hasLabel
@@ -199,7 +248,7 @@ const Product = () => {
                   </div>
 
                   <div className="footer">
-                    <span className="label">Category: </span>
+                    <span className="label">Brand: </span>
                     <Link href="/" title="">
                       {map(flatMapDepth(map(product?.item, (item) => item.brand)))}
                     </Link>

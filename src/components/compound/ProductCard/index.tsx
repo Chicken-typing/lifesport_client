@@ -102,7 +102,7 @@ export const ProductCard: FC<IProductCardProps> = ({ data, isLoading = false }) 
             <div className="footer">
               <p className="price">
                 <span className="">
-                  {data?.price.toLocaleString('en-US', {
+                  {(data?.price / 100).toLocaleString('en-US', {
                     style: 'currency',
                     currency: 'USD',
                     minimumFractionDigits: 2,

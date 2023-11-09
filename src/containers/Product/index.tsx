@@ -130,7 +130,17 @@ const Product = () => {
                   {/* <p className="description">{product?.shortDescription}</p> */}
 
                   <span className="price">
-                    {`$ ${map(flatMapDepth(map(product?.item, (item) => item.price)))} `}
+                    {`${map(
+                      flatMapDepth(
+                        map(product?.item, (item) =>
+                          (item.price / 100).toLocaleString('en-US', {
+                            style: 'currency',
+                            currency: 'USD',
+                            minimumFractionDigits: 2,
+                          }),
+                        ),
+                      ),
+                    )} `}
                   </span>
 
                   {/* <div className="weight ks-product-weight">

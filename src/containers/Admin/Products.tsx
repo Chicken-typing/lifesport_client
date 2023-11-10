@@ -50,11 +50,11 @@ const Products = () => {
         return (
           <div className="action-group">
             <Button color="green-500" fullWidth className="button">
-              <i className="fa-regular fa-trash"></i>
+              <i className="fa-regular fa-pen-to-square"></i>
             </Button>
 
             <Button color="green-500" fullWidth className="button">
-              <i className="fa-regular fa-pen-to-square"></i>
+              <i className="fa-regular fa-trash"></i>
             </Button>
           </div>
         );

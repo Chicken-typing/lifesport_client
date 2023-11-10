@@ -1,73 +1,105 @@
-import { Box, Typography, useTheme } from '@mui/material';
-import { DataGrid } from '@mui/x-data-grid';
+import AdminLayout from '@/adminLayout';
 import { tokens } from '@/adminLayout/theme';
-
+import { mockDataTeam } from '@components/compound/Admin/constants';
+import Introduce from '@components/compound/Admin/Introduce';
+import { Button } from '@components/primitive';
 import AdminPanelSettingsOutlinedIcon from '@mui/icons-material/AdminPanelSettingsOutlined';
 import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined';
 import SecurityOutlinedIcon from '@mui/icons-material/SecurityOutlined';
-import { mockDataTeam } from '@components/compound/Admin/constants';
-import AdminLayout from '@/adminLayout';
-import Introduce from '@components/compound/Admin/Introduce';
+import { Box, Typography, useTheme } from '@mui/material';
+import { DataGrid } from '@mui/x-data-grid';
+import { useQuery } from '@tanstack/react-query';
+import request from '@utils/request';
 
 const Account = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
+  const fetchUsers = async () => {
+    const data: any = await request.request({
+      method: 'GET',
+      url: '/users/list',
+    });
+
+    return data;
+  };
+
+  const { data: users, isFetching: isLoading } = useQuery(['/users/list', {}], fetchUsers, {
+    retry: 1,
+  });
+
+  console.log(users);
+
   const columns: any[] = [
-    // { field: 'id', headerName: 'ID' },
-    // {
-    //   field: 'name',
-    //   headerName: 'Name',
-    //   flex: 1,
-    //   cellClassName: 'name-column--cell',
-    // },
-    // {
-    //   field: 'age',
-    //   headerName: 'Age',
-    //   type: 'number',
-    //   headerAlign: 'left',
-    //   align: 'left',
-    // },
-    // {
-    //   field: 'phone',
-    //   headerName: 'Phone Number',
-    //   flex: 1,
-    // },
-    // {
-    //   field: 'email',
-    //   headerName: 'Email',
-    //   flex: 1,
-    // },
-    // {
-    //   field: 'accessLevel',
-    //   headerName: 'Access Level',
-    //   flex: 1,
-    //   renderCell: ({ row: { access } }: any) => {
-    //     return (
-    //       <Box
-    //         width="60%"
-    //         m="0 auto"
-    //         p="5px"
-    //         display="flex"
-    //         justifyContent="center"
-    //         bgcolor={
-    //           access === 'admin'
-    //             ? colors.greenAccent[600]
-    //             : access === 'manager'
-    //             ? colors.greenAccent[700]
-    //             : colors.greenAccent[700]
-    //         }
-    //         borderRadius="4px"
-    //       >
-    //         {access === 'admin' && <AdminPanelSettingsOutlinedIcon />}
-    //         {access === 'manager' && <SecurityOutlinedIcon />}
-    //         {access === 'user' && <LockOpenOutlinedIcon />}
-    //         <Typography color={colors.grey[100]} sx={{ ml: '5px' }}>
-    //           {access}
-    //         </Typography>
-    //       </Box>
-    //     );
-    //   },
-    // },
+    { field: 'id', headerName: 'ID' },
+    {
+      field: 'name',
+      headerName: 'Name',
+      flex: 1,
+      cellClassName: 'name-column--cell',
+    },
+    {
+      field: 'status',
+      headerName: 'Status',
+      type: 'number',
+      headerAlign: 'left',
+      align: 'left',
+    },
+    {
+      field: 'email',
+      headerName: 'Email',
+      flex: 1,
+    },
+    {
+      field: 'role',
+      headerName: 'Role',
+      flex: 1,
+      renderCell: ({ row: { role } }: any) => {
+        console.log(role);
+        return (
+          <Box
+            width="60%"
+            m="0 auto"
+            p="5px"
+            display="flex"
+            justifyContent="center"
+            bgcolor={
+              role === 'master_admin'
+                ? colors.greenAccent[600]
+                : role === 'admin'
+                ? colors.greenAccent[700]
+                : colors.greenAccent[700]
+            }
+            borderRadius="4px"
+          >
+            {role === 'master_admin' && <AdminPanelSettingsOutlinedIcon />}
+            {role === 'admin' && <SecurityOutlinedIcon />}
+            {role === 'customer' && <LockOpenOutlinedIcon />}
+            <Typography color={colors.grey[100]} sx={{ ml: '5px' }}>
+              {role}
+            </Typography>
+          </Box>
+        );
+      },
+    },
+    {
+      field: 'action',
+      headerName: 'Action',
+      flex: 1,
+      renderCell: ({ row: { access } }: any) => {
+        return (
+          <div className="action-group">
+            <Button color="green-500" fullWidth className="button">
+              <i className="fa-regular fa-pen-to-square"></i>
+            </Button>
+
+            <Button color="green-500" fullWidth className="button">
+              <i className="fa-regular fa-trash"></i>
+            </Button>
+          </div>
+        );
+      },
+    },
   ];
 
   return (
@@ -108,7 +140,12 @@ const Account = () => {
               },
             }}
           >
-            <DataGrid checkboxSelection rows={mockDataTeam} columns={columns} />
+            <DataGrid
+              checkboxSelection
+              rows={users?.user_lists || []}
+              columns={columns}
+              loading={isLoading}
+            />
           </Box>
         </Box>
       </div>

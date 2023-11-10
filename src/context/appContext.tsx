@@ -15,7 +15,7 @@ export const AppContextProvider = ({ children }: any) => {
   const dispatch = useAppDispatch();
   const auth = useAppSelector((state) => state.auth);
   const [isLoading, setIsLoading] = useState(true);
-  const token = cookieStorage.getAccessTokenInfo();
+  const token = cookieStorage?.getAccessTokenInfo();
 
   const [theme, colorMode] = useMode();
 
@@ -40,7 +40,7 @@ export const AppContextProvider = ({ children }: any) => {
     }
   }, []);
 
-  const contextValues = { isLoading };
+  const contextValues = { isLoading, token };
 
   return (
     <AppContext.Provider value={contextValues}>

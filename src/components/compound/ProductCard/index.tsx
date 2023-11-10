@@ -52,7 +52,13 @@ export const ProductCard: FC<IProductCardProps> = ({ data, isLoading = false }) 
               />
             </Link>
 
-            {data?.discount && <Badge label={`${data?.discount}% OFF`} className="badge" />}
+            {data?.amount_off && (
+              <Badge label={`Sale ${data?.amount_off / 10}$ `} className="badge" />
+            )}
+
+            {data?.percent_off && (
+              <Badge label={`${data?.percent_off * 100}% OFF`} className="badge" />
+            )}
 
             <div className="actions">
               <Button className="button" iconOnly variant="contained" color="light">
@@ -101,13 +107,33 @@ export const ProductCard: FC<IProductCardProps> = ({ data, isLoading = false }) 
 
             <div className="footer">
               <p className="price">
-                <span className="">
-                  {data?.price.toLocaleString('en-US', {
-                    style: 'currency',
-                    currency: 'USD',
-                    minimumFractionDigits: 2,
-                  })}
-                </span>
+                {data?.amount_off || data?.percent_off ? (
+                  <>
+                    <span className="after-sale">
+                      {(data?.sale_off / 100).toLocaleString('en-US', {
+                        style: 'currency',
+                        currency: 'USD',
+                        minimumFractionDigits: 2,
+                      })}
+                    </span>
+
+                    <span className="sale">
+                      {(data?.price / 100).toLocaleString('en-US', {
+                        style: 'currency',
+                        currency: 'USD',
+                        minimumFractionDigits: 2,
+                      })}
+                    </span>
+                  </>
+                ) : (
+                  <span className="primitive">
+                    {(data?.price / 100).toLocaleString('en-US', {
+                      style: 'currency',
+                      currency: 'USD',
+                      minimumFractionDigits: 2,
+                    })}
+                  </span>
+                )}
               </p>
 
               <div className="buy">

@@ -9,13 +9,14 @@ import { IProduct } from '@interfaces/product';
 import { routes } from '@utils/routes';
 import classNames from 'classnames';
 import { isEmpty, map, size, flatMapDepth, filter } from 'lodash';
-import { ChangeEvent, FocusEvent, ReactNode, useState } from 'react';
+import { ChangeEvent, FocusEvent, ReactNode, useState, useEffect } from 'react';
 import AccordionTab from './AccordionTab';
 import { COMMENTS, IMAGES, INFORMATION, NET_WEIGHT, PRODUCTS, SHARE, TAGS } from './constants';
 import { useProductQuery } from '@/query/products/get-product';
 import { useRouter } from 'next/router';
 import Skeleton from '@mui/material/Skeleton';
-import Quantity from '@components/compound/Quantity';
+import { addProduct } from '@/store/cart/slice';
+import Radio from '@mui/material/Radio';
 
 const breadcrumbs: ReactNode[] = [
   <Link href={routes.HOME} title="homepage" key="homepage" className="kl-page-header-link">
@@ -55,6 +56,29 @@ const Product = () => {
     isFetching: isLoadingProductDetail,
   } = useProductQuery({ id });
 
+  const [selectedValue, setSelectedValue] = useState('');
+
+  useEffect(() => {
+    if (!product?.item[0]?.color[0]) {
+      return;
+    }
+    setSelectedValue(product?.item[0]?.color[0] || '');
+  }, [product]);
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedValue(event.target.value);
+  };
+
+  const controlProps = (item: string) => ({
+    checked: selectedValue === item,
+    onChange: handleChange,
+    value: item,
+    name: 'color-radio-button-demo',
+    inputProps: { 'aria-label': item },
+  });
+
+  console.log(product?.item[0]?.quantity);
+
   return (
     <KsLayout title="Sản phẩm" hasPageHeader breadcrumbs={breadcrumbs}>
       <div className="kl-product kl-container">
@@ -93,13 +117,17 @@ const Product = () => {
                     <div className="group">
                       {map(
                         flatMapDepth(
-                          map(product?.item, (item) => (
-                            <Badge
-                              className="badge"
-                              label={`${item?.discountRate}% Giảm`}
-                              color="danger"
-                            />
-                          )),
+                          map(product?.item, (item) =>
+                            item.percent_off ? (
+                              <Badge
+                                className="badge"
+                                label={`${item?.percent_off * 100}% Discount`}
+                                color="danger"
+                              />
+                            ) : (
+                              <div></div>
+                            ),
+                          ),
                         ),
                       )}
 
@@ -117,9 +145,7 @@ const Product = () => {
                     </div>
                   </div>
 
-                  <h1 className="name">
-                    {map(flatMapDepth(map(product?.item, (item) => item.name)))}
-                  </h1>
+                  <h1 className="name">{flatMapDepth(map(product?.item, (item) => item.name))}</h1>
 
                   <div className="rating">
                     {/* <Rating value={Number(Math.ceil(product?.item?.rating || 5))} readOnly /> */}
@@ -129,49 +155,148 @@ const Product = () => {
 
                   {/* <p className="description">{product?.shortDescription}</p> */}
 
-                  <span className="price">
-                    {`$ ${map(flatMapDepth(map(product?.item, (item) => item.price)))} `}
-                  </span>
+                  {flatMapDepth(
+                    map(product?.item, (item) =>
+                      item.percent_off ? (
+                        <>
+                          <span
+                            className="price sale-after"
+                            style={{ color: '#e60002', fontSize: '24px' }}
+                          >
+                            {`${map(
+                              flatMapDepth(
+                                map(product?.item, (item) =>
+                                  (item.sale_off / 100).toLocaleString('en-US', {
+                                    style: 'currency',
+                                    currency: 'USD',
+                                    minimumFractionDigits: 2,
+                                  }),
+                                ),
+                              ),
+                            )} `}
+                          </span>
 
-                  {/* <div className="weight ks-product-weight">
-                    {product?.attributes && (
-                      <>
-                        <Label className="title">Lựa chọn</Label>
-                        <ul className="options">
-                          {map(product.attributes, (attribute) => (
-                            <li
-                              className={classNames('option', {
-                                '-active': isEqual(attribute.id, attributeSelected?.id),
-                              })}
-                              onClick={() => setAttributeSelected(attribute)}
-                              key={attribute.id}
-                            >
-                              <div className="info">
-                                <span className="value">
-                                  {attribute.options[0] ? attribute.options[0] : ''}
-                                </span>
-                                <span className="label">
-                                  {attribute.options[1] ? attribute.options[1] : ''}
-                                </span>
-                              </div>
-                            </li>
-                          ))}
-                        </ul>
-                      </>
-                    )}
-                  </div> */}
+                          <span
+                            className="price"
+                            style={{
+                              marginLeft: '10px',
+                              textDecoration: 'line-through',
+                              color: 'gray',
+                              fontSize: '18px',
+                            }}
+                          >
+                            {`${map(
+                              flatMapDepth(
+                                map(product?.item, (item) =>
+                                  (item.price / 100).toLocaleString('en-US', {
+                                    style: 'currency',
+                                    currency: 'USD',
+                                    minimumFractionDigits: 2,
+                                  }),
+                                ),
+                              ),
+                            )} `}
+                          </span>
+                        </>
+                      ) : (
+                        <span className="price">
+                          {`${map(
+                            flatMapDepth(
+                              map(product?.item, (item) =>
+                                (item.price / 100).toLocaleString('en-US', {
+                                  style: 'currency',
+                                  currency: 'USD',
+                                  minimumFractionDigits: 2,
+                                }),
+                              ),
+                            ),
+                          )} `}
+                        </span>
+                      ),
+                    ),
+                  )}
 
-                  <Quantity
-                    hasLabel
-                    quantity={quantity}
-                    id={String(map(flatMapDepth(map(product?.item, (item) => item.id))))}
-                  />
+                  <div className="weight ks-product-weight">
+                    <span style={{ marginRight: '20px', fontSize: '20px', fontWeight: '400' }}>
+                      Colours:
+                    </span>
+                    {map(flatMapDepth(map(product?.item, (item) => item?.color)), (color, idx) => (
+                      <Radio
+                        {...controlProps(color)}
+                        color="secondary"
+                        sx={{
+                          marginRight: '10px',
+
+                          '& .MuiTouchRipple-root': {
+                            backgroundColor: `#${color}`,
+                          },
+                          '& .MuiSvgIcon-root': {
+                            height: 20,
+                            width: 20,
+                          },
+                          ' &.Mui-checked': {
+                            color: `#${color}`,
+                            padding: '0',
+
+                            '&.Mui-checked .MuiTouchRipple-root': {
+                              backgroundColor: 'unset',
+                              // height: 30,
+                              // width: 30,
+                            },
+                            ' .MuiSvgIcon-root': {
+                              backgroundColor: 'unset',
+                              height: 45,
+                              width: 45,
+                            },
+                          },
+                        }}
+                      />
+                    ))}
+                  </div>
+
+                  {/* <Quantity quantity={quantity} setQuantity={setQuantity} /> */}
+                  <div className="quantity kl-product-quantity">
+                    <Label className="label">Số lượng</Label>
+
+                    <div className="action">
+                      <button onClick={handleMinus} className="button">
+                        -
+                      </button>
+                      <input
+                        value={quantity}
+                        onBlur={handleBlurQuantity}
+                        onChange={handleChangeQuantity}
+                        type="number"
+                        className="input"
+                      />
+                      <button onClick={handlePlus} className="button">
+                        +
+                      </button>
+                    </div>
+                  </div>
 
                   <Button
                     className="add"
                     color="primary"
                     fullWidth
                     startAdornment={<i className="fa-light fa-bag-shopping fa-xl" />}
+                    onClick={() =>
+                      dispatch(
+                        addProduct({
+                          quantity: quantity,
+                          product: {
+                            id: product?.item[0]?.id || '',
+                            name: product?.item[0]?.name || '',
+                            price: product?.item[0]?.sale_off
+                              ? product?.item[0]?.sale_off
+                              : product?.item[0]?.price || 0,
+                            quantity: product?.item[0]?.quantity || 0,
+                            thumbnail: product?.item[0]?.images[0] || '',
+                            color: selectedValue,
+                          },
+                        }),
+                      )
+                    }
                   >
                     Thêm vào giỏ hàng
                   </Button>
@@ -189,7 +314,7 @@ const Product = () => {
                   </div>
 
                   <div className="footer">
-                    <span className="label">Category: </span>
+                    <span className="label">Brand: </span>
                     <Link href="/" title="">
                       {map(flatMapDepth(map(product?.item, (item) => item.brand)))}
                     </Link>

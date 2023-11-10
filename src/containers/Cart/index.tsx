@@ -59,7 +59,7 @@ const Cart = () => {
                     carts,
                     (
                       {
-                        product: { name, price, thumbnail, id, quantity: quantityItem },
+                        product: { name, price, thumbnail, id, quantity: quantityItem, color },
                         quantity,
                         total,
                       },
@@ -75,12 +75,13 @@ const Cart = () => {
                           className="thumbnail  _style-rows"
                           onClick={() => dispatch(openModal({ view: MODALS.CART }))}
                         >
-                          <KaImage className="image" src={thumbnail[0]} alt="" />
+                          <KaImage className="image" src={thumbnail} alt="" />
                         </td>
                         <td className="name _style-rows">
                           <Link href="" title="" className="link">
                             {name}
                           </Link>
+                          <div>color: {color}</div>
                         </td>
                         <td className="price _style-rows">
                           {price} <span>đ</span>

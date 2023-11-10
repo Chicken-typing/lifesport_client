@@ -29,7 +29,11 @@ export interface IProduct {
   likeNum: number;
   viewNum: number;
   brand: string;
+  sale_off: number;
+  percent_off?: number;
+  amount_off?: number;
   quantityCart?: number;
+  color: string[];
 }
 
 export interface IProductDetail {

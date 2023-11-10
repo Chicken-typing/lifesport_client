@@ -5,7 +5,14 @@ import { IProduct } from '@interfaces/product';
 import { map, filter, findIndex } from 'lodash';
 
 interface PayloadType {
-  product: IProduct;
+  product: {
+    name: string;
+    price: number;
+    id: string;
+    quantity: number;
+    thumbnail: string;
+    color: string;
+  };
   quantity: number;
 }
 

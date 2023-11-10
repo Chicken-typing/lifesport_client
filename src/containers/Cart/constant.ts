@@ -242,3 +242,27 @@ export const INTERESTED = [
     ],
   },
 ];
+
+export const TYPES = {
+  '848482': {
+    color: 'Silver',
+  },
+  '000000': {
+    color: 'black',
+  },
+  '318ce7': {
+    color: 'blue',
+  },
+  ddf9f1: {
+    color: 'white',
+  },
+  '006400': {
+    color: 'green',
+  },
+  b43332: {
+    color: 'red',
+  },
+  fffc99: {
+    color: 'yellow',
+  },
+} as const;

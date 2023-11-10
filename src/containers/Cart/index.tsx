@@ -75,7 +75,7 @@ const Cart = () => {
                           className="thumbnail  _style-rows"
                           onClick={() => dispatch(openModal({ view: MODALS.CART }))}
                         >
-                          <KaImage className="image" src={thumbnail[0]} alt="" />
+                          <KaImage className="image" src={thumbnail} alt="" />
                         </td>
                         <td className="name _style-rows">
                           <Link href="" title="" className="link">

@@ -197,6 +197,15 @@
     font-weight: $fw-normal;
   }
 
+  > .content > .footer > .price > .after-sale {
+    color: #e60002;
+  }
+
+  > .content > .footer > .price > .sale {
+    margin-left: 10px;
+    text-decoration: line-through;
+    color: gray;
+  }
   > .content > .footer > .price > .normal {
     color: $black;
   }

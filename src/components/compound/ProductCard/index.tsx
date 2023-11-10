@@ -52,7 +52,13 @@ export const ProductCard: FC<IProductCardProps> = ({ data, isLoading = false }) 
               />
             </Link>
 
-            {data?.discount && <Badge label={`${data?.discount}% OFF`} className="badge" />}
+            {data?.amount_off && (
+              <Badge label={`Sale ${data?.amount_off / 10}$ `} className="badge" />
+            )}
+
+            {data?.percent_off && (
+              <Badge label={`${data?.percent_off * 100}% OFF`} className="badge" />
+            )}
 
             <div className="actions">
               <Button className="button" iconOnly variant="contained" color="light">
@@ -103,8 +109,8 @@ export const ProductCard: FC<IProductCardProps> = ({ data, isLoading = false }) 
               <p className="price">
                 {data?.amount_off || data?.percent_off ? (
                   <>
-                    <span className="primitive">
-                      {(data?.price / 100).toLocaleString('en-US', {
+                    <span className="after-sale">
+                      {(data?.sale_off / 100).toLocaleString('en-US', {
                         style: 'currency',
                         currency: 'USD',
                         minimumFractionDigits: 2,

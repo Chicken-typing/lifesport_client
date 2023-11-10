@@ -59,7 +59,7 @@ const Cart = () => {
                     carts,
                     (
                       {
-                        product: { name, price, thumbnail, id, quantity: quantityItem },
+                        product: { name, price, thumbnail, id, quantity: quantityItem, color },
                         quantity,
                         total,
                       },
@@ -81,6 +81,7 @@ const Cart = () => {
                           <Link href="" title="" className="link">
                             {name}
                           </Link>
+                          <div>color: {color}</div>
                         </td>
                         <td className="price _style-rows">
                           {price} <span>đ</span>

@@ -77,6 +77,8 @@ const Product = () => {
     inputProps: { 'aria-label': item },
   });
 
+  console.log(product?.item[0]?.quantity);
+
   return (
     <KsLayout title="Sản phẩm" hasPageHeader breadcrumbs={breadcrumbs}>
       <div className="kl-product kl-container">
@@ -288,8 +290,9 @@ const Product = () => {
                             price: product?.item[0]?.sale_off
                               ? product?.item[0]?.sale_off
                               : product?.item[0]?.price || 0,
-                            quantity: quantity,
+                            quantity: product?.item[0]?.quantity || 0,
                             thumbnail: product?.item[0]?.images[0] || '',
+                            color: selectedValue,
                           },
                         }),
                       )

@@ -11,6 +11,7 @@ interface PayloadType {
     id: string;
     quantity: number;
     thumbnail: string;
+    color: string;
   };
   quantity: number;
 }
@@ -25,7 +26,6 @@ const cartSlice = createSlice({
 
     addProduct: (state, action: PayloadAction<PayloadType>) => {
       const currentIndex = state.findIndex((item) => item.product.id === action.payload.product.id);
-      console.log(currentIndex);
       if (currentIndex === -1) {
         state.push({
           product: action.payload.product,

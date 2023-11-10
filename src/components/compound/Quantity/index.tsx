@@ -29,7 +29,7 @@ const Quantity: FC<IQuantityProps> = ({ quantity, id, disabled = false, hasLabel
   };
 
   return (
-    <div className="quantity kl-product-quantity">
+    <div className="quantity kl-quantity">
       {hasLabel && <Label className="label">Số lượng</Label>}
       <div className="action">
         <button

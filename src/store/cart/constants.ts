@@ -1,5 +1,3 @@
-import { IProduct } from '@interfaces/product';
-
 export interface CartDetail {
   product: {
     name: string;
@@ -7,6 +5,7 @@ export interface CartDetail {
     id: string;
     quantity: number;
     thumbnail: string;
+    color: string;
   };
   quantity: number;
   total: number;

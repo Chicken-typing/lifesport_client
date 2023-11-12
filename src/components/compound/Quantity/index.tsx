@@ -13,20 +13,28 @@ import { Label } from '@components/primitive';
 interface IQuantityProps {
   quantity: number;
   id: string;
+  color: string;
   disabled?: boolean;
   hasLabel?: boolean;
 }
 
-const Quantity: FC<IQuantityProps> = ({ quantity, id, disabled = false, hasLabel = false }) => {
+const Quantity: FC<IQuantityProps> = ({
+  quantity,
+  id,
+  color,
+  disabled = false,
+  hasLabel = false,
+}) => {
   const dispatch = useAppDispatch();
 
-  const handleBlurQuantity = (id: string) => (e: FocusEvent<HTMLInputElement>) => {
-    dispatch(blurQuantity({ quantity: Number(e.target.value), id: id }));
+  const handleBlurQuantity = (id: string, color: string) => (e: FocusEvent<HTMLInputElement>) => {
+    dispatch(blurQuantity({ quantity: Number(e.target.value), id: id, color: color }));
   };
 
-  const handleChangeQuantity = (id: string) => (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch(changeQuantity({ quantity: Number(e.target.value), id: id }));
-  };
+  const handleChangeQuantity =
+    (id: string, color: string) => (e: ChangeEvent<HTMLInputElement>) => {
+      dispatch(changeQuantity({ quantity: Number(e.target.value), id: id, color: color }));
+    };
 
   return (
     <div className="quantity kl-quantity">
@@ -34,7 +42,9 @@ const Quantity: FC<IQuantityProps> = ({ quantity, id, disabled = false, hasLabel
       <div className="action">
         <button
           className="button"
-          onClick={() => dispatch(quantity > 1 ? decrement(id) : removeProduct(id))}
+          onClick={() =>
+            dispatch(quantity > 1 ? decrement({ id, color }) : removeProduct({ id, color }))
+          }
         >
           -
         </button>
@@ -42,13 +52,13 @@ const Quantity: FC<IQuantityProps> = ({ quantity, id, disabled = false, hasLabel
           value={quantity}
           type="number"
           className="input"
-          onChange={handleChangeQuantity(id)}
-          onBlur={handleBlurQuantity(id)}
+          onChange={handleChangeQuantity(id, color)}
+          onBlur={handleBlurQuantity(id, color)}
         />
         <button
           disabled={disabled}
           className={classNames('button', { '-disabled': disabled })}
-          onClick={() => (quantity > 0 ? dispatch(increment(id)) : (quantity = 1))}
+          onClick={() => (quantity > 0 ? dispatch(increment({ id, color })) : (quantity = 1))}
         >
           +
         </button>

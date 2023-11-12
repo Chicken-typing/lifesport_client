@@ -25,7 +25,11 @@ const cartSlice = createSlice({
     },
 
     addProduct: (state, action: PayloadAction<PayloadType>) => {
-      const currentIndex = state.findIndex((item) => item.product.id === action.payload.product.id);
+      const currentIndex = state.findIndex(
+        (item) =>
+          item.product.id === action.payload.product.id &&
+          item.product.color === action.payload.product.color,
+      );
       if (currentIndex === -1) {
         state.push({
           product: action.payload.product,
@@ -34,7 +38,7 @@ const cartSlice = createSlice({
         });
       } else {
         if (state[currentIndex].quantity < state[currentIndex].product.quantity) {
-          state[currentIndex].quantity += 1;
+          state[currentIndex].quantity += action.payload.quantity;
           state[currentIndex].total =
             state[currentIndex].quantity * state[currentIndex].product.price;
         } else {
@@ -44,15 +48,18 @@ const cartSlice = createSlice({
       localStorage.setItem('carts', JSON.stringify(state));
     },
 
-    removeProduct: (state, action: PayloadAction<string>) => {
-      let newCart = filter(state, ({ product }) => product.id !== action.payload);
-      localStorage.setItem('carts', JSON.stringify(state));
+    removeProduct: (state, action: PayloadAction<{ id: string; color: string }>) => {
+      let newCart = filter(
+        state,
+        ({ product }) => product.id !== action.payload.id || product.color !== action.payload.color,
+      );
+      localStorage.setItem('carts', JSON.stringify(newCart));
       return newCart;
     },
 
-    increment: (state, action: PayloadAction<string>) => {
+    increment: (state, action: PayloadAction<{ id: string; color: string }>) => {
       const updateCart = map(state, (item) =>
-        item.product.id === action.payload
+        item.product.id === action.payload.id && item.product.color === action.payload.color
           ? {
               ...item,
               quantity: item.quantity + 1,
@@ -64,9 +71,9 @@ const cartSlice = createSlice({
       return updateCart;
     },
 
-    decrement: (state, action: PayloadAction<string>) => {
+    decrement: (state, action: PayloadAction<{ id: string; color: string }>) => {
       const updateCart = map(state, (item) =>
-        item.product.id === action.payload
+        item.product.id === action.payload.id && item.product.color === action.payload.color
           ? {
               ...item,
               quantity: item.quantity - 1,
@@ -78,9 +85,12 @@ const cartSlice = createSlice({
       return updateCart;
     },
 
-    changeQuantity: (state, action: PayloadAction<{ id: string; quantity: number }>) => {
+    changeQuantity: (
+      state,
+      action: PayloadAction<{ id: string; quantity: number; color: string }>,
+    ) => {
       const updateCart = map(state, (item) =>
-        item.product.id === action.payload.id
+        item.product.id === action.payload.id && item.product.color === action.payload.color
           ? { ...item, quantity: action.payload.quantity }
           : item,
       );
@@ -88,11 +98,18 @@ const cartSlice = createSlice({
       return updateCart;
     },
 
-    blurQuantity: (state, action: PayloadAction<{ id: string; quantity: number }>) => {
-      const currentIndex = findIndex(state, (item) => item.product.id === action.payload.id);
+    blurQuantity: (
+      state,
+      action: PayloadAction<{ id: string; quantity: number; color: string }>,
+    ) => {
+      const currentIndex = findIndex(
+        state,
+        (item) =>
+          item.product.id === action.payload.id && item.product.color === action.payload.color,
+      );
       if (state[currentIndex].product.quantity >= action.payload.quantity) {
         const updateCart = map(state, (item) =>
-          item.product.id === action.payload.id
+          item.product.id === action.payload.id && item.product.color === action.payload.color
             ? {
                 ...item,
                 quantity: action.payload.quantity <= 0 ? 1 : action.payload.quantity,
@@ -107,7 +124,7 @@ const cartSlice = createSlice({
         return updateCart;
       } else {
         const updateCart = map(state, (item) =>
-          item.product.id === action.payload.id
+          item.product.id === action.payload.id && item.product.color === action.payload.color
             ? {
                 ...item,
                 quantity: state[currentIndex].product.quantity,

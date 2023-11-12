@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { initialState } from './constants';
 import { IUser } from '@interfaces/user';
+import { cookieStorage } from '@utils/cookieStorage';
 const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -11,6 +12,17 @@ const authSlice = createSlice({
     },
     logout: (state) => {
       state.isAuthenticated = false;
+      state.user_infos = {
+        user_id: '',
+        address: '',
+        city: '',
+        country: '',
+        created_at: '',
+        phone_number: '',
+        province: '',
+        street: '',
+        updated_at: '',
+      };
     },
   },
 });

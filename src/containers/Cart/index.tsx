@@ -67,7 +67,10 @@ const Cart = () => {
                     ) => (
                       <tr className="rows" key={`cart-product-${idx}`}>
                         <td className="remove _style-rows">
-                          <button onClick={() => dispatch(removeProduct(id))} className="btn">
+                          <button
+                            onClick={() => dispatch(removeProduct({ id, color }))}
+                            className="btn"
+                          >
                             <i className="fa-light fa-xmark icon" />
                           </button>
                         </td>
@@ -90,6 +93,7 @@ const Cart = () => {
                           <Quantity
                             quantity={quantity}
                             id={id}
+                            color={color}
                             disabled={quantity === quantityItem}
                           />
                         </td>
@@ -108,7 +112,7 @@ const Cart = () => {
                     carts,
                     (
                       {
-                        product: { name, price, thumbnail, id, quantity: quantityItem },
+                        product: { name, price, thumbnail, color, id, quantity: quantityItem },
                         quantity,
                         total,
                       },
@@ -122,7 +126,10 @@ const Cart = () => {
                           <KaImage className="image" src={thumbnail[0]} alt="" />
                         </td>
                         <td className="remove _style-rows">
-                          <button onClick={() => dispatch(removeProduct(id))} className="btn">
+                          <button
+                            onClick={() => dispatch(removeProduct({ id, color }))}
+                            className="btn"
+                          >
                             <i className="fa-light fa-xmark icon" />
                           </button>
                         </td>
@@ -142,6 +149,7 @@ const Cart = () => {
                           <Quantity
                             quantity={quantity}
                             id={id}
+                            color={color}
                             disabled={quantity === quantityItem}
                           />
                         </td>

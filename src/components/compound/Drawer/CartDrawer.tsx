@@ -27,7 +27,7 @@ const CartDrawer = () => {
       <div className="content">
         <ul className="products">
           {size(carts) !== 0 ? (
-            map(carts, ({ product: { name, price, thumbnail, id }, quantity }, idx) => (
+            map(carts, ({ product: { name, price, thumbnail, id, color }, quantity }, idx) => (
               <li className="item" key={`cart-${idx}`}>
                 <KaImage
                   src={thumbnail[0]}
@@ -42,7 +42,7 @@ const CartDrawer = () => {
                     {quantity} x <span className="price">${price}</span>
                   </div>
                 </div>
-                <span className="close" onClick={() => dispatch(removeProduct(id))}>
+                <span className="close" onClick={() => dispatch(removeProduct({ id, color }))}>
                   <i className="fa-light fa-xmark icon" />
                 </span>
               </li>

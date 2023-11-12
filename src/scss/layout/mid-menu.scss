@@ -172,93 +172,24 @@
 
 .kl-popper {
   z-index: 5;
-  .kl-popper-auth {
+  .kl-popper-content {
     margin-top: 18px !important;
-    display: block;
+    display: flex;
+    align-items: center;
     border: 1px solid $color-light-gray;
+    border-radius: 5px;
     height: fit-content;
+
+    flex-direction: column;
     background: $white;
     box-shadow: 0 0 30px 0 rgba($black, 0.05);
+    min-width: 150px;
 
-    > .content {
-      display: flex;
-      padding: 20px;
-      width: 320px;
-
-      > .form {
-        width: 100%;
-      }
-
-      > .form > .header {
-        @include flex-center-ver;
-        justify-content: space-between;
-        margin-bottom: 10px;
-      }
-
-      > .form > .header > .title {
-        font-size: 18px;
-        color: $color-success !important;
-      }
-
-      > .form > .header > .action {
-        color: $color-success;
-        font-size: 14px;
-        &:hover {
-          color: $black-form;
-        }
-      }
-
-      > .form > .group > .container {
-        &.-mb-10 {
-          margin-bottom: 10px;
-        }
-        padding: 0;
-      }
-
-      > .form > .group > .container > .label {
-        font-size: 14px;
-        line-height: 1.5;
-        color: $color-success;
-      }
-
-      > .form > .group > .container > .field {
-        border-color: $color-light-gray;
-        border-radius: 5px;
-        color: $color-success;
-        box-shadow: none;
-        &:focus-within {
-          border-color: $black-form;
-        }
-      }
-
-      > .form > .group > .kl-input > .field > .input {
-        caret-color: $color-success;
-        &::placeholder {
-          color: $color-success;
-        }
-        &:focus::placeholder {
-          transition: all 0.55s ease-in-out;
-          color: transparent;
-        }
-      }
-
-      > .form > .group > .forgot {
-        text-align: right;
-        margin-top: 5px;
-        width: 100%;
-      }
-
-      > .form > .group > .forgot > .link {
-        text-decoration: underline;
-        font-size: 14px;
-        font-weight: unset;
-        color: $color-success;
-        &:hover,
-        &:active {
-          color: $black-form;
-        }
-      }
+    > .btn {
+      padding: 10px;
+      @include square(100%);
     }
+
     @include breakpoint-down(tablet) {
       display: none;
     }

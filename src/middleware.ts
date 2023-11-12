@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { decodeToken } from './utils/decode';
-import { jwtDecrypt } from 'jose';
+
 export function middleware(req: NextRequest) {
   const url = req.nextUrl.clone();
   if (url.pathname === '/products') {

@@ -10,9 +10,16 @@ import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
 import TrafficIcon from '@mui/icons-material/Traffic';
 import { Box, IconButton, Typography, useTheme } from '@mui/material';
 
+import dynamic from 'next/dynamic';
+import { FC } from 'react';
+
 const Admin = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
+  const ColumnChart = dynamic(() => import('@components/compound/Admin/ColumnChart'), {
+    ssr: false,
+  }) as FC;
 
   return (
     <AdminLayout title="Dashboard">
@@ -173,7 +180,9 @@ const Admin = () => {
                   </Box>
                 </Box>
 
-                <Box height="250px" m="-20px 0 0 0"></Box>
+                <Box height="fit-content" m="-20px 0 0 0">
+                  {<ColumnChart />}
+                </Box>
               </Box>
 
               <Box
@@ -234,10 +243,12 @@ const Admin = () => {
 
             {/* ROW 3 */}
             {/* <Box
-              gridColumn="span 4"
-              gridRow="span 2"
-              backgroundColor={colors.primary[400]}
-              p="30px"
+              sx={{
+                gridColumn: 'span 4',
+                gridRow: 'span 2',
+                backgroundColor: colors.primary[400],
+                p: '30px',
+              }}
             >
               <Typography variant="h5" fontWeight="600">
                 Campaign
@@ -249,14 +260,19 @@ const Admin = () => {
                 </Typography>
                 <Typography>Includes extra misc expenditures and costs</Typography>
               </Box>
-            </Box>
-            <Box gridColumn="span 4" gridRow="span 2" backgroundColor={colors.primary[400]}>
+            </Box> */}
+
+            {/* <Box
+              sx={{
+                gridColumn: 'span 4',
+                gridRow: 'span 2',
+                backgroundColor: colors.primary[400],
+              }}
+            >
               <Typography variant="h5" fontWeight="600" sx={{ padding: '30px 30px 0 30px' }}>
                 Sales Quantity
               </Typography>
-              <Box height="250px" mt="-20px">
-                <BarChart isDashboard={true} />
-              </Box>
+              <Box height="250px" mt="-20px"></Box>
             </Box> */}
             {/* <Box
               sx={{

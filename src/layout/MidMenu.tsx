@@ -1,25 +1,24 @@
-import { useState, useRef, FormEvent, useContext } from 'react';
-import { GroupInput } from '@components/compound';
-import { Button, Link, KaImage } from '@components/primitive';
-import UserIcon from '@svg/user.svg';
-import HeartIcon from '@svg/heart.svg';
-import { Popper, ClickAwayListener } from '@mui/material';
-import { routes } from '@utils/routes';
-import { useRouter } from 'next/router';
-import { useEffect } from 'react';
-import { DRAWERS, ANCHORS } from '@/store/drawers/constants';
+import { AppContext } from '@/context';
+import { useLoginMutation } from '@/query/login/loginMutation';
+import { selectCart } from '@/store/cart/selector';
+import { ANCHORS, DRAWERS } from '@/store/drawers/constants';
 import { openDrawer } from '@/store/drawers/slice';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { selectCart } from '@/store/cart/selector';
-import { size, isEmpty } from 'lodash';
-import useTranslation from 'next-translate/useTranslation';
+import { GroupInput } from '@components/compound';
+import { Button, KaImage, Link } from '@components/primitive';
+import { ClickAwayListener, Popper } from '@mui/material';
+import HeartIcon from '@svg/heart.svg';
+import UserIcon from '@svg/user.svg';
 import { cookieStorage } from '@utils/cookieStorage';
-import { useLoginMutation } from '@/query/login/loginMutation';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import jwt from 'jsonwebtoken';
 import { decodeToken } from '@utils/decode';
-import { AppContext } from '@/context';
+import { routes } from '@utils/routes';
+import { useFormik } from 'formik';
+import { size } from 'lodash';
+import useTranslation from 'next-translate/useTranslation';
+import { useRouter } from 'next/router';
+import { FormEvent, useContext, useEffect, useRef, useState } from 'react';
+import * as Yup from 'yup';
+import { logout } from '@/store/user/slice';
 
 export default function MidMenu() {
   const router = useRouter();
@@ -99,52 +98,38 @@ export default function MidMenu() {
     }
   }, []);
 
+  const handleLogOut = () => {
+    cookieStorage.removeTokens();
+    dispatch(logout());
+    router.push({
+      pathname: '/',
+    });
+  };
+
   return (
     <>
-      <Popper className="kl-popper" placement="bottom-end" anchorEl={buttonEle.current} open={open}>
+      <Popper
+        style={{ display: token ? 'block' : 'none' }}
+        className="kl-popper"
+        placement="bottom-end"
+        anchorEl={buttonEle.current}
+        open={open}
+      >
         <ClickAwayListener onClickAway={() => setOpen(false)}>
-          <div className="kl-popper-auth">
-            <div className="content">
-              <form className="form" onSubmit={handleSubmit}>
-                <div className="header">
-                  <p className="title">{t('popper.title')}</p>
-                  <Link title="" href={routes.AUTH} className="action">
-                    {t('popper.action')}
-                  </Link>
-                </div>
-                <div className="group">
-                  <GroupInput
-                    className="container -mb-10"
-                    type="email"
-                    placeholder={t('popper.username.placeholder')}
-                    label={t('popper.username.title')}
-                    fadePlaceholderShown
-                    autoComplete="email"
-                    name="email"
-                    value={values.email}
-                    onChange={handleChange}
-                  />
-                  <GroupInput
-                    className="container -mb-10"
-                    type="password"
-                    placeholder={t('popper.password.placeholder')}
-                    label={t('popper.password.title')}
-                    fadePlaceholderShown
-                    name="password"
-                    value={values.password}
-                    onChange={handleChange}
-                  />
-                  <Button fullWidth type="submit">
-                    {t('popper.login')}
-                  </Button>
-                  <div className="forgot">
-                    <Link className="link" href="/" title="forgot-password">
-                      {t('popper.link')}
-                    </Link>
-                  </div>
-                </div>
-              </form>
-            </div>
+          <div className="kl-popper-content">
+            <button
+              style={{
+                display:
+                  decoded?.role === 'admin' || decoded?.role === 'master_admin' ? 'block' : 'none',
+              }}
+              className="btn"
+              onClick={() => router.push({ pathname: '/admin' })}
+            >
+              Go to Admin Page
+            </button>
+            <button onClick={handleLogOut} className="btn">
+              Log Out
+            </button>
           </div>
         </ClickAwayListener>
       </Popper>
@@ -182,7 +167,11 @@ export default function MidMenu() {
           </form>
 
           <div className="actions">
-            <button onClick={() => setOpen(true)} ref={buttonEle} className="btn">
+            <button
+              onClick={() => (token ? setOpen(true) : router.push({ pathname: '/login' }))}
+              ref={buttonEle}
+              className="btn"
+            >
               <span className="icon">
                 <UserIcon />
               </span>

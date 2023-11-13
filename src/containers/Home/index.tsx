@@ -12,14 +12,15 @@ import { Button, KaImage, Link } from '@components/primitive';
 import { Skeleton } from '@mui/material';
 import { LIMIT } from '@utils/limit';
 import { map, slice, times, isEmpty } from 'lodash';
-import { useEffect } from 'react';
+import { useEffect, FC } from 'react';
 import { Autoplay, EffectFade, Navigation, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import BannerCard from './BannerCard';
 import { BANNERS, QUANTITY, TESTIMONIALS, SLIDES } from './constants';
 import Slide from './Slide';
 import Testimonial from './Testimonial';
-import request from '@utils/request';
+
+import dynamic from 'next/dynamic';
 
 const Home = () => {
   const { data: products } = useProductsQuery({ limit: 10 });
@@ -30,6 +31,8 @@ const Home = () => {
   });
 
   const dispatch = useAppDispatch();
+
+  const FacebookMsg = dynamic(() => import('@components/compound/FacebookMsg')) as FC;
 
   useEffect(() => {
     const cart = localStorage.getItem('carts');
@@ -316,6 +319,8 @@ const Home = () => {
             </div>
           </div>
         </section>
+
+        <FacebookMsg />
       </div>
     </KsLayout>
   );

@@ -1,6 +1,23 @@
 {
+  "title": "Danh sách sản phẩm",
+  "header": "Sản phẩm",
   "breadcrumbs": {
     "first_route": "Trang Chủ",
     "second_route": "Sản phẩm"
-  }
+  },
+  "slogan": "Chúng tôi muốn tạo ra những chiếc xe máy điện có tính năng thân thiện với môi trường tuyệt vời và dễ tiếp cận hơn với nhiều khách hàng hơn. Với suy nghĩ này, chúng tôi đang phát triển dòng e:Business Bike để cung cấp những chiếc xe đạp kinh doanh dễ sử dụng nhằm tối đa hóa lợi thế của xe điện nhằm hỗ trợ nhiều tình huống kinh doanh khác nhau.",
+
+  "category": "Phân loại",
+
+  "price": "Giá thành",
+
+  "rating": "Đánh giá",
+
+  "banner": {
+    "image": "https://www.designboom.com/twitterimages/uploads/2021/09/bmw-concept-ce-02-electric-motorcycle-iaa-2021-designboom1200.jpg",
+    "title": "Đi xe máy điện!",
+    "description": "Bảo vệ trái đất: xe máy điện thân thiện với trái đất",
+    "color": "white"
+  },
+  "action": "Sản phẩm bán chạy"
 }

@@ -6,6 +6,7 @@ import { FC } from 'react';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 import { useValidateOtpMutation } from '../../query/register/registerMutation';
+import useTranslation from 'next-translate/useTranslation';
 
 interface IRegisterForm {
   className?: string;
@@ -58,10 +59,11 @@ const ConfirmOTP: FC<IRegisterForm> = ({ className, onNext, currentEmail, onChan
   };
 
   const handleBlur = ({ name }: { name: string }) => setFieldTouched(name);
+  const { t } = useTranslation('register');
 
   return (
     <form className={classNames('kl-register-form form -right', className)} onSubmit={handleSubmit}>
-      <h3 className="header">VALIDATE OTP</h3>
+      <h3 className="header">{t('validate')}</h3>
       <div className="group">
         <Label isRequired className="label">
           OTP
@@ -69,7 +71,7 @@ const ConfirmOTP: FC<IRegisterForm> = ({ className, onNext, currentEmail, onChan
         <GroupInput
           className="container -mb-10"
           type="text"
-          placeholder="Nhập email của bạn..."
+          placeholder={t('placeholderOTP')}
           name="otp"
           value={values.otp}
           error={errors.otp}
@@ -77,14 +79,10 @@ const ConfirmOTP: FC<IRegisterForm> = ({ className, onNext, currentEmail, onChan
           onChange={handleChange}
           onBlur={handleBlur}
         />
-        <p className="notice">A password will be sent to your email address.</p>
-        <p className="description">
-          Your personal data will be used to support your experience throughout this website, to
-          manage access to your account, and for other purposes described in our privacy policy.
-        </p>
+        <p className="description">{t('description')}</p>
 
         <Button type="submit" fullWidth className="button">
-          ĐĂNG KÝ
+          {t('button')}
         </Button>
       </div>
     </form>

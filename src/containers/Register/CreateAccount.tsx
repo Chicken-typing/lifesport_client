@@ -8,6 +8,7 @@ import * as Yup from 'yup';
 import { useCreateAccountMutation } from '../../query/register/registerMutation';
 import { useRouter } from 'next/router';
 import { isEqual } from 'lodash';
+import useTranslation from 'next-translate/useTranslation';
 
 interface ICreateAccount {
   className?: string;
@@ -65,17 +66,19 @@ const CreateAccount: FC<ICreateAccount> = ({ className, data }) => {
 
   const handleBlur = ({ name }: { name: string }) => setFieldTouched(name);
 
+  const { t } = useTranslation('register');
+
   return (
     <form className={classNames('kl-register-form form -right', className)} onSubmit={handleSubmit}>
-      <h3 className="header">Create Account</h3>
+      <h3 className="header">{t('createAccount')}</h3>
       <div className="group">
         <Label isRequired className="label">
-          Name
+          {t('name')}
         </Label>
         <GroupInput
           className="container -mb-10"
           type="text"
-          placeholder="Nhập ten của bạn..."
+          placeholder={t('holderAccount.name')}
           name="name"
           value={values.name}
           error={errors.name}
@@ -84,12 +87,12 @@ const CreateAccount: FC<ICreateAccount> = ({ className, data }) => {
           onBlur={handleBlur}
         />
         <Label isRequired className="label">
-          Password
+          {t('password')}
         </Label>
         <GroupInput
           className="container -mb-10"
           type="password"
-          placeholder="Nhập mat khau"
+          placeholder={t('holderAccount.password')}
           name="password"
           value={values.password}
           error={errors.password}
@@ -99,12 +102,12 @@ const CreateAccount: FC<ICreateAccount> = ({ className, data }) => {
         />
 
         <Label isRequired className="label">
-          Confirm Password
+          {t('confirm')}
         </Label>
         <GroupInput
           className="container -mb-10"
           type="password"
-          placeholder="Nhập mat khau"
+          placeholder={t('holderAccount.confirm')}
           name="confirmPassword"
           value={values.confirmPassword}
           error={errors.confirmPassword}
@@ -114,7 +117,7 @@ const CreateAccount: FC<ICreateAccount> = ({ className, data }) => {
         />
 
         <Button type="submit" fullWidth className="button">
-          ĐĂNG KÝ
+          {t('send')}
         </Button>
       </div>
     </form>

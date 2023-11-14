@@ -1,0 +1,13 @@
+{
+  "page": "Đăng Nhập",
+  "title": "Đăng Nhập",
+  "email": "Tài khoản hoặc Email",
+  "placeholder": {
+    "email": "Vui lòng nhập email của bạn...",
+    "password": "Vui lòng nhập mật khẩu của bạn..."
+  },
+  "password": "Mật khẩu",
+  "forgot": "Quên mật khẩu?",
+  "button": "Đăng Nhập",
+  "header": "Tài Khoản"
+}

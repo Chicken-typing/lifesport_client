@@ -1,0 +1,20 @@
+{
+  "page": "Contact",
+
+  "breadcrumbs": {
+    "first_route": "Home Page",
+    "second_route": "Contact"
+  },
+
+  "header": "Contact",
+
+  "title": "Get In Touch",
+
+  "form": {
+    "header": "Leave Us a Message",
+    "subHead": "Fill all information details to consult with us to get sevices from us",
+    "name": "name",
+    "phone": "phone",
+    "email": "email"
+  }
+}

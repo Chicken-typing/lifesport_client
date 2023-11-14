@@ -8,10 +8,11 @@ export const CATEGORIES = [
 ];
 
 export const PRODUCT_BANNER = {
-  image: 'https://demo2.wpopal.com/teapoz/wp-content/uploads/2023/05/shop-banner.jpg',
+  image:
+    'https://www.designboom.com/twitterimages/uploads/2021/09/bmw-concept-ce-02-electric-motorcycle-iaa-2021-designboom1200.jpg',
   title: 'Lose yourself in our world of tea',
   description: 'Popular flavored tea you must try. ',
-  color: 'black',
+  color: 'white',
 };
 
 export const SORT_ITEMS = [

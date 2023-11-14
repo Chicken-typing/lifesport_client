@@ -2,6 +2,7 @@ import { createContext, useState, useMemo, useEffect } from 'react';
 import { createTheme, ThemeOptions } from '@mui/material/styles';
 import { PaletteMode } from '@mui/material';
 import { useRouter } from 'next/router';
+
 // color design tokens export
 export const tokens = (mode: PaletteMode) => ({
   ...(mode === 'dark'
@@ -203,6 +204,14 @@ export const useMode = () => {
   const router = useRouter();
   const pathname = router.pathname;
   const [mode, setMode] = useState<PaletteMode>(pathname.startsWith('/admin') ? 'dark' : 'light');
+  useEffect(() => {
+    if (!pathname.includes('/admin')) {
+      setMode('light');
+    }
+    if (pathname.includes('/admin')) {
+      setMode('dark');
+    }
+  }, [pathname]);
 
   const colorMode = useMemo(
     () => ({

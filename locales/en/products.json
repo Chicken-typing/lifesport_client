@@ -1,6 +1,26 @@
 {
+  "title": "Product List",
+
+  "header": "Product",
+
   "breadcrumbs": {
     "first_route": "Home Page",
     "second_route": "Product"
-  }
+  },
+
+  "slogan": "We want to make electric motorcycles with excellent environmental performance more accessible to more customers. With this in mind, we are developing the ecommerce Business Bike series to provide easy-to-use business bikes that maximize the advantages of EVs to support a variety of business situations.",
+
+  "category": "Categories",
+
+  "price": "Price",
+
+  "rating": "Rating",
+
+  "banner": {
+    "image": "https://www.designboom.com/twitterimages/uploads/2021/09/bmw-concept-ce-02-electric-motorcycle-iaa-2021-designboom1200.jpg",
+    "title": "Ride an electric motocycles!",
+    "description": "Save the planet: electric motorcycles are earth friendly",
+    "color": "white"
+  },
+  "action": "Best Seller"
 }

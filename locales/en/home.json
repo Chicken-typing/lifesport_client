@@ -1,5 +1,42 @@
 {
+  "banner": [
+    {
+      "image": "https://www.furosystems.com/wp-content/uploads/2019/12/photo-of-person-riding-motorcycle-on-road-between-trees-2396045-min.jpg",
+      "color": "white",
+      "title": "Fresh & Healthy",
+      "description": "The wonderful of life"
+    },
+    {
+      "image": "https://xedienvietthanh.com/wp-content/uploads/2023/07/xe-may-dien-yadea-odora-s1-mau-xam-tinh-van.jpg",
+      "color": "white",
+      "title": "Up to 50% Off",
+      "description": "TBrew a new experience "
+    }
+  ],
+
+  "action": "Buy Now",
+
+  "best_seller": {
+    "title": "Best Seller",
+    "action": "Read more"
+  },
+
   "collection": {
-    "title": ""
+    "title": "Collection"
+  },
+
+  "testimonial": {
+    "title": "Customer Reviews"
+  },
+
+  "blog": {
+    "title": "New Blogs",
+    "action": "Read more"
+  },
+
+  "trailer": {
+    "first": "For the fresh environment",
+    "second": "Prevent the air pollution",
+    "action": "View all Products"
   }
 }

@@ -7,16 +7,18 @@ export const SLIDES = [
     image: 'https://cleantechnica.com/files/2021/02/1612291662944blob.png',
     listTitle: 'RIDE AND LIVE TODAY',
     caption: 'We ride together anytime, anywhere.',
+    color: 'light',
   },
   {
     image: '/images/home/slider_2.jpg',
-    listTitle: 'Rich Blend of the',
-    caption: 'We deliver all natural tea to you anytime, anywhere.',
+    listTitle: ' The future is electric.',
+    caption: 'Say goodbye to traffic, pollution, and parking nightmares – hello, e-motocycles.',
+    color: 'light',
   },
   {
     image: '/images/home/slider_3.jpg',
-    listTitle: 'Rich Blend of the',
-    caption: 'We deliver all natural tea to you anytime, anywhere.',
+    listTitle: 'Ride like a pro with the power of electricity',
+    caption: 'E-motocycles – for a smarter, healthier, and more sustainable lifestyle.',
     color: 'light',
   },
 ];
@@ -42,23 +44,6 @@ export interface IHomeBanner {
   description: string;
   color: 'primary' | 'secondary' | 'black' | 'white' | string;
 }
-
-export const BANNERS: IHomeBanner[] = [
-  {
-    image:
-      'https://www.furosystems.com/wp-content/uploads/2019/12/photo-of-person-riding-motorcycle-on-road-between-trees-2396045-min.jpg',
-    title: 'Fresh & Healthy',
-    description: 'The wonderful taste of life.',
-    color: 'black',
-  },
-  {
-    image:
-      'https://xedienvietthanh.com/wp-content/uploads/2023/07/xe-may-dien-yadea-odora-s1-mau-xam-tinh-van.jpg',
-    title: 'Up to 50% Off',
-    description: 'Brew a new experience ',
-    color: 'white',
-  },
-];
 
 export const QUANTITY = [
   {

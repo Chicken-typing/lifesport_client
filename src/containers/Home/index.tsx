@@ -19,7 +19,6 @@ import BannerCard from './BannerCard';
 import { QUANTITY, TESTIMONIALS, SLIDES, IHomeBanner } from './constants';
 import Slide from './Slide';
 import Testimonial from './Testimonial';
-
 import dynamic from 'next/dynamic';
 import useTranslation from 'next-translate/useTranslation';
 

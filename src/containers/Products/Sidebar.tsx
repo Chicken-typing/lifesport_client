@@ -9,6 +9,7 @@ import { useRouter } from 'next/router';
 import { FC, useEffect, useState } from 'react';
 import { INGREDIENTS, RATING, TEA_TYPE, CATEGORIES } from './constants';
 import { ISidebarProps } from '@interfaces/sidebar';
+import useTranslation from 'next-translate/useTranslation';
 
 const Sidebar: FC<ISidebarProps> = ({ variant }) => {
   const router = useRouter();
@@ -92,12 +93,14 @@ const Sidebar: FC<ISidebarProps> = ({ variant }) => {
     }
   };
 
+  const { t } = useTranslation('products');
+
   return (
     <aside className={classNames('kl-products-sidebar', variant)}>
       <div className="categories option">
         <div className="header">
           <span className="overlay" onClick={() => handleToggleCollapse('categories')} />
-          <h3 className="title">Categories</h3>
+          <h3 className="title">{t('category')}</h3>
           <i
             className={classNames(`fa-regular fa-chevron-up icon`, {
               '-down': !options.includes('categories'),
@@ -158,7 +161,7 @@ const Sidebar: FC<ISidebarProps> = ({ variant }) => {
       <div className="price option">
         <div className="header">
           <span className="overlay" onClick={() => handleToggleCollapse('price')} />
-          <h3 className="title">Price</h3>
+          <h3 className="title">{t('price')}</h3>
           <i
             className={classNames(`fa-regular fa-chevron-up icon`, {
               '-down': !options.includes('price'),
@@ -280,7 +283,7 @@ const Sidebar: FC<ISidebarProps> = ({ variant }) => {
       <div className="rating option">
         <div className="header">
           <span className="overlay" onClick={() => handleToggleCollapse('rating')} />
-          <h3 className="title">Rating</h3>
+          <h3 className="title">{t('rating')}</h3>
           <i
             className={classNames(`fa-regular fa-chevron-up icon`, {
               '-down': !options.includes('rating'),

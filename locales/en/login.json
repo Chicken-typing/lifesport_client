@@ -1,0 +1,13 @@
+{
+  "page": "Sign In",
+  "title": "Sign In",
+  "email": "Username or Email",
+  "placeholder": {
+    "email": "Input your email...",
+    "password": "Input your password..."
+  },
+  "password": "password",
+  "forgot": "Forgot Password?",
+  "button": "Login",
+  "header": "My Account"
+}

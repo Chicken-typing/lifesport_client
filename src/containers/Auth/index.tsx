@@ -1,12 +1,14 @@
 import KsLayout from '@/layout';
 import LoginForm from './LoginForm';
+import useTranslation from 'next-translate/useTranslation';
 
 const Auth = () => {
+  const { t } = useTranslation('login');
   return (
-    <KsLayout title="Tài khoản">
+    <KsLayout title={t('page')}>
       <div className="kl-auth">
         <div className="kl-container content">
-          <h1 className="title">My account</h1>
+          <h1 className="title">{t('header')}</h1>
           <div className="wrapper row">
             <div className="column login  col-12">
               <LoginForm className="form -left" />

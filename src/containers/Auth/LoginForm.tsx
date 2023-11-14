@@ -13,6 +13,7 @@ import ReCAPTCHA from 'react-google-recaptcha';
 import React from 'react';
 import { login } from '@/store/user/slice';
 import { decodeToken } from '../../utils/decode';
+import useTranslation from 'next-translate/useTranslation';
 
 interface ILoginFormProps {
   className?: string;
@@ -107,17 +108,19 @@ const LoginForm: FC<ILoginFormProps> = ({ className }) => {
     }
   };
 
+  const { t } = useTranslation('login');
+
   return (
     <form className={classNames('kl-login-form', className)} onSubmit={handleSubmit}>
-      <h3 className="header">Đăng Nhập</h3>
+      <h3 className="header">{t('title')}</h3>
       <div className="group">
         <Label isRequired className="label">
-          Tài khoản hoặc Email
+          {t('email')}
         </Label>
         <GroupInput
           className="container -mb-10"
           type="email"
-          placeholder="Nhập email của bạn..."
+          placeholder={t('placeholder.email')}
           fadePlaceholderShown
           name="email"
           value={values.email}
@@ -128,11 +131,11 @@ const LoginForm: FC<ILoginFormProps> = ({ className }) => {
         />
 
         <Label isRequired className="label">
-          Mật khẩu
+          {t('password')}
         </Label>
         <GroupInput
           className="container -mb-10"
-          placeholder="Nhập mật khẩu của bạn..."
+          placeholder={t('placeholder.password')}
           type="password"
           name="password"
           value={values.password}
@@ -149,7 +152,7 @@ const LoginForm: FC<ILoginFormProps> = ({ className }) => {
             label="Remember me"
           />
           <Link className="link" href="/" title="forgot-password">
-            Quên mật khẩu?
+            {t('forgot')}
           </Link>
         </div>
 
@@ -163,7 +166,7 @@ const LoginForm: FC<ILoginFormProps> = ({ className }) => {
         />
 
         <Button disabled={disabled} type="submit" fullWidth className="button">
-          ĐĂNG NHẬP
+          {t('button')}
         </Button>
       </div>
     </form>

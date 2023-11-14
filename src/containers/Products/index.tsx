@@ -16,6 +16,8 @@ import { ReactNode } from 'react';
 import { PRODUCT_BANNER, SHOW_ITEMS, SORT_ITEMS } from './constants';
 import Sidebar from './Sidebar';
 import { useEffect } from 'react';
+import useTranslation from 'next-translate/useTranslation';
+import { IHomeBanner } from '../Home/constants';
 
 const Products = () => {
   const router = useRouter();
@@ -31,24 +33,32 @@ const Products = () => {
   const END = limit * page;
 
   const { data: products, isFetching: isLoading, isError } = useProductsQuery({ page: 1 });
+  const { t } = useTranslation('products');
 
   const breadcrumbs: ReactNode[] = [
     <Link href={routes.HOME} title="homepage" key="homepage" className="kl-page-header-link">
-      Home Page
+      {t('breadcrumbs.first_route')}
     </Link>,
     <p className="kl-page-header-text" key="shop">
-      Product
+      {t('breadcrumbs.second_route')}
     </p>,
   ];
 
+  const banner: IHomeBanner = {
+    image: t('banner.image'),
+    title: t('banner.title'),
+    description: t('banner.description'),
+    color: t('banner.color'),
+  };
   return (
     <KsLayout
-      title="Danh sách sản phẩm"
+      title={t('title')}
       hasPageHeader
-      pageHeaderTitle="Product"
+      pageHeaderTitle={t('header')}
       pageHeaderBackground="https://can-am.brp.com/content/can-am-on-road/en_nz/models/can-am-electric-motorcycles/_jcr_content/root/imagecards.coreimg.jpeg/1678821073125/pulse.jpeg?imwidth=2048"
       breadcrumbs={breadcrumbs}
       colorTitle={'white'}
+      breadcrumbsColor="white"
     >
       <div className="kl-products">
         <div className="kl-container content">
@@ -60,14 +70,9 @@ const Products = () => {
             <div className="col-12 col-xl-10">
               <section className="kl-products-banners">
                 <div className="kl-container content">
-                  <p className="description">
-                    Choose from over 75 tea blends – from the classic Earl Grey to the award-winning
-                    Blueberry Merlot – our whole leaf teas are available in a variety of package
-                    types. We hope our teas provide you with some well-deserved comfort during your
-                    day.
-                  </p>
+                  <p className="description">{t('slogan')}</p>
                   <div className="wrapper">
-                    <BannerCard data={PRODUCT_BANNER} action="Sản phẩm bán chạy" size="medium" />
+                    <BannerCard data={banner} action={t('action')} size="medium" />
                   </div>
                 </div>
               </section>

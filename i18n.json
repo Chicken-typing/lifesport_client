@@ -6,6 +6,7 @@
   "pages": {
     "*": ["common"],
     "/": ["home"],
+    "/products/list": ["products"],
     "/about": ["about"]
   }
 }

@@ -1,1 +1,6 @@
-{}
+{
+  "breadcrumbs": {
+    "first_route": "Home Page",
+    "second_route": "Product"
+  }
+}

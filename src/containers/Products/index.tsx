@@ -16,6 +16,7 @@ import { ReactNode } from 'react';
 import { PRODUCT_BANNER, SHOW_ITEMS, SORT_ITEMS } from './constants';
 import Sidebar from './Sidebar';
 import { useEffect } from 'react';
+import useTranslation from 'next-translate/useTranslation';
 
 const Products = () => {
   const router = useRouter();
@@ -31,13 +32,14 @@ const Products = () => {
   const END = limit * page;
 
   const { data: products, isFetching: isLoading, isError } = useProductsQuery({ page: 1 });
+  const { t } = useTranslation('products');
 
   const breadcrumbs: ReactNode[] = [
     <Link href={routes.HOME} title="homepage" key="homepage" className="kl-page-header-link">
-      Home Page
+      {t('breadcrumbs.first_route')}
     </Link>,
     <p className="kl-page-header-text" key="shop">
-      Product
+      {t('breadcrumbs.second_route')}
     </p>,
   ];
 

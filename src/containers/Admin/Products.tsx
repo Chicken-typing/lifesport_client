@@ -92,6 +92,23 @@ const Products = () => {
     deleteProduct();
   };
 
+  const handleUpdateProduct = () => {
+    const updateProduct = async () => {
+      try {
+        const response: any = await request.request({
+          method: 'GET',
+          url: '/products/update',
+        });
+
+        if (isEqual(response?.status, 'success')) router.reload();
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    updateProduct();
+  };
+
   return (
     <AdminLayout title="Account List">
       <div className="kl-admin-account">
@@ -120,19 +137,56 @@ const Products = () => {
             <Introduce title="DASHBOARD" subtitle="Welcome to your dashboard" />
           </Box>
 
-          <Button
-            color="green-500"
-            fullWidth
-            className="button"
-            onClick={() => setOpenDialog(true)}
+          <div
+            className="function"
             style={{
-              visibility: `${!isEmpty(selection) ? 'visible' : 'hidden'}`,
-              width: '30px',
+              display: 'flex',
+              gap: '6px',
+              width: 'fit-content',
               marginLeft: 'auto',
+              marginBottom: '10px',
             }}
           >
-            <i className="fa-regular fa-trash"></i>
-          </Button>
+            <Button
+              color="green-500"
+              fullWidth
+              className="button"
+              onClick={() => setOpenDialog(true)}
+              style={{
+                width: '30px',
+                marginLeft: 'auto',
+              }}
+            >
+              <i className="fa-regular fa-plus" />
+            </Button>
+
+            <Button
+              color="green-500"
+              fullWidth
+              className="button"
+              onClick={() => handleUpdateProduct()}
+              style={{
+                width: '30px',
+                marginLeft: 'auto',
+              }}
+            >
+              <i className="fa-light fa-pen-to-square" />
+            </Button>
+
+            <Button
+              color="green-500"
+              fullWidth
+              disabled={isEmpty(selection)}
+              className="button"
+              onClick={() => setOpenDialog(true)}
+              style={{
+                width: '30px',
+                marginLeft: 'auto',
+              }}
+            >
+              <i className="fa-regular fa-trash" />
+            </Button>
+          </div>
 
           <Box
             height="70vh"

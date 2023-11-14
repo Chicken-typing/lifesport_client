@@ -22,7 +22,6 @@ import Testimonial from './Testimonial';
 import dynamic from 'next/dynamic';
 import useTranslation from 'next-translate/useTranslation';
 
-
 const Home = () => {
   const { data: products } = useProductsQuery({ limit: 10 });
   const { data: blogs } = useBlogsQuery({ limit: LIMIT.HOME_BLOGS, page: 1 });
@@ -33,12 +32,9 @@ const Home = () => {
 
   const dispatch = useAppDispatch();
 
-
   const { t } = useTranslation('home');
 
   const banner = t('banner', {}, { returnObjects: true });
-
-
 
   const FacebookMsg = dynamic(() => import('@components/compound/FacebookMsg')) as FC;
 

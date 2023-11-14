@@ -7,6 +7,8 @@
     "*": ["common"],
     "/": ["home"],
     "/products/list": ["products"],
-    "/about": ["about"]
+    "/about": ["about"],
+    "/login": ["login"],
+    "/register": ["register"]
   }
 }

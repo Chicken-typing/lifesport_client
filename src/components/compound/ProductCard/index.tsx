@@ -52,13 +52,7 @@ export const ProductCard: FC<IProductCardProps> = ({ data, isLoading = false }) 
               />
             </Link>
 
-            {data?.amount_off && (
-              <Badge label={`Sale ${data?.amount_off / 10}$ `} className="badge" />
-            )}
-
-            {data?.percent_off && (
-              <Badge label={`${data?.percent_off * 100}% OFF`} className="badge" />
-            )}
+            {data?.percent_off && <Badge label={`${data?.percent_off}% OFF`} className="badge" />}
 
             <div className="actions">
               <Button className="button" iconOnly variant="contained" color="light">

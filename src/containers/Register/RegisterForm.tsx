@@ -10,6 +10,7 @@ import { isEqual } from 'lodash';
 import ConfirmOTP from './ConfirmOTP';
 import { useState } from 'react';
 import CreateAccount from './CreateAccount';
+import useTranslation from 'next-translate/useTranslation';
 interface IRegisterForm {
   className?: string;
   onNext: () => void;
@@ -61,19 +62,21 @@ const RegisterForm: FC<IRegisterForm> = ({ className, onNext, step }) => {
     setData({ email: email, key: key });
   };
 
+  const { t } = useTranslation('register');
+
   return (
     <>
       {isEqual(step, 1) && (
         <form className={classNames('kl-register-form', className)} onSubmit={handleSubmit}>
-          <h3 className="header">Register</h3>
+          <h3 className="header">{t('header')}</h3>
           <div className="group">
             <Label isRequired className="label">
-              Email
+              {t('email')}
             </Label>
             <GroupInput
               className="container -mb-10"
               type="text"
-              placeholder="Nhập email của bạn..."
+              placeholder={t('placeholder')}
               name="email"
               value={values.email}
               error={errors.email}
@@ -81,14 +84,11 @@ const RegisterForm: FC<IRegisterForm> = ({ className, onNext, step }) => {
               onChange={handleChange}
               onBlur={handleBlur}
             />
-            <p className="notice">A password will be sent to your email address.</p>
-            <p className="description">
-              Your personal data will be used to support your experience throughout this website, to
-              manage access to your account, and for other purposes described in our privacy policy.
-            </p>
+            <p className="notice">{t('otp')}</p>
+            <p className="description">{t('description')}</p>
 
             <Button type="submit" fullWidth className="button">
-              ĐĂNG KÝ
+              {t('button')}
             </Button>
           </div>
         </form>

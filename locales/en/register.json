@@ -1,0 +1,22 @@
+{
+  "page": "Sign Up",
+  "title": "Register",
+  "header": "Register",
+  "email": "Email",
+  "placeholder": "Nhập Email của bạn...",
+  "otp": "A OTP code will be sent to your email address.",
+  "description": "Your personal data will be used to support your experience throughout this website, to manage access to your account, and for other purposes described in our privacy policy.",
+  "button": "NEXT",
+  "validate": "VALIDATE OTP",
+  "placeholderOTP": "Please input OTP Code...",
+  "createAccount": "Create Account",
+  "name": "Name",
+  "password": "Password",
+  "confirm": "Confirm Password",
+  "holderAccount": {
+    "name": "Input your name...",
+    "password": "Input your password...",
+    "confirm": "Confirm Password..."
+  },
+  "send": "SIGN UP"
+}

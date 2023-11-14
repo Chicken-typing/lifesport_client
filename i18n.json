@@ -9,6 +9,7 @@
     "/products/list": ["products"],
     "/about": ["about"],
     "/login": ["login"],
-    "/register": ["register"]
+    "/register": ["register"],
+    "contact": ["/contact"]
   }
 }

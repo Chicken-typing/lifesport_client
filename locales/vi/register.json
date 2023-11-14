@@ -1,0 +1,22 @@
+{
+  "page": "Đăng Ký",
+  "title": "Đăng Ký",
+  "header": "Đăng Ký",
+  "email": "Email",
+  "placeholder": "Nhập Email của bạn...",
+  "otp": "Mã OTP sẽ được gửi tới gmail của bạn",
+  "description": "Dữ liệu cá nhân của bạn sẽ được sử dụng để hỗ trợ trải nghiệm của bạn trên toàn bộ trang web này, để quản lý quyền truy cập vào tài khoản của bạn và cho các mục đích khác được mô tả trong chính sách bảo mật của chúng tôi.",
+  "button": "Tiếp theo",
+  "validate": "Xác minh OTP",
+  "placeholderOTP": "Vui lòng nhập mã OTP...",
+  "createAccount": "Tạo tài khoản",
+  "name": "Tên tài khoản",
+  "password": "Mật khẩu",
+  "confirm": "Xác minh mật khẩu",
+  "holderAccount": {
+    "name": "Vui lòng nhập tên của bạn...",
+    "password": "Nhập mật khẩu...",
+    "confirm": "Nhập lại mật khẩu..."
+  },
+  "send": "ĐĂNG KÝ"
+}

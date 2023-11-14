@@ -1,5 +1,42 @@
 {
+  "banner": [
+    {
+      "image": "https://www.furosystems.com/wp-content/uploads/2019/12/photo-of-person-riding-motorcycle-on-road-between-trees-2396045-min.jpg",
+      "color": "white",
+      "title": "Sức khỏe & Sự sống",
+      "description": "Điều tuyệt vời cho cuộc sống"
+    },
+    {
+      "image": "https://xedienvietthanh.com/wp-content/uploads/2023/07/xe-may-dien-yadea-odora-s1-mau-xam-tinh-van.jpg",
+      "color": "white",
+      "title": "Giảm giá tới 50%",
+      "description": "Tạo ra trải nghiệm mới"
+    }
+  ],
+
+  "action": "Mua ngay",
+
+  "best_seller": {
+    "title": "Sản phẩm bán chạy",
+    "action": "Xem thêm"
+  },
+
   "collection": {
-    "title": ""
+    "title": "Bộ sưu tập"
+  },
+
+  "testimonial": {
+    "title": "Ý kiến khách hàng"
+  },
+
+  "blog": {
+    "title": "Tin mới nhất",
+    "action": "Xem thêm"
+  },
+
+  "trailer": {
+    "first": "Vì môi trường trong sạch",
+    "second": "Hạn chế ô nhiễm khói bụi",
+    "action": "Xem tất cả sản phẩm"
   }
 }

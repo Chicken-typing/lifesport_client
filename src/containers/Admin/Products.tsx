@@ -1,19 +1,27 @@
-import { Box, Typography, useTheme } from '@mui/material';
-import { DataGrid } from '@mui/x-data-grid';
-import { tokens } from '@/adminLayout/theme';
-
-import AdminPanelSettingsOutlinedIcon from '@mui/icons-material/AdminPanelSettingsOutlined';
-import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined';
-import SecurityOutlinedIcon from '@mui/icons-material/SecurityOutlined';
-import { mockDataTeam } from '@components/compound/Admin/constants';
 import AdminLayout from '@/adminLayout';
-import Introduce from '@components/compound/Admin/Introduce';
+import { tokens } from '@/adminLayout/theme';
 import { useProductsQuery } from '@/query/products/get-products';
+import Introduce from '@components/compound/Admin/Introduce';
 import { Button } from '@components/primitive';
+import { Box, useTheme } from '@mui/material';
+import { DataGrid } from '@mui/x-data-grid';
+import { useState, useEffect } from 'react';
+import { isEmpty, isEqual } from 'lodash';
+import request from '@utils/request';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import { useQueryClient } from '@tanstack/react-query';
+import { useRouter } from 'next/router';
 
 const Products = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const [selection, setSelection] = useState<any>([]);
+  const [openDialog, setOpenDialog] = useState<boolean>(false);
+  const router = useRouter();
 
   const { data: products, isFetching: isLoading, isError }: any = useProductsQuery({ page: 1 });
 
@@ -52,24 +60,79 @@ const Products = () => {
             <Button color="green-500" fullWidth className="button">
               <i className="fa-regular fa-pen-to-square"></i>
             </Button>
-
-            <Button color="green-500" fullWidth className="button">
-              <i className="fa-regular fa-trash"></i>
-            </Button>
           </div>
         );
       },
     },
   ];
 
+  const handleCloseDialog = () => setOpenDialog(false);
+
+  const handleChange = (event: any) => {
+    setSelection(event?.rowSelection);
+  };
+
+  const handleDeleteProduct = () => {
+    const deleteProduct = async () => {
+      try {
+        const response: any = await request.request({
+          method: 'POST',
+          url: '/products/delete',
+          data: { ids: selection },
+        });
+
+        if (isEqual(response?.status, 'success')) router.reload();
+      } catch (error) {
+        console.log(error);
+      }
+
+      handleCloseDialog();
+    };
+
+    deleteProduct();
+  };
+
   return (
     <AdminLayout title="Account List">
       <div className="kl-admin-account">
+        <Dialog
+          open={openDialog}
+          onClose={handleCloseDialog}
+          aria-labelledby="responsive-dialog-title"
+        >
+          <DialogTitle id="responsive-dialog-title">{'Dcm mày có muốn xóa không ?'}</DialogTitle>
+          <DialogContent>
+            <DialogContentText>{JSON.stringify(selection)}</DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleDeleteProduct} autoFocus style={{ flex: '1' }}>
+              Ok
+            </Button>
+            <Button autoFocus onClick={handleCloseDialog} style={{ flex: '1' }}>
+              Cancel
+            </Button>
+          </DialogActions>
+        </Dialog>
+
         <Box display="flex" m="20px" flexDirection="column" width="100%">
           {/* HEADER */}
           <Box display="flex" justifyContent="flex-start" alignItems="center">
             <Introduce title="DASHBOARD" subtitle="Welcome to your dashboard" />
           </Box>
+
+          <Button
+            color="green-500"
+            fullWidth
+            className="button"
+            onClick={() => setOpenDialog(true)}
+            style={{
+              visibility: `${!isEmpty(selection) ? 'visible' : 'hidden'}`,
+              width: '30px',
+              marginLeft: 'auto',
+            }}
+          >
+            <i className="fa-regular fa-trash"></i>
+          </Button>
 
           <Box
             height="70vh"
@@ -105,6 +168,7 @@ const Products = () => {
               rows={products?.items || []}
               columns={columns}
               loading={isLoading}
+              onStateChange={handleChange}
             />
           </Box>
         </Box>

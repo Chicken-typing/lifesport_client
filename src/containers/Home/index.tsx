@@ -16,11 +16,12 @@ import { useEffect, FC } from 'react';
 import { Autoplay, EffectFade, Navigation, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import BannerCard from './BannerCard';
-import { BANNERS, QUANTITY, TESTIMONIALS, SLIDES } from './constants';
+import { QUANTITY, TESTIMONIALS, SLIDES, IHomeBanner } from './constants';
 import Slide from './Slide';
 import Testimonial from './Testimonial';
-
 import dynamic from 'next/dynamic';
+import useTranslation from 'next-translate/useTranslation';
+
 
 const Home = () => {
   const { data: products } = useProductsQuery({ limit: 10 });
@@ -31,6 +32,13 @@ const Home = () => {
   });
 
   const dispatch = useAppDispatch();
+
+
+  const { t } = useTranslation('home');
+
+  const banner = t('banner', {}, { returnObjects: true });
+
+
 
   const FacebookMsg = dynamic(() => import('@components/compound/FacebookMsg')) as FC;
 
@@ -93,10 +101,10 @@ const Home = () => {
         <section className="kl-home-banners">
           <div className="kl-container content">
             <div className="wrapper">
-              {map(BANNERS, (banner, idx) => (
+              {map(banner, (banner: IHomeBanner, idx) => (
                 <BannerCard
                   data={banner}
-                  action="Mua ngay"
+                  action={t('action')}
                   size="small"
                   key={`home-banner-${idx}`}
                 />
@@ -108,7 +116,7 @@ const Home = () => {
         <section className="kl-home-products">
           <div className="kl-container content">
             <div className="header">
-              <h2 className="title">Best Seller</h2>
+              <h2 className="title">{t('best_seller.title')}</h2>
               <div className="readmore -bottom">
                 <Link
                   href={routes.PRODUCTS}
@@ -118,7 +126,7 @@ const Home = () => {
                   color="primary"
                   rightIcon={<i className="fa-regular fa-chevron-right icon" />}
                 >
-                  Read more
+                  {t('best_seller.action')}
                 </Link>
               </div>
             </div>
@@ -128,7 +136,7 @@ const Home = () => {
 
         <section className="kl-home-collections">
           <div className="kl-container content">
-            <h2 className="title">Collection</h2>
+            <h2 className="title">{t('collection.title')}</h2>
 
             <div className="grid">
               {isLoadingCategories
@@ -229,7 +237,7 @@ const Home = () => {
         <section className="kl-home-testimonials">
           <div className="kl-container content">
             <div className="header">
-              <h2 className="title">Ý kiến khách hàng</h2>
+              <h2 className="title">{t('testimonial.title')}</h2>
             </div>
             <Swiper
               breakpoints={{
@@ -275,7 +283,7 @@ const Home = () => {
           <section className="kl-home-blogs">
             <div className="kl-container content">
               <div className="header">
-                <h2 className="title">TIN MỚI NHẤT</h2>
+                <h2 className="title">{t('blog.title')}</h2>
                 <div className="viewmore -bottom">
                   <Link
                     href="/"
@@ -285,7 +293,7 @@ const Home = () => {
                     color="primary"
                     rightIcon={<i className="fa-regular fa-chevron-right icon" />}
                   >
-                    Xem thêm
+                    {t('blog.action')}
                   </Link>
                 </div>
               </div>
@@ -301,8 +309,8 @@ const Home = () => {
             <div className="info">
               <p className="heading">TAKE A trip</p>
               <h2 className="title">
-                Vì môi trường trong sạch <br />
-                Hạn chế ô nhiễm khói bụi
+                {t('trailer.first')} <br />
+                {t('trailer.second')}
               </h2>
               {/* <ul className="description">
                 <li className="item">** Phục hồi chức năng vận động do tai biến mạch máu não **</li>
@@ -314,7 +322,7 @@ const Home = () => {
                 variant="outlined"
                 endAdornment={<i className="fa-solid fa-chevron-right icon" />}
               >
-                Xem tất cả sản phẩm
+                {t('trailer.action')}
               </Button>
             </div>
           </div>

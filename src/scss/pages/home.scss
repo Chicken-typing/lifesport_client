@@ -245,6 +245,14 @@
       border-radius: 5px;
       color: inherit;
 
+      &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        background-color: rgba($black, 0.3);
+      }
+
       &:hover > .link {
         transform: scale(1.1);
       }
@@ -264,6 +272,7 @@
       position: absolute;
       inset: 0;
       color: inherit;
+      z-index: 1;
 
       @include breakpoint-down(mediumdesktop) {
         padding: 30px;
@@ -283,6 +292,7 @@
       margin-bottom: 5px;
       line-height: 44px;
       color: $white;
+      z-index: 1;
 
       @include breakpoint-down(desktop) {
         font-size: 36px;
@@ -296,13 +306,15 @@
     }
 
     > .wrapper > .info > .inner > .description {
-      color: $color-gray-500;
+      color: $white;
       margin-bottom: 70px;
     }
 
     > .wrapper > .info > .inner > .link {
       display: inline;
       padding-bottom: 4px;
+      color: $white;
+      z-index: 1;
 
       @include breakpoint-down(phone) {
         margin-top: auto;

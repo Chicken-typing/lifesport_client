@@ -8,6 +8,7 @@ import { IUser } from '../interfaces/user';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { API_ENDPOINTS } from '../utils/api-endpoints';
 import { decodeToken } from '../utils/decode';
+import { useRouter } from 'next/router';
 
 export const AppContext = createContext({});
 
@@ -16,6 +17,7 @@ export const AppContextProvider = ({ children }: any) => {
   const auth = useAppSelector((state) => state.auth);
   const [isLoading, setIsLoading] = useState(true);
   const token = cookieStorage?.getAccessTokenInfo();
+  const router = useRouter();
 
   const [theme, colorMode] = useMode();
 

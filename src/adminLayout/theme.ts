@@ -202,7 +202,7 @@ export const ColorModeContext = createContext({
 export const useMode = () => {
   const router = useRouter();
   const pathname = router.pathname;
-  const [mode, setMode] = useState<PaletteMode>(pathname.includes('/admin') ? 'dark' : 'light');
+  const [mode, setMode] = useState<PaletteMode>(pathname.startsWith('/admin') ? 'dark' : 'light');
 
   const colorMode = useMemo(
     () => ({

@@ -1,6 +1,6 @@
 {
   "locales": ["vi", "en"],
-  "defaultLocale": "vi",
+  "defaultLocale": "en",
   "logBuild": false,
   "loader": true,
   "pages": {

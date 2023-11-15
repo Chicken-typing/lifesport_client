@@ -21,6 +21,7 @@ import Slide from './Slide';
 import Testimonial from './Testimonial';
 import dynamic from 'next/dynamic';
 import useTranslation from 'next-translate/useTranslation';
+import { useRouter } from 'next/router';
 
 const Home = () => {
   const { data: products } = useProductsQuery({ limit: 10 });
@@ -37,6 +38,8 @@ const Home = () => {
   const banner = t('banner', {}, { returnObjects: true });
 
   const FacebookMsg = dynamic(() => import('@components/compound/FacebookMsg')) as FC;
+
+  const router = useRouter();
 
   useEffect(() => {
     const cart = localStorage.getItem('carts');
@@ -316,6 +319,7 @@ const Home = () => {
               <Button
                 className="button"
                 variant="outlined"
+                onClick={() => router.push({ pathname: '/products/list' })}
                 endAdornment={<i className="fa-solid fa-chevron-right icon" />}
               >
                 {t('trailer.action')}

@@ -9,3 +9,7 @@ body {
   color: $white;
   background-color: $color-primary;
 }
+
+.no-scroll {
+  overflow: hidden;
+}

@@ -156,12 +156,6 @@ export const BRAND = [
   {
     className: 'fa-brands fa-facebook',
   },
-  {
-    className: 'fa-brands fa-twitter',
-  },
-  {
-    className: 'fa-brands fa-linkedin',
-  },
 ];
 
 export const SERVICE = [

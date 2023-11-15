@@ -86,7 +86,7 @@ const Sidebar = () => {
                     {decoded?.name}
                   </Typography>
                   <Typography variant="h5" color={colors.greenAccent[500]}>
-                    {decoded?.role}
+                    {decoded?.role.replace('_', ' ').toUpperCase()}
                   </Typography>
                 </Box>
               </Box>

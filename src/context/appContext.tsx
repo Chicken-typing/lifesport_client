@@ -20,7 +20,7 @@ export const AppContextProvider = ({ children }: any) => {
   const router = useRouter();
 
   const [theme, colorMode] = useMode();
-
+  const decoded = decodeToken(token || '');
   useEffect(() => {
     if (token) {
       const fetchUser = async () => {
@@ -42,7 +42,7 @@ export const AppContextProvider = ({ children }: any) => {
     }
   }, []);
 
-  const contextValues = { isLoading, token };
+  const contextValues = { isLoading, token, decoded };
 
   return (
     <AppContext.Provider value={contextValues}>

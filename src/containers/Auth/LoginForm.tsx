@@ -1,4 +1,4 @@
-import { FC, useRef, useState } from 'react';
+import { FC, useRef, useState, useEffect } from 'react';
 import classNames from 'classnames';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -14,6 +14,7 @@ import React from 'react';
 import { login } from '@/store/user/slice';
 import { decodeToken } from '../../utils/decode';
 import useTranslation from 'next-translate/useTranslation';
+import LoadingScreen from '@components/compound/LoadingScreen';
 
 interface ILoginFormProps {
   className?: string;
@@ -25,6 +26,36 @@ const LoginForm: FC<ILoginFormProps> = ({ className }) => {
   const auth = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
   const [disabled, setDisabled] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const getResponse = async (response: any) => {
+    try {
+      const data = await response;
+      if (data) {
+        cookieStorage.setTokens({
+          accessToken: response._token,
+        });
+        const token = response._token;
+        if (token) {
+          const decoded: any = decodeToken(token);
+          if (decoded?.role === 'master_admin' || decoded?.role === 'admin') {
+            router.push({
+              pathname: '/admin',
+            });
+          } else {
+            dispatch(login(decoded));
+            router.push({
+              pathname: '/',
+            });
+          }
+        }
+      }
+      setLoading(true);
+    } catch (error) {
+      console.error('Error fetching cart data:', error);
+      setLoading(false);
+    }
+  };
 
   const handleSubmitCaptcha = (event: any) => {
     event.preventDefault();
@@ -44,29 +75,29 @@ const LoginForm: FC<ILoginFormProps> = ({ className }) => {
       onSubmit: (v) => {
         handleSubmitCaptcha;
         loginMutation(v).then((response: any) => {
-          if (response) {
-            cookieStorage.setTokens({
-              accessToken: response._token,
-              refreshToken: response._token,
-            });
-            const token = response._token;
-            if (token) {
-              const decoded: any = decodeToken(token);
-              if (decoded?.role === 'master_admin' || decoded?.role === 'admin') {
-                router.push({
-                  pathname: '/admin',
-                });
-              } else {
-                dispatch(login(decoded));
-                router.push({
-                  pathname: '/',
-                });
-              }
-            }
-          }
+          // if (response) {
+          //   cookieStorage.setTokens({
+          //     accessToken: response._token,
+          //   });
+          //   const token = response._token;
+          //   if (token) {
+          //     const decoded: any = decodeToken(token);
+          //     if (decoded?.role === 'master_admin' || decoded?.role === 'admin') {
+          //       router.push({
+          //         pathname: '/admin',
+          //       });
+          //     } else {
+          //       dispatch(login(decoded));
+          //       router.push({
+          //         pathname: '/',
+          //       });
+          //     }
+          //   }
+          // } else {
+          //   <LoadingScreen />;
+          // }
+          getResponse(response);
         });
-
-        resetForm();
       },
     });
 
@@ -109,6 +140,14 @@ const LoginForm: FC<ILoginFormProps> = ({ className }) => {
   };
 
   const { t } = useTranslation('login');
+
+  useEffect(() => {
+    if (loading) {
+      document.body.classList.add('no-scroll');
+    } else {
+      document.body.classList.remove('no-scroll');
+    }
+  }, [loading]);
 
   return (
     <form className={classNames('kl-login-form', className)} onSubmit={handleSubmit}>
@@ -169,6 +208,7 @@ const LoginForm: FC<ILoginFormProps> = ({ className }) => {
           {t('button')}
         </Button>
       </div>
+      {loading && <LoadingScreen />}
     </form>
   );
 };

@@ -27,10 +27,10 @@ const Sidebar: FC<ISidebarProps> = ({ variant }) => {
   const ingredients = query?.ingredients || [];
   const rating = query?.rating || [];
 
-  const { data: categories, isFetching: isFetchingCategories } = useProductCategoriesQuery({
-    limit,
-    page,
-  });
+  // const { data: categories, isFetching: isFetchingCategories } = useProductCategoriesQuery({
+  //   limit,
+  //   page,
+  // });
 
   const [options, setOptions] = useState<string[]>([
     'categories',
@@ -109,30 +109,19 @@ const Sidebar: FC<ISidebarProps> = ({ variant }) => {
         </div>
 
         <Collapse in={options.includes('categories')}>
-          {isFetchingCategories ? (
-            <ul className="kl-products-sidebar-categories">
-              {times(5, (idx) => (
-                <li key={`product-category-${idx}`} className="category">
-                  <div className="item">
-                    <Skeleton animation="wave" />
-                  </div>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <ul className="kl-products-sidebar-categories">
-              {map(CATEGORIES, ({ label, value }, idx) => (
-                <li className="category" key={idx}>
-                  <div
-                    className="item"
-                    onClick={() => {
-                      router.push({ query: { ...query, category: value, page: 1 } });
-                    }}
-                  >
-                    {label}
-                  </div>
+          <ul className="kl-products-sidebar-categories">
+            {map(CATEGORIES, ({ label, value }, idx) => (
+              <li className="category" key={idx}>
+                <div
+                  className="item"
+                  onClick={() => {
+                    router.push({ query: { ...query, brand: value } });
+                  }}
+                >
+                  {label}
+                </div>
 
-                  {/* {!isEmpty(children) && (
+                {/* {!isEmpty(children) && (
                     <ul className="subcategory">
                       {map(children, ({ id, name }) => (
                         <li
@@ -151,10 +140,9 @@ const Sidebar: FC<ISidebarProps> = ({ variant }) => {
                       ))}
                     </ul>
                   )} */}
-                </li>
-              ))}
-            </ul>
-          )}
+              </li>
+            ))}
+          </ul>
         </Collapse>
       </div>
 

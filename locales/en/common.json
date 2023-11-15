@@ -23,15 +23,15 @@
       "subMenu": [
         {
           "title": "VINFAST",
-          "route": "/products"
+          "route": "/products/list?brand=vinfast"
         },
         {
           "title": "DIBAO",
-          "route": "/products"
+          "route": "/products/list?brand=dibao"
         },
         {
           "title": "HONDA",
-          "route": "/products"
+          "route": "/products/list?brand=honda"
         }
       ]
     },
@@ -171,7 +171,7 @@
           "address": "Return Policy",
           "phone1": "0932369776",
           "phone2": "0559270701",
-          "web": "lifetravel.vn"
+          "web": "https://lifesport-client.vercel.app/"
         }
       ]
     }

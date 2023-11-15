@@ -8,7 +8,7 @@ import { pickBy } from 'lodash';
 export const fetchProducts = async ({
   queryKey,
 }: QueryFunctionContext<
-  [string, IQueryOptionsList & { name?: string; category?: string; rating?: number }]
+  [string, IQueryOptionsList & { name?: string; brand?: string; rating?: number }]
 >): Promise<IQueryResultList<IProduct>> => {
   const [_, params] = queryKey;
   const filterValues = pickBy(params, (value) => value !== 'undefined');
@@ -23,7 +23,7 @@ export const fetchProducts = async ({
 };
 
 export const useProductsQuery = (
-  options?: IQueryOptionsList & { name?: string; category?: string; rating?: number },
+  options?: IQueryOptionsList & { name?: string; brand?: string; rating?: number },
 ): UseQueryResult<IQueryResultList<IProduct>, Error> =>
   useQuery([API_ENDPOINTS.PRODUCTS, { ...options }], fetchProducts, {
     retry: 1,

@@ -62,14 +62,6 @@ export const ProductCard: FC<IProductCardProps> = ({ data, isLoading = false }) 
                   </span>
                 </Tooltip>
               </Button>
-
-              <Button className="button" iconOnly variant="contained" color="light">
-                <Tooltip title="Xem ngay" placement="left" arrow>
-                  <span className="icon">
-                    <i className="fa-light fa-magnifying-glass-plus" />
-                  </span>
-                </Tooltip>
-              </Button>
             </div>
           </>
         ) : (

@@ -3,9 +3,10 @@ import { closeDrawer } from '@/store/drawers/slice';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { Button, KaImage } from '@components/primitive';
 import { routes } from '@utils/routes';
-import { map, size } from 'lodash';
+import { map, size, isEmpty } from 'lodash';
 import { useRouter } from 'next/router';
 import { removeProduct } from '@/store/cart/slice';
+import { selectTotal } from '../../../store/cart/selector';
 
 const CartDrawer = () => {
   const router = useRouter();
@@ -13,7 +14,7 @@ const CartDrawer = () => {
 
   const carts = useAppSelector(selectCart);
 
-  const handleDeleteProduct = (idx: number) => {};
+  const total = useAppSelector(selectTotal);
 
   return (
     <div className="kl-cart-drawer">
@@ -30,7 +31,7 @@ const CartDrawer = () => {
             map(carts, ({ product: { name, price, thumbnail, id, color }, quantity }, idx) => (
               <li className="item" key={`cart-${idx}`}>
                 <KaImage
-                  src={thumbnail[0]}
+                  src={thumbnail}
                   alt="cart"
                   objectFit="contain"
                   ratio="square"
@@ -39,7 +40,14 @@ const CartDrawer = () => {
                 <div className="info">
                   <div className="name">{name}</div>
                   <div className="group">
-                    {quantity} x <span className="price">${price}</span>
+                    {quantity}
+                    <span className="price">
+                      {(price / 100).toLocaleString('en-US', {
+                        style: 'currency',
+                        currency: 'USD',
+                        minimumFractionDigits: 2,
+                      })}
+                    </span>
                   </div>
                 </div>
                 <span className="close" onClick={() => dispatch(removeProduct({ id, color }))}>
@@ -57,7 +65,17 @@ const CartDrawer = () => {
         <div className="footer">
           <div className="total">
             <span className="subtotal">Total:</span>
-            <span className="price">$1,272</span>
+            <span className="price">
+              {' '}
+              {!isEmpty(total) &&
+                total
+                  .reduce((sub, currentItem) => sub / 100 + currentItem / 100)
+                  .toLocaleString('en-US', {
+                    style: 'currency',
+                    currency: 'USD',
+                    minimumFractionDigits: 2,
+                  })}
+            </span>
           </div>
           <Button
             fullWidth

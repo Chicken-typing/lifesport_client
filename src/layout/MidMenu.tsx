@@ -34,42 +34,6 @@ export default function MidMenu() {
   const { isLoading }: any = useContext(AppContext);
 
   const decoded = decodeToken(token || '');
-  const { setFieldValue, resetForm, setFieldTouched, handleSubmit, values, errors, touched } =
-    useFormik({
-      initialValues: {
-        email: '',
-        password: '',
-      },
-      validationSchema: Yup.object().shape({
-        email: Yup.string().required('Vui lòng nhập email!'),
-        password: Yup.string().required('Vui lòng nhập mật khẩu!'),
-      }),
-      onSubmit: (v) => {
-        loginMutation(v).then((response: any) => {
-          if (response) {
-            cookieStorage.setTokens({
-              accessToken: response._token,
-              refreshToken: response._token,
-            });
-          }
-          if (decoded?.role === 'master_admin' || 'admin') {
-            router.push({
-              pathname: '/admin',
-            });
-          } else {
-            router.push({
-              pathname: '/',
-            });
-          }
-        });
-
-        resetForm();
-      },
-    });
-
-  const handleChange = ({ name, value }: { name: string; value: string | number }) => {
-    setFieldValue(name, value);
-  };
 
   const handleSearch = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -96,7 +60,7 @@ export default function MidMenu() {
       const decoded = decodeToken(token);
       return decoded;
     }
-  }, []);
+  });
 
   const handleLogOut = () => {
     cookieStorage.removeTokens();
@@ -170,7 +134,7 @@ export default function MidMenu() {
             <button
               onClick={() => (token ? setOpen(true) : router.push({ pathname: '/login' }))}
               ref={buttonEle}
-              className="btn"
+              className="btn user"
             >
               <span className="icon">
                 <UserIcon />

@@ -87,7 +87,11 @@ const Cart = () => {
                           <div>color: {color}</div>
                         </td>
                         <td className="price _style-rows">
-                          {price} <span>đ</span>
+                          {(price / 100).toLocaleString('en-US', {
+                            style: 'currency',
+                            currency: 'USD',
+                            minimumFractionDigits: 2,
+                          })}
                         </td>
                         <td className="quantity _style-rows">
                           <Quantity
@@ -98,7 +102,11 @@ const Cart = () => {
                           />
                         </td>
                         <td className="total _style-rows">
-                          {total} <span>đ</span>
+                          {(total / 100).toLocaleString('en-US', {
+                            style: 'currency',
+                            currency: 'USD',
+                            minimumFractionDigits: 2,
+                          })}
                         </td>
                       </tr>
                     ),
@@ -141,7 +149,11 @@ const Cart = () => {
                         <td className="price _style-rows _style-flex">
                           <span className="title -text-sm">PRICE: </span>
                           <span className="cost">
-                            {price} <span>đ</span>
+                            {(price / 100).toLocaleString('en-US', {
+                              style: 'currency',
+                              currency: 'USD',
+                              minimumFractionDigits: 2,
+                            })}
                           </span>
                         </td>
                         <td className="quantity _style-rows _style-flex">
@@ -156,7 +168,11 @@ const Cart = () => {
                         <td className="total _style-rows _style-flex">
                           <span className="title -text-sm">SUBTOTAL: </span>
                           <span className="cost">
-                            {total} <span>đ</span>
+                            {(total / 100).toLocaleString('en-US', {
+                              style: 'currency',
+                              currency: 'USD',
+                              minimumFractionDigits: 2,
+                            })}
                           </span>
                         </td>
                       </tr>
@@ -174,8 +190,13 @@ const Cart = () => {
                     <th className="title -style-totals">Subtotal</th>
                     <td className="cost -style-totals">
                       {!isEmpty(subTotal) &&
-                        subTotal.reduce((sub, currentItem) => sub + currentItem)}{' '}
-                      <span>đ</span>
+                        subTotal
+                          .reduce((sub, currentItem) => sub / 100 + currentItem / 100)
+                          .toLocaleString('en-US', {
+                            style: 'currency',
+                            currency: 'USD',
+                            minimumFractionDigits: 2,
+                          })}
                     </td>
                   </tr>
 
@@ -183,8 +204,13 @@ const Cart = () => {
                     <th className="title -style-totals">Total</th>
                     <td className="cost -style-totals">
                       {!isEmpty(subTotal) &&
-                        subTotal.reduce((sub, currentItem) => sub + currentItem)}{' '}
-                      <span>đ</span>
+                        subTotal
+                          .reduce((sub, currentItem) => sub / 100 + currentItem / 100)
+                          .toLocaleString('en-US', {
+                            style: 'currency',
+                            currency: 'USD',
+                            minimumFractionDigits: 2,
+                          })}
                     </td>
                   </tr>
                 </tbody>

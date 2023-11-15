@@ -26,13 +26,13 @@ const Products = () => {
   const page = Number(query?.page || 1);
   const sort = String(query?.sort || SORT_ITEMS[0].value);
   const limit = Number(query?.limit || LIMIT.PRODUCTS_FILTER);
-  // const category = String(query?.category || undefined);
+  const brand = String(query?.brand || undefined);
   // const name = String(query?.name || undefined);
   const dispatch = useAppDispatch();
   const START = limit * (page - 1);
   const END = limit * page;
 
-  const { data: products, isFetching: isLoading, isError } = useProductsQuery({ page: 1 });
+  const { data: products, isFetching: isLoading, isError } = useProductsQuery({ page: 1, brand });
   const { t } = useTranslation('products');
 
   const breadcrumbs: ReactNode[] = [

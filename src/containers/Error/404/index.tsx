@@ -9,7 +9,7 @@ export default function Error404() {
           <div className="wrapper">
             <div className="images">
               <KaImage
-                src="https://demo2.wpopal.com/teapoz/wp-content/themes/teapoz/assets/images/404/404-img.png"
+                src="https://www.elegantthemes.com/blog/wp-content/uploads/2020/02/000-404.png"
                 alt="404 Page"
                 className="image"
               />

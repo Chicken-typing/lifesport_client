@@ -116,7 +116,8 @@
       }
 
       &:nth-child(1) > .btn-name {
-        @include size(80%, 18px);
+        min-width: fit-content;
+        height: 18px;
         font-size: 12px;
       }
 
@@ -194,4 +195,8 @@
       display: none;
     }
   }
+}
+
+.user {
+  gap: 20px;
 }

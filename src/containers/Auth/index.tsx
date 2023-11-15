@@ -1,6 +1,7 @@
 import KsLayout from '@/layout';
 import LoginForm from './LoginForm';
 import useTranslation from 'next-translate/useTranslation';
+import LoadingScreen from '@components/compound/LoadingScreen';
 
 const Auth = () => {
   const { t } = useTranslation('login');

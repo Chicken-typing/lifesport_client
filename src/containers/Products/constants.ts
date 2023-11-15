@@ -1,7 +1,7 @@
 export const CATEGORIES = [
   { label: 'Vinfast', value: 'vinfast' },
   { label: 'Honda', value: 'honda' },
-  { label: 'Dibao', value: 'dibaos' },
+  { label: 'Dibao', value: 'dibao' },
   { label: 'Ally', value: 'ally' },
   { label: 'Xmen', value: 'xmen' },
   { label: 'Vespa', value: 'vespa' },

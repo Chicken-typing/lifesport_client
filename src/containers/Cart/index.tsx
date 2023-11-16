@@ -12,13 +12,20 @@ import { map, size, isEmpty, times } from 'lodash';
 import { useEffect, useState } from 'react';
 import { INTERESTED } from './constant';
 import { Skeleton } from '@mui/material';
+import { toast } from 'react-toastify';
+import { cookieStorage } from '@utils/cookieStorage';
+import { useCheckoutMutation } from '../../query/checkout/checkoutMutation';
+import { decodeToken } from '@utils/decode';
 
 const Cart = () => {
   const dispatch = useAppDispatch();
   const carts = useAppSelector(selectCart);
   const subTotal = useAppSelector(selectTotal);
-
+  const [test, setTest] = useState({});
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const token = cookieStorage?.getAccessTokenInfo();
+  const decoded = decodeToken(token || '');
+  const { mutateAsync: checkoutMutation } = useCheckoutMutation();
 
   useEffect(() => {
     const getCart = async () => {
@@ -36,8 +43,74 @@ const Cart = () => {
     getCart();
   }, []);
 
+  interface PriceData {
+    currency: string;
+    product_data: {
+      name: string;
+      description?: string;
+      images: string[];
+      metadata: {
+        color: string;
+        product_id: number;
+      };
+      tax_code: string;
+    };
+    unit_amount: number;
+  }
+
+  interface LineItem {
+    quantity: number;
+    price_data: PriceData;
+  }
+
+  interface Product {
+    id: number;
+    line_item: LineItem[];
+  }
+
+  interface Checkout {
+    email: string;
+    products: Product[];
+  }
+  const handleCheckout = () => {
+    const data: any = {
+      email: decoded?.email,
+      products: map(carts, (item) => {
+        return {
+          id: item?.product?.id,
+          line_item: [
+            {
+              quantity: item?.quantity,
+              price_data: {
+                currency: 'usd',
+                product_data: {
+                  name: item?.product?.name,
+                  images: [item?.product?.thumbnail],
+                  metadata: {
+                    color: item?.product?.color,
+                    product_id: item?.product?.id,
+                  },
+                  tax_code: 'txcd_99999999',
+                },
+                unit_amount: item?.product?.price,
+              },
+            },
+          ],
+        };
+      }),
+    };
+
+    setTest(data);
+    if (token) {
+      checkoutMutation(data);
+    } else {
+      toast.error('You should login to checkout', { position: 'top-center' });
+    }
+  };
+
   return (
     <KsLayout title="Giỏ hàng">
+      {JSON.stringify(test)}
       <div className="kl-cart kl-container">
         <h2 className="heading">Cart</h2>
         {!isLoading && !isEmpty(carts) ? (
@@ -215,7 +288,9 @@ const Cart = () => {
                   </tr>
                 </tbody>
               </table>
-              <Button className="btn">Proceed To Checkout</Button>
+              <Button onClick={handleCheckout} className="btn">
+                Proceed To Checkout
+              </Button>
             </div>
           </div>
         ) : (

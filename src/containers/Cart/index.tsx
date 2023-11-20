@@ -16,6 +16,7 @@ import { toast } from 'react-toastify';
 import { cookieStorage } from '@utils/cookieStorage';
 import { useCheckoutMutation } from '../../query/checkout/checkoutMutation';
 import { decodeToken } from '@utils/decode';
+import { ICheckout } from '../../interfaces/checkout';
 
 const Cart = () => {
   const dispatch = useAppDispatch();
@@ -43,37 +44,8 @@ const Cart = () => {
     getCart();
   }, []);
 
-  interface PriceData {
-    currency: string;
-    product_data: {
-      name: string;
-      description?: string;
-      images: string[];
-      metadata: {
-        color: string;
-        product_id: number;
-      };
-      tax_code: string;
-    };
-    unit_amount: number;
-  }
-
-  interface LineItem {
-    quantity: number;
-    price_data: PriceData;
-  }
-
-  interface Product {
-    id: number;
-    line_item: LineItem[];
-  }
-
-  interface Checkout {
-    email: string;
-    products: Product[];
-  }
   const handleCheckout = () => {
-    const data: any = {
+    const data: ICheckout = {
       email: decoded?.email,
       products: map(carts, (item) => {
         return {

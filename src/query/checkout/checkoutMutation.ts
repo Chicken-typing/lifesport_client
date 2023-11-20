@@ -10,7 +10,7 @@ interface PriceData {
     images: string[];
     metadata: {
       color: string;
-      product_id: number;
+      product_id: string;
     };
     tax_code: string;
   };
@@ -23,11 +23,11 @@ interface LineItem {
 }
 
 interface Product {
-  id: number;
+  id: string;
   line_item: LineItem[];
 }
 
-const mutationCheckout = async (data: { email: string; products: any }) => {
+const mutationCheckout = async (data: { email: string; products: Product[] }) => {
   return await request.request({
     method: 'POST',
     url: '/orders/checkout',
@@ -36,5 +36,5 @@ const mutationCheckout = async (data: { email: string; products: any }) => {
 };
 
 export const useCheckoutMutation = () => {
-  return useMutation((data: { email: string; products: any }) => mutationCheckout(data));
+  return useMutation((data: { email: string; products: Product[] }) => mutationCheckout(data));
 };

@@ -1,0 +1,14 @@
+.content-success {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  .button {
+    padding: 10px;
+    background-color: $color-primary;
+    color: white;
+    border-radius: 10px;
+    margin-top: 40px;
+  }
+}

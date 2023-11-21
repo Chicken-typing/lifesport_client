@@ -57,6 +57,7 @@ const Cart = () => {
                 currency: 'usd',
                 product_data: {
                   name: item?.product?.name,
+                  description: 'string',
                   images: [item?.product?.thumbnail],
                   metadata: {
                     color: item?.product?.color,
@@ -74,7 +75,11 @@ const Cart = () => {
 
     setTest(data);
     if (token) {
-      checkoutMutation(data);
+      checkoutMutation(data)
+        .then((response: any) => {
+          console.log(response);
+        })
+        .catch((error) => console.log(error));
     } else {
       toast.error('You should login to checkout', { position: 'top-center' });
     }

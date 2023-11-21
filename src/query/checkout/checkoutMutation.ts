@@ -30,7 +30,7 @@ interface Product {
 const mutationCheckout = async (data: { email: string; products: Product[] }) => {
   return await request.request({
     method: 'POST',
-    url: '/orders/checkout',
+    url: '/order/checkout',
     data: data,
   });
 };

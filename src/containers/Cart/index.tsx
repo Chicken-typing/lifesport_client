@@ -8,7 +8,7 @@ import { ProductSlides } from '@components/compound';
 import Quantity from '@components/compound/Quantity';
 import { Button, KaImage, Link } from '@components/primitive';
 import { IProduct } from '@interfaces/product';
-import { map, size, isEmpty, times } from 'lodash';
+import { map, size, isEmpty, times, trim } from 'lodash';
 import { useEffect, useState } from 'react';
 import { INTERESTED } from './constant';
 import { Skeleton } from '@mui/material';
@@ -76,8 +76,13 @@ const Cart = () => {
       checkoutMutation(data)
         .then(async (response: any) => {
           const url = await response?.url;
+          if (response?.url) {
+            router.push(url);
+          } else {
+            console.error('Response does not contain a valid URL');
+          }
         })
-        .catch((error) => console.log(error));
+        .catch((error: any) => console.log(error));
     } else {
       toast.error('You should login to checkout', { position: 'top-center' });
     }

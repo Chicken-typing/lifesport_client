@@ -20,7 +20,7 @@ export interface LineItem {
 
 export interface Product {
   id: string;
-  line_item: LineItem[];
+  line_item: LineItem;
 }
 
 export interface ICheckout {

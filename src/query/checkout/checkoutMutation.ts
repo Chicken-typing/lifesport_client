@@ -24,7 +24,7 @@ interface LineItem {
 
 interface Product {
   id: string;
-  line_item: LineItem[];
+  line_item: LineItem;
 }
 
 const mutationCheckout = async (data: { email: string; products: Product[] }) => {

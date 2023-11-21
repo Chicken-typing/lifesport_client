@@ -17,16 +17,17 @@ import { cookieStorage } from '@utils/cookieStorage';
 import { useCheckoutMutation } from '../../query/checkout/checkoutMutation';
 import { decodeToken } from '@utils/decode';
 import { ICheckout } from '../../interfaces/checkout';
+import { useRouter } from 'next/router';
 
 const Cart = () => {
   const dispatch = useAppDispatch();
   const carts = useAppSelector(selectCart);
   const subTotal = useAppSelector(selectTotal);
-  const [test, setTest] = useState({});
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const token = cookieStorage?.getAccessTokenInfo();
   const decoded = decodeToken(token || '');
   const { mutateAsync: checkoutMutation } = useCheckoutMutation();
+  const router = useRouter();
 
   useEffect(() => {
     const getCart = async () => {
@@ -50,34 +51,31 @@ const Cart = () => {
       products: map(carts, (item) => {
         return {
           id: item?.product?.id,
-          line_item: [
-            {
-              quantity: item?.quantity,
-              price_data: {
-                currency: 'usd',
-                product_data: {
-                  name: item?.product?.name,
-                  description: 'string',
-                  images: [item?.product?.thumbnail],
-                  metadata: {
-                    color: item?.product?.color,
-                    product_id: item?.product?.id,
-                  },
-                  tax_code: 'txcd_99999999',
+          line_item: {
+            quantity: item?.quantity,
+            price_data: {
+              currency: 'usd',
+              product_data: {
+                name: item?.product?.name,
+                description: 'string',
+                images: [item?.product?.thumbnail],
+                metadata: {
+                  color: item?.product?.color,
+                  product_id: item?.product?.id,
                 },
-                unit_amount: item?.product?.price,
+                tax_code: 'txcd_99999999',
               },
+              unit_amount: item?.product?.price,
             },
-          ],
+          },
         };
       }),
     };
 
-    setTest(data);
     if (token) {
       checkoutMutation(data)
-        .then((response: any) => {
-          console.log(response);
+        .then(async (response: any) => {
+          const url = await response?.url;
         })
         .catch((error) => console.log(error));
     } else {
@@ -87,7 +85,6 @@ const Cart = () => {
 
   return (
     <KsLayout title="Giỏ hàng">
-      {JSON.stringify(test)}
       <div className="kl-cart kl-container">
         <h2 className="heading">Cart</h2>
         {!isLoading && !isEmpty(carts) ? (

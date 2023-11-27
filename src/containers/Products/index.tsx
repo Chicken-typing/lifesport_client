@@ -32,7 +32,11 @@ const Products = () => {
   const START = limit * (page - 1);
   const END = limit * page;
 
-  const { data: products, isFetching: isLoading, isError } = useProductsQuery({ page: 1, brand });
+  const {
+    data: products,
+    isFetching: isLoading,
+    isError,
+  } = useProductsQuery({ page: 1, filter_brand: brand });
   const { t } = useTranslation('products');
 
   const breadcrumbs: ReactNode[] = [
@@ -55,7 +59,7 @@ const Products = () => {
       title={t('title')}
       hasPageHeader
       pageHeaderTitle={t('header')}
-      pageHeaderBackground="https://can-am.brp.com/content/can-am-on-road/en_nz/models/can-am-electric-motorcycles/_jcr_content/root/imagecards.coreimg.jpeg/1678821073125/pulse.jpeg?imwidth=2048"
+      pageHeaderBackground="https://cdn.newswire.com/files/x/f7/68/4ab9c44ee75da3217d026a3c56d9.png"
       breadcrumbs={breadcrumbs}
       colorTitle={'white'}
       breadcrumbsColor="white"

@@ -4,7 +4,7 @@ import ThirdImage from '@svg/quantity/right-image.svg';
 
 export const SLIDES = [
   {
-    image: 'https://cleantechnica.com/files/2021/02/1612291662944blob.png',
+    image: 'https://cdn.motor1.com/images/mgl/JJl4E/s1/rgnt-no.-1---scrambler---left-side.jpg',
     listTitle: 'RIDE AND LIVE TODAY',
     caption: 'We ride together anytime, anywhere.',
     color: 'light',

@@ -26,7 +26,7 @@ const Cart = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const token = cookieStorage?.getAccessTokenInfo();
   const decoded = decodeToken(token || '');
-  const { mutateAsync: checkoutMutation } = useCheckoutMutation();
+  const { mutateAsync: checkoutMutation, isLoading: loadingMutation } = useCheckoutMutation();
   const router = useRouter();
 
   useEffect(() => {
@@ -267,7 +267,7 @@ const Cart = () => {
                   </tr>
                 </tbody>
               </table>
-              <Button onClick={handleCheckout} className="btn">
+              <Button isLoading={loadingMutation} onClick={handleCheckout} className="btn">
                 Proceed To Checkout
               </Button>
             </div>

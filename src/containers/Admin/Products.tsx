@@ -77,7 +77,7 @@ const Products = () => {
       try {
         const response: any = await request.request({
           method: 'POST',
-          url: '/products/delete',
+          url: '/products/admin/delete',
           data: { ids: selection },
         });
 
@@ -97,7 +97,7 @@ const Products = () => {
       try {
         const response: any = await request.request({
           method: 'GET',
-          url: '/products/update',
+          url: '/products/admin/update',
         });
 
         if (isEqual(response?.status, 'success')) router.reload();

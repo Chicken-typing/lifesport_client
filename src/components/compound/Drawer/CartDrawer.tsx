@@ -16,6 +16,11 @@ const CartDrawer = () => {
 
   const total = useAppSelector(selectTotal);
 
+  const handleViewCart = () => {
+    dispatch(closeDrawer());
+    router.push({ pathname: routes.CART });
+  };
+
   return (
     <div className="kl-cart-drawer">
       <div className="header">
@@ -77,12 +82,7 @@ const CartDrawer = () => {
                   })}
             </span>
           </div>
-          <Button
-            fullWidth
-            color="light"
-            className="button cart"
-            onClick={() => router.push({ pathname: routes.CART })}
-          >
+          <Button fullWidth color="light" className="button cart" onClick={handleViewCart}>
             View Cart
           </Button>
           <Button fullWidth className="button checkout">

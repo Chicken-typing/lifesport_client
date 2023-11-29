@@ -11,13 +11,12 @@ import MenuItem from '@mui/material/MenuItem';
 import { LIMIT } from '@utils/limit';
 import { routes } from '@utils/routes';
 import { ceil, isEmpty, map, size, times } from 'lodash';
+import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { ReactNode } from 'react';
-import { PRODUCT_BANNER, SHOW_ITEMS, SORT_ITEMS } from './constants';
-import Sidebar from './Sidebar';
-import { useEffect } from 'react';
-import useTranslation from 'next-translate/useTranslation';
 import { IHomeBanner } from '../Home/constants';
+import { SHOW_ITEMS, SORT_ITEMS } from './constants';
+import Sidebar from './Sidebar';
 
 const Products = () => {
   const router = useRouter();

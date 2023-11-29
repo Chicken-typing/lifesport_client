@@ -8,18 +8,41 @@ import EmailIcon from '@mui/icons-material/Email';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
 import TrafficIcon from '@mui/icons-material/Traffic';
-import { Box, IconButton, Typography, useTheme } from '@mui/material';
-
+import {
+  Box,
+  IconButton,
+  Typography,
+  useTheme,
+  InputLabel,
+  MenuItem,
+  FormControl,
+  Select,
+  SelectChangeEvent,
+} from '@mui/material';
 import dynamic from 'next/dynamic';
 import { FC } from 'react';
+import { useRevenueQuery } from '@/query/statistics/get-statistics';
+import { Interval, IStatus } from '@interfaces/statistics';
+import { useState } from 'react';
 
 const Admin = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
+  const [interval, setIntervals] = useState<Interval>('day');
+  const [status, setStatus] = useState<IStatus>('before');
+
+  const handleChangeInterval = (event: SelectChangeEvent) => {
+    setIntervals(event.target.value as Interval);
+  };
+
+  const handleChangeStatus = (event: SelectChangeEvent) => {
+    setStatus(event.target.value as IStatus);
+  };
+
   const ColumnChart = dynamic(() => import('@components/compound/Admin/ColumnChart'), {
     ssr: false,
-  }) as FC;
+  }) as FC<{ interval: Interval; status: IStatus }>;
 
   return (
     <AdminLayout title="Dashboard">
@@ -163,7 +186,7 @@ const Admin = () => {
                   justifyContent="space-between"
                   alignItems="center"
                 >
-                  <Box>
+                  <Box mb="30px">
                     <Typography variant="h5" fontWeight="600" color={colors.grey[100]}>
                       Revenue Generated
                     </Typography>
@@ -171,17 +194,45 @@ const Admin = () => {
                       $59,342.32
                     </Typography>
                   </Box>
-                  <Box>
-                    <IconButton>
-                      <DownloadOutlinedIcon
-                        sx={{ fontSize: '26px', color: colors.greenAccent[500] }}
-                      />
-                    </IconButton>
+
+                  <Box sx={{ minWidth: 120 }}>
+                    <FormControl fullWidth>
+                      <InputLabel id="demo-simple-select-label">Interval</InputLabel>
+                      <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={interval}
+                        label="Interval"
+                        onChange={handleChangeInterval}
+                      >
+                        <MenuItem value={'day'}>Day</MenuItem>
+                        <MenuItem value={'month'}>Month</MenuItem>
+                        <MenuItem value={'3-months'}>3-Months</MenuItem>
+                        <MenuItem value={'6-months'}>6-Months</MenuItem>
+                        <MenuItem value={'year'}>Year</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </Box>
+
+                  <Box sx={{ minWidth: 120 }}>
+                    <FormControl fullWidth>
+                      <InputLabel id="demo-simple-select-label">Status</InputLabel>
+                      <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={status}
+                        label="Status"
+                        onChange={handleChangeStatus}
+                      >
+                        <MenuItem value={'before'}>Before</MenuItem>
+                        <MenuItem value={'after'}>After</MenuItem>
+                      </Select>
+                    </FormControl>
                   </Box>
                 </Box>
 
                 <Box height="fit-content" m="-20px 0 0 0">
-                  {<ColumnChart />}
+                  {<ColumnChart interval={interval} status={status} />}
                 </Box>
               </Box>
 

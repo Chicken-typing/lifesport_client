@@ -27,6 +27,7 @@ const Cart = () => {
   const token = cookieStorage?.getAccessTokenInfo();
   const decoded = decodeToken(token || '');
   const { mutateAsync: checkoutMutation, isLoading: loadingMutation } = useCheckoutMutation();
+  const [test, setTest] = useState();
   const router = useRouter();
 
   useEffect(() => {
@@ -71,7 +72,6 @@ const Cart = () => {
         };
       }),
     };
-
     if (token) {
       checkoutMutation(data)
         .then(async (response: any) => {

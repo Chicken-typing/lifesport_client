@@ -23,3 +23,13 @@ export interface IQueryResultDetail<T> {
 export interface IQueryResultDetail<T> {
   data: T;
 }
+
+export interface IQueryResultStatistics {
+  status: string;
+  data: [
+    {
+      revenue: string;
+      revenue_interval: string;
+    },
+  ];
+}

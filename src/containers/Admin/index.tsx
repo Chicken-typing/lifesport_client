@@ -25,7 +25,7 @@ import { useRevenueQuery } from '@/query/statistics/get-statistics';
 import { Interval, IStatus } from '@interfaces/statistics';
 import { useState } from 'react';
 import PieChart from '@components/compound/Admin/PieChart';
-// import DateTimePicker from '@components/compound/Admin/DateTimePicker';
+import DateTimePicker from '@components/compound/Admin/DateTimePicker';
 const Admin = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -317,7 +317,7 @@ const Admin = () => {
                 <Typography variant="h5" fontWeight="600">
                   Campaign
                 </Typography>
-                {/* <DateTimePicker /> */}
+                <DateTimePicker />
               </Box>
 
               <Box min-height="fit-content" p="20px 20px">

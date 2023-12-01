@@ -36,8 +36,8 @@ export const useRevenueQuery = (options: {
 };
 
 const mutationSellingRate = async (data: {
-  start_date: string;
-  end_date: string;
+  start_date: number;
+  end_date: number;
   brands?: string[];
 }) => {
   return await request.request({
@@ -48,7 +48,7 @@ const mutationSellingRate = async (data: {
 };
 
 export const useSellingRateMutation = () => {
-  return useMutation((data: { start_date: string; end_date: string; brands?: string[] }) =>
+  return useMutation((data: { start_date: number; end_date: number; brands?: string[] }) =>
     mutationSellingRate(data),
   );
 };

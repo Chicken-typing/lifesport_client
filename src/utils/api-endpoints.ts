@@ -16,4 +16,5 @@ export const API_ENDPOINTS = {
   CONFIRM_OTP: '/users/register/confirm',
   CREATE_ACCOUNT: '/users/register/create',
   STATISTIC: '/statistic',
+  REVIEWS: '/users/review',
 } as const;

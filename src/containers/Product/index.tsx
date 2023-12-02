@@ -77,8 +77,6 @@ const Product = () => {
     inputProps: { 'aria-label': item },
   });
 
-  console.log(product?.item[0]?.quantity);
-
   return (
     <KsLayout title="Sản phẩm" hasPageHeader breadcrumbs={breadcrumbs}>
       <div className="kl-product kl-container">
@@ -319,14 +317,6 @@ const Product = () => {
                       {map(flatMapDepth(map(product?.item, (item) => item.brand)))}
                     </Link>
                     <br />
-                    {/* <span className="label">Tags: </span> */}
-                    {/* <div className="tags">
-                      {map(TAGS, (tag, idx) => (
-                        <Link href="/" title="" key={`footer-tags-${idx}`}>
-                          {tag},
-                        </Link>
-                      ))}
-                    </div> */}
                     <br />
                     <span className="label">Share: </span>
                     <div className="group">
@@ -368,20 +358,6 @@ const Product = () => {
             <div className="pane" hidden={activeTab !== 0}>
               <p>{map(flatMapDepth(map(product?.item, (item) => item.description)))}</p>
             </div>
-            {/* <div className="pane" hidden={activeTab !== 1}>
-              <table className="table-info">
-                <tbody className="body">
-                  {map(INFORMATION, ({ label, value }, idx) => (
-                    <tr className="rows" key={`info-${idx}`}>
-                      <th className="heading">{label}</th>
-                      <td className="content">
-                        <p className="text">{value}</p>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div> */}
             <div className="pane" hidden={activeTab !== 1}>
               <div className="comments">
                 {map(COMMENTS, ({ data, rating }, idx) => (
@@ -391,8 +367,9 @@ const Product = () => {
                 ))}
               </div>
               <CommentForm
+                product_id={Number(product?.item[0]?.id)}
                 rating
-                valueRating={0}
+                valueRating={3}
                 className="kl-product-review"
                 title="Add A Review"
               />

@@ -1,37 +1,37 @@
 import AdminLayout from '@/adminLayout';
 import { tokens } from '@/adminLayout/theme';
 import { mockTransactions } from '@components/compound/Admin/constants';
+import DateTimePicker from '@components/compound/Admin/DateTimePicker';
 import Introduce from '@components/compound/Admin/Introduce';
 import StatBox from '@components/compound/Admin/StatBox';
-import DownloadOutlinedIcon from '@mui/icons-material/DownloadOutlined';
+import { Interval, IStatus } from '@interfaces/statistics';
 import EmailIcon from '@mui/icons-material/Email';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
 import TrafficIcon from '@mui/icons-material/Traffic';
 import {
   Box,
-  IconButton,
-  Typography,
-  useTheme,
+  FormControl,
   InputLabel,
   MenuItem,
-  FormControl,
   Select,
   SelectChangeEvent,
+  Typography,
+  useTheme,
 } from '@mui/material';
+import { DateRange } from '@mui/x-date-pickers-pro';
+import { getUnixTime } from 'date-fns';
+import dayjs, { Dayjs } from 'dayjs';
 import dynamic from 'next/dynamic';
-import { FC } from 'react';
-import { useRevenueQuery } from '@/query/statistics/get-statistics';
-import { Interval, IStatus } from '@interfaces/statistics';
-import { useState } from 'react';
-import PieChart from '@components/compound/Admin/PieChart';
-import DateTimePicker from '@components/compound/Admin/DateTimePicker';
+import { FC, useState } from 'react';
+
 const Admin = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-
+  const today = dayjs();
   const [interval, setIntervals] = useState<Interval>('day');
   const [status, setStatus] = useState<IStatus>('before');
+  const [time, setTime] = useState<DateRange<Dayjs>>([today.startOf('week'), today]);
 
   const handleChangeInterval = (event: SelectChangeEvent) => {
     setIntervals(event.target.value as Interval);
@@ -47,7 +47,7 @@ const Admin = () => {
 
   const PieChart = dynamic(() => import('@components/compound/Admin/PieChart'), {
     ssr: false,
-  }) as FC;
+  }) as FC<{ time: DateRange<Dayjs> }>;
 
   return (
     <AdminLayout title="Dashboard">
@@ -302,7 +302,7 @@ const Admin = () => {
               sx={{
                 display: 'grid',
                 gridColumn: 'span 4',
-                gridRow: 'span 6',
+                gridRow: 'span 4',
                 backgroundColor: colors.primary[400],
                 gap: '30px',
               }}
@@ -317,11 +317,11 @@ const Admin = () => {
                 <Typography variant="h5" fontWeight="600">
                   Campaign
                 </Typography>
-                <DateTimePicker />
+                <DateTimePicker getState={setTime} />
               </Box>
 
               <Box min-height="fit-content" p="20px 20px">
-                {<PieChart />}
+                {<PieChart time={time} />}
               </Box>
             </Box>
 

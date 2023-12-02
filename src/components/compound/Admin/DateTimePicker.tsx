@@ -1,14 +1,17 @@
-import React, { useState } from 'react';
-import dayjs, { Dayjs } from 'dayjs';
-import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { Ranges } from '@interfaces/statistics';
+import { Box, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import { DateRange } from '@mui/x-date-pickers-pro';
 import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
-import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Box } from '@mui/material';
-export default function DateTimePicker() {
-  type Ranges = 'This Week' | 'This Month' | 'This Year';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import dayjs, { Dayjs } from 'dayjs';
+import React, { useState } from 'react';
+
+type GetStateFunction = (range: DateRange<Dayjs>) => void;
+
+export default function DateTimePicker({ getState }: { getState: GetStateFunction }) {
   const todays = dayjs();
+
   const [value, setValue] = React.useState<DateRange<Dayjs>>([todays.startOf('week'), todays]);
   const [range, setRange] = useState<Ranges>('This Week');
 
@@ -19,12 +22,15 @@ export default function DateTimePicker() {
     if (newRange === 'This Week') {
       const today = dayjs();
       setValue([today.startOf('week'), today]);
+      getState([today.startOf('week'), today]);
     } else if (newRange === 'This Month') {
       const today = dayjs();
       setValue([today.startOf('month'), today]);
+      getState([today.startOf('month'), today]);
     } else if (newRange === 'This Year') {
       const today = dayjs();
       setValue([today.startOf('year'), today]);
+      getState([today.startOf('year'), today]);
     }
   };
 
@@ -46,7 +52,13 @@ export default function DateTimePicker() {
           </Select>
         </FormControl>
       </Box>
-      <DateRangePicker value={value} onChange={(newValue) => setValue(newValue)} />
+      <DateRangePicker
+        value={value}
+        onChange={(newValue) => {
+          setValue(newValue);
+          getState(newValue);
+        }}
+      />
     </LocalizationProvider>
   );
 }

@@ -1,38 +1,38 @@
-import React from 'react';
-
 import { Pie, PieConfig } from '@ant-design/plots';
+import { DateRange } from '@mui/x-date-pickers-pro';
+import dayjs, { Dayjs } from 'dayjs';
+import { useSellingRateMutation } from '../../../query/statistics/get-statistics';
+import { getUnixTime } from 'date-fns';
+import { useEffect, useState } from 'react';
 
-function PieChart() {
-  const data = [
-    {
-      type: '分类一',
-      value: 27,
-    },
-    {
-      type: '分类二',
-      value: 25,
-    },
-    {
-      type: '分类三',
-      value: 18,
-    },
-    {
-      type: '分类四',
-      value: 15,
-    },
-    {
-      type: '分类五',
-      value: 10,
-    },
-    {
-      type: '其他',
-      value: 5,
-    },
-  ];
+function PieChart({ time }: { time: DateRange<Dayjs> }) {
+  const { mutateAsync: sellingRateMutation } = useSellingRateMutation();
+  const [datas, setDatas] = useState<Record<string, any>[]>([]);
+  useEffect(() => {
+    const firstDate = time[0];
+    const secondDate = time[1];
+
+    if (
+      firstDate &&
+      dayjs.isDayjs(firstDate) &&
+      firstDate.isValid() &&
+      secondDate &&
+      dayjs.isDayjs(secondDate) &&
+      secondDate.isValid()
+    ) {
+      const start_date = getUnixTime(firstDate.toDate());
+      const end_date = getUnixTime(secondDate.toDate());
+
+      // Gọi hook mutateAsync ở đây
+      sellingRateMutation({ start_date, end_date }).then((response: any) => {
+        setDatas(response?.data ? response?.data : {});
+      });
+    }
+  }, [time, sellingRateMutation]);
 
   const config: PieConfig = {
     appendPadding: 10,
-    data,
+    data: datas.map((item) => ({ type: item.brand, value: parseInt(item.total_sale_brand) })),
     angleField: 'value',
     colorField: 'type',
     radius: 0.8,

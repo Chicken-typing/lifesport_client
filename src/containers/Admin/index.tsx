@@ -1,36 +1,37 @@
 import AdminLayout from '@/adminLayout';
 import { tokens } from '@/adminLayout/theme';
 import { mockTransactions } from '@components/compound/Admin/constants';
+import DateTimePicker from '@components/compound/Admin/DateTimePicker';
 import Introduce from '@components/compound/Admin/Introduce';
 import StatBox from '@components/compound/Admin/StatBox';
-import DownloadOutlinedIcon from '@mui/icons-material/DownloadOutlined';
+import { Interval, IStatus } from '@interfaces/statistics';
 import EmailIcon from '@mui/icons-material/Email';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
 import TrafficIcon from '@mui/icons-material/Traffic';
 import {
   Box,
-  IconButton,
-  Typography,
-  useTheme,
+  FormControl,
   InputLabel,
   MenuItem,
-  FormControl,
   Select,
   SelectChangeEvent,
+  Typography,
+  useTheme,
 } from '@mui/material';
+import { DateRange } from '@mui/x-date-pickers-pro';
+import { getUnixTime } from 'date-fns';
+import dayjs, { Dayjs } from 'dayjs';
 import dynamic from 'next/dynamic';
-import { FC } from 'react';
-import { useRevenueQuery } from '@/query/statistics/get-statistics';
-import { Interval, IStatus } from '@interfaces/statistics';
-import { useState } from 'react';
+import { FC, useState } from 'react';
 
 const Admin = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-
+  const today = dayjs();
   const [interval, setIntervals] = useState<Interval>('day');
   const [status, setStatus] = useState<IStatus>('before');
+  const [time, setTime] = useState<DateRange<Dayjs>>([today.startOf('week'), today]);
 
   const handleChangeInterval = (event: SelectChangeEvent) => {
     setIntervals(event.target.value as Interval);
@@ -43,6 +44,10 @@ const Admin = () => {
   const ColumnChart = dynamic(() => import('@components/compound/Admin/ColumnChart'), {
     ssr: false,
   }) as FC<{ interval: Interval; status: IStatus }>;
+
+  const PieChart = dynamic(() => import('@components/compound/Admin/PieChart'), {
+    ssr: false,
+  }) as FC<{ time: DateRange<Dayjs> }>;
 
   return (
     <AdminLayout title="Dashboard">
@@ -159,7 +164,7 @@ const Admin = () => {
                 display: 'grid',
                 gridTemplateColumns: 'repeat(12, 1fr)',
                 gridColumn: 'span 4',
-                gridRow: 'span 2',
+                gridRow: 'span 4',
                 gridTemplateRows: 'repeat(auto, 1fr)',
                 gap: '20px',
                 '@media (max-width: 768px)': {
@@ -181,7 +186,7 @@ const Admin = () => {
               >
                 <Box
                   mt="25px"
-                  p="0 30px"
+                  p="30px 30px"
                   display="flex "
                   justifyContent="space-between"
                   alignItems="center"
@@ -231,7 +236,7 @@ const Admin = () => {
                   </Box>
                 </Box>
 
-                <Box height="fit-content" m="-20px 0 0 0">
+                <Box min-height="fit-content" p="20px 20px">
                   {<ColumnChart interval={interval} status={status} />}
                 </Box>
               </Box>
@@ -293,25 +298,32 @@ const Admin = () => {
             </Box>
 
             {/* ROW 3 */}
-            {/* <Box
+            <Box
               sx={{
+                display: 'grid',
                 gridColumn: 'span 4',
-                gridRow: 'span 2',
+                gridRow: 'span 4',
                 backgroundColor: colors.primary[400],
-                p: '30px',
+                gap: '30px',
               }}
             >
-              <Typography variant="h5" fontWeight="600">
-                Campaign
-              </Typography>
-              <Box display="flex" flexDirection="column" alignItems="center" mt="25px">
-                <ProgressCircle size="125" />
-                <Typography variant="h5" color={colors.greenAccent[500]} sx={{ mt: '15px' }}>
-                  $48,352 revenue generated
+              <Box
+                mt="25px"
+                p="30px 30px 0 30px"
+                display="flex "
+                justifyContent="space-between"
+                alignItems="center"
+              >
+                <Typography variant="h5" fontWeight="600">
+                  Campaign
                 </Typography>
-                <Typography>Includes extra misc expenditures and costs</Typography>
+                <DateTimePicker getState={setTime} />
               </Box>
-            </Box> */}
+
+              <Box min-height="fit-content" p="20px 20px">
+                {<PieChart time={time} />}
+              </Box>
+            </Box>
 
             {/* <Box
               sx={{

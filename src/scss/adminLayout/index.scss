@@ -1,8 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap');
 
-.kl-admin-container,
-.kl-admin {
-  height: 100%;
+.kl-admin-container {
   ::-webkit-scrollbar-track {
     background: transparent;
   }
@@ -11,13 +9,21 @@
     background: $color-black-fill;
   }
 
-  flex: 1;
-
   font-family: 'Source Sans Pro', sans-serif;
 }
 
+.kl-admin-container {
+  max-height: 100vh;
+  overflow-y: hidden;
+  display: flex;
+  position: relative;
+}
+
 .kl-admin {
-  padding: 20px;
+  padding: 0 20px;
+  min-height: fit-content;
+  overflow-y: scroll;
+  flex: 1;
 
   .action-group {
     @include flex-center-ver;
@@ -30,9 +36,8 @@
   }
 }
 
-.kl-admin-container {
-  display: flex;
-  position: relative;
+.kl-admin-dashboard {
+  min-height: fit-content;
 }
 
 .pro-sidebar {
@@ -71,4 +76,8 @@
 
 .MuiBox-root {
   margin: 0 !important;
+}
+
+.MuiDateRangePickerDay-root {
+  // background-color: $white;
 }

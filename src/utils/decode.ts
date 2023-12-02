@@ -5,7 +5,7 @@ export function decodeToken(token: string) {
       const decoded: any = jwtDecode(token);
       return decoded;
     }
-  } catch (error) {
+  } catch (error: any) {
     throw new Error('JWT verification failed: ' + error.message);
   }
 }

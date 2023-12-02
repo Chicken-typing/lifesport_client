@@ -132,7 +132,7 @@ const LoginForm: FC<ILoginFormProps> = ({ className }) => {
         const error = await response.json();
         throw new Error(error.message);
       }
-    } catch (error) {
+    } catch (error: any) {
       alert(error?.message || 'Something went wrong');
     } finally {
       recaptchaRef?.current?.reset();

@@ -1,13 +1,10 @@
 import { API_ENDPOINTS } from '@/utils/api-endpoints';
-import { useMutation } from '@tanstack/react-query';
+import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query';
 import request from '@utils/request';
+import { fetchProduct } from '../products/get-product';
+import { useProductQuery } from '@/query/products/get-product';
 
-const mutatioReviews = async (data: {
-  user_id: string;
-  product_id: number;
-  rate: number;
-  comment?: string;
-}) => {
+const mutatioReviews = async (data: { product_id: number; rate: number; comment?: string }) => {
   return await request.request({
     method: 'POST',
     url: API_ENDPOINTS.REVIEWS,
@@ -16,8 +13,14 @@ const mutatioReviews = async (data: {
 };
 
 export const useReviewMutation = () => {
+  const queryClient = useQueryClient();
+
   return useMutation(
-    (data: { user_id: string; product_id: number; rate: number; comment?: string }) =>
-      mutatioReviews(data),
+    (data: { product_id: number; rate: number; comment?: string }) => mutatioReviews(data),
+    {
+      onSuccess: (id) => {
+        queryClient.invalidateQueries([API_ENDPOINTS.PRODUCT, { id: id }]);
+      },
+    },
   );
 };

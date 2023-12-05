@@ -25,12 +25,11 @@ const CommentForm: FC<ICommentFormProp> = ({
   const [value, setValue] = useState<number>(valueRating as number | 0);
   const [text, setText] = useState<string>('');
   const token = cookieStorage?.getAccessTokenInfo();
-  const decoded = decodeToken(token || '');
   const { mutateAsync: reviewMutation } = useReviewMutation();
+
   const handleSubmit = () => {
     if (token) {
-      const user_id: string = decoded?.id;
-      reviewMutation({ user_id, product_id, rate: value, comment: text }).then((response: any) => {
+      reviewMutation({ product_id, rate: value, comment: text }).then((response: any) => {
         console.log(response);
       });
     } else {

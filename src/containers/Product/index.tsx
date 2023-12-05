@@ -5,10 +5,10 @@ import { openModal } from '@/store/modals/slice';
 import { CommentCard, ProductSlides, Rating } from '@components/compound';
 import { Badge, Button, KaImage, Label, Link } from '@components/primitive';
 import CommentForm from '@containers/Blog/CommentForm';
-import { IProduct } from '@interfaces/product';
+import { IComment, IProduct } from '@interfaces/product';
 import { routes } from '@utils/routes';
 import classNames from 'classnames';
-import { isEmpty, map, size, flatMapDepth, filter } from 'lodash';
+import { isEmpty, map, size, flatMapDepth, filter, isNull } from 'lodash';
 import { ChangeEvent, FocusEvent, ReactNode, useState, useEffect } from 'react';
 import AccordionTab from './AccordionTab';
 import { COMMENTS, IMAGES, INFORMATION, NET_WEIGHT, PRODUCTS, SHARE, TAGS } from './constants';
@@ -33,9 +33,10 @@ const breadcrumbs: ReactNode[] = [
 const Product = () => {
   const [quantity, setQuantity] = useState<number>(1);
   const [activeTab, setActiveTab] = useState<number>(0);
+
   const router = useRouter();
   const { query } = router;
-  const id = String(query?.id) || '';
+  const id = Number(query?.id) || 0;
   const dispatch = useAppDispatch();
 
   const handleMinus = () => setQuantity(quantity === 1 ? 1 : quantity - 1);
@@ -57,12 +58,17 @@ const Product = () => {
   } = useProductQuery({ id });
 
   const [selectedValue, setSelectedValue] = useState('');
+  const [reviews, setReviews] = useState<IComment[]>([]);
 
   useEffect(() => {
     if (!product?.item[0]?.color[0]) {
       return;
     }
     setSelectedValue(product?.item[0]?.color[0] || '');
+    if (!isEmpty(flatMapDepth(map(product?.item, (item) => item?.comments)))) {
+      // Tạo một bản sao mới của mảng comments và cập nhật state reviews
+      setReviews([...flatMapDepth(map(product?.item, (item) => item?.comments))]);
+    }
   }, [product]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -115,9 +121,10 @@ const Product = () => {
                     <div className="group">
                       {map(
                         flatMapDepth(
-                          map(product?.item, (item) =>
+                          map(product?.item, (item, idx) =>
                             item.percent_off ? (
                               <Badge
+                                key={idx}
                                 className="badge"
                                 label={`${item?.percent_off * 100}% Discount`}
                                 color="danger"
@@ -131,8 +138,9 @@ const Product = () => {
 
                       {map(
                         flatMapDepth(
-                          map(product?.item, (item) => (
+                          map(product?.item, (item, idx) => (
                             <Badge
+                              key={idx}
                               className="badge"
                               label={item?.quantity ? 'in_stock' : 'out_of_stock'}
                               color="primary"
@@ -147,7 +155,10 @@ const Product = () => {
 
                   <div className="rating">
                     {/* <Rating value={Number(Math.ceil(product?.item?.rating || 5))} readOnly /> */}
-                    <span className="count">(5 Reviews) | </span>
+                    <span className="count">
+                      {`${size(flatMapDepth(map(product?.item, (item) => item.comments)))} Reviews`}{' '}
+                      |
+                    </span>
                     <span className="number">SKU: HCMUTE2023</span>
                   </div>
 
@@ -283,7 +294,7 @@ const Product = () => {
                         addProduct({
                           quantity: quantity,
                           product: {
-                            id: product?.item[0]?.id || '',
+                            id: product?.item[0]?.id || 0,
                             name: product?.item[0]?.name || '',
                             price: product?.item[0]?.sale_off
                               ? product?.item[0]?.sale_off
@@ -359,17 +370,34 @@ const Product = () => {
               <p>{map(flatMapDepth(map(product?.item, (item) => item.description)))}</p>
             </div>
             <div className="pane" hidden={activeTab !== 1}>
-              <div className="comments">
-                {map(COMMENTS, ({ data, rating }, idx) => (
-                  <div key={`comment-${idx}`} className="kl-product-comment">
-                    <CommentCard className="card" data={data} hasRating valueRating={rating} />
-                  </div>
-                ))}
-              </div>
+              {!isEmpty(reviews) && (
+                <div className="comments">
+                  {map(reviews, (commentData, idx) => {
+                    // Kiểm tra xem commentData có tồn tại và không phải là null không
+                    if (commentData && commentData.rate !== null) {
+                      const data = {
+                        rate: commentData.rate,
+                        comment: commentData.comment,
+                        created_at: commentData.created_at,
+                        user_name: commentData.user_name,
+                      };
+
+                      return (
+                        !isEmpty(data) && (
+                          <div key={`comment-${idx}`} className="kl-product-comment">
+                            <CommentCard className="card" data={data} />
+                          </div>
+                        )
+                      );
+                    }
+                  })}
+                </div>
+              )}
+
               <CommentForm
-                product_id={Number(product?.item[0]?.id)}
+                product_id={product?.item[0]?.id ? product?.item[0]?.id : 0}
                 rating
-                valueRating={3}
+                valueRating={0}
                 className="kl-product-review"
                 title="Add A Review"
               />

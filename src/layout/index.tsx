@@ -54,8 +54,8 @@ const KsLayout: FC<IKsLayoutProps> = ({
       <NextSeo
         title={title}
         description={description}
-        canonical="https://kytesoft.com/"
-        defaultTitle="Kytesoft"
+        canonical="https://lifesport-client.vercel.app/"
+        defaultTitle="LifeTravel"
         openGraph={og}
       />
 

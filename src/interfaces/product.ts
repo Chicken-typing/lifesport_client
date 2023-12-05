@@ -1,6 +1,6 @@
 export interface IProduct {
   rating?: number;
-  id: string;
+  id: number;
   appId: string;
   name: string;
   slug: string;
@@ -34,8 +34,15 @@ export interface IProduct {
   amount_off?: number;
   quantityCart?: number;
   color: string[];
+  comments: IComment[];
 }
 
+export interface IComment {
+  rate: number;
+  comment?: string;
+  user_name: string;
+  created_at: string;
+}
 export interface IProductDetail {
   item: [
     {

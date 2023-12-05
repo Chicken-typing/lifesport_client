@@ -12,7 +12,7 @@ import { Label } from '@components/primitive';
 
 interface IQuantityProps {
   quantity: number;
-  id: string;
+  id: number;
   color: string;
   disabled?: boolean;
   hasLabel?: boolean;
@@ -27,12 +27,12 @@ const Quantity: FC<IQuantityProps> = ({
 }) => {
   const dispatch = useAppDispatch();
 
-  const handleBlurQuantity = (id: string, color: string) => (e: FocusEvent<HTMLInputElement>) => {
+  const handleBlurQuantity = (id: number, color: string) => (e: FocusEvent<HTMLInputElement>) => {
     dispatch(blurQuantity({ quantity: Number(e.target.value), id: id, color: color }));
   };
 
   const handleChangeQuantity =
-    (id: string, color: string) => (e: ChangeEvent<HTMLInputElement>) => {
+    (id: number, color: string) => (e: ChangeEvent<HTMLInputElement>) => {
       dispatch(changeQuantity({ quantity: Number(e.target.value), id: id, color: color }));
     };
 

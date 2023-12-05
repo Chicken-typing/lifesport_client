@@ -160,7 +160,7 @@ const Blog = () => {
             <div className="kl-blog-comments">
               <div className="kl-container content">
                 <h2 className="title">Comment</h2>
-                <div className="comments">
+                {/* <div className="comments">
                   {map(COMMENTS, ({ data, reply }, idx) => (
                     <div key={`comment-${idx}`} className="comment">
                       <CommentCard data={data} />
@@ -172,7 +172,7 @@ const Blog = () => {
                     </div>
                   ))}
                 </div>
-                <CommentForm title="Leave A Reply" />
+                <CommentForm title="Leave A Reply" /> */}
               </div>
             </div>
           </div>

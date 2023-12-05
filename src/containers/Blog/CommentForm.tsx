@@ -3,16 +3,40 @@ import { Button, Label } from '@components/primitive';
 import { Checkbox, FormControlLabel, FormGroup, Rating } from '@mui/material';
 import classNames from 'classnames';
 import { FC, useState } from 'react';
-
+import { useReviewMutation } from '@/query/reviews/reviewMutation';
+import { cookieStorage } from '@utils/cookieStorage';
+import { decodeToken } from '@utils/decode';
+import { toast } from 'react-toastify';
 export interface ICommentFormProp {
   title: string;
   className?: string;
   rating?: boolean;
   valueRating?: number;
+  product_id: number;
 }
 
-const CommentForm: FC<ICommentFormProp> = ({ title, className, rating, valueRating }) => {
+const CommentForm: FC<ICommentFormProp> = ({
+  title,
+  className,
+  rating,
+  valueRating,
+  product_id,
+}) => {
   const [value, setValue] = useState<number>(valueRating as number | 0);
+  const [text, setText] = useState<string>('');
+  const token = cookieStorage?.getAccessTokenInfo();
+  const { mutateAsync: reviewMutation, isLoading } = useReviewMutation();
+
+  const handleSubmit = () => {
+    if (token) {
+      reviewMutation({ product_id, rate: value, comment: text }).then((response: any) => {
+        setText('');
+        setValue(0);
+      });
+    } else {
+      toast.error('You should sign in to reviews', { position: 'top-center' });
+    }
+  };
   return (
     <div className={classNames('kl-blog-comment-form', className)}>
       <div className="wrapper">
@@ -43,6 +67,8 @@ const CommentForm: FC<ICommentFormProp> = ({ title, className, rating, valueRati
         )}
         <div className="form col-12 col-lg-12">
           <GroupTextarea
+            value={text}
+            onChange={({ value }) => setText(String(value))}
             placeholder="Comment"
             textareaClassName="kl-blog-field"
             name="comment"
@@ -50,7 +76,7 @@ const CommentForm: FC<ICommentFormProp> = ({ title, className, rating, valueRati
             fadePlaceholderShown
           />
         </div>
-        <div className="form  col-md-4 col-lg-4 col-sm-12">
+        {/* <div className="form  col-md-4 col-lg-4 col-sm-12">
           <GroupInput
             type="text"
             placeholder="Your Name *"
@@ -76,12 +102,14 @@ const CommentForm: FC<ICommentFormProp> = ({ title, className, rating, valueRati
             className="icon"
             label="Save my name, email, and website in this browser for the next time I comment"
           />
-        </FormGroup>
+        </FormGroup> */}
         <Button
+          onClick={handleSubmit}
           variant="outlined"
           endAdornment={<i className="fa-solid fa-chevron-right icon"></i>}
           color="primary"
           className="button"
+          isLoading={isLoading}
         >
           Post Comment
         </Button>

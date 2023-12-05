@@ -5,7 +5,7 @@ import { isEqual } from 'lodash';
 import ConfirmOTP from './ConfirmOTP';
 import useTranslation from 'next-translate/useTranslation';
 const Register = () => {
-  const [step, setStep] = useState<number>(3);
+  const [step, setStep] = useState<number>(1);
 
   const handleNextStep = () => {
     setStep(step + 1);

@@ -164,7 +164,7 @@ export const INTERESTED = [
     name: 'Cinnamon Horchata Organic Green and Black Tea',
     price: 50,
     quantity: 5,
-    id: '1',
+    id: 1,
     rating: 4,
     discount: 30,
     images: [
@@ -175,7 +175,7 @@ export const INTERESTED = [
   {
     name: 'Cinnamon Horchata Organic Green and Black Tea',
     price: 50,
-    id: '2',
+    id: 2,
     rating: 4,
     quantity: 3,
     discount: 30,
@@ -187,7 +187,7 @@ export const INTERESTED = [
   {
     name: 'Cinnamon Horchata Organic Green and Black Tea',
     price: 50,
-    id: '3',
+    id: 3,
     rating: 4,
     quantity: 10,
     discount: 30,
@@ -199,7 +199,7 @@ export const INTERESTED = [
   {
     name: 'Cinnamon Horchata Organic Green and Black Tea',
     price: 50,
-    id: '4',
+    id: 4,
     quantity: 2,
     rating: 4,
     discount: 50,
@@ -211,7 +211,7 @@ export const INTERESTED = [
   {
     name: 'Cinnamon Horchata Organic Green and Black Tea',
     price: 50,
-    id: '5',
+    id: 5,
     rating: 4,
     discount: 50,
     images: [
@@ -222,7 +222,7 @@ export const INTERESTED = [
   {
     name: 'Cinnamon Horchata Organic Green and Black Tea',
     price: 50,
-    id: '6',
+    id: 6,
     rating: 4,
     discount: 50,
     images: [
@@ -233,7 +233,7 @@ export const INTERESTED = [
   {
     name: 'Cinnamon Horchata Organic Green and Black Tea',
     price: 50,
-    id: '7',
+    id: 7,
     rating: 4,
     discount: 50,
     images: [

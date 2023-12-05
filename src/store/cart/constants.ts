@@ -2,7 +2,7 @@ export interface CartDetail {
   product: {
     name: string;
     price: number;
-    id: string;
+    id: number;
     quantity: number;
     thumbnail: string;
     color: string;

@@ -8,7 +8,7 @@ interface PayloadType {
   product: {
     name: string;
     price: number;
-    id: string;
+    id: number;
     quantity: number;
     thumbnail: string;
     color: string;
@@ -48,7 +48,7 @@ const cartSlice = createSlice({
       localStorage.setItem('carts', JSON.stringify(state));
     },
 
-    removeProduct: (state, action: PayloadAction<{ id: string; color: string }>) => {
+    removeProduct: (state, action: PayloadAction<{ id: number; color: string }>) => {
       let newCart = filter(
         state,
         ({ product }) => product.id !== action.payload.id || product.color !== action.payload.color,
@@ -57,7 +57,7 @@ const cartSlice = createSlice({
       return newCart;
     },
 
-    increment: (state, action: PayloadAction<{ id: string; color: string }>) => {
+    increment: (state, action: PayloadAction<{ id: number; color: string }>) => {
       const updateCart = map(state, (item) =>
         item.product.id === action.payload.id && item.product.color === action.payload.color
           ? {
@@ -71,7 +71,7 @@ const cartSlice = createSlice({
       return updateCart;
     },
 
-    decrement: (state, action: PayloadAction<{ id: string; color: string }>) => {
+    decrement: (state, action: PayloadAction<{ id: number; color: string }>) => {
       const updateCart = map(state, (item) =>
         item.product.id === action.payload.id && item.product.color === action.payload.color
           ? {
@@ -87,7 +87,7 @@ const cartSlice = createSlice({
 
     changeQuantity: (
       state,
-      action: PayloadAction<{ id: string; quantity: number; color: string }>,
+      action: PayloadAction<{ id: number; quantity: number; color: string }>,
     ) => {
       const updateCart = map(state, (item) =>
         item.product.id === action.payload.id && item.product.color === action.payload.color
@@ -100,7 +100,7 @@ const cartSlice = createSlice({
 
     blurQuantity: (
       state,
-      action: PayloadAction<{ id: string; quantity: number; color: string }>,
+      action: PayloadAction<{ id: number; quantity: number; color: string }>,
     ) => {
       const currentIndex = findIndex(
         state,

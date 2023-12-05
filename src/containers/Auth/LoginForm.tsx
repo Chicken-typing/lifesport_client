@@ -39,6 +39,7 @@ const LoginForm: FC<ILoginFormProps> = ({ className }) => {
         if (token) {
           const decoded: any = decodeToken(token);
           if (decoded?.role === 'master_admin' || decoded?.role === 'admin') {
+            dispatch(login(decoded));
             router.push({
               pathname: '/admin',
             });
@@ -140,14 +141,6 @@ const LoginForm: FC<ILoginFormProps> = ({ className }) => {
   };
 
   const { t } = useTranslation('login');
-
-  useEffect(() => {
-    if (loading) {
-      document.body.classList.add('no-scroll');
-    } else {
-      document.body.classList.remove('no-scroll');
-    }
-  }, [loading]);
 
   return (
     <form className={classNames('kl-login-form', className)} onSubmit={handleSubmit}>

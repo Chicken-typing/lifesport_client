@@ -54,7 +54,7 @@ const Admin = () => {
       <div className="kl-admin-dashboard">
         <Box display="flex" m="20px" flexDirection="column" width="100%">
           {/* HEADER */}
-          <Box display="flex" justifyContent="flex-start" alignItems="center">
+          <Box mb="30px" display="flex" justifyContent="flex-start" alignItems="center">
             <Introduce title="DASHBOARD" subtitle="Welcome to your dashboard" />
           </Box>
 
@@ -88,6 +88,7 @@ const Admin = () => {
             >
               <Box
                 sx={{
+                  paddingInline: '10px',
                   gridColumn: 'span 1',
                   backgroundColor: colors.primary[400],
                   display: 'flex',
@@ -105,6 +106,7 @@ const Admin = () => {
               </Box>
               <Box
                 sx={{
+                  paddingInline: '10px',
                   gridColumn: 'span 1',
                   backgroundColor: colors.primary[400],
                   display: 'flex',
@@ -124,6 +126,7 @@ const Admin = () => {
               </Box>
               <Box
                 sx={{
+                  paddingInline: '10px',
                   gridColumn: 'span 1',
                   backgroundColor: colors.primary[400],
                   display: 'flex',
@@ -141,6 +144,7 @@ const Admin = () => {
               </Box>
               <Box
                 sx={{
+                  paddingInline: '10px',
                   gridColumn: 'span 1',
                   backgroundColor: colors.primary[400],
                   display: 'flex',

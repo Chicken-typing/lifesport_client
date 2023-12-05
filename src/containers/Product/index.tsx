@@ -65,10 +65,11 @@ const Product = () => {
       return;
     }
     setSelectedValue(product?.item[0]?.color[0] || '');
-    if (!isEmpty(flatMapDepth(map(product?.item, (item) => item?.comments)))) {
-      // Tạo một bản sao mới của mảng comments và cập nhật state reviews
-      setReviews([...flatMapDepth(map(product?.item, (item) => item?.comments))]);
-    }
+
+    // if (!isEmpty(flatMapDepth(map(product?.item, (item) => item?.comments)))) {
+
+    //   setReviews([...flatMapDepth(map(product?.item, (item) => item?.comments))]);
+    // }
   }, [product]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -370,27 +371,30 @@ const Product = () => {
               <p>{map(flatMapDepth(map(product?.item, (item) => item.description)))}</p>
             </div>
             <div className="pane" hidden={activeTab !== 1}>
-              {!isEmpty(reviews) && (
+              {!isEmpty(flatMapDepth(map(product?.item, (item) => item?.comments))) && (
                 <div className="comments">
-                  {map(reviews, (commentData, idx) => {
-                    // Kiểm tra xem commentData có tồn tại và không phải là null không
-                    if (commentData && commentData.rate !== null) {
-                      const data = {
-                        rate: commentData.rate,
-                        comment: commentData.comment,
-                        created_at: commentData.created_at,
-                        user_name: commentData.user_name,
-                      };
+                  {map(
+                    flatMapDepth(map(product?.item, (item) => item?.comments)),
+                    (commentData, idx) => {
+                      // Kiểm tra xem commentData có tồn tại và không phải là null không
+                      if (commentData && commentData.rate !== null) {
+                        const data = {
+                          rate: commentData.rate,
+                          comment: commentData.comment,
+                          created_at: commentData.created_at,
+                          user_name: commentData.user_name,
+                        };
 
-                      return (
-                        !isEmpty(data) && (
-                          <div key={`comment-${idx}`} className="kl-product-comment">
-                            <CommentCard className="card" data={data} />
-                          </div>
-                        )
-                      );
-                    }
-                  })}
+                        return (
+                          !isEmpty(data) && (
+                            <div key={`comment-${idx}`} className="kl-product-comment">
+                              <CommentCard className="card" data={data} />
+                            </div>
+                          )
+                        );
+                      }
+                    },
+                  )}
                 </div>
               )}
 

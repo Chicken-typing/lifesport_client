@@ -18,8 +18,8 @@ export const useReviewMutation = () => {
   return useMutation(
     (data: { product_id: number; rate: number; comment?: string }) => mutatioReviews(data),
     {
-      onSuccess: (id) => {
-        queryClient.invalidateQueries([API_ENDPOINTS.PRODUCT, { id: id }]);
+      onSuccess: () => {
+        queryClient.invalidateQueries([API_ENDPOINTS.PRODUCT]);
       },
     },
   );

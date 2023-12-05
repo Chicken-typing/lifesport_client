@@ -25,12 +25,13 @@ const CommentForm: FC<ICommentFormProp> = ({
   const [value, setValue] = useState<number>(valueRating as number | 0);
   const [text, setText] = useState<string>('');
   const token = cookieStorage?.getAccessTokenInfo();
-  const { mutateAsync: reviewMutation } = useReviewMutation();
+  const { mutateAsync: reviewMutation, isLoading } = useReviewMutation();
 
   const handleSubmit = () => {
     if (token) {
       reviewMutation({ product_id, rate: value, comment: text }).then((response: any) => {
-        console.log(response);
+        setText('');
+        setValue(0);
       });
     } else {
       toast.error('You should sign in to reviews', { position: 'top-center' });
@@ -108,6 +109,7 @@ const CommentForm: FC<ICommentFormProp> = ({
           endAdornment={<i className="fa-solid fa-chevron-right icon"></i>}
           color="primary"
           className="button"
+          isLoading={isLoading}
         >
           Post Comment
         </Button>

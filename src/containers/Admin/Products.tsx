@@ -117,7 +117,7 @@ const Products = () => {
           onClose={handleCloseDialog}
           aria-labelledby="responsive-dialog-title"
         >
-          <DialogTitle id="responsive-dialog-title">{'Dcm mày có muốn xóa không ?'}</DialogTitle>
+          <DialogTitle id="responsive-dialog-title">{'Do you want to delete it ?'}</DialogTitle>
           <DialogContent>
             <DialogContentText>{JSON.stringify(selection)}</DialogContentText>
           </DialogContent>

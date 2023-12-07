@@ -28,8 +28,6 @@ const Account = () => {
     retry: 1,
   });
 
-  console.log(users);
-
   const columns: any[] = [
     { field: 'id', headerName: 'ID' },
     {

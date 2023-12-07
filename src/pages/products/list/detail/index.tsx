@@ -16,7 +16,6 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 
   // Sử dụng prefetchQuery để tải trước dữ liệu cho trang chi tiết sản phẩm
   await queryClient.prefetchQuery([API_ENDPOINTS.PRODUCT, { id }], fetchProduct);
-  // await queryClient.invalidateQueries;
 
   return {
     props: {

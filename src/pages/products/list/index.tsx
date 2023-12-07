@@ -1,28 +1,25 @@
 import Products from '@containers/Products';
-import { GetStaticProps } from 'next';
-import { QueryClient, dehydrate } from '@tanstack/react-query';
-import { API_ENDPOINTS } from '@utils/api-endpoints';
-import { LIMIT } from '@utils/limit';
-import { fetchCategories } from '@/query/productCategories/getProductCategories';
+
+import { dehydrate, QueryClient } from '@tanstack/react-query';
+
+import { fetchProducts, prefetchProductsQuery } from '@/query/products/get-products';
 import { GetServerSideProps } from 'next';
+import { API_ENDPOINTS } from '@utils/api-endpoints';
 
 const index = () => <Products />;
 
-// export const getServerSideProps: GetServerSideProps = async () => {
-//   const queryClient = new QueryClient();
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+  const page = Number(params?.page) | 1;
+  const limit = Number(params?.limit) | 4;
+  const queryClient = new QueryClient();
 
-//   await queryClient.prefetchQuery(
-//     [API_ENDPOINTS.PRODUCT_CATEGORIES, { limit: LIMIT.PRODUCTS_CATEGORY, page: 1 }],
-//     fetchCategories,
-//     { retry: 1 },
-//   );
+  await queryClient.prefetchQuery([API_ENDPOINTS.PRODUCTS, { page, limit }], fetchProducts);
 
-//   return {
-//     props: {
-//       dehydratedState: dehydrate(queryClient),
-//     },
-//     revalidate: 60,
-//   };
-// };
+  return {
+    props: {
+      dehydratedState: dehydrate(queryClient),
+    },
+  };
+};
 
 export default index;

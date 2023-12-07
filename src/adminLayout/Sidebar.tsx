@@ -101,7 +101,7 @@ const Sidebar = () => {
 
               <Item title="Managed Account" to="/admin/account" icon={<PeopleOutlinedIcon />} />
               <Item title="Managed Product" to="/admin/products" icon={<ContactsOutlinedIcon />} />
-              <Item title="Invoices Balances" to="/invoices" icon={<ReceiptOutlinedIcon />} />
+              <Item title="Invoices Balances" to="/admin/invoices" icon={<ReceiptOutlinedIcon />} />
 
               {/* <Typography variant="h6" color={colors.grey[300]} sx={{ m: '15px 0 5px 20px' }}>
                 Pages

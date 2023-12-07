@@ -28,3 +28,7 @@ export const useProductsQuery = (
   useQuery([API_ENDPOINTS.PRODUCTS, { ...options }], fetchProducts, {
     retry: 1,
   });
+
+export const prefetchProductsQuery = async (queryClient: any, options?: any) => {
+  await queryClient.prefetchQuery(fetchProducts(options));
+};

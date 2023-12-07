@@ -57,7 +57,6 @@ const Cart = () => {
               currency: 'usd',
               product_data: {
                 name: item?.product?.name,
-                description: 'string',
                 images: [item?.product?.thumbnail],
                 metadata: {
                   color: item?.product?.color,

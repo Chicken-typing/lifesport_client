@@ -21,12 +21,12 @@ interface ILoginFormProps {
 }
 
 const LoginForm: FC<ILoginFormProps> = ({ className }) => {
-  const { mutateAsync: loginMutation } = useLoginMutation();
+  const { mutateAsync: loginMutation, isLoading } = useLoginMutation();
   const router = useRouter();
   const auth = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
   const [disabled, setDisabled] = useState<boolean>(true);
-  const [loading, setLoading] = useState<boolean>(false);
+  // const [loading, setLoading] = useState<boolean>(false);
 
   const getResponse = async (response: any) => {
     try {
@@ -51,10 +51,8 @@ const LoginForm: FC<ILoginFormProps> = ({ className }) => {
           }
         }
       }
-      setLoading(true);
     } catch (error) {
       console.error('Error fetching cart data:', error);
-      setLoading(false);
     }
   };
 
@@ -197,11 +195,16 @@ const LoginForm: FC<ILoginFormProps> = ({ className }) => {
           onChange={onReCAPTCHAChange}
         />
 
-        <Button disabled={disabled} type="submit" fullWidth className="button">
+        <Button
+          isLoading={isLoading}
+          disabled={disabled}
+          type="submit"
+          fullWidth
+          className="button"
+        >
           {t('button')}
         </Button>
       </div>
-      {loading && <LoadingScreen />}
     </form>
   );
 };

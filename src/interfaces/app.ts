@@ -33,3 +33,48 @@ export interface IQueryResultStatistics {
     },
   ];
 }
+
+export interface IQueryResultInvoices {
+  status: string;
+  messaage: string;
+  order_lists: [
+    {
+      id: number;
+      payment_intent: string;
+      shipping_method: string;
+      email: string;
+      name: string;
+      phone: string;
+      address: {
+        city: string;
+        country: string;
+        line1: string;
+        line2: string;
+        postal_code: string;
+        state: string;
+      };
+      currency: string;
+      amount_subtotal: number;
+      amount_total: number;
+      invoice_id: string;
+      shipping_cost: number;
+      payment_status: string;
+      paid_at: string;
+      outbound: boolean;
+      delivered_at: string;
+      ordered_items: [
+        {
+          brand: string;
+          color: string;
+          quantity: number;
+          amount_tax: number;
+          product_id: number;
+          amount_total: number;
+          product_name: string;
+          amount_discount: number;
+          amount_subtotal: number;
+        },
+      ];
+    },
+  ];
+}

@@ -77,8 +77,38 @@
 .MuiBox-root {
   margin-left: 0 !important;
   margin-right: 0 !important;
+  // .css-jv0vcw {
+  //   margin-right: 20px !important;
+  // }
+  // .css-0 {
+  //   margin-left: 20px !important;
+  // }
+  .css-1bukg3w-MuiGrid-root {
+    max-height: 100% !important;
+  }
+  .css-1rr4qq7 {
+    max-height: 100% !important;
+  }
+  .css-16soiyw {
+    margin-left: 20px !important;
+    max-height: 100% !important;
+  }
+  .css-dvbve,
+  .css-14st18b,
+  .css-1b045aq {
+    max-height: 250px;
+  }
+  .css-14st18b,
+  .css-1b045aq {
+    margin-left: 20px !important;
+  }
+
+  .css-1mh3mi2 {
+    max-height: 100% !important;
+    overflow-y: scroll !important;
+  }
 }
 
-.MuiDateRangePickerDay-root {
-  // background-color: $white;
+.css-1kpnj7b-MuiDivider-root {
+  border-color: unset !important;
 }

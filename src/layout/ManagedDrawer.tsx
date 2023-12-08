@@ -23,6 +23,7 @@ const ManagedDrawer = () => {
   const BlogSidebarDrawer = dynamic(
     () => import('@components/compound/Drawer/BlogSidebarDrawer'),
   ) as FC<ISidebarProps>;
+  const NotifyDrawer = dynamic(() => import('@components/compound/Drawer/NotifyDrawer')) as FC;
   return (
     <Drawer anchor={anchor} open={isOpen} onClose={handleCloseDrawer}>
       <div
@@ -32,10 +33,12 @@ const ManagedDrawer = () => {
           { 'kl-drawer-cart': view === DRAWERS.CART },
           { 'kl-drawer-products': view === DRAWERS.PRODUCT },
           { 'kl-drawer-blogs': view === DRAWERS.BLOG },
+          { 'kl-drawer-notify': view === DRAWERS.NOTIFICATION },
         )}
       >
         {view === DRAWERS.HEADER && <HeaderDrawer />}
         {view === DRAWERS.CART && <CartDrawer />}
+        {view === DRAWERS.NOTIFICATION && <NotifyDrawer />}
         {view === DRAWERS.PRODUCT && (
           <ProductSidebarDrawer variant={view === DRAWERS.PRODUCT ? '-drawer' : '-static'} />
         )}

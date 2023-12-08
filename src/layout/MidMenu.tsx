@@ -43,15 +43,15 @@ export default function MidMenu() {
     router.push({
       pathname: routes.PRODUCTS,
       query: {
-        name: searchValue,
+        s: searchValue,
       },
     });
   };
 
   useEffect(() => {
-    if (!router.query?.name) return;
+    if (!router.query?.s) return;
 
-    setSearchValue(String(router.query?.name));
+    setSearchValue(String(router.query?.s));
   }, [router]);
 
   useEffect(() => {
@@ -150,6 +150,19 @@ export default function MidMenu() {
                 <HeartIcon />
               </span>
               <span className="quantity">(0)</span>
+            </button>
+
+            <button
+              className="btn"
+              style={{ marginLeft: '0px', marginRight: '5px' }}
+              onClick={() =>
+                dispatch(openDrawer({ view: DRAWERS.NOTIFICATION, anchor: ANCHORS.right }))
+              }
+            >
+              <span className="icon">
+                <i className="fa-light fa-bell fa-xl"></i>
+              </span>
+              <span className="quantity">{`(${size(carts)})`}</span>
             </button>
 
             <button

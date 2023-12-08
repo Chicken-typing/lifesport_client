@@ -1,6 +1,8 @@
 import KsLayout from '@/layout';
 import { selectCart, selectTotal } from '@/store/cart/selector';
+import { selectOrder } from '@/store/order/selector';
 import { getCartList, removeProduct } from '@/store/cart/slice';
+import { addToOrder } from '@/store/order/slice';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { MODALS } from '@/store/modals/constants';
 import { openModal } from '@/store/modals/slice';
@@ -18,10 +20,11 @@ import { useCheckoutMutation } from '../../query/checkout/checkoutMutation';
 import { decodeToken } from '@utils/decode';
 import { ICheckout } from '../../interfaces/checkout';
 import { useRouter } from 'next/router';
-
+import { ResponseCheckout } from '@interfaces/app';
 const Cart = () => {
   const dispatch = useAppDispatch();
   const carts = useAppSelector(selectCart);
+  const order = useAppSelector(selectOrder);
   const subTotal = useAppSelector(selectTotal);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const token = cookieStorage?.getAccessTokenInfo();
@@ -45,6 +48,7 @@ const Cart = () => {
     getCart();
   }, []);
 
+  console.log('test', order);
   const handleCheckout = () => {
     const data: ICheckout = {
       email: decoded?.email,
@@ -73,12 +77,22 @@ const Cart = () => {
     if (token) {
       checkoutMutation(data)
         .then(async (response: any) => {
-          const url = await response?.url;
-          if (response?.url) {
-            router.push(url);
-          } else {
-            console.error('Response does not contain a valid URL');
-          }
+          const getResponse: ResponseCheckout = response;
+          const url = await getResponse?.url;
+
+          const tempOrder = getResponse?.temp_order.map((item) => item);
+          dispatch(
+            addToOrder({
+              id_order: tempOrder[0]?.id,
+              user_id: tempOrder[0]?.user_id,
+              checkout_id: tempOrder[0]?.checkout_id,
+              checkout_link: tempOrder[0]?.checkout_link,
+              created: tempOrder[0]?.created,
+              expires_at: tempOrder[0]?.expires_at,
+              total: tempOrder[0]?.total,
+              list_items: tempOrder[0]?.list_items,
+            }),
+          );
         })
         .catch((error: any) => console.log(error));
     } else {

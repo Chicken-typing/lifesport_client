@@ -112,3 +112,15 @@
 .css-1kpnj7b-MuiDivider-root {
   border-color: unset !important;
 }
+.css-1qxadfk-MuiPaper-root-MuiDialog-paper {
+  background-color: $white;
+  min-width: 500px;
+}
+
+.css-1ol7unp-MuiInputBase-root-MuiInput-root {
+  color: $black;
+  width: 100%;
+  &::before {
+    border-bottom: 1px solid $black;
+  }
+}

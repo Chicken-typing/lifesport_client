@@ -78,3 +78,32 @@ export interface IQueryResultInvoices {
     },
   ];
 }
+
+export interface IUpdate {
+  id: number;
+  deliver: boolean;
+}
+
+export interface ResponseCheckout {
+  status: string;
+  url: string;
+  temp_order: [
+    {
+      id: number;
+      user_id: string;
+      checkout_id: number;
+      checkout_link: string;
+      created: string;
+      expires_at: string;
+      total: number;
+      list_items: [
+        {
+          color: string;
+          quantity: number;
+          product_id: number;
+          checkout_id: number;
+        },
+      ];
+    },
+  ];
+}

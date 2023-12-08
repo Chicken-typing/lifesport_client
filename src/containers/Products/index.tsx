@@ -26,6 +26,7 @@ const Products = () => {
   const sort = String(query?.sort || SORT_ITEMS[0].value);
   const limit = Number(query?.limit || LIMIT.PRODUCTS_FILTER);
   const brand = String(query?.brand || undefined);
+  const s = query?.s ? String(query.s) : undefined;
   // const name = String(query?.name || undefined);
   const dispatch = useAppDispatch();
   const START = limit * (page - 1);
@@ -35,7 +36,7 @@ const Products = () => {
     data: products,
     isFetching: isLoading,
     isError,
-  } = useProductsQuery({ page: 1, filter_brand: brand });
+  } = useProductsQuery({ page: 1, brand, s });
   const { t } = useTranslation('products');
 
   const breadcrumbs: ReactNode[] = [

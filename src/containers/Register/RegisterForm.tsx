@@ -40,7 +40,7 @@ const RegisterForm: FC<IRegisterForm> = ({ className, onNext, step }) => {
       registerMutation(v)
         .then((response: any) => {
           if (response?.status === 'success') {
-            toast.success('test');
+            toast.success('Please check your email');
             onNext();
           }
         })

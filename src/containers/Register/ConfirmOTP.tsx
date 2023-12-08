@@ -38,11 +38,11 @@ const ConfirmOTP: FC<IRegisterForm> = ({ className, onNext, currentEmail, onChan
         .then((response: any) => {
           if (response?.status === 'success') {
             onChangeKey({ email: values?.email, key: response?.key });
-            toast.success('test1');
+            toast.success('Submit OTP is Correct');
             onNext();
           }
           if (response?.status === 'error') {
-            toast.error('test1');
+            toast.error('OTP code is not correct');
           }
         })
         .catch(({ statusCode }) => {

@@ -17,6 +17,15 @@
     }
   }
 
+  &-notify {
+    display: block;
+    width: 540px;
+
+    @include breakpoint-down(phone) {
+      width: 300px;
+    }
+  }
+
   &-header {
     padding-top: 60px;
     display: block;

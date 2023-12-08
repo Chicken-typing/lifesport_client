@@ -3,9 +3,9 @@ import { tokens } from '@/adminLayout/theme';
 import { useProductsQuery } from '@/query/products/get-products';
 import Introduce from '@components/compound/Admin/Introduce';
 import { Button } from '@components/primitive';
-import { Box, useTheme } from '@mui/material';
+import { Box, useTheme, TextField, Input } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, ChangeEvent } from 'react';
 import { isEmpty, isEqual } from 'lodash';
 import request from '@utils/request';
 import Dialog from '@mui/material/Dialog';
@@ -15,15 +15,20 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
+import { Tooltip } from '@components/compound';
+import { useEventMutation } from '@/query/products/eventMutation';
 
 const Products = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [selection, setSelection] = useState<any>([]);
   const [openDialog, setOpenDialog] = useState<boolean>(false);
+  const [openEvent, setOpenEvent] = useState<boolean>(false);
+  const [code, setCode] = useState<string>('');
   const router = useRouter();
 
-  const { data: products, isFetching: isLoading, isError }: any = useProductsQuery({ page: 1 });
+  const { data: products, isFetching: isLoading, isError } = useProductsQuery({ page: 1 });
+  const { mutateAsync: applyEvent } = useEventMutation();
 
   const columns: any[] = [
     { field: 'id', headerName: 'ID' },
@@ -67,6 +72,7 @@ const Products = () => {
   ];
 
   const handleCloseDialog = () => setOpenDialog(false);
+  const handleCloseEvent = () => setOpenEvent(false);
 
   const handleChange = (event: any) => {
     setSelection(event?.rowSelection);
@@ -109,9 +115,43 @@ const Products = () => {
     updateProduct();
   };
 
+  const handleChangeEvent = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const newValue = event.target.value;
+    setCode(newValue);
+  };
+  const handleApplyEvent = () => {
+    applyEvent({ code })
+      .then((response: any) => {
+        if (isEqual(response?.status, 'success')) {
+          handleCloseEvent();
+        }
+      })
+      .catch((error: any) => {
+        console.log(error);
+      });
+  };
   return (
     <AdminLayout title="Account List">
       <div className="kl-admin-account">
+        {/* Dialog for add event */}
+        <Dialog open={openEvent} onClose={handleCloseEvent}>
+          <DialogTitle color="black" fontSize="24px">
+            APPLY EVENT
+          </DialogTitle>
+          <DialogContent>
+            <Input
+              required
+              value={code}
+              onChange={handleChangeEvent}
+              placeholder="Input the code event"
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleApplyEvent}>OK</Button>
+          </DialogActions>
+        </Dialog>
+
+        {/* Dialog for delete */}
         <Dialog
           open={openDialog}
           onClose={handleCloseDialog}
@@ -151,13 +191,30 @@ const Products = () => {
               color="green-500"
               fullWidth
               className="button"
+              onClick={() => setOpenEvent(true)}
+              style={{
+                width: '30px',
+                marginLeft: 'auto',
+              }}
+            >
+              <Tooltip title="Apply Event" placement="bottom" arrow>
+                <i className="fa-regular fa-gift" />
+              </Tooltip>
+            </Button>
+
+            <Button
+              color="green-500"
+              fullWidth
+              className="button"
               onClick={() => setOpenDialog(true)}
               style={{
                 width: '30px',
                 marginLeft: 'auto',
               }}
             >
-              <i className="fa-regular fa-plus" />
+              <Tooltip title="Import Product" placement="bottom" arrow>
+                <i className="fa-regular fa-plus" />
+              </Tooltip>
             </Button>
 
             <Button
@@ -170,7 +227,9 @@ const Products = () => {
                 marginLeft: 'auto',
               }}
             >
-              <i className="fa-light fa-pen-to-square" />
+              <Tooltip title="Update Product" placement="bottom" arrow>
+                <i className="fa-light fa-pen-to-square" />
+              </Tooltip>
             </Button>
 
             <Button

@@ -15,14 +15,24 @@ import {
   Grid,
   ToggleButtonGroup,
   ToggleButton,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
 } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
-import { useInvoicesQuery, TypeInvoices } from '@/query/invoices/get-invoices';
-import { useState } from 'react';
+import {
+  useInvoicesQuery,
+  TypeInvoices,
+  useUpdateStatusMutation,
+} from '@/query/invoices/get-invoices';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { format } from 'date-fns';
-import { isEmpty, map } from 'lodash';
+import { isEmpty, isEqual, map } from 'lodash';
 import { Tooltip } from '@components/compound';
+import { IUpdate } from '@interfaces/app';
 
 export interface IOrders {
   id: number;
@@ -69,7 +79,8 @@ function Invoices() {
   const [type, setType] = useState<TypeInvoices>('all');
   const [selectedOrder, setSelectedOrder] = useState<IOrders>();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selection, setSelection] = useState<any>([]);
+  const [selection, setSelection] = useState<IUpdate[]>([]);
+  const [openDialog, setOpenDialog] = useState<boolean>(false);
 
   const handleCellClick = (params: any, event?: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const orderId = params.id;
@@ -83,6 +94,9 @@ function Invoices() {
   };
 
   const { data: invoices, isLoading } = useInvoicesQuery({ type });
+  const { mutateAsync: updateMutation } = useUpdateStatusMutation();
+
+  const router = useRouter();
   const orderLists = invoices?.order_lists || [];
 
   const filterOrdersByType = (orders: IOrders[], type: TypeInvoices) => {
@@ -168,12 +182,43 @@ function Invoices() {
     setType(newAlignment);
   };
 
-  const handleChange = (event: any) => {
-    setSelection(event?.rowSelection);
+  const handleCloseDialog = () => setOpenDialog(false);
+  // console.log(selection);
+  const handleUpdateStatus = () => {
+    if (selection) {
+      updateMutation(selection).then((response: any) => {
+        console.log('test', selection);
+        console.log(response);
+        handleCloseDialog();
+      });
+    }
   };
+  // useEffect(() => {
+  //   console.log(selection);
+  // }, [selection]);
   return (
     <AdminLayout title="Account List">
       <div className="kl-admin-invoices">
+        <Dialog
+          open={openDialog}
+          onClose={handleCloseDialog}
+          aria-labelledby="responsive-dialog-title"
+        >
+          <DialogTitle color="black" id="responsive-dialog-title">
+            {'Do you want to update it ?'}
+          </DialogTitle>
+          {/* <DialogContent>
+            <DialogContentText>{JSON.stringify(selection)}</DialogContentText>
+          </DialogContent> */}
+          <DialogActions>
+            <Button onClick={handleUpdateStatus} autoFocus style={{ flex: '1' }}>
+              Ok
+            </Button>
+            <Button autoFocus onClick={handleCloseDialog} style={{ flex: '1' }}>
+              Cancel
+            </Button>
+          </DialogActions>
+        </Dialog>
         <Box display="flex" m="20px" flexDirection="column" width="100%">
           {/* HEADER */}
           <Box display="flex" justifyContent="flex-start" alignItems="center">
@@ -212,6 +257,7 @@ function Invoices() {
             <Button
               color="green-500"
               fullWidth
+              onClick={() => setOpenDialog(true)}
               disabled={isEmpty(selection)}
               className="button"
               style={{
@@ -261,7 +307,20 @@ function Invoices() {
               rows={filterOrdersByType(orderLists, type) || []}
               columns={columns}
               loading={isLoading}
-              onStateChange={handleChange}
+              // onStateChange={handleChange}
+              onRowSelectionModelChange={(params) => {
+                const newSelectionState: IUpdate[] = params.map((selectedRowId) => {
+                  const selectedOrder = invoices?.order_lists.find(
+                    (order) => order.id === selectedRowId,
+                  );
+                  return selectedOrder
+                    ? { id: Number(selectedRowId), deliver: !selectedOrder.outbound }
+                    : { id: Number(selectedRowId), deliver: false };
+                });
+
+                setSelection(newSelectionState);
+                console.log(newSelectionState);
+              }}
             />
           </Box>
         </Box>

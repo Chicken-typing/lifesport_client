@@ -9,6 +9,7 @@ export const DRAWERS = {
   PRODUCT: 'PRODUCT',
   BLOG: 'BLOG',
   CART: 'CART',
+  NOTIFICATION: 'NOTIFICATION',
 } as const;
 
 export const ANCHORS = {

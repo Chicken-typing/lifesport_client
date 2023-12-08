@@ -1,5 +1,5 @@
 import request from '@/utils/request';
-import { IQueryResultInvoices } from '@interfaces/app';
+import { IQueryResultInvoices, IUpdate } from '@interfaces/app';
 import {
   QueryFunctionContext,
   useMutation,
@@ -35,14 +35,11 @@ export const useInvoicesQuery = (options: {
   });
 };
 
-const mutationUpdateStatus = async (
-  data: [
-    {
-      id: number;
-      deliver: boolean;
-    },
-  ],
-) => {
+const mutationUpdateStatus = async (data: IUpdate[]) => {
+  // console.log(
+  //   'test',
+  //   data.map((item) => item.deliver),
+  // );
   return await request.request({
     method: 'PUT',
     url: 'order/admin/deliver',
@@ -50,21 +47,11 @@ const mutationUpdateStatus = async (
   });
 };
 
-export const useSellingRateMutation = () => {
+export const useUpdateStatusMutation = () => {
   const queryClient = useQueryClient();
-  return useMutation(
-    (
-      data: [
-        {
-          id: number;
-          deliver: boolean;
-        },
-      ],
-    ) => mutationUpdateStatus(data),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(['fetchInvoices']);
-      },
-    },
-  );
+  return useMutation((data: IUpdate[]) => mutationUpdateStatus(data), {
+    // onSuccess: () => {
+    //   queryClient.invalidateQueries(['fetchInvoices']);
+    // },
+  });
 };

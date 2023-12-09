@@ -8,6 +8,8 @@ import { useRouter } from 'next/router';
 import { removeProduct } from '@/store/cart/slice';
 import { selectTotal } from '../../../store/cart/selector';
 import { Accordion } from '../Accordion';
+import { useOrderTempQuery } from '@/query/order/get-OrderTemp';
+
 const NotifyDrawer = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
@@ -15,6 +17,9 @@ const NotifyDrawer = () => {
   const carts = useAppSelector(selectCart);
 
   const total = useAppSelector(selectTotal);
+
+  const { data: order } = useOrderTempQuery({});
+  console.log(order);
 
   const handleViewCart = () => {
     dispatch(closeDrawer());

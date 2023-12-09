@@ -77,22 +77,9 @@ const Cart = () => {
     if (token) {
       checkoutMutation(data)
         .then(async (response: any) => {
-          const getResponse: ResponseCheckout = response;
-          const url = await getResponse?.url;
-
-          const tempOrder = getResponse?.temp_order.map((item) => item);
-          dispatch(
-            addToOrder({
-              id_order: tempOrder[0]?.id,
-              user_id: tempOrder[0]?.user_id,
-              checkout_id: tempOrder[0]?.checkout_id,
-              checkout_link: tempOrder[0]?.checkout_link,
-              created: tempOrder[0]?.created,
-              expires_at: tempOrder[0]?.expires_at,
-              total: tempOrder[0]?.total,
-              list_items: tempOrder[0]?.list_items,
-            }),
-          );
+          console.log(response);
+          const url = await response?.url;
+          router.push(url);
         })
         .catch((error: any) => console.log(error));
     } else {

@@ -19,6 +19,7 @@ import { useRouter } from 'next/router';
 import { FormEvent, useContext, useEffect, useRef, useState } from 'react';
 import * as Yup from 'yup';
 import { logout } from '@/store/user/slice';
+import { useOrderTempQuery } from '@/query/order/get-OrderTemp';
 
 export default function MidMenu() {
   const router = useRouter();
@@ -28,11 +29,10 @@ export default function MidMenu() {
   const dispatch = useAppDispatch();
   const carts = useAppSelector(selectCart);
   const { t } = useTranslation('common');
-  const { mutateAsync: loginMutation } = useLoginMutation();
   const token = cookieStorage.getAccessTokenInfo();
   const auth = useAppSelector((state) => state.auth);
   const { isLoading }: any = useContext(AppContext);
-
+  const { data: order } = useOrderTempQuery({});
   const decoded = decodeToken(token || '');
 
   const handleSearch = (e: FormEvent<HTMLFormElement>) => {
@@ -162,7 +162,7 @@ export default function MidMenu() {
               <span className="icon">
                 <i className="fa-light fa-bell fa-xl"></i>
               </span>
-              <span className="quantity">{`(${size(carts)})`}</span>
+              <span className="quantity">{`(${size(order?.data)})`}</span>
             </button>
 
             <button

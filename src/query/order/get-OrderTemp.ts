@@ -1,5 +1,5 @@
 import request from '@/utils/request';
-import { IQueryResultInvoices, IUpdate } from '@interfaces/app';
+import { IQueryResultOrderTemp } from '@interfaces/app';
 import {
   QueryFunctionContext,
   useMutation,
@@ -8,11 +8,9 @@ import {
   UseQueryResult,
 } from '@tanstack/react-query';
 
-export type TypeInvoices = 'inbound' | 'outbound' | 'all';
-
 export const fetchOrderTemp = async ({
   queryKey,
-}: QueryFunctionContext<[string, any]>): Promise<any> => {
+}: QueryFunctionContext<[string, any]>): Promise<IQueryResultOrderTemp> => {
   const [_, params] = queryKey;
 
   const data: any = await request.request({
@@ -22,7 +20,7 @@ export const fetchOrderTemp = async ({
   return data;
 };
 
-export const useOrderTempQuery = (options: any): UseQueryResult<any, Error> => {
+export const useOrderTempQuery = (options: any): UseQueryResult<IQueryResultOrderTemp, Error> => {
   return useQuery(['OrderTemp', { ...options }], fetchOrderTemp, {
     retry: 1,
   });

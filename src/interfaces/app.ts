@@ -107,3 +107,26 @@ export interface ResponseCheckout {
     },
   ];
 }
+
+export interface IQueryResultOrderTemp {
+  data: [
+    {
+      id: number;
+      user_id: string;
+      checkout_id: number;
+      checkout_link: string;
+      created: string;
+      expires_at: string;
+      total: number;
+      list_items: [
+        {
+          name: string;
+          color: string;
+          price: number;
+          quantity: number;
+          thumbnail: string;
+        },
+      ];
+    },
+  ];
+}

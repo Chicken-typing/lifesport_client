@@ -1,8 +1,6 @@
 import KsLayout from '@/layout';
 import { selectCart, selectTotal } from '@/store/cart/selector';
-import { selectOrder } from '@/store/order/selector';
 import { getCartList, removeProduct } from '@/store/cart/slice';
-import { addToOrder } from '@/store/order/slice';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { MODALS } from '@/store/modals/constants';
 import { openModal } from '@/store/modals/slice';
@@ -24,7 +22,6 @@ import { ResponseCheckout } from '@interfaces/app';
 const Cart = () => {
   const dispatch = useAppDispatch();
   const carts = useAppSelector(selectCart);
-  const order = useAppSelector(selectOrder);
   const subTotal = useAppSelector(selectTotal);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const token = cookieStorage?.getAccessTokenInfo();
@@ -48,7 +45,6 @@ const Cart = () => {
     getCart();
   }, []);
 
-  console.log('test', order);
   const handleCheckout = () => {
     const data: ICheckout = {
       email: decoded?.email,

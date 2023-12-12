@@ -15,6 +15,11 @@ import Header from './Header';
 import ManagedDrawer from './ManagedDrawer';
 import ManagedModal from './ManagedModal';
 import MenuBottom from './MenuBottom';
+
+import { toast } from 'react-toastify';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { fetchOrderTemp } from '@/query/order/get-OrderTemp';
+
 interface IKsLayoutProps {
   children: ReactNode;
   title: string;
@@ -44,10 +49,25 @@ const KsLayout: FC<IKsLayoutProps> = ({
   og,
 }) => {
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     document.documentElement.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, [router.pathname]);
+
+  const fetchOrderTemp = async () => {
+    const data: any = await request.request({
+      method: 'GET',
+      url: '/order/temp-orders',
+    });
+    return data;
+  };
+
+  const { data: order, isFetching: isLoading } = useQuery(['OrderTemp', {}], fetchOrderTemp, {
+    retry: 1,
+  });
+
+  queryClient.invalidateQueries(['OrderTemp']);
 
   return (
     <>

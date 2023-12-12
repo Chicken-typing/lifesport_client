@@ -221,7 +221,7 @@ const Products = () => {
               color="green-500"
               fullWidth
               className="button"
-              onClick={() => handleUpdateProduct()}
+              onClick={handleUpdateProduct}
               style={{
                 width: '30px',
                 marginLeft: 'auto',

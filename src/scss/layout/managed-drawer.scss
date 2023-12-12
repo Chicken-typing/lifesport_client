@@ -24,6 +24,10 @@
     @include breakpoint-down(phone) {
       width: 300px;
     }
+
+    > .content > .container {
+      display: flex;
+    }
   }
 
   &-header {

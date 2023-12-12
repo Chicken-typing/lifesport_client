@@ -17,6 +17,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { Tooltip } from '@components/compound';
 import { useEventMutation } from '@/query/products/eventMutation';
+import { toast } from 'react-toastify';
 
 const Products = () => {
   const theme = useTheme();
@@ -106,7 +107,9 @@ const Products = () => {
           url: '/products/admin/update',
         });
 
-        if (isEqual(response?.status, 'success')) router.reload();
+        if (isEqual(response?.status, 'success')) {
+          toast.success('Update Product Successfully', { position: 'top-center' });
+        }
       } catch (error) {
         console.log(error);
       }

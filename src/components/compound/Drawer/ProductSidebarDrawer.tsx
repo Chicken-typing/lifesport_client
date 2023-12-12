@@ -1,7 +1,7 @@
 import { useProductCategoriesQuery } from '@/query/productCategories/getProductCategories';
 import { Rating } from '@components/compound';
 import { Checkbox } from '@components/primitive';
-import { Collapse, Slider, Skeleton } from '@mui/material';
+import { Collapse, Slider, Drawer } from '@mui/material';
 import { LIMIT } from '@utils/limit';
 import classNames from 'classnames';
 import { isArray, isEmpty, map, slice, times } from 'lodash';
@@ -10,9 +10,17 @@ import { FC, useEffect, useState } from 'react';
 import { INGREDIENTS, RATING, TEA_TYPE } from './constants';
 import { closeDrawer } from '@/store/drawers/slice';
 import { useAppDispatch } from '@/store/hooks';
-import { ISidebarProps } from '@interfaces/sidebar';
 
-const ProductSidebarDrawer: FC<ISidebarProps> = ({ variant }) => {
+import useTranslation from 'next-translate/useTranslation';
+import { CATEGORIES } from '@containers/Products/constants';
+
+export interface ISidebarProps {
+  variant?: '-static' | '-drawer';
+  open: boolean;
+  onClose: () => void;
+}
+
+const ProductSidebarDrawer: FC<ISidebarProps> = ({ variant, onClose, open }) => {
   const router = useRouter();
   const { query } = router;
 
@@ -29,10 +37,10 @@ const ProductSidebarDrawer: FC<ISidebarProps> = ({ variant }) => {
   const rating = query?.rating || [];
   const dispatch = useAppDispatch();
 
-  const { data: categories, isFetching: isFetchingCategories } = useProductCategoriesQuery({
-    limit,
-    page,
-  });
+  // const { data: categories, isFetching: isFetchingCategories } = useProductCategoriesQuery({
+  //   limit,
+  //   page,
+  // });
 
   const [options, setOptions] = useState<string[]>([
     'categories',
@@ -95,49 +103,42 @@ const ProductSidebarDrawer: FC<ISidebarProps> = ({ variant }) => {
     }
   };
 
+  const { t } = useTranslation('products');
+
   return (
-    <aside className={classNames('kl-products-sidebar', variant)}>
-      <div className="header">
-        <button onClick={() => dispatch(closeDrawer())} className="action">
-          <i className="fa-regular fa-xmark fa-xs" />
-        </button>
-      </div>
-      <div className="categories option">
-        <div className="header">
-          <span className="overlay" onClick={() => handleToggleCollapse('categories')} />
-          <h3 className="title">Categories</h3>
-          <i
-            className={classNames(`fa-regular fa-chevron-up icon`, {
-              '-down': !options.includes('categories'),
-            })}
-          />
-        </div>
+    <Drawer open={open} onClose={onClose}>
+      <div className="kl-drawer-products">
+        <aside className={classNames('kl-products-sidebar', variant)}>
+          <div className="header">
+            <button onClick={onClose} className="action">
+              <i className="fa-regular fa-xmark fa-xs" />
+            </button>
+          </div>
+          <div className="categories option">
+            <div className="header">
+              <span className="overlay" onClick={() => handleToggleCollapse('categories')} />
+              <h3 className="title">{t('category')}</h3>
+              <i
+                className={classNames(`fa-regular fa-chevron-up icon`, {
+                  '-down': !options.includes('categories'),
+                })}
+              />
+            </div>
 
-        <Collapse in={options.includes('categories')}>
-          {isFetchingCategories ? (
-            <ul className="kl-products-sidebar-categories">
-              {times(5, (idx) => (
-                <li key={`product-category-${idx}`} className="category">
-                  <div className="item">
-                    <Skeleton animation="wave" />
-                  </div>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <ul className="kl-products-sidebar-categories">
-              {map(slice(categories, 0, 5), ({ id, name, children }) => (
-                <li className="category" key={id}>
-                  <div
-                    className={classNames('item', { '-active': `${name}-${id}` === category })}
-                    onClick={() => {
-                      router.push({ query: { ...query, category: `${name}-${id}`, page: 1 } });
-                    }}
-                  >
-                    {name}
-                  </div>
+            <Collapse in={options.includes('categories')}>
+              <ul className="kl-products-sidebar-categories">
+                {map(CATEGORIES, ({ label, value }, idx) => (
+                  <li className="category" key={idx}>
+                    <div
+                      className="item"
+                      onClick={() => {
+                        router.push({ query: { ...query, brand: value } });
+                      }}
+                    >
+                      {label}
+                    </div>
 
-                  {!isEmpty(children) && (
+                    {/* {!isEmpty(children) && (
                     <ul className="subcategory">
                       {map(children, ({ id, name }) => (
                         <li
@@ -155,68 +156,67 @@ const ProductSidebarDrawer: FC<ISidebarProps> = ({ variant }) => {
                         </li>
                       ))}
                     </ul>
-                  )}
-                </li>
-              ))}
-            </ul>
-          )}
-        </Collapse>
-      </div>
-
-      <div className="price option">
-        <div className="header">
-          <span className="overlay" onClick={() => handleToggleCollapse('price')} />
-          <h3 className="title">Price</h3>
-          <i
-            className={classNames(`fa-regular fa-chevron-up icon`, {
-              '-down': !options.includes('price'),
-            })}
-          />
-        </div>
-
-        <Collapse in={options.includes('price')}>
-          <div className="kl-products-sidebar-price">
-            <Slider
-              className="slider"
-              getAriaLabel={() => 'Minimum distance'}
-              value={price}
-              onChange={handleChangePrice}
-              valueLabelDisplay="auto"
-              disableSwap
-              classes={{
-                root: 'price-slider',
-                rail: 'price-slider-rail',
-                track: 'price-slider-track',
-                thumb: 'price-slider-thumb',
-              }}
-            />
-
-            <div className="wrapper">
-              <span className="price">
-                Price:
-                <span className="range">
-                  ${price[0]}.00 - ${price[1]}.00
-                </span>
-              </span>
-              <span
-                className="action"
-                onClick={() => {
-                  router.push({
-                    query: { ...query, minPrice: price[0], maxPrice: price[1], page: 1 },
-                  });
-                }}
-              >
-                FILTER
-              </span>
-            </div>
+                  )} */}
+                  </li>
+                ))}
+              </ul>
+            </Collapse>
           </div>
-        </Collapse>
-      </div>
 
-      <div className="type option">
+          <div className="price option">
+            <div className="header">
+              <span className="overlay" onClick={() => handleToggleCollapse('price')} />
+              <h3 className="title">{t('price')}</h3>
+              <i
+                className={classNames(`fa-regular fa-chevron-up icon`, {
+                  '-down': !options.includes('price'),
+                })}
+              />
+            </div>
+
+            <Collapse in={options.includes('price')}>
+              <div className="kl-products-sidebar-price">
+                <Slider
+                  className="slider"
+                  getAriaLabel={() => 'Minimum distance'}
+                  value={price}
+                  onChange={handleChangePrice}
+                  valueLabelDisplay="auto"
+                  disableSwap
+                  classes={{
+                    root: 'price-slider',
+                    rail: 'price-slider-rail',
+                    track: 'price-slider-track',
+                    thumb: 'price-slider-thumb',
+                  }}
+                />
+
+                <div className="wrapper">
+                  <span className="price">
+                    Price:
+                    <span className="range">
+                      ${price[0]}.00 - ${price[1]}.00
+                    </span>
+                  </span>
+                  <span
+                    className="action"
+                    onClick={() => {
+                      router.push({
+                        query: { ...query, minPrice: price[0], maxPrice: price[1], page: 1 },
+                      });
+                    }}
+                  >
+                    FILTER
+                  </span>
+                </div>
+              </div>
+            </Collapse>
+          </div>
+
+          {/* <div className="type option">
         <div className="header">
           <span className="overlay" onClick={() => handleToggleCollapse('type')} />
-          <h3 className="title">Tea Type</h3>
+          <h3 className="title">{t('rating')}</h3>
           <i
             className={classNames(`fa-regular fa-chevron-up icon`, {
               '-down': !options.includes('type'),
@@ -247,9 +247,9 @@ const ProductSidebarDrawer: FC<ISidebarProps> = ({ variant }) => {
             ))}
           </ul>
         </Collapse>
-      </div>
+      </div> */}
 
-      <div className="ingredients option">
+          {/* <div className="ingredients option">
         <div className="header">
           <span className="overlay" onClick={() => handleToggleCollapse('ingredients')} />
           <h3 className="title">Ingredients</h3>
@@ -283,44 +283,46 @@ const ProductSidebarDrawer: FC<ISidebarProps> = ({ variant }) => {
             ))}
           </ul>
         </Collapse>
-      </div>
+      </div> */}
 
-      <div className="rating option">
-        <div className="header">
-          <span className="overlay" onClick={() => handleToggleCollapse('rating')} />
-          <h3 className="title">Rating</h3>
-          <i
-            className={classNames(`fa-regular fa-chevron-up icon`, {
-              '-down': !options.includes('rating'),
-            })}
-          />
-        </div>
-        <Collapse in={options.includes('rating')}>
-          <ul className="kl-products-sidebar-rating ">
-            {map(RATING, ({ value, count }, idx) => (
-              <li key={`sidebar-rating-${idx}`} className="item">
-                <Checkbox
-                  onChange={({ value, checked }) =>
-                    handleChangeFilterCheckbox({
-                      checked: checked,
-                      value: value as string,
-                      name: 'rating',
-                      arr: [],
-                    })
-                  }
-                  checked={rating.includes(value as unknown as string)}
-                  value={value}
-                />
-                <div className="rating">
-                  <Rating value={value} readOnly />
-                </div>
-                <span className="count">{count}</span>
-              </li>
-            ))}
-          </ul>
-        </Collapse>
+          <div className="rating option">
+            <div className="header">
+              <span className="overlay" onClick={() => handleToggleCollapse('rating')} />
+              <h3 className="title">{t('rating')}</h3>
+              <i
+                className={classNames(`fa-regular fa-chevron-up icon`, {
+                  '-down': !options.includes('rating'),
+                })}
+              />
+            </div>
+            <Collapse in={options.includes('rating')}>
+              <ul className="kl-products-sidebar-rating ">
+                {map(RATING, ({ value, count }, idx) => (
+                  <li key={`sidebar-rating-${idx}`} className="item">
+                    <Checkbox
+                      onChange={({ value, checked }) =>
+                        handleChangeFilterCheckbox({
+                          checked: checked,
+                          value: value as string,
+                          name: 'rating',
+                          arr: [],
+                        })
+                      }
+                      checked={rating.includes(value as unknown as string)}
+                      value={value}
+                    />
+                    <div className="rating">
+                      <Rating value={value} readOnly />
+                    </div>
+                    <span className="count">{count}</span>
+                  </li>
+                ))}
+              </ul>
+            </Collapse>
+          </div>
+        </aside>
       </div>
-    </aside>
+    </Drawer>
   );
 };
 

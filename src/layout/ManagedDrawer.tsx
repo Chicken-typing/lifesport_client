@@ -15,10 +15,6 @@ const ManagedDrawer = () => {
   const anchor = useAppSelector(selectDrawerAnchor);
   const handleCloseDrawer = () => dispatch(closeDrawer());
 
-  const HeaderDrawer = dynamic(() => import('@components/compound/Drawer/HeaderDrawer')) as FC;
-  const ProductSidebarDrawer = dynamic(
-    () => import('@components/compound/Drawer/ProductSidebarDrawer'),
-  ) as FC<ISidebarProps>;
   const BlogSidebarDrawer = dynamic(
     () => import('@components/compound/Drawer/BlogSidebarDrawer'),
   ) as FC<ISidebarProps>;
@@ -27,20 +23,15 @@ const ManagedDrawer = () => {
       <div
         className={classNames(
           'kl-drawer',
-          { 'kl-drawer-header': view === DRAWERS.HEADER },
           { 'kl-drawer-products': view === DRAWERS.PRODUCT },
           { 'kl-drawer-blogs': view === DRAWERS.BLOG },
-          { 'kl-drawer-notify': view === DRAWERS.NOTIFICATION },
         )}
       >
-        {view === DRAWERS.HEADER && <HeaderDrawer />}
+        {/* {view === DRAWERS.HEADER && <HeaderDrawer />} */}
 
-        {view === DRAWERS.PRODUCT && (
-          <ProductSidebarDrawer variant={view === DRAWERS.PRODUCT ? '-drawer' : '-static'} />
-        )}
-        {view === DRAWERS.BLOG && (
+        {/* {view === DRAWERS.BLOG && (
           <BlogSidebarDrawer variant={view === DRAWERS.BLOG ? '-drawer' : '-static'} />
-        )}
+        )} */}
       </div>
     </Drawer>
   );

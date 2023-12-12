@@ -1,110 +1,131 @@
 import { Link } from '@components/primitive';
-import { Collapse } from '@mui/material';
+import { Collapse, Drawer } from '@mui/material';
 import { map } from 'lodash';
 import { MouseEvent, useState } from 'react';
 import { MENU_LIST } from './constants';
 import { closeDrawer } from '@/store/drawers/slice';
 import { useAppDispatch } from '@/store/hooks';
+import useTranslation from 'next-translate/useTranslation';
 
-export default function MenuDrawer() {
+interface INavigation {
+  title: string;
+  route: string;
+  subMenu?: INavigation[];
+}
+
+export default function MenuDrawer({ open, onClose }: { open: boolean; onClose: () => void }) {
   const [dropdown, setDropdown] = useState<string>('');
   const [subDropdown, setSubDropDown] = useState<string>('');
   const dispatch = useAppDispatch();
+  const { t } = useTranslation('common');
+  const menu = t('navigation', {}, { returnObjects: true });
 
-  const handleCollapse = (label: string, submenu: any) => (event: MouseEvent<HTMLElement>) => {
-    if (!submenu) return;
-    event.preventDefault();
-    setDropdown(dropdown !== label ? label : '');
-  };
+  const handleCollapse =
+    (label: string, subMenu: INavigation[]) => (event: MouseEvent<HTMLElement>) => {
+      if (!subMenu) return;
+      event.preventDefault();
+      setDropdown(dropdown !== label ? label : '');
+    };
 
   return (
-    <div className="kl-menu-drawer">
-      <div className="header">
-        <button onClick={() => dispatch(closeDrawer())} className="action">
-          <i className="fa-regular fa-xmark fa-xs" />
-        </button>
+    <Drawer open={open} onClose={onClose}>
+      <div className="kl-drawer-header">
+        <div className="kl-menu-drawer">
+          <div className="header">
+            <button onClick={onClose} className="action">
+              <i className="fa-regular fa-xmark fa-xs" />
+            </button>
+          </div>
+
+          <ul className="menu">
+            {map(menu, (item: INavigation) => (
+              <li className="item" key={`menu-${item.title}`}>
+                <Link
+                  rightIcon={
+                    item?.subMenu && (
+                      <button className="btn">
+                        <span className="chevron">
+                          <i
+                            className={
+                              dropdown !== item.title
+                                ? 'fa-solid fa-chevron-right fa-2xs'
+                                : 'fa-solid fa-chevron-down fa-2xs'
+                            }
+                          />
+                        </span>
+                      </button>
+                    )
+                  }
+                  className="link _link-size"
+                  title={item.title}
+                  href={item.route}
+                >
+                  {item.title}
+                  <div
+                    onClick={handleCollapse(item.title, item.subMenu || [])}
+                    className="overlay"
+                  />
+                </Link>
+
+                <Collapse in={dropdown === item.title} timeout="auto" unmountOnExit>
+                  <div className="kl-menu-drawer-content">
+                    <ul className="sub">
+                      {map(item.subMenu, (subItem) => (
+                        <li
+                          onClick={() => {
+                            subItem.subMenu &&
+                              setSubDropDown(subDropdown !== subItem.title ? subItem.title : '');
+                          }}
+                          className="item"
+                          key={`sub-${subItem.title}`}
+                        >
+                          <Link
+                            className="link _link-size"
+                            title={subItem.title}
+                            href={subItem.route}
+                          >
+                            {subItem.title}
+                          </Link>
+                          {subItem.subMenu && (
+                            <button className="btn">
+                              <span className="chevron">
+                                <i
+                                  className={`${
+                                    subDropdown !== subItem.title
+                                      ? 'fa-solid fa-chevron-right fa-2xs'
+                                      : 'fa-solid fa-chevron-down fa-2xs'
+                                  }`}
+                                ></i>
+                              </span>
+                            </button>
+                          )}
+                          <Collapse in={subDropdown === subItem.title} timeout="auto" unmountOnExit>
+                            <div className="kl-menu-drawer-children">
+                              <ul className="child">
+                                {map(subItem.subMenu, (child) => (
+                                  <li className="item" key={`child-${child.title}`}>
+                                    <Link
+                                      className="link _link-size"
+                                      title={child.title}
+                                      href={child.route}
+                                    >
+                                      {child.title}
+                                    </Link>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          </Collapse>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </Collapse>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
-
-      <ul className="menu">
-        {map(MENU_LIST, ({ label, route, submenu }) => (
-          <li className="item" key={`menu-${label}`}>
-            <Link
-              rightIcon={
-                submenu && (
-                  <button className="btn">
-                    <span className="chevron">
-                      <i
-                        className={
-                          dropdown !== label
-                            ? 'fa-solid fa-chevron-right fa-2xs'
-                            : 'fa-solid fa-chevron-down fa-2xs'
-                        }
-                      />
-                    </span>
-                  </button>
-                )
-              }
-              className="link _link-size"
-              title={label}
-              href={route}
-            >
-              {label}
-              <div onClick={handleCollapse(label, submenu)} className="overlay" />
-            </Link>
-
-            <Collapse in={dropdown === label} timeout="auto" unmountOnExit>
-              <div className="kl-menu-drawer-content">
-                <ul className="sub">
-                  {map(submenu, (subItem) => (
-                    <li
-                      onClick={() => {
-                        subItem.submenu &&
-                          setSubDropDown(subDropdown !== subItem.label ? subItem.label : '');
-                      }}
-                      className="item"
-                      key={`sub-${subItem.label}`}
-                    >
-                      <Link className="link _link-size" title={subItem.label} href={subItem.route}>
-                        {subItem.label}
-                      </Link>
-                      {subItem.submenu && (
-                        <button className="btn">
-                          <span className="chevron">
-                            <i
-                              className={`${
-                                subDropdown !== subItem.label
-                                  ? 'fa-solid fa-chevron-right fa-2xs'
-                                  : 'fa-solid fa-chevron-down fa-2xs'
-                              }`}
-                            ></i>
-                          </span>
-                        </button>
-                      )}
-                      <Collapse in={subDropdown === subItem.label} timeout="auto" unmountOnExit>
-                        <div className="kl-menu-drawer-children">
-                          <ul className="child">
-                            {map(subItem.submenu, (child) => (
-                              <li className="item" key={`child-${child.label}`}>
-                                <Link
-                                  className="link _link-size"
-                                  title={child.label}
-                                  href={child.route}
-                                >
-                                  {child.label}
-                                </Link>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      </Collapse>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </Collapse>
-          </li>
-        ))}
-      </ul>
-    </div>
+    </Drawer>
   );
 }

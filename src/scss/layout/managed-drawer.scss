@@ -33,6 +33,7 @@
   &-header {
     padding-top: 60px;
     display: block;
+    width: 375px;
     @include breakpoint-up(mediumphone) {
       width: 340px;
     }

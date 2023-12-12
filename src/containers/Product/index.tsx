@@ -106,7 +106,10 @@ const Product = () => {
                       dispatch(
                         openModal({
                           view: MODALS.LIGHT_BOX,
-                          // lightBoxData: { defaultActive: idx, images: images|| [] },
+                          lightBoxData: {
+                            defaultActive: idx,
+                            images: flatMapDepth(map(product?.item, (item) => item.images)),
+                          },
                         }),
                       );
                     }}

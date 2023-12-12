@@ -6,7 +6,7 @@ export function changeColor(color: string) {
       return (color = 'Silver');
     case '318ce7':
       return (color = 'Blue');
-    case 'ddf9f12':
+    case 'ddf9f1':
       return (color = 'White');
     case '006400':
       return (color = 'Green');

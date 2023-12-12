@@ -25,3 +25,10 @@ export const useOrderTempQuery = (options: any): UseQueryResult<IQueryResultOrde
     retry: 1,
   });
 };
+
+// export const InvalidateOrderTempQuery = () => {
+//   const queryClient = useQueryClient();
+//   queryClient.invalidateQueries(['OrderTemp']); // Pass the query key as an array
+// };
+
+// InvalidateOrderTempQuery();

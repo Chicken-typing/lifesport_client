@@ -12,14 +12,15 @@ import UserIcon from '@svg/user.svg';
 import { cookieStorage } from '@utils/cookieStorage';
 import { decodeToken } from '@utils/decode';
 import { routes } from '@utils/routes';
-import { useFormik } from 'formik';
+
 import { size } from 'lodash';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { FormEvent, useContext, useEffect, useRef, useState } from 'react';
-import * as Yup from 'yup';
 import { logout } from '@/store/user/slice';
 import { useOrderTempQuery } from '@/query/order/get-OrderTemp';
+import NotifyDrawer from '@components/compound/Drawer/NotifyDrawer';
+import CartDrawer from '@components/compound/Drawer/CartDrawer';
 
 export default function MidMenu() {
   const router = useRouter();
@@ -34,6 +35,9 @@ export default function MidMenu() {
   const { isLoading }: any = useContext(AppContext);
   const { data: order } = useOrderTempQuery({});
   const decoded = decodeToken(token || '');
+
+  const [openNotify, setOpenNotify] = useState<boolean>(false);
+  const [openCart, setOpenCart] = useState<boolean>(false);
 
   const handleSearch = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -97,10 +101,14 @@ export default function MidMenu() {
           </div>
         </ClickAwayListener>
       </Popper>
+      <NotifyDrawer open={openNotify} onClose={() => setOpenNotify(false)} />
+
+      <CartDrawer open={openCart} onClose={() => setOpenCart(false)} />
+
       <div className="kl-mid-menu">
         <div className="kl-mid-menu-wrapper">
           <button
-            onClick={() => dispatch(openDrawer({ view: DRAWERS.HEADER, anchor: ANCHORS.left }))}
+            // onClick={() => dispatch(openDrawer({ view: DRAWERS.HEADER, anchor: ANCHORS.left }))}
             className="burger"
           >
             <span className="icon"></span>
@@ -155,9 +163,7 @@ export default function MidMenu() {
             <button
               className="btn"
               style={{ marginLeft: '0px', marginRight: '5px' }}
-              onClick={() =>
-                dispatch(openDrawer({ view: DRAWERS.NOTIFICATION, anchor: ANCHORS.right }))
-              }
+              onClick={() => setOpenNotify(true)}
             >
               <span className="icon">
                 <i className="fa-light fa-bell fa-xl"></i>
@@ -165,10 +171,7 @@ export default function MidMenu() {
               <span className="quantity">{`(${size(order?.data)})`}</span>
             </button>
 
-            <button
-              className="btn"
-              onClick={() => dispatch(openDrawer({ view: DRAWERS.CART, anchor: ANCHORS.right }))}
-            >
+            <button className="btn" onClick={() => setOpenCart(true)}>
               <span className="icon">
                 <i className="fa-light fa-bag-shopping fa-xl " />
               </span>

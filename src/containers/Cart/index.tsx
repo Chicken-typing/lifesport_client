@@ -19,6 +19,7 @@ import { decodeToken } from '@utils/decode';
 import { ICheckout } from '../../interfaces/checkout';
 import { useRouter } from 'next/router';
 import { ResponseCheckout } from '@interfaces/app';
+import { changeColor } from '@utils/changeColor';
 const Cart = () => {
   const dispatch = useAppDispatch();
   const carts = useAppSelector(selectCart);
@@ -75,7 +76,8 @@ const Cart = () => {
         .then(async (response: any) => {
           console.log(response);
           const url = await response?.url;
-          router.push(url);
+          // router.push(url);
+          window.open(url, '_blank');
         })
         .catch((error: any) => console.log(error));
     } else {
@@ -131,7 +133,7 @@ const Cart = () => {
                           <Link href="" title="" className="link">
                             {name}
                           </Link>
-                          <div>color: {color}</div>
+                          <div>color: {changeColor(color)}</div>
                         </td>
                         <td className="price _style-rows">
                           {(price / 100).toLocaleString('en-US', {
@@ -193,6 +195,7 @@ const Cart = () => {
                             {name}
                           </Link>
                         </td>
+                        <div>color: {changeColor(color)}</div>
                         <td className="price _style-rows _style-flex">
                           <span className="title -text-sm">PRICE: </span>
                           <span className="cost">
@@ -237,13 +240,13 @@ const Cart = () => {
                     <th className="title -style-totals">Subtotal</th>
                     <td className="cost -style-totals">
                       {!isEmpty(subTotal) &&
-                        subTotal
-                          .reduce((sub, currentItem) => sub / 100 + currentItem / 100)
-                          .toLocaleString('en-US', {
-                            style: 'currency',
-                            currency: 'USD',
-                            minimumFractionDigits: 2,
-                          })}
+                        (
+                          subTotal.reduce((sub, currentItem) => sub + currentItem) / 100
+                        ).toLocaleString('en-US', {
+                          style: 'currency',
+                          currency: 'USD',
+                          minimumFractionDigits: 2,
+                        })}
                     </td>
                   </tr>
 
@@ -251,13 +254,13 @@ const Cart = () => {
                     <th className="title -style-totals">Total</th>
                     <td className="cost -style-totals">
                       {!isEmpty(subTotal) &&
-                        subTotal
-                          .reduce((sub, currentItem) => sub / 100 + currentItem / 100)
-                          .toLocaleString('en-US', {
-                            style: 'currency',
-                            currency: 'USD',
-                            minimumFractionDigits: 2,
-                          })}
+                        (
+                          subTotal.reduce((sub, currentItem) => sub + currentItem) / 100
+                        ).toLocaleString('en-US', {
+                          style: 'currency',
+                          currency: 'USD',
+                          minimumFractionDigits: 2,
+                        })}
                     </td>
                   </tr>
                 </tbody>

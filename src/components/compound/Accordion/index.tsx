@@ -9,7 +9,7 @@ interface IAccordionProps {
   onChange?: () => void;
   isActive?: boolean;
   hasIcon?: boolean;
-
+  disabled?: boolean;
   // prop for title
   title: string;
   titleProps?: HTMLAttributes<HTMLLabelElement>;
@@ -40,6 +40,7 @@ export const Accordion: FC<IAccordionProps> = ({
   prefix,
   hasIcon,
   iconPosition,
+  disabled,
 }) => {
   return (
     <div className={classNames(`kl-accordion`, className)}>
@@ -47,6 +48,7 @@ export const Accordion: FC<IAccordionProps> = ({
         className={classNames(`accordion-root`, className)}
         expanded={isActive}
         onChange={onChange}
+        style={{ display: disabled ? 'none' : 'block' }}
         classes={{
           root: classes?.root,
           expanded: classes?.expanded,

@@ -7,20 +7,20 @@ import { Button, KaImage } from '@components/primitive';
 import { routes } from '@utils/routes';
 import { map, size, isEmpty } from 'lodash';
 import { useRouter } from 'next/router';
-import { removeProduct } from '@/store/cart/slice';
-import { selectTotal } from '../../../store/cart/selector';
+
 import { Accordion } from '../Accordion';
 import { useOrderTempQuery } from '@/query/order/get-OrderTemp';
 import moment from 'moment';
 import { toast } from 'react-toastify';
-import { Link } from '../../primitive/Link/index';
+import { Drawer } from '@mui/material';
 
-const NotifyDrawer = () => {
-  const router = useRouter();
-  const dispatch = useAppDispatch();
-
+const NotifyDrawer = ({ open, onClose }: { open: boolean; onClose: () => void }) => {
   const { data: order } = useOrderTempQuery({});
-  console.log(order);
+
+  const [end, setEnd] = useState<number[]>([]);
+  const [timeRemaining, setTimeRemaining] = useState<string[]>([]);
+  const [lastNotificationTime, setLastNotificationTime] = useState<number | null>(null);
+  const [expiredItems, setExpiredItems] = useState<number[]>([]);
 
   const calculateTimeRemaining = (expires_at: string) => {
     const currentTime = moment();
@@ -35,13 +35,9 @@ const NotifyDrawer = () => {
     return remainingTime;
   };
 
-  const [timeRemaining, setTimeRemaining] = useState<string[]>([]);
-  const [lastNotificationTime, setLastNotificationTime] = useState<number | null>(null);
-
   useEffect(() => {
     const intervalIds: NodeJS.Timeout[] = [];
 
-    // Hàm để thêm hoặc cập nhật thời gian còn lại
     const updateTimeRemaining = () => {
       const updatedTimeRemaining = map(order?.data, (item) =>
         calculateTimeRemaining(item?.expires_at),
@@ -49,7 +45,6 @@ const NotifyDrawer = () => {
       setTimeRemaining(updatedTimeRemaining);
     };
 
-    // Hàm để xử lý thông báo
     const handleNotification = (remainingTime: string, index: number) => {
       if (
         remainingTime.endsWith('0s') &&
@@ -67,13 +62,16 @@ const NotifyDrawer = () => {
       if (remainingTime === '0m 0s') {
         toast.info(`Order ${index + 1}: Time is up!`, { position: 'top-center' });
         setLastNotificationTime(null);
+        setEnd((prevExpiredItems) => [...prevExpiredItems, index]);
+
+        setTimeout(() => {
+          setExpiredItems((prevExpiredItems) => [...prevExpiredItems, index]);
+        }, 10000);
       }
     };
 
-    // Cập nhật thời gian còn lại khi có sự thay đổi trong danh sách đơn hàng
     updateTimeRemaining();
 
-    // Tạo interval cho mỗi đơn hàng
     map(order?.data, (item, index) => {
       const intervalId = setInterval(() => {
         const remainingTime = calculateTimeRemaining(item?.expires_at);
@@ -93,36 +91,79 @@ const NotifyDrawer = () => {
       intervalIds.push(intervalId);
     });
 
-    // Hủy đăng ký tất cả các interval khi component bị hủy
     return () => {
       intervalIds.forEach((id) => clearInterval(id));
     };
   }, [order?.data, lastNotificationTime]);
 
   return (
-    <div className="kl-cart-drawer">
-      <div className="header">
-        <span className="title">Notify</span>
-        <span className="close" onClick={() => dispatch(closeDrawer())}>
-          Close <i className="fa-light fa-xmark icon" />
-        </span>
-      </div>
+    <Drawer anchor="right" open={open} onClose={onClose}>
+      <div className="kl-drawer-notify">
+        <div className="kl-cart-drawer">
+          <div className="header">
+            <span className="title">Notify</span>
+            <span className="close" onClick={onClose}>
+              Close <i className="fa-light fa-xmark icon" />
+            </span>
+          </div>
 
-      <div className="content">
-        {!isEmpty(order?.data) &&
-          map(order?.data, (item, idx) => (
-            <Accordion key={item.id} title={`Order ${idx + 1} - Expires at: ${timeRemaining[idx]}`}>
-              <div className="detail">
-                <Button>
-                  <Link title="Checkout Now" href={item?.checkout_link}>
-                    Checkout Now
-                  </Link>
-                </Button>
-              </div>
-            </Accordion>
-          ))}
+          <div className="content">
+            {!isEmpty(order?.data) &&
+              map(order?.data, (item, idx) => (
+                <Accordion
+                  disabled={expiredItems.includes(idx)}
+                  key={item.id}
+                  title={
+                    end.includes(idx)
+                      ? 'Your order is expired'
+                      : `Order ${idx + 1} - Expires at: ${timeRemaining[idx]}`
+                  }
+                >
+                  <div className="wrap">
+                    <ul className="products-temp">
+                      {item?.list_items &&
+                        map(item?.list_items, (item, idx) => (
+                          <li key={idx} className="item-temp">
+                            <KaImage
+                              src={item.thumbnail}
+                              alt="cart"
+                              objectFit="contain"
+                              ratio="square"
+                              className="image-temp"
+                            />
+                            <div className="info-temp">
+                              <div className="name-temp">{item.name}</div>
+                              <div className="group-temp">
+                                <div className="right-empty">
+                                  <div> {`Qty: ${item.quantity}`}</div>
+
+                                  <div> {`Color: ${item.color}`}</div>
+                                </div>
+                                <div className="price-temp">
+                                  {(item.price / 100).toLocaleString('en-US', {
+                                    style: 'currency',
+                                    currency: 'USD',
+                                    minimumFractionDigits: 2,
+                                  })}
+                                </div>
+                              </div>
+                            </div>
+                          </li>
+                        ))}
+                    </ul>
+                    <Button
+                      disabled={end.includes(idx)}
+                      onClick={() => window.open(item.checkout_link, '_blank')}
+                    >
+                      Pay Now
+                    </Button>
+                  </div>
+                </Accordion>
+              ))}
+          </div>
+        </div>
       </div>
-    </div>
+    </Drawer>
   );
 };
 

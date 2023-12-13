@@ -5,18 +5,18 @@ import { useFormik } from 'formik';
 import { FC } from 'react';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
-import { useCreateAccountMutation } from '../../query/register/registerMutation';
 import { useRouter } from 'next/router';
 import { isEqual } from 'lodash';
 import useTranslation from 'next-translate/useTranslation';
+import { useResetPasswordMutation } from '@/query/forgotPassword/forgotPasswordMutation';
 
 interface ICreateAccount {
   className?: string;
   data: { email: string; key: string };
 }
 
-const CreateAccount: FC<ICreateAccount> = ({ className, data }) => {
-  const { mutateAsync: createAccountMutation } = useCreateAccountMutation();
+const ResetPassword: FC<ICreateAccount> = ({ className, data }) => {
+  const { mutateAsync: resetPasswordMutation } = useResetPasswordMutation();
   const router = useRouter();
   const {
     setFieldValue,
@@ -31,7 +31,6 @@ const CreateAccount: FC<ICreateAccount> = ({ className, data }) => {
     initialValues: {
       email: data?.email,
       key: data?.key,
-      name: '',
       password: '',
       confirmPassword: '',
     },
@@ -45,7 +44,7 @@ const CreateAccount: FC<ICreateAccount> = ({ className, data }) => {
     }),
 
     onSubmit: (v) => {
-      createAccountMutation(v)
+      resetPasswordMutation({ email: v.email, password: v.password, key: v.key })
         .then((response: any) => {
           if (response?.status === 'success') {
             toast.success('Create Account Successfully');
@@ -66,7 +65,7 @@ const CreateAccount: FC<ICreateAccount> = ({ className, data }) => {
 
   const handleBlur = ({ name }: { name: string }) => setFieldTouched(name);
 
-  const { t } = useTranslation('register');
+  const { t } = useTranslation('forgot');
 
   return (
     <form className={classNames('kl-register-form form -right', className)} onSubmit={handleSubmit}>
@@ -75,17 +74,6 @@ const CreateAccount: FC<ICreateAccount> = ({ className, data }) => {
         <Label isRequired className="label">
           {t('name')}
         </Label>
-        <GroupInput
-          className="container -mb-10"
-          type="text"
-          placeholder={t('holderAccount.name')}
-          name="name"
-          value={values.name}
-          error={errors.name}
-          touched={touched.name}
-          onChange={handleChange}
-          onBlur={handleBlur}
-        />
         <Label isRequired className="label">
           {t('password')}
         </Label>
@@ -124,4 +112,4 @@ const CreateAccount: FC<ICreateAccount> = ({ className, data }) => {
   );
 };
 
-export default CreateAccount;
+export default ResetPassword;

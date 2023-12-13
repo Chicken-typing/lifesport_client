@@ -10,6 +10,7 @@
     "/about": ["about"],
     "/login": ["login"],
     "/register": ["register"],
-    "contact": ["/contact"]
+    "contact": ["/contact"],
+    "/forgot-password": ["forgot"]
   }
 }

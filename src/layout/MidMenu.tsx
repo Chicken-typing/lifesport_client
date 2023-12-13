@@ -22,7 +22,7 @@ import { useOrderTempQuery } from '@/query/order/get-OrderTemp';
 import NotifyDrawer from '@components/compound/Drawer/NotifyDrawer';
 import CartDrawer from '@components/compound/Drawer/CartDrawer';
 
-export default function MidMenu() {
+export default function MidMenu({ openHeader }: { openHeader: () => void }) {
   const router = useRouter();
   const buttonEle = useRef(null);
   const [open, setOpen] = useState<boolean>(false);
@@ -107,10 +107,7 @@ export default function MidMenu() {
 
       <div className="kl-mid-menu">
         <div className="kl-mid-menu-wrapper">
-          <button
-            // onClick={() => dispatch(openDrawer({ view: DRAWERS.HEADER, anchor: ANCHORS.left }))}
-            className="burger"
-          >
+          <button onClick={openHeader} className="burger">
             <span className="icon"></span>
             <span className="icon"></span>
             <span className="icon"></span>

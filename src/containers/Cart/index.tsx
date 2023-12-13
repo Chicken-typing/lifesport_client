@@ -287,7 +287,9 @@ const Cart = () => {
               <div className="empty">
                 <i className="fa-sharp fa-light fa-cart-xmark fa-2xl icon" />
                 <p className="title">Giỏ hàng hiện đang trống</p>
-                <Button className="button">Return To Shop</Button>
+                <Button onClick={() => router.push({ pathname: '/' })} className="button">
+                  Return To Shop
+                </Button>
               </div>
             )}
           </div>

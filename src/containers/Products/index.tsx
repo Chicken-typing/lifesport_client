@@ -13,10 +13,11 @@ import { routes } from '@utils/routes';
 import { ceil, isEmpty, map, size, times } from 'lodash';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
-import { ReactNode } from 'react';
+import { ReactNode, useState } from 'react';
 import { IHomeBanner } from '../Home/constants';
 import { SHOW_ITEMS, SORT_ITEMS } from './constants';
 import Sidebar from './Sidebar';
+import ProductSidebarDrawer from '@components/compound/Drawer/ProductSidebarDrawer';
 
 const Products = () => {
   const router = useRouter();
@@ -38,6 +39,7 @@ const Products = () => {
     isError,
   } = useProductsQuery({ page: 1, brand, s });
   const { t } = useTranslation('products');
+  const [open, setOpen] = useState<boolean>(false);
 
   const breadcrumbs: ReactNode[] = [
     <Link href={routes.HOME} title="homepage" key="homepage" className="kl-page-header-link">
@@ -85,12 +87,7 @@ const Products = () => {
                 <div className="kl-container content">
                   <div className="sorts">
                     <div className="actions">
-                      <button
-                        onClick={() =>
-                          dispatch(openDrawer({ view: DRAWERS.PRODUCT, anchor: ANCHORS.left }))
-                        }
-                        className="filter"
-                      >
+                      <button onClick={() => setOpen(true)} className="filter">
                         <i className="fa-regular fa-sliders-simple icon" />
                         <strong className="text">Filter</strong>
                       </button>
@@ -220,6 +217,8 @@ const Products = () => {
           </div>
         </div>
       </div>
+
+      <ProductSidebarDrawer open={open} onClose={() => setOpen(false)} variant="-drawer" />
     </KsLayout>
   );
 };

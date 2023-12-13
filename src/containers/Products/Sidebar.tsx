@@ -17,14 +17,9 @@ const Sidebar: FC<ISidebarProps> = ({ variant }) => {
 
   const MIN_PRICE_DISTANCE = 5;
 
-  const category = String(query?.category || undefined);
   const minPrice = Number(query?.minPrice || 0);
   const maxPrice = Number(query?.maxPrice || 100);
-  const page = Number(query?.page || 1);
-  const limit = Number(query?.limit || LIMIT.PRODUCTS_FILTER);
-
-  const typeTea = query?.typeTea || [];
-  const ingredients = query?.ingredients || [];
+  const brand = String(query?.brand || undefined);
   const rating = query?.rating || [];
 
   // const { data: categories, isFetching: isFetchingCategories } = useProductCategoriesQuery({

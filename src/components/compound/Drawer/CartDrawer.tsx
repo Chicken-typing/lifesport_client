@@ -61,7 +61,6 @@ const CartDrawer = ({ open, onClose }: { open: boolean; onClose: () => void }) =
     if (token) {
       checkoutMutation(data)
         .then(async (response: any) => {
-          console.log(response);
           const url = await response?.url;
           onClose();
           window.open(url, '_blank');

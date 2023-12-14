@@ -52,7 +52,7 @@
     > .search {
       margin-top: 2px;
       display: flex;
-      @include size(57%, 44px);
+      @include size(45%, 44px);
       @include breakpoint-down(tablet) {
         display: none;
       }
@@ -189,6 +189,13 @@
     > .btn {
       padding: 10px;
       @include square(100%);
+      text-align: left;
+      border-radius: 5px;
+
+      &:hover {
+        background-color: #65a3e6;
+        color: $white;
+      }
     }
 
     @include breakpoint-down(tablet) {
@@ -198,5 +205,6 @@
 }
 
 .user {
-  gap: 20px;
+  gap: 5px;
+  margin-right: 5px;
 }

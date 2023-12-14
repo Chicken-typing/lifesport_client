@@ -183,19 +183,15 @@ function Invoices() {
   };
 
   const handleCloseDialog = () => setOpenDialog(false);
-  // console.log(selection);
+
   const handleUpdateStatus = () => {
     if (selection) {
       updateMutation(selection).then((response: any) => {
-        console.log('test', selection);
-        console.log(response);
         handleCloseDialog();
       });
     }
   };
-  // useEffect(() => {
-  //   console.log(selection);
-  // }, [selection]);
+
   return (
     <AdminLayout title="Account List">
       <div className="kl-admin-invoices">
@@ -319,7 +315,6 @@ function Invoices() {
                 });
 
                 setSelection(newSelectionState);
-                console.log(newSelectionState);
               }}
             />
           </Box>

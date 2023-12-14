@@ -74,7 +74,6 @@ const Cart = () => {
     if (token) {
       checkoutMutation(data)
         .then(async (response: any) => {
-          console.log(response);
           const url = await response?.url;
           // router.push(url);
           window.open(url, '_blank');

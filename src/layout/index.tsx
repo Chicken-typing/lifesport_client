@@ -50,6 +50,7 @@ const KsLayout: FC<IKsLayoutProps> = ({
 }) => {
   const router = useRouter();
   const queryClient = useQueryClient();
+  const token = cookieStorage?.getAccessTokenInfo();
 
   useEffect(() => {
     document.documentElement.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
@@ -67,7 +68,11 @@ const KsLayout: FC<IKsLayoutProps> = ({
     retry: 1,
   });
 
-  queryClient.invalidateQueries(['OrderTemp']);
+  useEffect(() => {
+    if (token) {
+      queryClient.invalidateQueries(['OrderTemp']);
+    }
+  }, [token, queryClient]);
 
   return (
     <>

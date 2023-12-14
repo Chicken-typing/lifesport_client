@@ -39,10 +39,7 @@
       "title": "PRODUCT",
       "route": "/products"
     },
-    {
-      "title": "BLOG",
-      "route": "/blogs"
-    },
+
     {
       "title": "PAGES",
       "route": "",
@@ -170,8 +167,7 @@
         {
           "address": "Return Policy",
           "phone1": "0932369776",
-          "phone2": "0559270701",
-          "web": "https://lifesport-client.vercel.app/"
+          "phone2": "0559270701"
         }
       ]
     }

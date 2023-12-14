@@ -133,7 +133,28 @@ const Home = () => {
           </div>
         </section>
 
-        <section className="kl-home-collections">
+        <section className="kl-home-products">
+          <div className="kl-container content">
+            <div className="header">
+              <h2 className="title">{t('best_seller.title')}</h2>
+              <div className="readmore -bottom">
+                <Link
+                  href={routes.PRODUCTS}
+                  className="action"
+                  title=""
+                  underline
+                  color="primary"
+                  rightIcon={<i className="fa-regular fa-chevron-right icon" />}
+                >
+                  {t('best_seller.action')}
+                </Link>
+              </div>
+            </div>
+            <ProductSlides products={products?.items || []} />
+          </div>
+        </section>
+
+        {/* <section className="kl-home-collections">
           <div className="kl-container content">
             <h2 className="title">{t('collection.title')}</h2>
 
@@ -205,7 +226,7 @@ const Home = () => {
                   ))}
             </div>
           </div>
-        </section>
+        </section> */}
 
         {/* <section className="kl-home-quantity">
           <div className="kl-container content">
@@ -278,7 +299,7 @@ const Home = () => {
           </div>
         </section>
 
-        {blogs?.items.length !== 0 && (
+        {/* {blogs?.items.length !== 0 && (
           <section className="kl-home-blogs">
             <div className="kl-container content">
               <div className="header">
@@ -297,10 +318,10 @@ const Home = () => {
                 </div>
               </div>
 
-              {/* <BlogSlide blogs={blogs?.items || []} /> */}
+              <BlogSlide blogs={blogs?.items || []} />
             </div>
           </section>
-        )}
+        )} */}
 
         <section className="kl-home-trailer">
           <span className="overlay" />

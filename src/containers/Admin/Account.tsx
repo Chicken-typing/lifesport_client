@@ -8,7 +8,7 @@ import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined';
 import SecurityOutlinedIcon from '@mui/icons-material/SecurityOutlined';
 import { Box, Typography, useTheme } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import request from '@utils/request';
 
 const Account = () => {
@@ -53,7 +53,6 @@ const Account = () => {
       headerName: 'Role',
       flex: 1,
       renderCell: ({ row: { role } }: any) => {
-        console.log(role);
         return (
           <Box
             width="60%"

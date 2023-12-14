@@ -15,6 +15,7 @@ import { login } from '@/store/user/slice';
 import { decodeToken } from '../../utils/decode';
 import useTranslation from 'next-translate/useTranslation';
 import LoadingScreen from '@components/compound/LoadingScreen';
+import { toast } from 'react-toastify';
 
 interface ILoginFormProps {
   className?: string;
@@ -73,30 +74,15 @@ const LoginForm: FC<ILoginFormProps> = ({ className }) => {
       }),
       onSubmit: (v) => {
         handleSubmitCaptcha;
-        loginMutation(v).then((response: any) => {
-          // if (response) {
-          //   cookieStorage.setTokens({
-          //     accessToken: response._token,
-          //   });
-          //   const token = response._token;
-          //   if (token) {
-          //     const decoded: any = decodeToken(token);
-          //     if (decoded?.role === 'master_admin' || decoded?.role === 'admin') {
-          //       router.push({
-          //         pathname: '/admin',
-          //       });
-          //     } else {
-          //       dispatch(login(decoded));
-          //       router.push({
-          //         pathname: '/',
-          //       });
-          //     }
-          //   }
-          // } else {
-          //   <LoadingScreen />;
-          // }
-          getResponse(response);
-        });
+        loginMutation(v)
+          .then((response: any) => {
+            getResponse(response);
+          })
+          .catch(({ statusCode }) => {
+            if (statusCode !== 200) {
+              toast.error('Your Email or Password is not correct', { position: 'top-center' });
+            }
+          });
       },
     });
 

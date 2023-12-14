@@ -101,14 +101,14 @@ const NotifyDrawer = ({ open, onClose }: { open: boolean; onClose: () => void })
       <div className="kl-drawer-notify">
         <div className="kl-cart-drawer">
           <div className="header">
-            <span className="title">Notify</span>
+            <span className="title">Unpaid Order</span>
             <span className="close" onClick={onClose}>
               Close <i className="fa-light fa-xmark icon" />
             </span>
           </div>
 
           <div className="content">
-            {!isEmpty(order?.data) &&
+            {size(order?.data) !== 0 ? (
               map(order?.data, (item, idx) => (
                 <Accordion
                   disabled={expiredItems.includes(idx)}
@@ -159,7 +159,10 @@ const NotifyDrawer = ({ open, onClose }: { open: boolean; onClose: () => void })
                     </Button>
                   </div>
                 </Accordion>
-              ))}
+              ))
+            ) : (
+              <p className="empty-temp">No unpaid products.</p>
+            )}
           </div>
         </div>
       </div>

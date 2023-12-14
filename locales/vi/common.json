@@ -39,10 +39,7 @@
       "title": "SẢN PHẨM",
       "route": "/products"
     },
-    {
-      "title": "TIN TỨC",
-      "route": "/blogs"
-    },
+
     {
       "title": "TRANG",
       "route": "",
@@ -170,8 +167,7 @@
         {
           "address": "Chính sách đổi trả",
           "phone1": "0932369776",
-          "phone2": "0559270701",
-          "web": "https://lifesport-client.vercel.app/"
+          "phone2": "0559270701"
         }
       ]
     }

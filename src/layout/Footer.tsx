@@ -23,7 +23,6 @@ interface IContact {
   address: string;
   phone1: string;
   phone2: string;
-  web: string;
 }
 
 const Footer = () => {
@@ -212,13 +211,11 @@ const Footer = () => {
             <div className="col-12 col-md-8 col-lg-3 order-lg-12">
               <div className="footer-widget">
                 <h3 className="heading">Get in touch</h3>
-                {map(contact_link, ({ address, phone1, phone2, web }: IContact) => (
+                {map(contact_link, ({ address, phone1, phone2 }: IContact) => (
                   <div className="address" key={`footer-contact-item-${address}`}>
                     Address: {address}
                     <br />
                     Hotline: {phone1}- {phone2}
-                    <br />
-                    Web: {web}
                   </div>
                 ))}
               </div>

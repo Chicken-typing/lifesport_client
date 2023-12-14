@@ -144,18 +144,15 @@ export default function MidMenu({ openHeader }: { openHeader: () => void }) {
               <span className="icon">
                 <UserIcon />
               </span>
-              <span className="btn-name">
-                {!isLoading && auth?.isAuthenticated && decoded?.name}
-                {!isLoading && !auth?.isAuthenticated && t('mid_menu.login.label')}
-              </span>
+              <span className="btn-name">{token ? decoded?.name : t('mid_menu.login.label')}</span>
             </button>
 
-            <button className="btn">
+            {/* <button className="btn">
               <span className="icon">
                 <HeartIcon />
               </span>
               <span className="quantity">(0)</span>
-            </button>
+            </button> */}
 
             <button
               className="btn"
@@ -163,7 +160,7 @@ export default function MidMenu({ openHeader }: { openHeader: () => void }) {
               onClick={() => setOpenNotify(true)}
             >
               <span className="icon">
-                <i className="fa-light fa-bell fa-xl"></i>
+                <i className="fa-light fa-cart-xmark fa-xl"></i>
               </span>
               <span className="quantity">{`(${size(order?.data)})`}</span>
             </button>

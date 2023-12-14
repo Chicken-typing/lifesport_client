@@ -113,14 +113,14 @@
   border-color: unset !important;
 }
 .css-1qxadfk-MuiPaper-root-MuiDialog-paper {
-  background-color: $white;
-  min-width: 500px;
+  background-color: $white !important;
+  min-width: 500px !important;
 }
 
 .css-1ol7unp-MuiInputBase-root-MuiInput-root {
-  color: $black;
-  width: 100%;
+  color: $black !important;
+  width: 100% !important;
   &::before {
-    border-bottom: 1px solid $black;
+    border-bottom: 1px solid $black !important;
   }
 }

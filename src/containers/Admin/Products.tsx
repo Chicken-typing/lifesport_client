@@ -28,7 +28,7 @@ const Products = () => {
   const [code, setCode] = useState<string>('');
   const router = useRouter();
 
-  const { data: products, isFetching: isLoading, isError } = useProductsQuery({ page: 1 });
+  const { data: products, isFetching: isLoading, isError } = useProductsQuery({ limit: 19 });
   const { mutateAsync: applyEvent } = useEventMutation();
 
   const columns: any[] = [
@@ -281,6 +281,7 @@ const Products = () => {
           >
             <DataGrid
               checkboxSelection
+              hideFooter
               rows={products?.items || []}
               columns={columns}
               loading={isLoading}

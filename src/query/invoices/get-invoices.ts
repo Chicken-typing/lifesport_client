@@ -36,10 +36,6 @@ export const useInvoicesQuery = (options: {
 };
 
 const mutationUpdateStatus = async (data: IUpdate[]) => {
-  // console.log(
-  //   'test',
-  //   data.map((item) => item.deliver),
-  // );
   return await request.request({
     method: 'PUT',
     url: 'order/admin/deliver',

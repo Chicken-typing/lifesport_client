@@ -33,11 +33,7 @@ const Products = () => {
   const START = limit * (page - 1);
   const END = limit * page;
 
-  const {
-    data: products,
-    isFetching: isLoading,
-    isError,
-  } = useProductsQuery({ page: 1, brand, s });
+  const { data: products, isFetching: isLoading, isError } = useProductsQuery({ brand, s });
   const { t } = useTranslation('products');
   const [open, setOpen] = useState<boolean>(false);
 
@@ -56,6 +52,7 @@ const Products = () => {
     description: t('banner.description'),
     color: t('banner.color'),
   };
+
   return (
     <KsLayout
       title={t('title')}

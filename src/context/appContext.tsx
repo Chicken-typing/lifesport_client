@@ -14,7 +14,6 @@ export const AppContext = createContext({});
 
 export const AppContextProvider = ({ children }: any) => {
   const dispatch = useAppDispatch();
-  const auth = useAppSelector((state) => state.auth);
   const [isLoading, setIsLoading] = useState(true);
   const token = cookieStorage?.getAccessTokenInfo();
   const router = useRouter();

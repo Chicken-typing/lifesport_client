@@ -53,16 +53,6 @@ export const ProductCard: FC<IProductCardProps> = ({ data, isLoading = false }) 
             </Link>
 
             {data?.percent_off && <Badge label={`${data?.percent_off}% OFF`} className="badge" />}
-
-            <div className="actions">
-              <Button className="button" iconOnly variant="contained" color="light">
-                <Tooltip title="Yêu thích" placement="left" arrow>
-                  <span className="icon">
-                    <i className="fa-light fa-heart icon" />
-                  </span>
-                </Tooltip>
-              </Button>
-            </div>
           </>
         ) : (
           <Skeleton width="100%" height="100%" variant="rectangular" animation="wave" />

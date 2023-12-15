@@ -108,8 +108,8 @@
       text-align: center;
       color: $white;
       &:nth-child(1) {
-        width: 120px;
-
+        width: fit-content;
+        margin-right: 10px;
         &:hover > .icon {
           color: $color-primary;
         }

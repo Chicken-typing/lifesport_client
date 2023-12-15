@@ -96,7 +96,6 @@ function Invoices() {
   const { data: invoices, isLoading } = useInvoicesQuery({ type });
   const { mutateAsync: updateMutation } = useUpdateStatusMutation();
 
-  const router = useRouter();
   const orderLists = invoices?.order_lists || [];
 
   const filterOrdersByType = (orders: IOrders[], type: TypeInvoices) => {
@@ -170,7 +169,7 @@ function Invoices() {
               className="button"
             >
               <Typography color={colors.primary} sx={{ ml: '5px' }}>
-                {outbound ? 'Deliverd' : 'Shipping'}
+                {outbound ? 'Outbound' : 'Inbound'}
               </Typography>
             </Button>
           </div>
@@ -203,9 +202,6 @@ function Invoices() {
           <DialogTitle color="black" id="responsive-dialog-title">
             {'Do you want to update it ?'}
           </DialogTitle>
-          {/* <DialogContent>
-            <DialogContentText>{JSON.stringify(selection)}</DialogContentText>
-          </DialogContent> */}
           <DialogActions>
             <Button onClick={handleUpdateStatus} autoFocus style={{ flex: '1' }}>
               Ok

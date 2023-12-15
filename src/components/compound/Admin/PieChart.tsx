@@ -30,15 +30,33 @@ function PieChart({ time }: { time: DateRange<Dayjs> }) {
     }
   }, [time, sellingRateMutation]);
 
+  const getColorForType = (datum: Record<string, any>, defaultColor?: string): string => {
+    const type = datum.type;
+    const colorMap: Record<string, string> = {
+      Type1: 'white',
+      Type2: 'blue',
+      Type3: 'green',
+      // Thêm loại và màu theo ý muốn
+    };
+
+    return colorMap[type] || defaultColor || 'white';
+  };
+
   const config: PieConfig = {
     appendPadding: 10,
-    data: datas.map((item) => ({ type: item.brand, value: parseInt(item.total_sale_brand) })),
+    data: datas.map((item) => ({
+      type: item.brand.toUpperCase(),
+      value: parseInt(item.total_sale_brand),
+    })),
     angleField: 'value',
     colorField: 'type',
     radius: 0.8,
     label: {
       type: 'outer',
       content: '{name} {percentage}',
+      // style: {
+      //   fill: (datum: Record<string, any>) => getColorForType(datum, 'white'),
+      // },
     },
     interactions: [
       {

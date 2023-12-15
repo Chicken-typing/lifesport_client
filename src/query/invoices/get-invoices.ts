@@ -20,16 +20,13 @@ export const fetchInvoices = async ({
     method: 'GET',
     url: `/order/admin/list?type=${type}`,
   });
+
   return data;
 };
 
 export const useInvoicesQuery = (options: {
   type: TypeInvoices;
 }): UseQueryResult<IQueryResultInvoices, Error> => {
-  const processType = (value: TypeInvoices): string => String(value).replace(/\"/g, '');
-
-  const processedType = processType(options.type);
-
   return useQuery(['fetchInvoices', { ...options }], fetchInvoices, {
     retry: 1,
   });

@@ -4,13 +4,13 @@ import { decodeToken } from './utils/decode';
 
 export function middleware(req: NextRequest) {
   const url = req.nextUrl.clone();
+  const token = req.cookies.get('access-token');
+  const decoded = decodeToken(token || '');
+
   if (url.pathname === '/products') {
     url.pathname = '/products/list';
     return NextResponse.redirect(new URL(url.href)); // Sử dụng `new URL` để tạo URL tuyệt đối.
   }
-
-  const token = req.cookies.get('access-token');
-  const decoded = decodeToken(token || '');
 
   if (
     (!token && url.pathname.includes('/admin')) ||
@@ -18,6 +18,10 @@ export function middleware(req: NextRequest) {
       decoded?.role !== 'admin' &&
       url.pathname.includes('/admin'))
   ) {
+    return NextResponse.redirect(new URL('/404', req.nextUrl.origin));
+  }
+
+  if (!token && url.pathname === '/transaction') {
     return NextResponse.redirect(new URL('/404', req.nextUrl.origin));
   }
 }

@@ -25,11 +25,6 @@ import { useRouter } from 'next/router';
 
 const Home = () => {
   const { data: products } = useProductsQuery({ limit: 10 });
-  const { data: blogs } = useBlogsQuery({ limit: LIMIT.HOME_BLOGS, page: 1 });
-  const { data: categories, isLoading: isLoadingCategories } = useProductCategoriesQuery({
-    limit: LIMIT.HOME_COLLECTIONS,
-    page: 1,
-  });
 
   const dispatch = useAppDispatch();
 
@@ -349,7 +344,7 @@ const Home = () => {
           </div>
         </section>
 
-        <FacebookMsg />
+        {/* <FacebookMsg /> */}
       </div>
     </KsLayout>
   );

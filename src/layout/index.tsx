@@ -67,12 +67,7 @@ const KsLayout: FC<IKsLayoutProps> = ({
   const { data: order, isFetching: isLoading } = useQuery(['OrderTemp', {}], fetchOrderTemp, {
     retry: 1,
   });
-
-  useEffect(() => {
-    if (token) {
-      queryClient.invalidateQueries(['OrderTemp']);
-    }
-  }, [token, queryClient]);
+  queryClient.invalidateQueries(['OrderTemp']);
 
   return (
     <>

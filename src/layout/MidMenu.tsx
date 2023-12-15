@@ -95,6 +95,9 @@ export default function MidMenu({ openHeader }: { openHeader: () => void }) {
             >
               Go to Admin Page
             </button>
+            <button onClick={() => router.push({ pathname: '/transaction' })} className="btn">
+              View Transaction
+            </button>
             <button onClick={handleLogOut} className="btn">
               Log Out
             </button>

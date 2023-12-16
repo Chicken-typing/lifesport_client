@@ -3,10 +3,10 @@ import { tokens } from '@/adminLayout/theme';
 import { useProductsQuery } from '@/query/products/get-products';
 import Introduce from '@components/compound/Admin/Introduce';
 import { Button } from '@components/primitive';
-import { Box, useTheme, TextField, Input } from '@mui/material';
+import { Box, useTheme, TextField, Input, Typography } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import { useState, useEffect, ChangeEvent } from 'react';
-import { isEmpty, isEqual } from 'lodash';
+import { isEmpty, isEqual, map } from 'lodash';
 import request from '@utils/request';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -50,11 +50,25 @@ const Products = () => {
       field: 'price',
       headerName: 'Price',
       flex: 1,
+      renderCell: ({ row: { price } }: any) => {
+        return (
+          <Typography sx={{ ml: '5px' }}>
+            {(price / 100).toLocaleString('en-US', {
+              style: 'currency',
+              currency: 'USD',
+              minimumFractionDigits: 2,
+            })}
+          </Typography>
+        );
+      },
     },
     {
       field: 'brand',
       headerName: 'Brand',
       flex: 1,
+      renderCell: ({ row: { brand } }: any) => {
+        return <Typography sx={{ ml: '5px' }}>{brand.toUpperCase()}</Typography>;
+      },
     },
     {
       field: 'action',
@@ -133,11 +147,21 @@ const Products = () => {
         console.log(error);
       });
   };
+
   return (
     <AdminLayout title="Account List">
-      <div className="kl-admin-account">
+      <div className="kl-admin-products">
         {/* Dialog for add event */}
-        <Dialog open={openEvent} onClose={handleCloseEvent}>
+        <Dialog
+          className="dialog-delete"
+          classes={{
+            root: 'dialog-root',
+            container: 'dialog-container',
+            paper: 'dialog-paper',
+          }}
+          open={openEvent}
+          onClose={handleCloseEvent}
+        >
           <DialogTitle color="black" fontSize="24px">
             APPLY EVENT
           </DialogTitle>
@@ -159,10 +183,22 @@ const Products = () => {
           open={openDialog}
           onClose={handleCloseDialog}
           aria-labelledby="responsive-dialog-title"
+          className="dialog-delete"
+          classes={{
+            root: 'dialog-root',
+            container: 'dialog-container',
+            paper: 'dialog-paper',
+          }}
         >
-          <DialogTitle id="responsive-dialog-title">{'Do you want to delete it ?'}</DialogTitle>
+          <DialogTitle className="dialog-title" id="responsive-dialog-title">
+            {'Do you want to delete it ?'}
+          </DialogTitle>
           <DialogContent>
-            <DialogContentText>{JSON.stringify(selection)}</DialogContentText>
+            <DialogContentText className="dialog-context">
+              {map(selection, (item) => (
+                <div>{item.name}</div>
+              ))}
+            </DialogContentText>
           </DialogContent>
           <DialogActions>
             <Button onClick={handleDeleteProduct} autoFocus style={{ flex: '1' }}>
@@ -285,7 +321,19 @@ const Products = () => {
               rows={products?.items || []}
               columns={columns}
               loading={isLoading}
-              onStateChange={handleChange}
+              // onStateChange={handleChange}
+              onRowSelectionModelChange={(params) => {
+                const newSelectionState = params.map((selectedRowId) => {
+                  const selectedOrder: any = products?.items.find(
+                    (order) => order.id === selectedRowId,
+                  );
+                  return selectedOrder
+                    ? { id: Number(selectedRowId), name: selectedOrder.name }
+                    : { id: Number(selectedRowId), name: selectedOrder.name };
+                });
+
+                setSelection(newSelectionState);
+              }}
             />
           </Box>
         </Box>

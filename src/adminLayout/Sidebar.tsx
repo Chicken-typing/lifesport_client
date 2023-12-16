@@ -66,7 +66,7 @@ const Sidebar = () => {
                   alt="profile-user"
                   width="100px"
                   height="100px"
-                  src="/images/error.png"
+                  src="/images/users.png"
                   style={{ cursor: 'pointer', borderRadius: '50%' }}
                 />
               </Box>

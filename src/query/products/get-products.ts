@@ -29,6 +29,23 @@ export const useProductsQuery = (
     retry: 1,
   });
 
+export const fetchProduct = async ({
+  queryKey,
+}: QueryFunctionContext<
+  [string, IQueryOptionsList & { s?: string; brand?: string; rating?: number }]
+>): Promise<IQueryResultList<IProduct>> => {
+  const [_, params] = queryKey;
+  const filterValues = pickBy(params, (value) => value !== 'undefined');
+
+  const data: IQueryResultList<IProduct> = await request.request({
+    method: 'GET',
+    url: API_ENDPOINTS.PRODUCTS,
+    params: filterValues,
+  });
+
+  return data;
+};
+
 export const prefetchProductsQuery = async (queryClient: any, options?: any) => {
   await queryClient.prefetchQuery(fetchProducts(options));
 };

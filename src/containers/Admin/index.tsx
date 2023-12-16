@@ -6,9 +6,10 @@ import Introduce from '@components/compound/Admin/Introduce';
 import StatBox from '@components/compound/Admin/StatBox';
 import { Interval, IStatus } from '@interfaces/statistics';
 import EmailIcon from '@mui/icons-material/Email';
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import PeopleIcon from '@mui/icons-material/People';
 import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
 import TrafficIcon from '@mui/icons-material/Traffic';
+import ReceiptIcon from '@mui/icons-material/Receipt';
 import {
   Box,
   FormControl,
@@ -98,10 +99,10 @@ const Admin = () => {
               >
                 <StatBox
                   title="12,361"
-                  subtitle="Emails Sent"
+                  subtitle="Total Transaction"
                   progress="0.75"
                   increase="+14%"
-                  icon={<EmailIcon sx={{ color: colors.greenAccent[600], fontSize: '26px' }} />}
+                  icon={<ReceiptIcon sx={{ color: colors.greenAccent[600], fontSize: '26px' }} />}
                 />
               </Box>
               <Box
@@ -136,10 +137,10 @@ const Admin = () => {
               >
                 <StatBox
                   title="32,441"
-                  subtitle="New Clients"
+                  subtitle="People"
                   progress="0.30"
                   increase="+5%"
-                  icon={<PersonAddIcon sx={{ color: colors.greenAccent[600], fontSize: '26px' }} />}
+                  icon={<PeopleIcon sx={{ color: colors.greenAccent[600], fontSize: '26px' }} />}
                 />
               </Box>
               <Box

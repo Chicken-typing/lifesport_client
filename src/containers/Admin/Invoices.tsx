@@ -106,7 +106,7 @@ function Invoices() {
       return orders.filter((order) => order.outbound === false);
     }
     if (type === 'outbound') {
-      return orders.filter((order) => order.outbound !== true);
+      return orders.filter((order) => order.outbound === true);
     }
   };
 
@@ -198,6 +198,12 @@ function Invoices() {
           open={openDialog}
           onClose={handleCloseDialog}
           aria-labelledby="responsive-dialog-title"
+          className="dialog-delete"
+          classes={{
+            root: 'dialog-root',
+            container: 'dialog-container',
+            paper: 'dialog-paper',
+          }}
         >
           <DialogTitle color="black" id="responsive-dialog-title">
             {'Do you want to update it ?'}
@@ -374,7 +380,15 @@ function Invoices() {
               <Typography variant="body1">{`Sub Total: ${
                 selectedOrder?.amount_subtotal || ''
               }`}</Typography>
-              <Typography variant="body1">{`Shipping Cost: ${selectedOrder?.shipping_cost}`}</Typography>
+              <Typography variant="body1">{`Shipping Cost: ${selectedOrder?.shipping_cost.toLocaleString(
+                'en-US',
+                {
+                  style: 'currency',
+                  currency: 'USD',
+                  minimumFractionDigits: 2,
+                },
+              )}`}</Typography>
+
               <Typography variant="body1">{`Payment Status: ${
                 selectedOrder?.payment_status || ''
               }`}</Typography>
@@ -429,14 +443,26 @@ function Invoices() {
                     }`}</Typography>
 
                     <Typography key={idx} variant="body1">{`Amount Subtotal: ${
-                      item?.amount_subtotal || ''
+                      item?.amount_subtotal.toLocaleString('en-US', {
+                        style: 'currency',
+                        currency: 'USD',
+                        minimumFractionDigits: 2,
+                      }) || ''
                     }`}</Typography>
                     <Typography key={idx} variant="body1">{`Amount Discount: ${
-                      item?.amount_discount || ''
+                      item?.amount_discount.toLocaleString('en-US', {
+                        style: 'currency',
+                        currency: 'USD',
+                        minimumFractionDigits: 2,
+                      }) || ''
                     }`}</Typography>
 
                     <Typography key={idx} variant="body1">{`Amount Total: ${
-                      item?.amount_total || ''
+                      item?.amount_total.toLocaleString('en-US', {
+                        style: 'currency',
+                        currency: 'USD',
+                        minimumFractionDigits: 2,
+                      }) || ''
                     }`}</Typography>
 
                     <Divider

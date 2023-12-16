@@ -5,6 +5,7 @@ export const CATEGORIES = [
   { label: 'Ally', value: 'ally' },
   { label: 'Xmen', value: 'xmen' },
   { label: 'Vespa', value: 'vespa' },
+  { label: 'Piaggio', value: 'piaggio' },
 ];
 
 export const PRODUCT_BANNER = {

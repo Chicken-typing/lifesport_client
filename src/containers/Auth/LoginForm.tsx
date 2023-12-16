@@ -162,12 +162,10 @@ const LoginForm: FC<ILoginFormProps> = ({ className }) => {
         />
 
         <div className="actions">
-          <FormControlLabel
-            control={<Checkbox size="small" color="default" />}
-            className="icon"
-            label="Remember me"
-          />
-          <Link className="link" href="/" title="forgot-password">
+          <Link className="link" href="/register" title="Create An Account">
+            Create An Account
+          </Link>
+          <Link className="link" href="/forgot-password" title="forgot-password">
             {t('forgot')}
           </Link>
         </div>

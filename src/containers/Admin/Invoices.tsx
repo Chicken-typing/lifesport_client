@@ -106,7 +106,7 @@ function Invoices() {
       return orders.filter((order) => order.outbound === false);
     }
     if (type === 'outbound') {
-      return orders.filter((order) => order.outbound === true);
+      return orders.filter((order) => order.outbound !== true);
     }
   };
 

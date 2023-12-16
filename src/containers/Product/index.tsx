@@ -314,7 +314,7 @@ const Product = () => {
                     Thêm vào giỏ hàng
                   </Button>
 
-                  <div className="like">
+                  {/* <div className="like">
                     <Button
                       onClick={() => dispatch(openModal({ view: MODALS.WISHLIST }))}
                       className="wishlist action"
@@ -324,7 +324,7 @@ const Product = () => {
                     >
                       Danh sách yêu thích
                     </Button>
-                  </div>
+                  </div> */}
 
                   <div className="footer">
                     <span className="label">Brand: </span>

@@ -1,6 +1,6 @@
 import AdminLayout from '@/adminLayout';
 import { tokens } from '@/adminLayout/theme';
-import { useProductsQuery } from '@/query/products/get-products';
+import { useProductAdminQuery } from '@/query/products/get-products';
 import Introduce from '@components/compound/Admin/Introduce';
 import { Button } from '@components/primitive';
 import { Box, useTheme, TextField, Input, Typography } from '@mui/material';
@@ -28,7 +28,7 @@ const Products = () => {
   const [code, setCode] = useState<string>('');
   const router = useRouter();
 
-  const { data: products, isFetching: isLoading, isError } = useProductsQuery({ limit: 19 });
+  const { data: products, isFetching: isLoading, isError } = useProductAdminQuery({});
   const { mutateAsync: applyEvent } = useEventMutation();
 
   const columns: any[] = [
@@ -47,13 +47,13 @@ const Products = () => {
       align: 'left',
     },
     {
-      field: 'price',
+      field: 'primary_pric',
       headerName: 'Price',
       flex: 1,
-      renderCell: ({ row: { price } }: any) => {
+      renderCell: ({ row: { primary_price } }: any) => {
         return (
           <Typography sx={{ ml: '5px' }}>
-            {(price / 100).toLocaleString('en-US', {
+            {(primary_price / 100).toLocaleString('en-US', {
               style: 'currency',
               currency: 'USD',
               minimumFractionDigits: 2,

@@ -25,7 +25,9 @@ import { getUnixTime } from 'date-fns';
 import dayjs, { Dayjs } from 'dayjs';
 import dynamic from 'next/dynamic';
 import { FC, useState } from 'react';
-
+import { useInvoicesQuery } from '@/query/invoices/get-invoices';
+import { isEmpty, size } from 'lodash';
+import { format } from 'date-fns';
 const Admin = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -33,6 +35,7 @@ const Admin = () => {
   const [interval, setIntervals] = useState<Interval>('day');
   const [status, setStatus] = useState<IStatus>('before');
   const [time, setTime] = useState<DateRange<Dayjs>>([today.startOf('week'), today]);
+  const { data: invoices, isLoading } = useInvoicesQuery({});
 
   const handleChangeInterval = (event: SelectChangeEvent) => {
     setIntervals(event.target.value as Interval);
@@ -98,7 +101,7 @@ const Admin = () => {
                 }}
               >
                 <StatBox
-                  title="12,361"
+                  title={String(size(invoices?.order_lists))}
                   subtitle="Total Transaction"
                   progress="0.75"
                   increase="+14%"
@@ -272,33 +275,40 @@ const Admin = () => {
                     Recent Transactions
                   </Typography>
                 </Box>
-                {mockTransactions.map((transaction, i) => (
-                  <Box
-                    key={`${transaction.txId}-${i}`}
-                    display="flex"
-                    justifyContent="space-between"
-                    alignItems="center"
-                    borderBottom={`4px solid ${colors.primary[500]}`}
-                    p="15px"
-                  >
-                    <Box>
-                      <Typography color={colors.greenAccent[500]} variant="h5" fontWeight="600">
-                        {transaction.txId}
-                      </Typography>
-                      <Typography color={colors.grey[100]}>{transaction.user}</Typography>
-                    </Box>
-                    <Box color={colors.grey[100]}>{transaction.date}</Box>
+                {!isEmpty(invoices?.order_lists) &&
+                  invoices?.order_lists.map((transaction, i) => (
                     <Box
-                      sx={{
-                        backgroundColor: colors.greenAccent[500],
-                        p: '5px 10px',
-                        borderRadius: '4px',
-                      }}
+                      key={`${transaction.id}-${i}`}
+                      display="flex"
+                      justifyContent="space-between"
+                      alignItems="center"
+                      borderBottom={`4px solid ${colors.primary[500]}`}
+                      p="15px"
                     >
-                      ${transaction.cost}
+                      <Box>
+                        <Typography color={colors.greenAccent[500]} variant="h5" fontWeight="600">
+                          {transaction.id}
+                        </Typography>
+                        <Typography color={colors.grey[100]}>{transaction.name}</Typography>
+                      </Box>
+                      <Box color={colors.grey[100]}>
+                        {format(new Date(Number(transaction?.paid_at) * 1000), 'dd/MM/yyyy')}
+                      </Box>
+                      <Box
+                        sx={{
+                          backgroundColor: colors.greenAccent[500],
+                          p: '5px 10px',
+                          borderRadius: '4px',
+                        }}
+                      >
+                        {(transaction?.amount_total / 100).toLocaleString('en-US', {
+                          style: 'currency',
+                          currency: 'USD',
+                          minimumFractionDigits: 2,
+                        })}
+                      </Box>
                     </Box>
-                  </Box>
-                ))}
+                  ))}
               </Box>
             </Box>
 
@@ -320,7 +330,7 @@ const Admin = () => {
                 alignItems="center"
               >
                 <Typography variant="h5" fontWeight="600">
-                  Campaign
+                  Brands Best Seller
                 </Typography>
                 <DateTimePicker getState={setTime} />
               </Box>

@@ -21,6 +21,7 @@ import { logout } from '@/store/user/slice';
 import { useOrderTempQuery } from '@/query/order/get-OrderTemp';
 import NotifyDrawer from '@components/compound/Drawer/NotifyDrawer';
 import CartDrawer from '@components/compound/Drawer/CartDrawer';
+import { Tooltip } from '@components/compound';
 
 export default function MidMenu({ openHeader }: { openHeader: () => void }) {
   const router = useRouter();

@@ -29,7 +29,7 @@ export const useProductsQuery = (
     retry: 1,
   });
 
-export const fetchProduct = async ({
+export const fetchProductAdmin = async ({
   queryKey,
 }: QueryFunctionContext<
   [string, IQueryOptionsList & { s?: string; brand?: string; rating?: number }]
@@ -39,12 +39,19 @@ export const fetchProduct = async ({
 
   const data: IQueryResultList<IProduct> = await request.request({
     method: 'GET',
-    url: API_ENDPOINTS.PRODUCTS,
+    url: '/products/admin/list',
     params: filterValues,
   });
 
   return data;
 };
+
+export const useProductAdminQuery = (
+  options?: IQueryOptionsList & { s?: string; brand?: string; rating?: number },
+): UseQueryResult<IQueryResultList<IProduct>, Error> =>
+  useQuery([API_ENDPOINTS.PRODUCTS, { ...options }], fetchProductAdmin, {
+    retry: 1,
+  });
 
 export const prefetchProductsQuery = async (queryClient: any, options?: any) => {
   await queryClient.prefetchQuery(fetchProducts(options));

@@ -142,4 +142,9 @@
     color: $color-success;
     text-align: center;
   }
+
+  > .selection {
+    max-width: 120px;
+    margin-bottom: 50px;
+  }
 }

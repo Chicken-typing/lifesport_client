@@ -82,6 +82,11 @@ function Invoices() {
   const [selection, setSelection] = useState<IUpdate[]>([]);
   const [openDialog, setOpenDialog] = useState<boolean>(false);
 
+  const { data: invoices, isLoading } = useInvoicesQuery({ type });
+  const { mutateAsync: updateMutation } = useUpdateStatusMutation();
+
+  const orderLists = invoices?.order_lists || [];
+
   const handleCellClick = (params: any, event?: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const orderId = params.id;
     const order = invoices?.order_lists.find((item) => item.id === orderId);
@@ -92,11 +97,6 @@ function Invoices() {
       event?.stopPropagation();
     }
   };
-
-  const { data: invoices, isLoading } = useInvoicesQuery({ type });
-  const { mutateAsync: updateMutation } = useUpdateStatusMutation();
-
-  const orderLists = invoices?.order_lists || [];
 
   const filterOrdersByType = (orders: IOrders[], type: TypeInvoices) => {
     if (type === 'all') {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Accordion } from '@components/compound';
 import { useInvoicesUserQuery } from '../../query/invoices/get-userInvoices';
 import { useRouter } from 'next/router';
@@ -11,6 +11,8 @@ import KsLayout from '@/layout';
 import Skeleton from '@mui/material/Skeleton';
 import { changeColor } from '@utils/changeColor';
 import { format } from 'date-fns';
+import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
+import { IQueryResultUserInvoices, IOrders } from '@interfaces/app';
 
 function Transaction() {
   const router = useRouter();
@@ -19,17 +21,50 @@ function Transaction() {
   const decoded = decodeToken(token || '');
   // const type = (query?.type as TypeInvoices) || 'all';
   const id = decoded?.id;
+  const [status, setStatus] = useState<TypeInvoices>('all');
 
-  const { data: invoices, isFetching } = useInvoicesUserQuery({ id, type: 'inbound' });
-  console.log('invoices', invoices);
+  const handleChange = (event: SelectChangeEvent) => {
+    setStatus(event.target.value as TypeInvoices);
+  };
+  const { data: invoices, isFetching } = useInvoicesUserQuery({ id, type: status });
+
+  console.log(invoices);
+
+  const filterOrdersByType = (orders: IOrders[], type: TypeInvoices) => {
+    if (type === 'all') {
+      return orders;
+    }
+    if (type === 'inbound') {
+      return orders.filter((order) => order.outbound === false);
+    }
+    if (type === 'outbound') {
+      return orders.filter((order) => order.outbound === true);
+    }
+  };
+
+  const filteredOrders = filterOrdersByType(invoices?.order_lists || [], status);
+
   return (
     <KsLayout title="Transaction">
       <div className="kl-transaction">
         <h2 className="title">Transaction History</h2>
-
+        <div className="selection">
+          <FormControl sx={{ m: 1, minWidth: 120 }}>
+            <Select
+              value={status}
+              onChange={handleChange}
+              displayEmpty
+              inputProps={{ 'aria-label': 'Without label' }}
+            >
+              <MenuItem value="all">All Transaction</MenuItem>
+              <MenuItem value="inbound">Inbound Transaction</MenuItem>
+              <MenuItem value="outbound">Outbound Transaction</MenuItem>
+            </Select>
+          </FormControl>
+        </div>
         <div className="container-list">
           {!isFetching ? (
-            map(invoices?.order_lists, (item) => (
+            map(filteredOrders, (item) => (
               <Accordion className="accordion" key={item.id} title={`Order ID: ${item.id}`}>
                 <div className="wrap">
                   <ul className="products-temp">

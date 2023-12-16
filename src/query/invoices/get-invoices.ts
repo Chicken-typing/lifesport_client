@@ -25,7 +25,7 @@ export const fetchInvoices = async ({
 };
 
 export const useInvoicesQuery = (options: {
-  type: TypeInvoices;
+  type?: TypeInvoices;
 }): UseQueryResult<IQueryResultInvoices, Error> => {
   return useQuery(['fetchInvoices', { ...options }], fetchInvoices, {
     retry: 1,

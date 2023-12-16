@@ -24,4 +24,8 @@ export function middleware(req: NextRequest) {
   if (!token && url.pathname === '/transaction') {
     return NextResponse.redirect(new URL('/404', req.nextUrl.origin));
   }
+
+  if (token && url.pathname === '/login') {
+    return NextResponse.redirect(new URL('/', req.nextUrl.origin));
+  }
 }

@@ -116,7 +116,7 @@ function Transaction() {
 
                     {item?.ordered_items &&
                       map(item?.ordered_items, (item, idx) => (
-                        <li key={idx} className="item-temp">
+                        <li key={idx} className="items-temp">
                           <KaImage
                             src={item.image}
                             alt="cart"

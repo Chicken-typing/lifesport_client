@@ -15,10 +15,10 @@
     }
   }
   > .container-list {
-    border: 1px solid rgba($black, 0.4);
+    border: 1px solid rgba(#cccccc, 0.4);
     border-radius: 5px;
-    padding: 40px 60px;
-    max-height: 565px;
+    padding: 40px;
+    height: 380px;
     overflow-y: scroll;
     @include breakpoint-down(phone) {
       padding: 10px 20px;
@@ -97,10 +97,10 @@
     }
   }
 
-  .item-temp {
+  .items-temp {
     display: flex;
     gap: 10px;
-    border-bottom: 1px solid $color-light-gray;
+
     padding-block: 10px;
   }
 
@@ -145,6 +145,18 @@
 
   > .selection {
     max-width: 120px;
-    margin-bottom: 50px;
+    margin-bottom: 22px;
+  }
+
+  .accordion-summary {
+    background-color: #d6dadd;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  }
+
+  .accordion-details {
+    margin-top: 0;
+    background-color: #f1f6f9;
+    padding: 16px;
   }
 }

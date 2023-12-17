@@ -82,7 +82,9 @@ const Product = () => {
     inputProps: { 'aria-label': item },
   });
 
-  const recommend = products?.items.filter((item) => item.brand === product?.item[0].brand);
+  const recommend = products?.items.filter(
+    (item) => item.brand === product?.item[0]?.brand && item.id !== product?.item[0]?.id,
+  );
 
   return (
     <KsLayout title="Sản phẩm" hasPageHeader breadcrumbs={breadcrumbs}>

@@ -34,7 +34,7 @@ const RegisterForm: FC<IRegisterForm> = ({ className, onNext, step }) => {
       email: '',
     },
     validationSchema: Yup.object().shape({
-      email: Yup.string().email('Email không chính xác!').required('Vui lòng nhập email!'),
+      email: Yup.string().email('Email is not correct!').required('Please input your email!'),
     }),
     onSubmit: (v) => {
       registerMutation(v)

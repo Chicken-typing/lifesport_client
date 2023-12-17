@@ -36,6 +36,7 @@ const CreateAccount: FC<ICreateAccount> = ({ className, data }) => {
       confirmPassword: '',
     },
     validationSchema: Yup.object().shape({
+      name: Yup.string().required('Please input your name!'),
       password: Yup.string()
         .min(6, 'Password must be at least 6 characters long')
         .required('Please input yout password'),

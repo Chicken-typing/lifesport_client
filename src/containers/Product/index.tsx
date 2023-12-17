@@ -40,18 +40,6 @@ const Product = () => {
   const id = Number(query?.id) || 0;
   const dispatch = useAppDispatch();
 
-  const handleMinus = () => setQuantity(quantity === 1 ? 1 : quantity - 1);
-  const handlePlus = () => setQuantity(quantity + 1);
-
-  const handleBlurQuantity = (e: FocusEvent<HTMLInputElement>) => {
-    const value = Number(e.target.value || 0);
-
-    if (!value || value <= 0) return setQuantity(1);
-  };
-
-  const handleChangeQuantity = (e: ChangeEvent<HTMLInputElement>) =>
-    setQuantity(Number(e.target.value));
-
   const {
     data: product,
     isError: isErrorProductDetail,
@@ -59,6 +47,27 @@ const Product = () => {
   } = useProductQuery({ id });
 
   const { data: products } = useProductsQuery({});
+
+  const handleMinus = () => setQuantity(quantity === 1 ? 1 : quantity - 1);
+  const handlePlus = () => {
+    const currenQuantity = product?.item[0]?.quantity || 0;
+
+    setQuantity(quantity < currenQuantity ? quantity + 1 : currenQuantity);
+  };
+
+  const handleBlurQuantity = (e: FocusEvent<HTMLInputElement>) => {
+    const value = Number(e.target.value || 0);
+    const currenQuantity = product?.item[0]?.quantity || 0;
+
+    if (value > currenQuantity) {
+      setQuantity(currenQuantity);
+    }
+    if (!value || value <= 0) return setQuantity(1);
+  };
+
+  const handleChangeQuantity = (e: ChangeEvent<HTMLInputElement>) => {
+    setQuantity(Number(e.target.value));
+  };
 
   const [selectedValue, setSelectedValue] = useState('');
 

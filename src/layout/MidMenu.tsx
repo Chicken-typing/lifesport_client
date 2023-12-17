@@ -141,7 +141,7 @@ export default function MidMenu({ openHeader }: { openHeader: () => void }) {
 
           <div className="actions">
             <button
-              onClick={() => (token ? setOpen(true) : router.push({ pathname: '/login' }))}
+              onClick={() => (token ? setOpen(true) : router.push('/login'))}
               ref={buttonEle}
               className="btn user"
             >

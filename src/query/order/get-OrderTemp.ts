@@ -13,7 +13,7 @@ export const fetchOrderTemp = async ({
 }: QueryFunctionContext<[string, any]>): Promise<IQueryResultOrderTemp> => {
   const [_, params] = queryKey;
 
-  const data: any = await request.request({
+  const data: IQueryResultOrderTemp = await request.request({
     method: 'GET',
     url: '/order/temp-orders',
   });
@@ -25,10 +25,3 @@ export const useOrderTempQuery = (options: any): UseQueryResult<IQueryResultOrde
     retry: 1,
   });
 };
-
-// export const InvalidateOrderTempQuery = () => {
-//   const queryClient = useQueryClient();
-//   queryClient.invalidateQueries(['OrderTemp']); // Pass the query key as an array
-// };
-
-// InvalidateOrderTempQuery();

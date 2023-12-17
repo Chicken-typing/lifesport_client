@@ -72,7 +72,7 @@ const Admin = () => {
             gridTemplateRows="repeat(auto, 1fr)"
           >
             {/* ROW 1 */}
-            <Box
+            {/* <Box
               display="grid"
               gridColumn="span 4"
               gridRow="span 1"
@@ -164,7 +164,7 @@ const Admin = () => {
                   icon={<TrafficIcon sx={{ color: colors.greenAccent[600], fontSize: '26px' }} />}
                 />
               </Box>
-            </Box>
+            </Box> */}
 
             {/* ROW 2 */}
             <Box

@@ -13,6 +13,7 @@ import { changeColor } from '@utils/changeColor';
 import { format } from 'date-fns';
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import { IQueryResultUserInvoices, IOrders } from '@interfaces/app';
+import LoadingScreen from '@components/compound/LoadingScreen';
 
 function Transaction() {
   const router = useRouter();
@@ -148,7 +149,7 @@ function Transaction() {
               </Accordion>
             ))
           ) : (
-            <Skeleton />
+            <LoadingScreen />
           )}
 
           {isEmpty(invoices?.order_lists) && !isFetching && (

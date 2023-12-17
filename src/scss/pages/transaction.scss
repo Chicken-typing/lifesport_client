@@ -18,7 +18,8 @@
     border: 1px solid rgba(#cccccc, 0.4);
     border-radius: 5px;
     padding: 40px;
-    height: 380px;
+    height: 400px;
+    position: relative;
     overflow-y: scroll;
     @include breakpoint-down(phone) {
       padding: 10px 20px;
@@ -157,6 +158,6 @@
   .accordion-details {
     margin-top: 0;
     background-color: #f1f6f9;
-    padding: 16px;
+    padding: 20px 30px;
   }
 }

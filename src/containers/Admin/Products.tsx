@@ -99,7 +99,7 @@ const Products = () => {
         const response: any = await request.request({
           method: 'POST',
           url: '/products/admin/delete',
-          data: { ids: selection },
+          data: { ids: map(selection, (item) => item?.id) },
         });
 
         if (isEqual(response?.status, 'success')) router.reload();

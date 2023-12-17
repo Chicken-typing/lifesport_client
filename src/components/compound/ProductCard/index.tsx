@@ -134,6 +134,7 @@ export const ProductCard: FC<IProductCardProps> = ({ data, isLoading = false }) 
                 </Button>
               </div>
             </div>
+            <div className="sold">{`Sold: ${data?.sold}`}</div>
           </>
         )}
       </div>

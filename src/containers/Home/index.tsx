@@ -11,7 +11,7 @@ import { ProductSlides } from '@components/compound';
 import { Button, KaImage, Link } from '@components/primitive';
 import { Skeleton } from '@mui/material';
 import { LIMIT } from '@utils/limit';
-import { map, slice, times, isEmpty } from 'lodash';
+import { map, slice, times, isEmpty, filter } from 'lodash';
 import { useEffect, FC } from 'react';
 import { Autoplay, EffectFade, Navigation, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -24,7 +24,7 @@ import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 
 const Home = () => {
-  const { data: products } = useProductsQuery({ limit: 10 });
+  const { data: products } = useProductsQuery({});
 
   const dispatch = useAppDispatch();
 
@@ -35,6 +35,9 @@ const Home = () => {
   const FacebookMsg = dynamic(() => import('@components/compound/FacebookMsg')) as FC;
 
   const router = useRouter();
+
+  const best_seller = products?.items.filter((item) => item.sold > 1);
+  const sales = products?.items.filter((item) => item.percent_off);
 
   useEffect(() => {
     const cart = localStorage.getItem('carts');
@@ -124,14 +127,14 @@ const Home = () => {
                 </Link>
               </div>
             </div>
-            <ProductSlides products={products?.items || []} />
+            <ProductSlides products={best_seller || []} />
           </div>
         </section>
 
         <section className="kl-home-products">
           <div className="kl-container content">
             <div className="header">
-              <h2 className="title">{t('best_seller.title')}</h2>
+              <h2 className="title">On Sales</h2>
               <div className="readmore -bottom">
                 <Link
                   href={routes.PRODUCTS}
@@ -145,7 +148,7 @@ const Home = () => {
                 </Link>
               </div>
             </div>
-            <ProductSlides products={products?.items || []} />
+            <ProductSlides products={sales || []} />
           </div>
         </section>
 

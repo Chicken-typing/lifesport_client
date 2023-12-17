@@ -17,6 +17,7 @@ import { useRouter } from 'next/router';
 import Skeleton from '@mui/material/Skeleton';
 import { addProduct } from '@/store/cart/slice';
 import Radio from '@mui/material/Radio';
+import { useProductsQuery } from '@/query/products/get-products';
 
 const breadcrumbs: ReactNode[] = [
   <Link href={routes.HOME} title="homepage" key="homepage" className="kl-page-header-link">
@@ -57,6 +58,8 @@ const Product = () => {
     isFetching: isLoadingProductDetail,
   } = useProductQuery({ id });
 
+  const { data: products } = useProductsQuery({});
+
   const [selectedValue, setSelectedValue] = useState('');
   const [reviews, setReviews] = useState<IComment[]>([]);
 
@@ -65,11 +68,6 @@ const Product = () => {
       return;
     }
     setSelectedValue(product?.item[0]?.color[0] || '');
-
-    // if (!isEmpty(flatMapDepth(map(product?.item, (item) => item?.comments)))) {
-
-    //   setReviews([...flatMapDepth(map(product?.item, (item) => item?.comments))]);
-    // }
   }, [product]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -83,6 +81,8 @@ const Product = () => {
     name: 'color-radio-button-demo',
     inputProps: { 'aria-label': item },
   });
+
+  const recommend = products?.items.filter((item) => item.brand === product?.item[0].brand);
 
   return (
     <KsLayout title="Sản phẩm" hasPageHeader breadcrumbs={breadcrumbs}>
@@ -329,7 +329,7 @@ const Product = () => {
                   <div className="footer">
                     <span className="label">Brand: </span>
                     <Link href="/" title="">
-                      {map(flatMapDepth(map(product?.item, (item) => item.brand)))}
+                      {map(flatMapDepth(map(product?.item, (item) => item.brand.toUpperCase())))}
                     </Link>
                     <br />
                     <br />
@@ -414,10 +414,12 @@ const Product = () => {
 
         <AccordionTab />
 
-        <section className="kl-product-related">
-          <h2 className="title">Sản phẩm tương tự</h2>
-          <ProductSlides products={PRODUCTS as IProduct[]} />
-        </section>
+        {!isEmpty(recommend) && (
+          <section className="kl-product-related">
+            <h2 className="title">Related Product</h2>
+            <ProductSlides products={recommend || []} />
+          </section>
+        )}
       </div>
     </KsLayout>
   );

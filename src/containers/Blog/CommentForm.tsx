@@ -2,7 +2,7 @@ import { GroupInput, GroupTextarea } from '@components/compound';
 import { Button, Label } from '@components/primitive';
 import { Checkbox, FormControlLabel, FormGroup, Rating } from '@mui/material';
 import classNames from 'classnames';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useReviewMutation } from '@/query/reviews/reviewMutation';
 import { cookieStorage } from '@utils/cookieStorage';
 import { decodeToken } from '@utils/decode';
@@ -25,13 +25,28 @@ const CommentForm: FC<ICommentFormProp> = ({
   const [value, setValue] = useState<number>(valueRating as number | 0);
   const [text, setText] = useState<string>('');
   const token = cookieStorage?.getAccessTokenInfo();
+  const [disabled, setDisabled] = useState<boolean>(false);
   const { mutateAsync: reviewMutation, isLoading } = useReviewMutation();
+
+  useEffect(() => {
+    if (value === null || value === 0) {
+      setDisabled(true);
+    }
+  }, [value]);
 
   const handleSubmit = () => {
     if (token) {
       reviewMutation({ product_id, rate: value, comment: text }).then((response: any) => {
-        setText('');
-        setValue(0);
+        if (response?.status === 'success') {
+          toast.success('Reviewed Successfully', { position: 'top-center' });
+          setText('');
+          setValue(0);
+        }
+        if (response.status === 'error') {
+          toast.error('You have reviewed this product', { position: 'top-center' });
+          setText('');
+          setValue(0);
+        }
       });
     } else {
       toast.error('You should sign in to reviews', { position: 'top-center' });
@@ -60,6 +75,7 @@ const CommentForm: FC<ICommentFormProp> = ({
               value={value}
               size="large"
               onChange={(event, newValue) => {
+                console.log(newValue);
                 setValue(newValue as number);
               }}
             />
@@ -76,33 +92,7 @@ const CommentForm: FC<ICommentFormProp> = ({
             fadePlaceholderShown
           />
         </div>
-        {/* <div className="form  col-md-4 col-lg-4 col-sm-12">
-          <GroupInput
-            type="text"
-            placeholder="Your Name *"
-            className="group"
-            fadePlaceholderShown
-          />
-          <GroupInput
-            type="text"
-            placeholder="Email Address *"
-            className="group"
-            fadePlaceholderShown
-          />
-          <GroupInput
-            type="text"
-            placeholder="Your Website"
-            className="group"
-            fadePlaceholderShown
-          />
-        </div>
-        <FormGroup className="checkbox">
-          <FormControlLabel
-            control={<Checkbox size="small" color="default" />}
-            className="icon"
-            label="Save my name, email, and website in this browser for the next time I comment"
-          />
-        </FormGroup> */}
+
         <Button
           onClick={handleSubmit}
           variant="outlined"
@@ -110,6 +100,7 @@ const CommentForm: FC<ICommentFormProp> = ({
           color="primary"
           className="button"
           isLoading={isLoading}
+          disabled={value === null || value === 0}
         >
           Post Comment
         </Button>

@@ -113,6 +113,44 @@ const Products = () => {
     deleteProduct();
   };
 
+  const handleImportProduct = () => {
+    const importProduct = async () => {
+      try {
+        const response: any = await request.request({
+          method: 'GET',
+          url: '/products/admin/import',
+        });
+
+        if (isEqual(response?.status, 'success')) {
+          toast.success('Add Product Successfully', { position: 'top-center' });
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    importProduct();
+  };
+
+  const handleExportProduct = () => {
+    const exportProduct = async () => {
+      try {
+        const response: any = await request.request({
+          method: 'GET',
+          url: '/products/admin/export',
+        });
+
+        if (isEqual(response?.status, 'success')) {
+          toast.success('Update Product Successfully', { position: 'top-center' });
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    exportProduct();
+  };
+
   const handleUpdateProduct = () => {
     const updateProduct = async () => {
       try {
@@ -245,7 +283,7 @@ const Products = () => {
               color="green-500"
               fullWidth
               className="button"
-              onClick={() => setOpenDialog(true)}
+              onClick={handleImportProduct}
               style={{
                 width: '30px',
                 marginLeft: 'auto',

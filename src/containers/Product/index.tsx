@@ -61,7 +61,6 @@ const Product = () => {
   const { data: products } = useProductsQuery({});
 
   const [selectedValue, setSelectedValue] = useState('');
-  const [reviews, setReviews] = useState<IComment[]>([]);
 
   useEffect(() => {
     if (!product?.item[0]?.color[0]) {
@@ -162,7 +161,13 @@ const Product = () => {
                   <div className="rating">
                     {/* <Rating value={Number(Math.ceil(product?.item?.rating || 5))} readOnly /> */}
                     <span className="count">
-                      {`${size(flatMapDepth(map(product?.item, (item) => item.comments)))} Reviews`}{' '}
+                      {flatMapDepth(map(product?.item, (item) => item.comments)).some(
+                        (comment) => comment === null,
+                      )
+                        ? '0 Review'
+                        : `${size(
+                            flatMapDepth(map(product?.item, (item) => item.comments)),
+                          )} Reviews`}
                       |
                     </span>
                     <span className="number">SKU: HCMUTE2023</span>
@@ -359,14 +364,20 @@ const Product = () => {
               className={classNames('tab', { '-active': activeTab === 0 })}
               onClick={() => setActiveTab(0)}
             >
-              <span className="actions"> Mô tả</span>
+              <span className="actions">Description</span>
             </li>
             <li
               className={classNames('tab', { '-active': activeTab === 1 })}
               onClick={() => setActiveTab(1)}
             >
               <span className="actions">
-                Bình luận <span>(5)</span>
+                <span>
+                  {flatMapDepth(map(product?.item, (item) => item.comments)).some(
+                    (comment) => comment === null,
+                  )
+                    ? '0 Review'
+                    : `${size(flatMapDepth(map(product?.item, (item) => item.comments)))} Reviews`}
+                </span>
               </span>
             </li>
           </ul>
@@ -381,7 +392,6 @@ const Product = () => {
                   {map(
                     flatMapDepth(map(product?.item, (item) => item?.comments)),
                     (commentData, idx) => {
-                      // Kiểm tra xem commentData có tồn tại và không phải là null không
                       if (commentData && commentData.rate !== null) {
                         const data = {
                           rate: commentData.rate,

@@ -14,6 +14,8 @@ export function changeColor(color: string) {
       return (color = 'Red');
     case 'fffc99':
       return (color = 'Yellow');
+    case 'fd5800':
+      return (color = 'Orange');
 
     default:
       return color;

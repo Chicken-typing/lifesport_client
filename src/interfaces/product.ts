@@ -34,6 +34,7 @@ export interface IProduct {
   amount_off?: number;
   quantityCart?: number;
   color: string[];
+  avg_rate: string;
   comments: IComment[];
 }
 

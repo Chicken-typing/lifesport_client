@@ -1,23 +1,23 @@
 import KsLayout from '@/layout';
+import { useProductQuery } from '@/query/products/get-product';
+import { useProductsQuery } from '@/query/products/get-products';
+import { addProduct } from '@/store/cart/slice';
 import { useAppDispatch } from '@/store/hooks';
 import { MODALS } from '@/store/modals/constants';
 import { openModal } from '@/store/modals/slice';
-import { CommentCard, ProductSlides, Rating } from '@components/compound';
+import { CommentCard, ProductSlides } from '@components/compound';
 import { Badge, Button, KaImage, Label, Link } from '@components/primitive';
 import CommentForm from '@containers/Blog/CommentForm';
-import { IComment, IProduct } from '@interfaces/product';
+import Radio from '@mui/material/Radio';
+import Skeleton from '@mui/material/Skeleton';
 import { routes } from '@utils/routes';
 import classNames from 'classnames';
-import { isEmpty, map, size, flatMapDepth, filter, isNull } from 'lodash';
-import { ChangeEvent, FocusEvent, ReactNode, useState, useEffect } from 'react';
-import AccordionTab from './AccordionTab';
-import { COMMENTS, IMAGES, INFORMATION, NET_WEIGHT, PRODUCTS, SHARE, TAGS } from './constants';
-import { useProductQuery } from '@/query/products/get-product';
+import { flatMapDepth, isEmpty, map, size, get } from 'lodash';
 import { useRouter } from 'next/router';
-import Skeleton from '@mui/material/Skeleton';
-import { addProduct } from '@/store/cart/slice';
-import Radio from '@mui/material/Radio';
-import { useProductsQuery } from '@/query/products/get-products';
+import { ChangeEvent, FocusEvent, ReactNode, useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+import AccordionTab from './AccordionTab';
+import { SHARE } from './constants';
 
 const breadcrumbs: ReactNode[] = [
   <Link href={routes.HOME} title="homepage" key="homepage" className="kl-page-header-link">
@@ -34,6 +34,7 @@ const breadcrumbs: ReactNode[] = [
 const Product = () => {
   const [quantity, setQuantity] = useState<number>(1);
   const [activeTab, setActiveTab] = useState<number>(0);
+  const [selectedValue, setSelectedValue] = useState('');
 
   const router = useRouter();
   const { query } = router;
@@ -48,7 +49,15 @@ const Product = () => {
 
   const { data: products } = useProductsQuery({});
 
-  const handleMinus = () => setQuantity(quantity === 1 ? 1 : quantity - 1);
+  const recommend = products?.items.filter(
+    (item) => item.brand === product?.item[0]?.brand && item.id !== product?.item[0]?.id,
+  );
+
+  const handleMinus = () => {
+    if (quantity > 0) {
+      setQuantity(quantity === 1 ? 1 : quantity - 1);
+    }
+  };
   const handlePlus = () => {
     const currenQuantity = product?.item[0]?.quantity || 0;
 
@@ -69,8 +78,6 @@ const Product = () => {
     setQuantity(Number(e.target.value));
   };
 
-  const [selectedValue, setSelectedValue] = useState('');
-
   useEffect(() => {
     if (!product?.item[0]?.color[0]) {
       return;
@@ -89,10 +96,6 @@ const Product = () => {
     name: 'color-radio-button-demo',
     inputProps: { 'aria-label': item },
   });
-
-  const recommend = products?.items.filter(
-    (item) => item.brand === product?.item[0]?.brand && item.id !== product?.item[0]?.id,
-  );
 
   return (
     <KsLayout title="Sản phẩm" hasPageHeader breadcrumbs={breadcrumbs}>
@@ -156,8 +159,8 @@ const Product = () => {
                             <Badge
                               key={idx}
                               className="badge"
-                              label={item?.quantity ? 'in_stock' : 'out_of_stock'}
-                              color="primary"
+                              label={item?.quantity ? 'IN STOCK' : 'OUT OF STOCK'}
+                              color={item?.quantity ? 'primary' : 'danger'}
                             />
                           )),
                         ),
@@ -283,33 +286,35 @@ const Product = () => {
                     ))}
                   </div>
 
-                  {/* <Quantity quantity={quantity} setQuantity={setQuantity} /> */}
-                  <div className="quantity kl-product-quantity">
-                    <Label className="label">Số lượng</Label>
+                  {get(product?.item[0], 'quantity', 0) !== 0 && (
+                    <div className="quantity kl-product-quantity">
+                      <Label className="label">Số lượng</Label>
 
-                    <div className="action">
-                      <button onClick={handleMinus} className="button">
-                        -
-                      </button>
-                      <input
-                        value={quantity}
-                        onBlur={handleBlurQuantity}
-                        onChange={handleChangeQuantity}
-                        type="number"
-                        className="input"
-                      />
-                      <button onClick={handlePlus} className="button">
-                        +
-                      </button>
+                      <div className="action">
+                        <button onClick={handleMinus} className="button">
+                          -
+                        </button>
+                        <input
+                          value={quantity}
+                          onBlur={handleBlurQuantity}
+                          onChange={handleChangeQuantity}
+                          type="number"
+                          className="input"
+                        />
+                        <button onClick={handlePlus} className="button">
+                          +
+                        </button>
+                      </div>
                     </div>
-                  </div>
+                  )}
 
                   <Button
                     className="add"
                     color="primary"
+                    disabled={product?.item[0]?.quantity === 0}
                     fullWidth
                     startAdornment={<i className="fa-light fa-bag-shopping fa-xl" />}
-                    onClick={() =>
+                    onClick={() => {
                       dispatch(
                         addProduct({
                           quantity: quantity,
@@ -324,23 +329,12 @@ const Product = () => {
                             color: selectedValue,
                           },
                         }),
-                      )
-                    }
+                      );
+                      toast.success('Product is added to cart', { position: 'top-center' });
+                    }}
                   >
-                    Thêm vào giỏ hàng
+                    ADD TO CART
                   </Button>
-
-                  {/* <div className="like">
-                    <Button
-                      onClick={() => dispatch(openModal({ view: MODALS.WISHLIST }))}
-                      className="wishlist action"
-                      variant="contained"
-                      color="light"
-                      startAdornment={<i className="fa-sharp fa-solid fa-heart" />}
-                    >
-                      Danh sách yêu thích
-                    </Button>
-                  </div> */}
 
                   <div className="footer">
                     <span className="label">Brand: </span>

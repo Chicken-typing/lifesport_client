@@ -27,13 +27,20 @@ const Products = () => {
   const sort = String(query?.sort || SORT_ITEMS[0].value);
   const limit = Number(query?.limit || LIMIT.PRODUCTS_FILTER);
   const brand = String(query?.brand || undefined);
-  const s = query?.s ? String(query.s) : undefined;
-  // const name = String(query?.name || undefined);
+  const s = String(query.s) || undefined;
+  const minPrice = Number(query?.minPrice || 0);
+  const maxPrice = Number(query?.maxPrice || 10000000);
+  console.log(minPrice, maxPrice);
+  // const r = Number(query?.r ? query.r.map(Number)) : undefined;
   const dispatch = useAppDispatch();
   const START = limit * (page - 1);
   const END = limit * page;
 
-  const { data: products, isFetching: isLoading, isError } = useProductsQuery({ brand, s });
+  const {
+    data: products,
+    isFetching: isLoading,
+    isError,
+  } = useProductsQuery({ brand, s, r: `${minPrice},${maxPrice}` });
   const { t } = useTranslation('products');
   const [open, setOpen] = useState<boolean>(false);
 

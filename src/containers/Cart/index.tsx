@@ -74,9 +74,14 @@ const Cart = () => {
     if (token) {
       checkoutMutation(data)
         .then(async (response: any) => {
-          const url = await response?.url;
-          // router.push(url);
-          window.open(url, '_blank');
+          if (response?.status === 'success') {
+            const url = await response?.url;
+            window.open(url, '_blank');
+          } else {
+            toast.error('There are currently not enough products in stock, please understand', {
+              position: 'top-center',
+            });
+          }
         })
         .catch((error: any) => console.log(error));
     } else {

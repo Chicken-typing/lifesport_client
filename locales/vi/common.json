@@ -45,8 +45,12 @@
       "route": "",
       "subMenu": [
         {
-          "title": "ĐĂNG NHẬP / ĐĂNG KÝ",
-          "route": "/auth"
+          "title": "ĐĂNG NHẬP",
+          "route": "/login"
+        },
+        {
+          "title": "ĐĂNG KÝ",
+          "route": "/register"
         },
         {
           "title": "LIÊN HỆ",

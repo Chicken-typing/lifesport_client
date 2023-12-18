@@ -45,8 +45,12 @@
       "route": "",
       "subMenu": [
         {
-          "title": "LOGIN / REGISTER",
-          "route": "/auth"
+          "title": "LOGIN",
+          "route": "/login"
+        },
+        {
+          "title": "REGISTER",
+          "route": "/register"
         },
         {
           "title": "CONTACT",

@@ -1,15 +1,11 @@
-import { useProductCategoriesQuery } from '@/query/productCategories/getProductCategories';
-import { Rating } from '@components/compound';
-import { Checkbox } from '@components/primitive';
-import { Collapse, Slider, Skeleton } from '@mui/material';
-import { LIMIT } from '@utils/limit';
+import { ISidebarProps } from '@interfaces/sidebar';
+import { Collapse, Slider } from '@mui/material';
 import classNames from 'classnames';
-import { isArray, isEmpty, map, slice, times } from 'lodash';
+import { map } from 'lodash';
+import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { FC, useEffect, useState } from 'react';
-import { INGREDIENTS, RATING, TEA_TYPE, CATEGORIES } from './constants';
-import { ISidebarProps } from '@interfaces/sidebar';
-import useTranslation from 'next-translate/useTranslation';
+import { CATEGORIES } from './constants';
 
 const Sidebar: FC<ISidebarProps> = ({ variant }) => {
   const router = useRouter();
@@ -17,15 +13,10 @@ const Sidebar: FC<ISidebarProps> = ({ variant }) => {
 
   const MIN_PRICE_DISTANCE = 5;
 
-  const minPrice = Number(query?.minPrice || 0);
-  const maxPrice = Number(query?.maxPrice || 100);
+  const minPrice = Number(query?.minPrice || 75000);
+  const maxPrice = Number(query?.maxPrice || 1000000);
   const brand = String(query?.brand || undefined);
   const rating = query?.rating || [];
-
-  // const { data: categories, isFetching: isFetchingCategories } = useProductCategoriesQuery({
-  //   limit,
-  //   page,
-  // });
 
   const [options, setOptions] = useState<string[]>([
     'categories',
@@ -34,18 +25,20 @@ const Sidebar: FC<ISidebarProps> = ({ variant }) => {
     'ingredients',
     'rating',
   ]);
-  const [price, setPrice] = useState<number[]>([minPrice, maxPrice]);
-
+  const [priceRange, setPriceRange] = useState<number[]>([minPrice, maxPrice]);
   useEffect(() => {
-    minPrice > maxPrice ? setPrice([maxPrice, minPrice]) : setPrice([minPrice, maxPrice]);
-  }, [maxPrice, minPrice]);
+    // Đảo ngược giá trị minPrice và maxPrice nếu minPrice lớn hơn maxPrice
+    setPriceRange((prev) => {
+      return minPrice > maxPrice ? [maxPrice, minPrice] : [minPrice, maxPrice];
+    });
+  }, [minPrice, maxPrice]);
 
   const handleChangePrice = (event: Event, newValue: number | number[], activeThumb: number) => {
     if (!Array.isArray(newValue)) return;
 
     activeThumb === 0
-      ? setPrice([Math.min(newValue[0], price[1] - MIN_PRICE_DISTANCE), price[1]])
-      : setPrice([price[0], Math.max(newValue[1], price[0] + MIN_PRICE_DISTANCE)]);
+      ? setPriceRange([Math.min(newValue[0], priceRange[1] - MIN_PRICE_DISTANCE), priceRange[1]])
+      : setPriceRange([priceRange[0], Math.max(newValue[1], priceRange[0] + MIN_PRICE_DISTANCE)]);
   };
 
   const handleToggleCollapse = (key: string) => {
@@ -54,39 +47,44 @@ const Sidebar: FC<ISidebarProps> = ({ variant }) => {
     );
   };
 
-  const handleChangeFilterCheckbox = ({
-    checked,
-    value,
-    name,
-    arr,
-  }: {
-    checked: boolean;
-    value: string;
-    name: string;
-    arr: string | string[];
-  }) => {
-    if (!checked) {
-      if (isArray(arr)) {
-        const index = arr.indexOf(value);
-        if (index !== -1) arr.splice(index, 1);
-      }
-      return router.push({
-        query: {
-          ...query,
-          [name]: [...(isArray(arr) ? arr : [])],
-          page: 1,
-        },
-      });
-    } else {
-      router.push({
-        query: {
-          ...query,
-          page: 1,
-          [name]: [value as string, ...(isArray(arr) ? arr : [arr])],
-        },
-      });
-    }
-  };
+  //   checked,
+  //   value,
+  //   name,
+  //   arr,
+  // }: {
+  //   checked: boolean;
+  //   value: string;
+  //   name: string;
+  //   arr: string | string[];
+  // }) => {
+  //   if (name === 'price' && checked) {
+  //     const [newMinPrice, newMaxPrice] = value.split(',');
+  //     setPriceRange([Number(newMinPrice), Number(newMaxPrice)]);
+  //   }
+  //   if (!checked) {
+  //     if (isArray(arr)) {
+  //       const index = arr.indexOf(value);
+  //       if (index !== -1) arr.splice(index, 1);
+  //     }
+  //     return router.push({
+  //       query: {
+  //         ...query,
+  //         [name]: [...(isArray(arr) ? arr : [])],
+  //         page: 1,
+  //       },
+  //     });
+  //   } else {
+  //     router.push({
+  //       query: {
+  //         ...query,
+  //         page: 1,
+  //         [name]: checked ? [value as string, ...(isArray(arr) ? arr : [arr])] : [],
+  //         minPrice: name === 'price' ? priceRange[0] : minPrice,
+  //         maxPrice: name === 'price' ? priceRange[1] : maxPrice,
+  //       },
+  //     });
+  //   }
+  // };
 
   const { t } = useTranslation('products');
 
@@ -115,26 +113,6 @@ const Sidebar: FC<ISidebarProps> = ({ variant }) => {
                 >
                   {label}
                 </div>
-
-                {/* {!isEmpty(children) && (
-                    <ul className="subcategory">
-                      {map(children, ({ id, name }) => (
-                        <li
-                          key={id}
-                          className={classNames('item', {
-                            '-active': `${name}-${id}` === category,
-                          })}
-                          onClick={() => {
-                            router.push({
-                              query: { ...query, category: `${name}-${id}`, page: 1 },
-                            });
-                          }}
-                        >
-                          {name}
-                        </li>
-                      ))}
-                    </ul>
-                  )} */}
               </li>
             ))}
           </ul>
@@ -155,9 +133,11 @@ const Sidebar: FC<ISidebarProps> = ({ variant }) => {
         <Collapse in={options.includes('price')}>
           <div className="kl-products-sidebar-price">
             <Slider
+              min={75000}
+              max={1000000}
               className="slider"
               getAriaLabel={() => 'Minimum distance'}
-              value={price}
+              value={priceRange}
               onChange={handleChangePrice}
               valueLabelDisplay="auto"
               disableSwap
@@ -173,14 +153,24 @@ const Sidebar: FC<ISidebarProps> = ({ variant }) => {
               <span className="price">
                 Price:
                 <span className="range">
-                  ${price[0]}.00 - ${price[1]}.00
+                  {(priceRange[0] / 100).toLocaleString('en-US', {
+                    style: 'currency',
+                    currency: 'USD',
+                    minimumFractionDigits: 2,
+                  })}
+                  -
+                  {(priceRange[1] / 100).toLocaleString('en-US', {
+                    style: 'currency',
+                    currency: 'USD',
+                    minimumFractionDigits: 2,
+                  })}
                 </span>
               </span>
               <span
                 className="action"
                 onClick={() => {
                   router.push({
-                    query: { ...query, minPrice: price[0], maxPrice: price[1], page: 1 },
+                    query: { ...query, minPrice: priceRange[0], maxPrice: priceRange[1], page: 1 },
                   });
                 }}
               >
@@ -188,114 +178,6 @@ const Sidebar: FC<ISidebarProps> = ({ variant }) => {
               </span>
             </div>
           </div>
-        </Collapse>
-      </div>
-
-      {/* <div className="type option">
-        <div className="header">
-          <span className="overlay" onClick={() => handleToggleCollapse('type')} />
-          <h3 className="title">Tea Type</h3>
-          <i
-            className={classNames(`fa-regular fa-chevron-up icon`, {
-              '-down': !options.includes('type'),
-            })}
-          />
-        </div>
-        <Collapse in={options.includes('type')}>
-          <ul className="kl-products-sidebar-type ">
-            {map(TEA_TYPE, ({ label, value, count }, idx) => (
-              <li key={`sidebar-type-${idx}`} className="item">
-                <Checkbox
-                  id={value}
-                  onChange={({ value, checked }) =>
-                    handleChangeFilterCheckbox({
-                      checked: checked,
-                      value: value as string,
-                      name: 'typeTea',
-                      arr: typeTea,
-                    })
-                  }
-                  checked={typeTea.includes(value)}
-                  value={value}
-                  label={label}
-                />
-
-                <span className="count">{`(${count})`}</span>
-              </li>
-            ))}
-          </ul>
-        </Collapse>
-      </div> */}
-
-      {/* <div className="ingredients option">
-        <div className="header">
-          <span className="overlay" onClick={() => handleToggleCollapse('ingredients')} />
-          <h3 className="title">Ingredients</h3>
-          <i
-            className={classNames(`fa-regular fa-chevron-up icon`, {
-              '-down': !options.includes('ingredients'),
-            })}
-          />
-        </div>
-        <Collapse in={options.includes('ingredients')}>
-          <ul className="kl-products-sidebar-ingredients ">
-            {map(INGREDIENTS, ({ label, count, value }, idx) => (
-              <li key={`sidebar-ingredients-${idx}`} className="item">
-                <Checkbox
-                  id={value}
-                  onChange={({ value, checked }) =>
-                    handleChangeFilterCheckbox({
-                      checked: checked,
-                      value: value as string,
-                      name: 'ingredients',
-                      arr: ingredients,
-                    })
-                  }
-                  checked={ingredients.includes(value)}
-                  value={value}
-                  label={label}
-                />
-
-                <span className="count">{`(${count})`}</span>
-              </li>
-            ))}
-          </ul>
-        </Collapse>
-      </div> */}
-
-      <div className="rating option">
-        <div className="header">
-          <span className="overlay" onClick={() => handleToggleCollapse('rating')} />
-          <h3 className="title">{t('rating')}</h3>
-          <i
-            className={classNames(`fa-regular fa-chevron-up icon`, {
-              '-down': !options.includes('rating'),
-            })}
-          />
-        </div>
-        <Collapse in={options.includes('rating')}>
-          <ul className="kl-products-sidebar-rating ">
-            {map(RATING, ({ value, count }, idx) => (
-              <li key={`sidebar-rating-${idx}`} className="item">
-                <Checkbox
-                  onChange={({ value, checked }) =>
-                    handleChangeFilterCheckbox({
-                      checked: checked,
-                      value: value as string,
-                      name: 'rating',
-                      arr: [],
-                    })
-                  }
-                  checked={rating.includes(value as unknown as string)}
-                  value={value}
-                />
-                <div className="rating">
-                  <Rating value={value} readOnly />
-                </div>
-                <span className="count">{count}</span>
-              </li>
-            ))}
-          </ul>
         </Collapse>
       </div>
     </aside>

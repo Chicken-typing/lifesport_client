@@ -28,8 +28,8 @@ const Products = () => {
   const limit = Number(query?.limit || LIMIT.PRODUCTS_FILTER);
   const brand = String(query?.brand || undefined);
   const s = String(query.s) || undefined;
-  const minPrice = Number(query?.minPrice || 0);
-  const maxPrice = Number(query?.maxPrice || 10000000);
+  const minPrice = Number(query?.minPrice || 75000);
+  const maxPrice = Number(query?.maxPrice || 900000);
   console.log(minPrice, maxPrice);
   // const r = Number(query?.r ? query.r.map(Number)) : undefined;
   const dispatch = useAppDispatch();

@@ -14,7 +14,7 @@ const Sidebar: FC<ISidebarProps> = ({ variant }) => {
   const MIN_PRICE_DISTANCE = 5;
 
   const minPrice = Number(query?.minPrice || 75000);
-  const maxPrice = Number(query?.maxPrice || 1000000);
+  const maxPrice = Number(query?.maxPrice || 900000);
   const brand = String(query?.brand || undefined);
   const rating = query?.rating || [];
 

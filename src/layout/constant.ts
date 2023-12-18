@@ -67,3 +67,37 @@ export const BRAND = [
     className: 'fa-brands fa-facebook',
   },
 ];
+
+export const MENU_BOTTOM = [
+  {
+    route: routes.PRODUCTS,
+    className: 'fa-light fa-house',
+    title: 'Shop',
+  },
+  {
+    route: routes.AUTH,
+    className: 'fa-regular fa-user',
+    title: 'Account',
+  },
+  {
+    route: '/',
+    className: 'fa-regular fa-magnifying-glass',
+    title: 'Search',
+  },
+  {
+    route: routes.CART,
+    className: 'fa-regular fa-heart',
+    title: 'Wishlist',
+  },
+];
+
+export const MENU_CURRENCY = [
+  {
+    icon: 'fa-regular fa-dollar-sign fa-sm _icon-hover',
+    name: 'USD',
+  },
+  {
+    icon: 'fa-regular fa-dong-sign fa-sm _icon-hover',
+    name: 'VNĐ',
+  },
+];

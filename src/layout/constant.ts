@@ -61,3 +61,9 @@ export const MENU_LANGUAGE = [
     name: 'Vietnamese (vi) ',
   },
 ];
+
+export const BRAND = [
+  {
+    className: 'fa-brands fa-facebook',
+  },
+];

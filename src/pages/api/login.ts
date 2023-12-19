@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+import { toast } from 'react-toastify';
 
 const sleep = () =>
   new Promise<void>((resolve) => {
@@ -16,9 +17,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (method === 'POST') {
     // If email or captcha are missing return an error
     if (!email || !captcha || !password) {
-      return res.status(422).json({
-        message: 'Unproccesable request, please provide the required fields',
-      });
+      // return res.status(422).json({
+      //   message: 'Unproccesable request, please provide the required fields',
+      // });
+      toast.error('please provide the required fields !');
     }
 
     try {

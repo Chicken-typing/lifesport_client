@@ -13,10 +13,8 @@ const Sidebar: FC<ISidebarProps> = ({ variant }) => {
 
   const MIN_PRICE_DISTANCE = 5;
 
-  const minPrice = Number(query?.minPrice || 75000);
-  const maxPrice = Number(query?.maxPrice || 900000);
-  const brand = String(query?.brand || undefined);
-  const rating = query?.rating || [];
+  const min = Number(query?.min || 75000);
+  const max = Number(query?.max || 900000);
 
   const [options, setOptions] = useState<string[]>([
     'categories',
@@ -25,13 +23,13 @@ const Sidebar: FC<ISidebarProps> = ({ variant }) => {
     'ingredients',
     'rating',
   ]);
-  const [priceRange, setPriceRange] = useState<number[]>([minPrice, maxPrice]);
+  const [priceRange, setPriceRange] = useState<number[]>([min, max]);
   useEffect(() => {
     // Đảo ngược giá trị minPrice và maxPrice nếu minPrice lớn hơn maxPrice
     setPriceRange((prev) => {
-      return minPrice > maxPrice ? [maxPrice, minPrice] : [minPrice, maxPrice];
+      return min > max ? [max, min] : [min, max];
     });
-  }, [minPrice, maxPrice]);
+  }, [min, max]);
 
   const handleChangePrice = (event: Event, newValue: number | number[], activeThumb: number) => {
     if (!Array.isArray(newValue)) return;
@@ -170,7 +168,7 @@ const Sidebar: FC<ISidebarProps> = ({ variant }) => {
                 className="action"
                 onClick={() => {
                   router.push({
-                    query: { ...query, minPrice: priceRange[0], maxPrice: priceRange[1], page: 1 },
+                    query: { ...query, min: priceRange[0], max: priceRange[1], page: 1 },
                   });
                 }}
               >

@@ -22,11 +22,12 @@ interface ILoginFormProps {
 }
 
 const LoginForm: FC<ILoginFormProps> = ({ className }) => {
-  const { mutateAsync: loginMutation, isLoading } = useLoginMutation();
+  const { mutateAsync: loginMutation, isLoading: loadingLogin } = useLoginMutation();
   const router = useRouter();
   const auth = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
   const [disabled, setDisabled] = useState<boolean>(true);
+  const [captchaField, setCaptchaField] = useState<string | number>('');
   // const [loading, setLoading] = useState<boolean>(false);
 
   const getResponse = async (response: any) => {
@@ -73,7 +74,6 @@ const LoginForm: FC<ILoginFormProps> = ({ className }) => {
         password: Yup.string().required('Vui lòng nhập mật khẩu!'),
       }),
       onSubmit: (v) => {
-        handleSubmitCaptcha;
         loginMutation(v)
           .then((response: any) => {
             getResponse(response);
@@ -88,9 +88,17 @@ const LoginForm: FC<ILoginFormProps> = ({ className }) => {
 
   const handleChange = ({ name, value }: { name: string; value: string | number }) => {
     setFieldValue(name, value);
+    setCaptchaField(value);
   };
 
+  useEffect(() => {
+    if (captchaField === '') {
+      setDisabled(true);
+    }
+  }, [captchaField, disabled]);
+
   const handleBlur = ({ name }: { name: string }) => setFieldTouched(name);
+
   const recaptchaRef = useRef<ReCAPTCHA | null>(null);
 
   const onReCAPTCHAChange = async (captchaCode: any) => {
@@ -171,7 +179,10 @@ const LoginForm: FC<ILoginFormProps> = ({ className }) => {
         </div>
 
         <ReCAPTCHA
-          style={{ display: disabled ? 'inline-block' : 'none', marginBottom: '30px' }}
+          style={{
+            display: disabled ? 'inline-block' : 'none',
+            marginBottom: '30px',
+          }}
           // style={{ display: 'inline-block', marginBottom: '30px' }}
           theme="light"
           ref={recaptchaRef}
@@ -180,7 +191,7 @@ const LoginForm: FC<ILoginFormProps> = ({ className }) => {
         />
 
         <Button
-          isLoading={isLoading}
+          isLoading={loadingLogin}
           disabled={disabled}
           type="submit"
           fullWidth

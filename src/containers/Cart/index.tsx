@@ -1,4 +1,5 @@
 import KsLayout from '@/layout';
+import { useProductsQuery } from '@/query/products/get-products';
 import { selectCart, selectTotal } from '@/store/cart/selector';
 import { getCartList, removeProduct } from '@/store/cart/slice';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
@@ -8,18 +9,18 @@ import { ProductSlides } from '@components/compound';
 import Quantity from '@components/compound/Quantity';
 import { Button, KaImage, Link } from '@components/primitive';
 import { IProduct } from '@interfaces/product';
-import { map, size, isEmpty, times, trim } from 'lodash';
-import { useEffect, useState } from 'react';
-import { INTERESTED } from './constant';
 import { Skeleton } from '@mui/material';
-import { toast } from 'react-toastify';
-import { cookieStorage } from '@utils/cookieStorage';
-import { useCheckoutMutation } from '../../query/checkout/checkoutMutation';
-import { decodeToken } from '@utils/decode';
-import { ICheckout } from '../../interfaces/checkout';
-import { useRouter } from 'next/router';
-import { ResponseCheckout } from '@interfaces/app';
 import { changeColor } from '@utils/changeColor';
+import { cookieStorage } from '@utils/cookieStorage';
+import { decodeToken } from '@utils/decode';
+import { isEmpty, map, times } from 'lodash';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+import { ICheckout } from '../../interfaces/checkout';
+import { useCheckoutMutation } from '../../query/checkout/checkoutMutation';
+import { INTERESTED } from './constant';
+
 const Cart = () => {
   const dispatch = useAppDispatch();
   const carts = useAppSelector(selectCart);
@@ -28,8 +29,9 @@ const Cart = () => {
   const token = cookieStorage?.getAccessTokenInfo();
   const decoded = decodeToken(token || '');
   const { mutateAsync: checkoutMutation, isLoading: loadingMutation } = useCheckoutMutation();
+  const { data: products } = useProductsQuery({});
   const router = useRouter();
-
+  const recommend = products?.items.filter((item) => item.sold > 2);
   useEffect(() => {
     const getCart = async () => {
       try {
@@ -290,7 +292,7 @@ const Cart = () => {
             ) : (
               <div className="empty">
                 <i className="fa-sharp fa-light fa-cart-xmark fa-2xl icon" />
-                <p className="title">Giỏ hàng hiện đang trống</p>
+                <p className="title">Your Cart is empty!</p>
                 <Button onClick={() => router.push({ pathname: '/' })} className="button">
                   Return To Shop
                 </Button>
@@ -299,8 +301,8 @@ const Cart = () => {
           </div>
         )}
 
-        <h2 className="title">Có thể bạn đang quan tâm...</h2>
-        <ProductSlides products={INTERESTED as IProduct[]} />
+        <h2 className="title">You may be interested...</h2>
+        <ProductSlides products={recommend || []} />
       </div>
     </KsLayout>
   );

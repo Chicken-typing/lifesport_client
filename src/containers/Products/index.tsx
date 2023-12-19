@@ -1,13 +1,9 @@
 import KsLayout from '@/layout';
 import { useProductsQuery } from '@/query/products/get-products';
-import { ANCHORS, DRAWERS } from '@/store/drawers/constants';
-import { openDrawer } from '@/store/drawers/slice';
-import { useAppDispatch } from '@/store/hooks';
 import { Pagination, ProductCard } from '@components/compound';
+import ProductSidebarDrawer from '@components/compound/Drawer/ProductSidebarDrawer';
 import { Link } from '@components/primitive';
 import BannerCard from '@containers/Home/BannerCard';
-import { FormControl, Input, Select } from '@mui/material';
-import MenuItem from '@mui/material/MenuItem';
 import { LIMIT } from '@utils/limit';
 import { routes } from '@utils/routes';
 import { ceil, isEmpty, map, size, times } from 'lodash';
@@ -15,24 +11,20 @@ import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { ReactNode, useState } from 'react';
 import { IHomeBanner } from '../Home/constants';
-import { SHOW_ITEMS, SORT_ITEMS } from './constants';
 import Sidebar from './Sidebar';
-import ProductSidebarDrawer from '@components/compound/Drawer/ProductSidebarDrawer';
 
 const Products = () => {
   const router = useRouter();
   const { query } = router;
 
   const page = Number(query?.page || 1);
-  const sort = String(query?.sort || SORT_ITEMS[0].value);
+
   const limit = Number(query?.limit || LIMIT.PRODUCTS_FILTER);
   const brand = String(query?.brand || undefined);
   const s = String(query.s) || undefined;
-  const minPrice = Number(query?.minPrice || 75000);
-  const maxPrice = Number(query?.maxPrice || 900000);
-  console.log(minPrice, maxPrice);
-  // const r = Number(query?.r ? query.r.map(Number)) : undefined;
-  const dispatch = useAppDispatch();
+  const min = Number(query?.min || 75000);
+  const max = Number(query?.max || 900000);
+
   const START = limit * (page - 1);
   const END = limit * page;
 
@@ -40,7 +32,7 @@ const Products = () => {
     data: products,
     isFetching: isLoading,
     isError,
-  } = useProductsQuery({ brand, s, r: `${minPrice},${maxPrice}` });
+  } = useProductsQuery({ brand, s, r: `${min},${max}` });
   const { t } = useTranslation('products');
   const [open, setOpen] = useState<boolean>(false);
 
@@ -90,7 +82,7 @@ const Products = () => {
               <section className="kl-products-filters">
                 <div className="kl-container content">
                   <div className="sorts">
-                    <div className="actions">
+                    {/* <div className="actions">
                       <button onClick={() => setOpen(true)} className="filter">
                         <i className="fa-regular fa-sliders-simple icon" />
                         <strong className="text">Filter</strong>
@@ -145,13 +137,10 @@ const Products = () => {
                           </Select>
                         </FormControl>
                       </div>
-                    </div>
+                    </div> */}
 
                     <div className="info">
-                      <p className="text">
-                        Showing 1–{limit || LIMIT.PRODUCTS_FILTER} of {size(products?.items) || 0}{' '}
-                        results
-                      </p>
+                      <p className="text">Showing {size(products?.items) || 0} results</p>
                     </div>
                   </div>
                 </div>

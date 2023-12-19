@@ -46,27 +46,31 @@ const NotifyDrawer = ({ open, onClose }: { open: boolean; onClose: () => void })
     };
 
     const handleNotification = (remainingTime: string, index: number) => {
+      const [minutes, seconds] = remainingTime.split('m ');
+      const remainingTimeInSeconds = parseInt(minutes, 10) * 60 + parseInt(seconds, 10);
+
       if (
         remainingTime.endsWith('0s') &&
-        parseInt(remainingTime, 10) % 300 === 0 &&
-        parseInt(remainingTime, 10) !== lastNotificationTime
+        remainingTimeInSeconds % 300 === 0 &&
+        remainingTimeInSeconds !== lastNotificationTime
       ) {
-        toast.info(`Order ${index + 1}: ${parseInt(remainingTime, 10) / 60} minutes left!`, {
+        toast.info(`Order ${index + 1}: ${remainingTimeInSeconds / 60} minutes left!`, {
           position: 'top-center',
         });
-        setLastNotificationTime(parseInt(remainingTime, 10));
+        setLastNotificationTime(remainingTimeInSeconds);
       }
+
       if (remainingTime === '1m 0s') {
-        toast.info(`Order ${index + 1}: Almost time's up!`, { position: 'top-center' });
+        toast.info(`Order ${index + 1}: has 1 minute left!`, { position: 'top-center' });
       }
       if (remainingTime === '0m 0s') {
-        toast.info(`Order ${index + 1}: Time is up!`, { position: 'top-center' });
+        toast.info(`Order ${index + 1}: is expired!`, { position: 'top-center' });
         setLastNotificationTime(null);
         setEnd((prevExpiredItems) => [...prevExpiredItems, index]);
 
         setTimeout(() => {
           setExpiredItems((prevExpiredItems) => [...prevExpiredItems, index]);
-        }, 10000);
+        }, 15000);
       }
     };
 

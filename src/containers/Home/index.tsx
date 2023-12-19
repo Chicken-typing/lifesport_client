@@ -22,6 +22,7 @@ import Testimonial from './Testimonial';
 import dynamic from 'next/dynamic';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
+import { isValid, parseISO, format, addMinutes } from 'date-fns';
 
 const Home = () => {
   const { data: products } = useProductsQuery({});
@@ -45,6 +46,15 @@ const Home = () => {
       dispatch(getCartList(JSON.parse(cart)));
     }
   });
+
+  const timestamp = 1703065142;
+  const date = new Date(timestamp * 1000);
+  const indochinaTime = addMinutes(date, 7 * 60);
+
+  // Format ngày giờ theo định dạng bạn mong muốn
+  const formattedTime = format(indochinaTime, 'dd/MM/yyyy HH:mm:ss');
+
+  console.log(formattedTime + ' (Indochina Time)');
 
   return (
     <KsLayout title="Home">

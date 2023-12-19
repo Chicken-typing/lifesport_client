@@ -31,37 +31,26 @@ export default function TopMenu() {
                 <li key={item.name} className="list">
                   <Link
                     locale={item?.locale}
-                    href={router.pathname}
+                    href={
+                      router.pathname === '/products/list/detail'
+                        ? `/products/list/detail?id=${router.query.id}`
+                        : router.pathname
+                    }
                     title="locale"
                     className="choices"
                   >
+                    {/* <Link
+                    locale={item?.locale}
+                    href={`/products/list/detail?id=${router.query.id}`}
+                    title="locale"
+                    className="choices"
+                  > */}
                     <div className="other-choices">{item.name}</div>
                   </Link>
                 </li>
               ))}
             </ul>
           </li>
-          {/* <li className="monetary">
-            <div className="selected">
-              <span className="currency">
-                <i className="fa-light fa-dong-sign fa-sm _icon-hover"></i>
-              </span>
-              <span className="label _text-sm">VNĐ</span>
-              <span className="chevron">
-                <i className="fa-thin fa-chevron-down fa-2xs icon _icon-hover -font-icon"></i>
-              </span>
-            </div>
-            <ul className="menu">
-              {map(MENU_CURRENCY, ({ icon, name }) => (
-                <li key={name} className="list">
-                  <div className="choices">
-                    <i className={icon} />
-                    <div className="name">{name}</div>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </li> */}
         </ul>
       </div>
     </div>

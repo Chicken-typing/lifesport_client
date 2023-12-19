@@ -11,6 +11,7 @@
     "/login": ["login"],
     "/register": ["register"],
     "contact": ["/contact"],
-    "/forgot-password": ["forgot"]
+    "/forgot-password": ["forgot"],
+    "/products/list/detail": ["detail"]
   }
 }

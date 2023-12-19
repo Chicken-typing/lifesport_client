@@ -13,23 +13,12 @@ import Skeleton from '@mui/material/Skeleton';
 import { routes } from '@utils/routes';
 import classNames from 'classnames';
 import { flatMapDepth, isEmpty, map, size, get } from 'lodash';
+import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { ChangeEvent, FocusEvent, ReactNode, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import AccordionTab from './AccordionTab';
 import { SHARE } from './constants';
-
-const breadcrumbs: ReactNode[] = [
-  <Link href={routes.HOME} title="homepage" key="homepage" className="kl-page-header-link">
-    Trang chủ
-  </Link>,
-  <Link href={routes.PRODUCTS} title="homepage" key="blogs" className="kl-page-header-link">
-    Sản phẩm
-  </Link>,
-  <p className="kl-page-header-text" key="blog">
-    Chi tiết sản phẩm
-  </p>,
-];
 
 const Product = () => {
   const [quantity, setQuantity] = useState<number>(1);
@@ -41,6 +30,8 @@ const Product = () => {
   const id = Number(query?.id) || 0;
   const dispatch = useAppDispatch();
 
+  const { t } = useTranslation('detail');
+
   const {
     data: product,
     isError: isErrorProductDetail,
@@ -48,6 +39,18 @@ const Product = () => {
   } = useProductQuery({ id });
 
   const { data: products } = useProductsQuery({});
+
+  const breadcrumbs: ReactNode[] = [
+    <Link href={routes.HOME} title="homepage" key="homepage" className="kl-page-header-link">
+      {t('breadcrumb.first')}
+    </Link>,
+    <Link href={routes.PRODUCTS} title="homepage" key="blogs" className="kl-page-header-link">
+      {t('breadcrumb.second')}
+    </Link>,
+    <p className="kl-page-header-text" key="blog">
+      {t('breadcrumb.third')}
+    </p>,
+  ];
 
   const recommend = products?.items.filter(
     (item) => item.brand === product?.item[0]?.brand && item.id !== product?.item[0]?.id,
@@ -143,7 +146,7 @@ const Product = () => {
                               <Badge
                                 key={idx}
                                 className="badge"
-                                label={`${item?.percent_off * 100}% Discount`}
+                                label={`${t('status.first')} ${item?.percent_off}% `}
                                 color="danger"
                               />
                             ) : (
@@ -159,7 +162,7 @@ const Product = () => {
                             <Badge
                               key={idx}
                               className="badge"
-                              label={item?.quantity ? 'IN STOCK' : 'OUT OF STOCK'}
+                              label={item?.quantity ? t('status.second') : t('status.third')}
                               color={item?.quantity ? 'primary' : 'danger'}
                             />
                           )),
@@ -250,7 +253,7 @@ const Product = () => {
 
                   <div className="weight ks-product-weight">
                     <span style={{ marginRight: '20px', fontSize: '20px', fontWeight: '400' }}>
-                      Colours:
+                      {t('color')}
                     </span>
                     {map(flatMapDepth(map(product?.item, (item) => item?.color)), (color, idx) => (
                       <Radio
@@ -288,7 +291,7 @@ const Product = () => {
 
                   {get(product?.item[0], 'quantity', 0) !== 0 && (
                     <div className="quantity kl-product-quantity">
-                      <Label className="label">Số lượng</Label>
+                      <Label className="label">{t('quantity')}</Label>
 
                       <div className="action">
                         <button onClick={handleMinus} className="button">
@@ -333,7 +336,7 @@ const Product = () => {
                       toast.success('Product is added to cart', { position: 'top-center' });
                     }}
                   >
-                    ADD TO CART
+                    {t('add')}
                   </Button>
 
                   <div className="footer">
@@ -367,7 +370,7 @@ const Product = () => {
               className={classNames('tab', { '-active': activeTab === 0 })}
               onClick={() => setActiveTab(0)}
             >
-              <span className="actions">Description</span>
+              <span className="actions">{t('review.title1')}</span>
             </li>
             <li
               className={classNames('tab', { '-active': activeTab === 1 })}
@@ -378,8 +381,10 @@ const Product = () => {
                   {flatMapDepth(map(product?.item, (item) => item.comments)).some(
                     (comment) => comment === null,
                   )
-                    ? '0 Review'
-                    : `${size(flatMapDepth(map(product?.item, (item) => item.comments)))} Reviews`}
+                    ? `0 ${t('review.title3')}`
+                    : `${size(flatMapDepth(map(product?.item, (item) => item.comments)))} ${t(
+                        'review.title2',
+                      )}`}
                 </span>
               </span>
             </li>
@@ -421,7 +426,7 @@ const Product = () => {
                 rating
                 valueRating={0}
                 className="kl-product-review"
-                title="Add A Review"
+                title={t('review.header')}
               />
             </div>
           </div>
@@ -431,7 +436,7 @@ const Product = () => {
 
         {!isEmpty(recommend) && (
           <section className="kl-product-related">
-            <h2 className="title">Related Product</h2>
+            <h2 className="title">{t('review.related')}</h2>
             <ProductSlides products={recommend || []} />
           </section>
         )}

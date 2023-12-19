@@ -1,0 +1,26 @@
+{
+  "breadcrumb": {
+    "first": "Trang chủ",
+    "second": "Sản phẩm",
+    "third": "Chi tiết sản phẩm"
+  },
+  "status": {
+    "first": "Giảm Giá",
+    "second": "CÒN HÀNG",
+    "third": "HẾT HÀNG"
+  },
+  "color": "Màu Sắc:",
+  "quantity": "Số lượng",
+  "add": "THÊM VÀO GIỎ HÀNG",
+  "review": {
+    "title1": "Mô Tả",
+    "title2": "Nhận Xét",
+    "title3": "Nhận Xét",
+    "note": "Địa chỉ email của bạn sẽ không được công bố. Vui lòng nhập đầy đủ các ô bắt buộc",
+    "header": "Đóng Góp Ý Kiến",
+    "rating": "Đánh Giá",
+    "comment": "Bình Luận",
+    "button": "Gửi Nhận Xét",
+    "related": "Sản phẩm liên quan"
+  }
+}

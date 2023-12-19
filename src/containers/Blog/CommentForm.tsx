@@ -7,6 +7,7 @@ import { useReviewMutation } from '@/query/reviews/reviewMutation';
 import { cookieStorage } from '@utils/cookieStorage';
 import { decodeToken } from '@utils/decode';
 import { toast } from 'react-toastify';
+import useTranslation from 'next-translate/useTranslation';
 export interface ICommentFormProp {
   title: string;
   className?: string;
@@ -52,18 +53,20 @@ const CommentForm: FC<ICommentFormProp> = ({
       toast.error('You should sign in to reviews', { position: 'top-center' });
     }
   };
+
+  const { t } = useTranslation('detail');
   return (
     <div className={classNames('kl-blog-comment-form', className)}>
       <div className="wrapper">
         <h1 className="title">{title}</h1>
 
         <Label isRequired className="comment-note">
-          Your email address will not be published. Required fields are marked
+          {t('review.note')}
         </Label>
 
         {rating && (
           <div className="rating">
-            <span className="require-field-message">Your Rating </span>
+            <span className="require-field-message">{t('review.rating')} </span>
             <span className="require">*</span>
             <Rating
               className="rating"
@@ -85,7 +88,7 @@ const CommentForm: FC<ICommentFormProp> = ({
           <GroupTextarea
             value={text}
             onChange={({ value }) => setText(String(value))}
-            placeholder="Comment"
+            placeholder={t('review.comment')}
             textareaClassName="kl-blog-field"
             name="comment"
             className="group"
@@ -102,7 +105,7 @@ const CommentForm: FC<ICommentFormProp> = ({
           isLoading={isLoading}
           disabled={value === null || value === 0}
         >
-          Post Comment
+          {t('review.button')}
         </Button>
       </div>
     </div>

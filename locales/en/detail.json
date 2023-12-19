@@ -1,0 +1,26 @@
+{
+  "breadcrumb": {
+    "first": "Home Page",
+    "second": "Product",
+    "third": "Product Detail"
+  },
+  "status": {
+    "first": "Discount",
+    "second": "IN STOCK",
+    "third": "OUT OF STOCK"
+  },
+  "color": "Colours:",
+  "quantity": "Quantity",
+  "add": "ADD TO CART",
+  "review": {
+    "title1": "Description",
+    "title2": "Reviews",
+    "title3": "Review",
+    "note": "Your email address will not be published. Required fields are marked",
+    "header": "Add A Review",
+    "rating": "Your Rating",
+    "comment": "Comment",
+    "button": "Post Review",
+    "related": "Related Product"
+  }
+}

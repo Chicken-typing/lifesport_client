@@ -32,7 +32,9 @@ const ConfirmOTP: FC<IRegisterForm> = ({ className, onNext, currentEmail, onChan
       email: currentEmail,
       otp: '',
     },
-
+    validationSchema: Yup.object().shape({
+      otp: Yup.string().required('Please input OTP Code!'),
+    }),
     onSubmit: (v) => {
       otpMutation(v)
         .then((response: any) => {

@@ -70,8 +70,10 @@ const LoginForm: FC<ILoginFormProps> = ({ className }) => {
         password: '',
       },
       validationSchema: Yup.object().shape({
-        email: Yup.string().email('Email không chính xác!').required('Vui lòng nhập email!'),
-        password: Yup.string().required('Vui lòng nhập mật khẩu!'),
+        email: Yup.string()
+          .email('Your Email is not correact!')
+          .required('Please type your Email!'),
+        password: Yup.string().required('Please type your password!'),
       }),
       onSubmit: (v) => {
         loginMutation(v)
@@ -170,10 +172,10 @@ const LoginForm: FC<ILoginFormProps> = ({ className }) => {
         />
 
         <div className="actions">
-          <Link className="link" href="/register" title="Create An Account">
+          <Link className="links" href="/register" title="Create An Account">
             Create An Account
           </Link>
-          <Link className="link" href="/forgot-password" title="forgot-password">
+          <Link color="danger" className="link" href="/forgot-password" title="forgot-password">
             {t('forgot')}
           </Link>
         </div>

@@ -5,7 +5,7 @@ interface ILinkProps extends LinkProps {
   children?: ReactNode;
   className?: string;
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'unset';
-  color?: 'primary' | 'secondary' | 'black' | 'white' | string;
+  color?: 'primary' | 'secondary' | 'black' | 'white' | 'danger' | string;
   underline?: boolean;
   textTransform?: 'unset' | 'uppercase' | 'capitalize';
   title: string;

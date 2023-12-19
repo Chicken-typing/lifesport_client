@@ -109,6 +109,9 @@
     margin-bottom: 30px;
   }
 
+  > .content > .wrapper > .column > .form > .group > .actions > .links {
+    text-decoration: none !important;
+  }
   > .content > .wrapper > .column > .form > .group > .container > .field {
     border-color: $color-light-gray;
 

@@ -1,5 +1,5 @@
 export interface IProduct {
-  rating?: number;
+  rating?: string;
   id: number;
   appId: string;
   name: string;

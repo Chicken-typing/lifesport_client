@@ -10,9 +10,9 @@ const index = () => {
   return <Product />;
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+export const getServerSideProps: GetServerSideProps = async (context: any) => {
   const queryClient = new QueryClient();
-  const id = Number(params?.id);
+  const id = Number(context?.query?.id || undefined);
 
   // Sử dụng prefetchQuery để tải trước dữ liệu cho trang chi tiết sản phẩm
   await queryClient.prefetchQuery([API_ENDPOINTS.PRODUCT, { id }], fetchProduct);

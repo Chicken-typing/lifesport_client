@@ -58,7 +58,7 @@ export const ProductCard: FC<IProductCardProps> = ({ data, isLoading = false }) 
         {!isLoading && (
           <>
             <div className="rating">
-              <Rating value={Number(data?.avg_rate) || 5} readOnly />
+              <Rating value={Number(data?.rating) || 5} readOnly />
             </div>
 
             <div className="name">

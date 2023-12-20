@@ -33,6 +33,7 @@ const Products = () => {
     isFetching: isLoading,
     isError,
   } = useProductsQuery({ brand, s, r: `${min},${max}` });
+
   const { t } = useTranslation('products');
   const [open, setOpen] = useState<boolean>(false);
 
@@ -181,7 +182,7 @@ const Products = () => {
                             <ProductCard data={item} />
                           </li>
                         ))
-                      : times(limit, (idx) => (
+                      : times(4, (idx) => (
                           <li
                             className="col-12 col-md-4 col-lg-4 item"
                             key={`product-result-${idx}`}
@@ -202,7 +203,7 @@ const Products = () => {
                       query: { ...query, page: p },
                     },
                     undefined,
-                    { shallow: true, scroll: true },
+                    { shallow: true },
                   );
                 }}
               />

@@ -150,7 +150,7 @@ const Product = () => {
                                 color="danger"
                               />
                             ) : (
-                              <div></div>
+                              <div key={idx}></div>
                             ),
                           ),
                         ),

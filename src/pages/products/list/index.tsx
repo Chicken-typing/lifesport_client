@@ -2,18 +2,19 @@ import Products from '@containers/Products';
 
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 
-import { fetchProducts, prefetchProductsQuery } from '@/query/products/get-products';
-import { GetServerSideProps } from 'next';
+import { fetchProducts } from '@/query/products/get-products';
 import { API_ENDPOINTS } from '@utils/api-endpoints';
+import { GetServerSideProps } from 'next';
 
 const index = () => <Products />;
 
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  const page = Number(params?.page) | 1;
-  const limit = Number(params?.limit) | 4;
+export const getServerSideProps: GetServerSideProps = async (context: any) => {
+  const brand = String(context?.query?.brand || undefined);
+  const s = String(context.query?.s || undefined);
+
   const queryClient = new QueryClient();
 
-  await queryClient.prefetchQuery([API_ENDPOINTS.PRODUCTS, { page, limit }], fetchProducts);
+  await queryClient.prefetchQuery([API_ENDPOINTS.PRODUCTS, { brand, s }], fetchProducts);
 
   return {
     props: {

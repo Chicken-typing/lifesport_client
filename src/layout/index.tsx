@@ -52,9 +52,9 @@ const KsLayout: FC<IKsLayoutProps> = ({
   const queryClient = useQueryClient();
   const token = cookieStorage?.getAccessTokenInfo();
 
-  useEffect(() => {
-    document.documentElement.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-  }, [router.pathname]);
+  // useEffect(() => {
+  //   document.documentElement.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+  // }, [router.pathname]);
 
   const fetchOrderTemp = async () => {
     const data: any = await request.request({

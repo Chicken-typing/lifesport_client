@@ -1,31 +1,25 @@
 import KsLayout from '@/layout';
-import { useBlogsQuery } from '@/query/blogs/getBlogs';
-import { useProductCategoriesQuery } from '@/query/productCategories/getProductCategories';
 import { useProductsQuery } from '@/query/products/get-products';
-import { useSlidersQuery } from '@/query/sliders/getSliders';
 import { getCartList } from '@/store/cart/slice';
 import { useAppDispatch } from '@/store/hooks';
 import { breakpoints } from '@/utils/constants';
 import { routes } from '@/utils/routes';
 import { ProductSlides } from '@components/compound';
-import { Button, KaImage, Link } from '@components/primitive';
-import { Skeleton } from '@mui/material';
-import { LIMIT } from '@utils/limit';
-import { map, slice, times, isEmpty, filter } from 'lodash';
-import { useEffect, FC } from 'react';
+import { Button, Link } from '@components/primitive';
+import { map } from 'lodash';
+import useTranslation from 'next-translate/useTranslation';
+import dynamic from 'next/dynamic';
+import { useRouter } from 'next/router';
+import { FC, useEffect } from 'react';
 import { Autoplay, EffectFade, Navigation, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import BannerCard from './BannerCard';
-import { QUANTITY, TESTIMONIALS, SLIDES, IHomeBanner } from './constants';
+import { IHomeBanner, SLIDES, TESTIMONIALS } from './constants';
 import Slide from './Slide';
 import Testimonial from './Testimonial';
-import dynamic from 'next/dynamic';
-import useTranslation from 'next-translate/useTranslation';
-import { useRouter } from 'next/router';
-import { isValid, parseISO, format, addMinutes } from 'date-fns';
 
 const Home = () => {
-  const { data: products } = useProductsQuery({});
+  const { data: products, isFetching: isLoading } = useProductsQuery({});
 
   const dispatch = useAppDispatch();
 
@@ -46,15 +40,6 @@ const Home = () => {
       dispatch(getCartList(JSON.parse(cart)));
     }
   });
-
-  const timestamp = 1703065142;
-  const date = new Date(timestamp * 1000);
-  const indochinaTime = addMinutes(date, 7 * 60);
-
-  // Format ngày giờ theo định dạng bạn mong muốn
-  const formattedTime = format(indochinaTime, 'dd/MM/yyyy HH:mm:ss');
-
-  console.log(formattedTime + ' (Indochina Time)');
 
   return (
     <KsLayout title="Home">
@@ -137,7 +122,7 @@ const Home = () => {
                 </Link>
               </div>
             </div>
-            <ProductSlides products={best_seller || []} />
+            <ProductSlides products={best_seller || []} isLoading={isLoading} />
           </div>
         </section>
 
@@ -158,7 +143,7 @@ const Home = () => {
                 </Link>
               </div>
             </div>
-            <ProductSlides products={sales || []} />
+            <ProductSlides products={sales || []} isLoading={isLoading} />
           </div>
         </section>
 

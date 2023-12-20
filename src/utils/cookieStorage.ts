@@ -4,8 +4,8 @@ const ACCESS_TOKEN = 'access-token';
 
 const getAccessTokenInfo = () => cookies.get(ACCESS_TOKEN || '');
 
-const setTokens = ({ accessToken }: { accessToken: any }) => {
-  cookies.set(ACCESS_TOKEN, accessToken);
+const setTokens = ({ accessToken, expires }: any) => {
+  cookies.set(ACCESS_TOKEN, accessToken, { expires });
 };
 
 const removeTokens = () => {

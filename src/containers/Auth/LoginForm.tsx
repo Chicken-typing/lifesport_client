@@ -16,6 +16,7 @@ import { decodeToken } from '../../utils/decode';
 import useTranslation from 'next-translate/useTranslation';
 import LoadingScreen from '@components/compound/LoadingScreen';
 import { toast } from 'react-toastify';
+import { addMinutes, format } from 'date-fns';
 
 interface ILoginFormProps {
   className?: string;
@@ -31,15 +32,21 @@ const LoginForm: FC<ILoginFormProps> = ({ className }) => {
   // const [loading, setLoading] = useState<boolean>(false);
 
   const getResponse = async (response: any) => {
+    const data = await response;
+    const token = response._token;
+    const decoded: any = decodeToken(token);
+
+    const timestamp = decoded?.exp;
+    const date = new Date(timestamp * 1000);
+
     try {
-      const data = await response;
       if (data) {
         cookieStorage.setTokens({
           accessToken: response._token,
+          expires: date,
         });
-        const token = response._token;
+
         if (token) {
-          const decoded: any = decodeToken(token);
           if (decoded?.role === 'master_admin' || decoded?.role === 'admin') {
             dispatch(login(decoded));
             router.push({

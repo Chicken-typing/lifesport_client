@@ -1,5 +1,5 @@
 import { ColorModeContext, useMode } from '@/adminLayout/theme';
-import { login } from '@/store/user/slice';
+import { login, logout } from '@/store/user/slice';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { cookieStorage } from '@utils/cookieStorage';
 import request from '@utils/request';
@@ -9,6 +9,9 @@ import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { API_ENDPOINTS } from '../utils/api-endpoints';
 import { decodeToken } from '../utils/decode';
 import { useRouter } from 'next/router';
+import { addMinutes } from 'date-fns';
+import { format } from 'path';
+import { floor, isEmpty } from 'lodash';
 
 export const AppContext = createContext({});
 
@@ -20,7 +23,12 @@ export const AppContextProvider = ({ children }: any) => {
 
   const [theme, colorMode] = useMode();
   const decoded = decodeToken(token || '');
+
   useEffect(() => {
+    if (isEmpty(token)) {
+      return;
+    }
+
     if (token) {
       const fetchUser = async () => {
         try {
@@ -28,8 +36,6 @@ export const AppContextProvider = ({ children }: any) => {
           const data: { user_infos: IUser } = await request.get(API_ENDPOINTS.USERINFO, {});
           dispatch(login(data.user_infos));
           setIsLoading(false);
-          const decoded = decodeToken(token || '');
-          return decoded;
         } catch (error) {
           setIsLoading(false);
         }
@@ -39,7 +45,7 @@ export const AppContextProvider = ({ children }: any) => {
     } else {
       setIsLoading(false);
     }
-  }, []);
+  }, [token, dispatch]);
 
   const contextValues = { isLoading, token, decoded };
 

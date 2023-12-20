@@ -4,11 +4,10 @@ import { IProduct } from '@interfaces/product';
 import Skeleton from '@mui/material/Skeleton';
 import { routes } from '@utils/routes';
 import classNames from 'classnames';
-import { get, trim, isEmpty } from 'lodash';
-import { FC, useEffect } from 'react';
-import { useAppDispatch } from '../../../store/hooks';
-import { addProduct } from '@/store/cart/slice';
+import { get, trim } from 'lodash';
 import { useRouter } from 'next/router';
+import { FC } from 'react';
+import { useAppDispatch } from '../../../store/hooks';
 export interface IProductCardProps {
   data?: IProduct;
   isLoading?: boolean;
@@ -17,10 +16,6 @@ export interface IProductCardProps {
 export const ProductCard: FC<IProductCardProps> = ({ data, isLoading = false }) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
-
-  if (!data) {
-    return null;
-  }
 
   return (
     <div className={classNames('ks-product-card', { '-loading': isLoading })}>
@@ -103,7 +98,7 @@ export const ProductCard: FC<IProductCardProps> = ({ data, isLoading = false }) 
                   </>
                 ) : (
                   <span className="primitive">
-                    {(data?.price / 100).toLocaleString('en-US', {
+                    {(data?.price || 0 / 100).toLocaleString('en-US', {
                       style: 'currency',
                       currency: 'USD',
                       minimumFractionDigits: 2,

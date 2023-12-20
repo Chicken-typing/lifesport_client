@@ -1,5 +1,3 @@
-export * from './BlogCard';
-export * from './BlogSlide';
 export * from './Accordion';
 export * from './GroupInput';
 export * from './GroupTextarea';

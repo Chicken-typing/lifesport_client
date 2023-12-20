@@ -106,7 +106,9 @@ const Sidebar: FC<ISidebarProps> = ({ variant }) => {
                 <div
                   className="item"
                   onClick={() => {
-                    router.push({ query: { ...query, brand: value, page: 1 } });
+                    router.push({ query: { ...query, brand: value, page: 1 } }, undefined, {
+                      shallow: true,
+                    });
                   }}
                 >
                   {label}
@@ -167,9 +169,13 @@ const Sidebar: FC<ISidebarProps> = ({ variant }) => {
               <span
                 className="action"
                 onClick={() => {
-                  router.push({
-                    query: { ...query, min: priceRange[0], max: priceRange[1], page: 1 },
-                  });
+                  router.push(
+                    {
+                      query: { ...query, min: priceRange[0], max: priceRange[1], page: 1 },
+                    },
+                    undefined,
+                    { shallow: true },
+                  );
                 }}
               >
                 FILTER

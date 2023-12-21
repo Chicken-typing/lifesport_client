@@ -55,10 +55,6 @@
         {
           "title": "CONTACT",
           "route": "/contact"
-        },
-        {
-          "title": "ABOUT US",
-          "route": "/about"
         }
       ]
     }

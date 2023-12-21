@@ -6,14 +6,21 @@ import { Button } from '@components/primitive';
 import AdminPanelSettingsOutlinedIcon from '@mui/icons-material/AdminPanelSettingsOutlined';
 import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined';
 import SecurityOutlinedIcon from '@mui/icons-material/SecurityOutlined';
-import { Box, Typography, useTheme } from '@mui/material';
+import { Box, ToggleButton, ToggleButtonGroup, Tooltip, Typography, useTheme } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import request from '@utils/request';
+import { useState } from 'react';
+
+type IAccount = 'all' | 'admin' | 'customer';
 
 const Account = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
+  const [type, setType] = useState<IAccount>('all');
+  const [selection, setSelection] = useState<any[]>([]);
+  const [openDialog, setOpenDialog] = useState<boolean>(false);
 
   const fetchUsers = async () => {
     const data: any = await request.request({
@@ -28,6 +35,24 @@ const Account = () => {
     retry: 1,
   });
 
+  const handleChangeType = (event: React.MouseEvent<HTMLElement>, newAlignment: IAccount) => {
+    if (newAlignment !== null) {
+      setType(newAlignment);
+    }
+  };
+
+  const filterOrdersByType = (users: any, type: IAccount) => {
+    if (type === 'all') {
+      return users;
+    }
+    if (type === 'admin') {
+      return users.filter((user: any) => user.role !== 'customer');
+    }
+    if (type === 'customer') {
+      return users.filter((user: any) => user.role === 'customer');
+    }
+  };
+
   const columns: any[] = [
     { field: 'id', headerName: 'ID' },
     {
@@ -36,13 +61,7 @@ const Account = () => {
       flex: 1,
       cellClassName: 'name-column--cell',
     },
-    {
-      field: 'status',
-      headerName: 'Status',
-      type: 'number',
-      headerAlign: 'left',
-      align: 'left',
-    },
+
     {
       field: 'email',
       headerName: 'Email',
@@ -79,24 +98,24 @@ const Account = () => {
         );
       },
     },
-    {
-      field: 'action',
-      headerName: 'Action',
-      flex: 1,
-      renderCell: ({ row: { access } }: any) => {
-        return (
-          <div className="action-group">
-            <Button color="green-500" fullWidth className="button">
-              <i className="fa-regular fa-pen-to-square"></i>
-            </Button>
+    // {
+    //   field: 'action',
+    //   headerName: 'Action',
+    //   flex: 1,
+    //   renderCell: ({ row: { access } }: any) => {
+    //     return (
+    //       <div className="action-group">
+    //         <Button color="green-500" fullWidth className="button">
+    //           <i className="fa-regular fa-pen-to-square"></i>
+    //         </Button>
 
-            <Button color="green-500" fullWidth className="button">
-              <i className="fa-regular fa-trash"></i>
-            </Button>
-          </div>
-        );
-      },
-    },
+    //         <Button color="green-500" fullWidth className="button">
+    //           <i className="fa-regular fa-trash"></i>
+    //         </Button>
+    //       </div>
+    //     );
+    //   },
+    // },
   ];
 
   return (
@@ -107,6 +126,52 @@ const Account = () => {
           <Box display="flex" justifyContent="flex-start" alignItems="center">
             <Introduce title="DASHBOARD" subtitle="Welcome to your dashboard" />
           </Box>
+
+          <ToggleButtonGroup
+            color="secondary"
+            value={type}
+            exclusive
+            onChange={handleChangeType}
+            style={{ marginBottom: '50px' }}
+            aria-label="Platform"
+          >
+            <ToggleButton defaultChecked style={{ width: '100px' }} value="all">
+              All
+            </ToggleButton>
+            <ToggleButton style={{ width: '100px' }} value="admin">
+              Admin
+            </ToggleButton>
+            <ToggleButton style={{ width: '100px' }} value="customer">
+              Customer
+            </ToggleButton>
+          </ToggleButtonGroup>
+
+          <div
+            className="function"
+            style={{
+              display: type !== 'all' ? 'block' : 'none',
+              gap: '6px',
+              width: 'fit-content',
+              marginLeft: 'auto',
+              marginBottom: '10px',
+            }}
+          >
+            <Button
+              color="green-500"
+              fullWidth
+              onClick={() => setOpenDialog(true)}
+              // disabled={isEmpty(selection)}
+              className="button"
+              style={{
+                width: '30px',
+                marginLeft: 'auto',
+              }}
+            >
+              <Tooltip title="Edit Status" placement="left" arrow>
+                <i className="fa-light fa-pen-to-square" />
+              </Tooltip>
+            </Button>
+          </div>
 
           <Box
             height="70vh"
@@ -139,7 +204,8 @@ const Account = () => {
           >
             <DataGrid
               checkboxSelection
-              rows={users?.user_lists || []}
+              hideFooter
+              rows={filterOrdersByType(users?.user_lists || [], type)}
               columns={columns}
               loading={isLoading}
             />

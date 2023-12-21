@@ -101,10 +101,8 @@ const LoginForm: FC<ILoginFormProps> = ({ className }) => {
   };
 
   useEffect(() => {
-    if (captchaField === '') {
-      setDisabled(true);
-    }
-  }, [captchaField, disabled]);
+    setDisabled(true);
+  }, [captchaField]);
 
   const handleBlur = ({ name }: { name: string }) => setFieldTouched(name);
 

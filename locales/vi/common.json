@@ -55,10 +55,6 @@
         {
           "title": "LIÊN HỆ",
           "route": "/contact"
-        },
-        {
-          "title": "THÔNG TIN",
-          "route": "/about"
         }
       ]
     }

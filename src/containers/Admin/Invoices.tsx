@@ -178,7 +178,9 @@ function Invoices() {
     },
   ];
   const handleChangeStatus = (event: React.MouseEvent<HTMLElement>, newAlignment: TypeInvoices) => {
-    setType(newAlignment);
+    if (newAlignment !== null) {
+      setType(newAlignment);
+    }
   };
 
   const handleCloseDialog = () => setOpenDialog(false);

@@ -33,6 +33,7 @@ import { format } from 'date-fns';
 import { isEmpty, isEqual, map } from 'lodash';
 import { Tooltip } from '@components/compound';
 import { IUpdate } from '@interfaces/app';
+import { changeColor } from '@utils/changeColor';
 
 export interface IOrders {
   id: number;
@@ -436,7 +437,7 @@ function Invoices() {
                       item?.brand || ''
                     }`}</Typography>
                     <Typography key={idx} variant="body1">{`Color: ${
-                      item?.color || ''
+                      changeColor(item?.color) || ''
                     }`}</Typography>
                     <Typography key={idx} variant="body1">{`Quantity: ${
                       item?.quantity || ''

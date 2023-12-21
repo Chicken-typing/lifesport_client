@@ -285,16 +285,20 @@ const Admin = () => {
                       borderBottom={`4px solid ${colors.primary[500]}`}
                       p="15px"
                     >
-                      <Box>
+                      <Box flex="1.25">
                         <Typography color={colors.greenAccent[500]} variant="h5" fontWeight="600">
                           {transaction.id}
                         </Typography>
                         <Typography color={colors.grey[100]}>{transaction.name}</Typography>
                       </Box>
-                      <Box color={colors.grey[100]}>
+
+                      <Box flex="1" color={colors.grey[100]}>
                         {format(new Date(Number(transaction?.paid_at) * 1000), 'dd/MM/yyyy')}
                       </Box>
+
                       <Box
+                        flex="0.755"
+                        textAlign="center"
                         sx={{
                           backgroundColor: colors.greenAccent[500],
                           p: '5px 10px',

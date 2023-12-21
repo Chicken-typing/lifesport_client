@@ -28,6 +28,7 @@ const Coupons = () => {
       headerAlign: 'left',
       align: 'left',
       flex: 1,
+      valueFormatter: (params: any) => `${params.value}%`,
     },
     {
       field: 'amount_off',
@@ -36,6 +37,7 @@ const Coupons = () => {
       headerAlign: 'left',
       align: 'left',
       flex: 1,
+      valueGetter: (params: any) => (params.row.amount_off / 100).toFixed(2),
     },
     {
       field: 'first_time_transaction',

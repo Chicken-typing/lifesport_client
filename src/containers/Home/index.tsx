@@ -186,7 +186,7 @@ const Home = () => {
                       parse(created_at, 'HH:mm:ss.SSSSSS', new Date()),
                       'dd/MM/yyyy',
                     )}
-                    review={description}
+                    review={description.replaceAll('&#39;', "'")}
                   />
                 </SwiperSlide>
               ))}

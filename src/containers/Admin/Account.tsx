@@ -161,7 +161,7 @@ const Account = () => {
       renderCell: ({ row: { role } }: any) => {
         return (
           <Box
-            width="50%"
+            width="55%"
             m="0 auto"
             p="5px"
             display="flex"

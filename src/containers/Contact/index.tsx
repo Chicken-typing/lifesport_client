@@ -33,7 +33,6 @@ const Contact = () => {
       onSubmit: (e) => {
         feedbackMutation(e)
           .then((response: any) => {
-            console.log(response);
             if (response?.status === 'success') {
               toast.success('Your Feedback is sent', {
                 position: 'top-center',

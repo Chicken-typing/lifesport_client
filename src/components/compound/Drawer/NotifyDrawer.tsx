@@ -6,6 +6,7 @@ import moment from 'moment';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { Accordion } from '../Accordion';
+import { changeColor } from '@utils/changeColor';
 
 const NotifyDrawer = ({ open, onClose }: { open: boolean; onClose: () => void }) => {
   const { data: order } = useOrderTempQuery({});
@@ -93,6 +94,8 @@ const NotifyDrawer = ({ open, onClose }: { open: boolean; onClose: () => void })
     };
   }, [order?.data, lastNotificationTime]);
 
+  console.log(changeColor('044022'));
+
   return (
     <Drawer anchor="right" open={open} onClose={onClose}>
       <div className="kl-drawer-notify">
@@ -134,7 +137,7 @@ const NotifyDrawer = ({ open, onClose }: { open: boolean; onClose: () => void })
                                 <div className="right-empty">
                                   <div> {`Qty: ${item.quantity}`}</div>
 
-                                  <div> {`Color: ${item.color}`}</div>
+                                  <div> {`Color: ${changeColor(item.color)}`}</div>
                                 </div>
                                 <div className="price-temp">
                                   {(item.price / 100).toLocaleString('en-US', {

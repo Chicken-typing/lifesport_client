@@ -34,7 +34,7 @@ function ColumnChart({ interval, status }: { interval: Interval; status: IStatus
   const convertRevenueToNumber = (data: any) => {
     return data.map((item: any) => ({
       revenue_interval: formatDate(item.revenue_interval, interval),
-      revenue: Number(item.revenue),
+      revenue: Number(item.revenue / 100),
     }));
   };
 

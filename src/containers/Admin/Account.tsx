@@ -139,16 +139,16 @@ const Account = () => {
       renderCell: ({ row: { role } }: any) => {
         return (
           <Box
-            width="60%"
+            width="50%"
             m="0 auto"
             p="5px"
             display="flex"
-            justifyContent="center"
+            justifyContent="flex-start"
             bgcolor={
               role === 'master_admin'
-                ? colors.greenAccent[600]
+                ? colors.redAccent[600]
                 : role === 'admin'
-                ? colors.greenAccent[700]
+                ? colors.blueAccent[600]
                 : colors.greenAccent[700]
             }
             borderRadius="4px"
@@ -157,7 +157,7 @@ const Account = () => {
             {role === 'admin' && <SecurityOutlinedIcon />}
             {role === 'customer' && <LockOpenOutlinedIcon />}
             <Typography color={colors.grey[100]} sx={{ ml: '5px' }}>
-              {role}
+              {role.replace('_', ' ').toUpperCase()}
             </Typography>
           </Box>
         );

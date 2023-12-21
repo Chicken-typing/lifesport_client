@@ -163,8 +163,8 @@ function Invoices() {
         return (
           <div onClick={(e) => e.stopPropagation()}>
             <Button
-              style={{ minWidth: 'fit-content' }}
-              color="green-500"
+              style={{ maxWidth: '114px' }}
+              color={outbound ? 'green-500' : 'success'}
               fullWidth
               className="button"
             >
@@ -177,6 +177,7 @@ function Invoices() {
       },
     },
   ];
+
   const handleChangeStatus = (event: React.MouseEvent<HTMLElement>, newAlignment: TypeInvoices) => {
     if (newAlignment !== null) {
       setType(newAlignment);

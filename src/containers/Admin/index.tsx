@@ -220,8 +220,8 @@ const Admin = () => {
                       >
                         <MenuItem value={'day'}>Day</MenuItem>
                         <MenuItem value={'month'}>Month</MenuItem>
-                        <MenuItem value={'3-months'}>3-Months</MenuItem>
-                        <MenuItem value={'6-months'}>6-Months</MenuItem>
+                        <MenuItem value={'3-months'}>3 Months</MenuItem>
+                        <MenuItem value={'6-months'}>6 Months</MenuItem>
                         <MenuItem value={'year'}>Year</MenuItem>
                       </Select>
                     </FormControl>

@@ -5,15 +5,12 @@ import { FC } from 'react';
 import { useSwiperSlide } from 'swiper/react';
 import { Avatar } from '@mui/material';
 interface ITestimonialProps {
-  image: string;
   name: string;
-  province?: string;
-  city: string;
-  district?: string;
   review: string;
+  created_at: string;
 }
 
-const Testimonial: FC<ITestimonialProps> = ({ image, name, province, city, district, review }) => {
+const Testimonial: FC<ITestimonialProps> = ({ name, review, created_at }) => {
   const swiperSlide = useSwiperSlide();
   return (
     <div
@@ -24,19 +21,12 @@ const Testimonial: FC<ITestimonialProps> = ({ image, name, province, city, distr
       )}
     >
       <div className="info">
-        <Avatar src={image} className="avatar" />
+        <Avatar src="/images/feedback.png" className="avatar" />
         <p className="name">{name}</p>
-        {province ? (
-          <div className="address">
-            <span className="city">{`${city}, `}</span>
-            <span className="province">{province}</span>
-          </div>
-        ) : (
-          <div className="address">
-            <span className="district">{`${district}, `}</span>
-            <span className="city">{city}</span>
-          </div>
-        )}
+
+        <div className="address">
+          <span className="city">{created_at}</span>
+        </div>
       </div>
       <div className="review">
         <p className="text">{review}</p>

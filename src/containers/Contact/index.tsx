@@ -10,31 +10,45 @@ import { NAME_SCHEMA, PHONE_SCHEMA } from '@utils/validations/common';
 import { useFormik } from 'formik';
 import { ReactNode, useState } from 'react';
 import * as Yup from 'yup';
+import { useFeedbackMutation } from '@/query/feedback/feedbackMutation';
+import { toast } from 'react-toastify';
+
 const Contact = () => {
-  const { mutateAsync: contactMutation, isLoading } = useContactMutation();
+  const { mutateAsync: feedbackMutation, isLoading } = useFeedbackMutation();
   const [isOpenModal, setIsOpenModal] = useState<'error' | 'success' | false>(false);
   const { values, errors, touched, setFieldValue, resetForm, handleSubmit, setFieldTouched } =
     useFormik({
       initialValues: {
         name: '',
-        phone: '',
         email: '',
-        message: '',
+        description: '',
       },
       validationSchema: Yup.object().shape({
         name: NAME_SCHEMA,
-        phone: PHONE_SCHEMA,
-        email: Yup.string()
-          .email('Email không đúng định dạng')
-          .required('Email không được để trống')
-          .trim(),
-        message: Yup.string().required('Tin nhắn không được để trống'),
+        email: Yup.string().email('Invalid Email').required('Email is required').trim(),
+        description: Yup.string()
+          .required('Feedback is required')
+          .max(150, 'Just only write 150 characters'),
       }),
       onSubmit: (e) => {
-        contactMutation(e)
-          .then(() => {
-            setIsOpenModal('success');
-            resetForm();
+        feedbackMutation(e)
+          .then((response: any) => {
+            console.log(response);
+            if (response?.status === 'success') {
+              toast.success('Your Feedback is sent', {
+                position: 'top-center',
+                hideProgressBar: true,
+                theme: 'colored',
+              });
+              resetForm();
+            }
+            if (response?.status === 'error') {
+              toast.error(response?.message, {
+                position: 'top-center',
+                hideProgressBar: true,
+                theme: 'colored',
+              });
+            }
           })
           .catch(({ statusCode }) => {
             statusCode !== 200 && setIsOpenModal('error');
@@ -147,18 +161,7 @@ const Contact = () => {
                   touched={touched.name}
                   onChange={handleChange}
                 />
-                <GroupInput
-                  type="text"
-                  placeholder="Phone *"
-                  className="group"
-                  name="phone"
-                  onBlur={handleBlur}
-                  fadePlaceholderShown
-                  value={values.phone}
-                  error={errors.phone}
-                  touched={touched.phone}
-                  onChange={handleChange}
-                />
+
                 <GroupInput
                   type="text"
                   placeholder="Email *"
@@ -174,12 +177,12 @@ const Contact = () => {
                 <GroupTextarea
                   className="group"
                   placeholder="Enter your message...."
-                  name="message"
+                  name="description"
                   onBlur={handleBlur}
                   fadePlaceholderShown
-                  value={values.message}
-                  error={errors.message}
-                  touched={touched.message}
+                  value={values.description}
+                  error={errors.description}
+                  touched={touched.description}
                   onChange={handleChange}
                 />
               </div>

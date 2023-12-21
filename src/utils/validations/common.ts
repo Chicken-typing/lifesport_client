@@ -1,8 +1,8 @@
 import * as Yup from 'yup';
 
 export const NAME_SCHEMA = Yup.string()
-  .required('Tên không được để trống')
-  .matches(/^[\p{L}\p{M}\s.'-]+$/u, 'Tên không hợp lệ');
+  .required('Name is required')
+  .matches(/^[\p{L}\p{M}\s.'-]+$/u, 'Invalid Name');
 
 export const USERNAME_SCHEMA = Yup.string()
   .required()

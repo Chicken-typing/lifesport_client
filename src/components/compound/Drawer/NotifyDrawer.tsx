@@ -1,18 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { selectCart } from '@/store/cart/selector';
-import { closeDrawer } from '@/store/drawers/slice';
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { Button, KaImage } from '@components/primitive';
-import { routes } from '@utils/routes';
-import { map, size, isEmpty } from 'lodash';
-import { useRouter } from 'next/router';
-import Alert from '@mui/material';
-import { Accordion } from '../Accordion';
 import { useOrderTempQuery } from '@/query/order/get-OrderTemp';
-import moment from 'moment';
-import { toast } from 'react-toastify';
+import { Button, KaImage } from '@components/primitive';
 import { Drawer } from '@mui/material';
+import { map, size } from 'lodash';
+import moment from 'moment';
+import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+import { Accordion } from '../Accordion';
 
 const NotifyDrawer = ({ open, onClose }: { open: boolean; onClose: () => void }) => {
   const { data: order } = useOrderTempQuery({});

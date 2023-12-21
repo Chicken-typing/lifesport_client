@@ -1,4 +1,5 @@
 import KsLayout from '@/layout';
+import { useFeedback } from '@/query/feedback/getFeedback';
 import { useProductsQuery } from '@/query/products/get-products';
 import { getCartList } from '@/store/cart/slice';
 import { useAppDispatch } from '@/store/hooks';
@@ -17,10 +18,11 @@ import BannerCard from './BannerCard';
 import { IHomeBanner, SLIDES, TESTIMONIALS } from './constants';
 import Slide from './Slide';
 import Testimonial from './Testimonial';
+import { format, isValid, parseISO, parse } from 'date-fns';
 
 const Home = () => {
   const { data: products, isFetching: isLoading } = useProductsQuery({});
-
+  const { data: feedbacks, isFetching } = useFeedback({});
   const dispatch = useAppDispatch();
 
   const { t } = useTranslation('home');
@@ -147,106 +149,6 @@ const Home = () => {
           </div>
         </section>
 
-        {/* <section className="kl-home-collections">
-          <div className="kl-container content">
-            <h2 className="title">{t('collection.title')}</h2>
-
-            <div className="grid">
-              {isLoadingCategories
-                ? times(LIMIT.HOME_COLLECTIONS, (idx) => (
-                    <div className="card" key={`collection-${idx}`}>
-                      <div className="kl-home-collection">
-                        <div className="link" />
-                      </div>
-                    </div>
-                  ))
-                : map(slice(categories, 0, LIMIT.HOME_COLLECTIONS), ({ id, name, image }) => (
-                    <div className="card" key={`collection-${id}`}>
-                      <div className="kl-home-collection">
-                        <Link
-                          className="link"
-                          href={{
-                            pathname: routes.PRODUCTS,
-                            query: {
-                              category: `${name}-${id}`,
-                            },
-                          }}
-                          title={name}
-                        >
-                          <KaImage
-                            src={!isEmpty(image) ? image : ''}
-                            alt={!isEmpty(image) ? image : ''}
-                            objectFit="cover"
-                            className="image"
-                            ratio="square"
-                          />
-                        </Link>
-
-                        <div className="container">
-                          <Link
-                            href={{
-                              pathname: routes.PRODUCTS,
-                              query: {
-                                category: `${name}-${id}`,
-                              },
-                            }}
-                            className="title"
-                            color="white"
-                            size="lg"
-                            title={name}
-                          >
-                            {name}
-                          </Link>
-
-                          <Link
-                            href={{
-                              pathname: routes.PRODUCTS,
-                              query: {
-                                category: `${name}-${id}`,
-                              },
-                            }}
-                            title={name}
-                            className="link"
-                            size="sm"
-                            color="white"
-                            rightIcon={<i className="fa-regular fa-chevron-right icon" />}
-                          >
-                            Mua ngay
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-            </div>
-          </div>
-        </section> */}
-
-        {/* <section className="kl-home-quantity">
-          <div className="kl-container content">
-            {map(QUANTITY, (item, idx) => (
-              <div key={`quantity-${idx}`} className="quantity">
-                <div className="image">
-                  <div className={item.classNameIcon}>{item.image}</div>
-                </div>
-                <div className="title">{item.title}</div>
-                <div className="name">{item.name}</div>
-                <div className="description">{item.description}</div>
-                <Link
-                  className="link"
-                  href="/"
-                  title=""
-                  rightIcon={<i className="fa-solid fa-chevron-right fa-xs icon" />}
-                  underline
-                  color="black"
-                  size="sm"
-                >
-                  {item.link}
-                </Link>
-              </div>
-            ))}
-          </div>
-        </section> */}
-
         <section className="kl-home-testimonials">
           <div className="kl-container content">
             <div className="header">
@@ -276,15 +178,15 @@ const Home = () => {
               }}
               className="swiper"
             >
-              {map(TESTIMONIALS, ({ image, name, province, city, district, review }, idx) => (
+              {map(feedbacks?.data, ({ name, description, created_at }, idx) => (
                 <SwiperSlide key={`testimonial-${idx}`}>
                   <Testimonial
-                    image={image}
                     name={name}
-                    province={province}
-                    city={city}
-                    district={district}
-                    review={review}
+                    created_at={format(
+                      parse(created_at, 'HH:mm:ss.SSSSSS', new Date()),
+                      'dd/MM/yyyy',
+                    )}
+                    review={description}
                   />
                 </SwiperSlide>
               ))}

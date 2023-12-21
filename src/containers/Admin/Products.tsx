@@ -89,10 +89,6 @@ const Products = () => {
   const handleCloseDialog = () => setOpenDialog(false);
   const handleCloseEvent = () => setOpenEvent(false);
 
-  const handleChange = (event: any) => {
-    setSelection(event?.rowSelection);
-  };
-
   const handleDeleteProduct = () => {
     const deleteProduct = async () => {
       try {
@@ -130,25 +126,6 @@ const Products = () => {
     };
 
     importProduct();
-  };
-
-  const handleExportProduct = () => {
-    const exportProduct = async () => {
-      try {
-        const response: any = await request.request({
-          method: 'GET',
-          url: '/products/admin/export',
-        });
-
-        if (isEqual(response?.status, 'success')) {
-          toast.success('Update Product Successfully', { position: 'top-center' });
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    exportProduct();
   };
 
   const handleUpdateProduct = () => {
@@ -251,7 +228,7 @@ const Products = () => {
         <Box display="flex" m="20px" flexDirection="column" width="100%">
           {/* HEADER */}
           <Box display="flex" justifyContent="flex-start" alignItems="center">
-            <Introduce title="DASHBOARD" subtitle="Welcome to your dashboard" />
+            <Introduce title="PRODUCT MANAGEMENT" subtitle="Welcome to your product page" />
           </Box>
 
           <div

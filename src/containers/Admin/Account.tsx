@@ -124,7 +124,7 @@ const Account = () => {
         <Box display="flex" m="20px" flexDirection="column" width="100%">
           {/* HEADER */}
           <Box display="flex" justifyContent="flex-start" alignItems="center">
-            <Introduce title="DASHBOARD" subtitle="Welcome to your dashboard" />
+            <Introduce title="ACCOUNT MANAGEMENT" subtitle="Welcome to your account page" />
           </Box>
 
           <ToggleButtonGroup

@@ -6,7 +6,7 @@ import { TypeInvoices } from '@/query/invoices/get-invoices';
 import { cookieStorage } from '@utils/cookieStorage';
 import { decodeToken } from '@utils/decode';
 import { map, size, isEmpty } from 'lodash';
-import { KaImage } from '@components/primitive';
+import { Button, KaImage, Link } from '@components/primitive';
 import KsLayout from '@/layout';
 import Skeleton from '@mui/material/Skeleton';
 import { changeColor } from '@utils/changeColor';
@@ -28,8 +28,6 @@ function Transaction() {
     setStatus(event.target.value as TypeInvoices);
   };
   const { data: invoices, isFetching } = useInvoicesUserQuery({ id, type: status });
-
-  console.log(invoices);
 
   const filterOrdersByType = (orders: IOrders[], type: TypeInvoices) => {
     if (type === 'all') {
@@ -66,7 +64,11 @@ function Transaction() {
         <div className="container-list">
           {!isFetching ? (
             map(filteredOrders, (item) => (
-              <Accordion className="accordion" key={item.id} title={`Order ID: ${item.id}`}>
+              <Accordion
+                className="accordion"
+                key={item.id}
+                title={`${format(new Date(Number(item?.paid_at) * 1000), 'dd/MM/yyyy')}`}
+              >
                 <div className="wrap">
                   <ul className="products-temp">
                     <div className="user-info">
@@ -112,6 +114,21 @@ function Transaction() {
                             minimumFractionDigits: 2,
                           })}
                         </p>
+                      </div>
+
+                      <div className="fourth">
+                        <Button className="btn">
+                          <Link className="link" title="" href={item?.invoice_pdf}>
+                            Export Invoice
+                          </Link>
+                        </Button>
+                        <Button
+                          onClick={() => window.open(item?.invoice_link, '_blank')}
+                          className="btn1"
+                        >
+                          View Invoices Link
+                        </Button>
+                        <div className="temp"></div>
                       </div>
                     </div>
 

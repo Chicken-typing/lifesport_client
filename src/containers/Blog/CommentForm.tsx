@@ -78,7 +78,6 @@ const CommentForm: FC<ICommentFormProp> = ({
               value={value}
               size="large"
               onChange={(event, newValue) => {
-                console.log(newValue);
                 setValue(newValue as number);
               }}
             />

@@ -8,26 +8,34 @@ import { useEffect, useState } from 'react';
 function PieChart({ time }: { time: DateRange<Dayjs> }) {
   const { mutateAsync: sellingRateMutation } = useSellingRateMutation();
   const [datas, setDatas] = useState<Record<string, any>[]>([]);
+
   useEffect(() => {
-    const firstDate = time[0];
-    const secondDate = time[1];
+    const getDatas = async () => {
+      const firstDate = time[0];
+      const secondDate = time[1];
 
-    if (
-      firstDate &&
-      dayjs.isDayjs(firstDate) &&
-      firstDate.isValid() &&
-      secondDate &&
-      dayjs.isDayjs(secondDate) &&
-      secondDate.isValid()
-    ) {
-      const start_date = getUnixTime(firstDate.toDate());
-      const end_date = getUnixTime(secondDate.toDate());
+      if (
+        firstDate &&
+        dayjs.isDayjs(firstDate) &&
+        firstDate.isValid() &&
+        secondDate &&
+        dayjs.isDayjs(secondDate) &&
+        secondDate.isValid()
+      ) {
+        const start_date = getUnixTime(firstDate.toDate());
+        const end_date = getUnixTime(secondDate.toDate());
 
-      // Gọi hook mutateAsync ở đây
-      sellingRateMutation({ start_date, end_date }).then((response: any) => {
-        setDatas(response?.data ? response?.data : {});
-      });
-    }
+        sellingRateMutation({ start_date, end_date }).then((response: any) => {
+          setDatas(response?.data ? response?.data : []);
+        });
+      }
+    };
+
+    getDatas();
+
+    return () => {
+      setDatas([]);
+    };
   }, [time, sellingRateMutation]);
 
   const getColorForType = (datum: Record<string, any>, defaultColor?: string): string => {

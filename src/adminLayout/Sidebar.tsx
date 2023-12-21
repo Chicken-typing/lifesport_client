@@ -17,7 +17,6 @@ const Sidebar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const [selected, setSelected] = useState<string>('Dashboard');
 
   const token = cookieStorage.getAccessTokenInfo();
   const decoded = decodeToken(token || '');
@@ -87,29 +86,9 @@ const Sidebar = () => {
 
             <Box paddingLeft={isCollapsed ? undefined : '10%'}>
               <Item title="Dashboard" to="/admin" icon={<HomeOutlinedIcon />} />
-
-              <Typography variant="h6" color={colors.grey[300]} sx={{ m: '15px 0 5px 20px' }}>
-                Data
-              </Typography>
-
               <Item title="Managed Account" to="/admin/account" icon={<PeopleOutlinedIcon />} />
               <Item title="Managed Product" to="/admin/products" icon={<ContactsOutlinedIcon />} />
-              <Item title="Invoices Balances" to="/admin/invoices" icon={<ReceiptOutlinedIcon />} />
-
-              {/* <Typography variant="h6" color={colors.grey[300]} sx={{ m: '15px 0 5px 20px' }}>
-                Pages
-              </Typography>
-              <Item title="Create Account" to="/form" icon={<PersonOutlinedIcon />} />
-              <Item title="Calendar" to="/calendar" icon={<CalendarTodayOutlinedIcon />} />
-              <Item title="FAQ Page" to="/faq" icon={<HelpOutlineOutlinedIcon />} /> */}
-
-              {/* <Typography variant="h6" color={colors.grey[300]} sx={{ m: '15px 0 5px 20px' }}>
-                Charts
-              </Typography>
-              <Item title="Bar Chart" to="/bar" icon={<BarChartOutlinedIcon />} />
-              <Item title="Pie Chart" to="/pie" icon={<PieChartOutlineOutlinedIcon />} />
-              <Item title="Line Chart" to="/line" icon={<TimelineOutlinedIcon />} />
-              <Item title="Geography Chart" to="/geography" icon={<MapOutlinedIcon />} /> */}
+              <Item title="Managed Invoices" to="/admin/invoices" icon={<ReceiptOutlinedIcon />} />
             </Box>
           </Menu>
         </ProSidebar>

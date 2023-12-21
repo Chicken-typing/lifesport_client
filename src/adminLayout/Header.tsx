@@ -113,13 +113,6 @@ const Header = ({ onOpenDrawer }: IHeaderProps) => {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        {/* <MenuItem onClick={handleClose}>
-          <Avatar /> Profile
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <Avatar /> My account
-        </MenuItem>
-        <Divider /> */}
         <MenuItem onClick={() => router.push({ pathname: '/' })}>
           <ListItemIcon>
             <PersonAdd fontSize="small" />

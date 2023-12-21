@@ -10,6 +10,7 @@ import PeopleOutlinedIcon from '@mui/icons-material/PeopleOutlined';
 import ReceiptOutlinedIcon from '@mui/icons-material/ReceiptOutlined';
 import Item from './Item';
 import { tokens } from './theme';
+import LoyaltyIcon from '@mui/icons-material/Loyalty';
 
 interface IDrawerAdmin {
   open: boolean;
@@ -57,13 +58,10 @@ const DrawerAdmin = ({ open, onCloseDrawer }: IDrawerAdmin) => {
             <Box>
               <Item title="Dashboard" to="/admin" icon={<HomeOutlinedIcon />} />
 
-              <Typography variant="h6" color={colors.grey[300]} sx={{ m: '15px 0 5px 20px' }}>
-                Data
-              </Typography>
-
               <Item title="Managed Account" to="/admin/account" icon={<PeopleOutlinedIcon />} />
               <Item title="Managed Product" to="/admin/products" icon={<ContactsOutlinedIcon />} />
               <Item title="Invoices Balances" to="/admin/invoices" icon={<ReceiptOutlinedIcon />} />
+              <Item title="Managed Coupons" to="/admin/coupons" icon={<LoyaltyIcon />} />
             </Box>
           </Menu>
         </Box>

@@ -94,8 +94,6 @@ const NotifyDrawer = ({ open, onClose }: { open: boolean; onClose: () => void })
     };
   }, [order?.data, lastNotificationTime]);
 
-  console.log(changeColor('044022'));
-
   return (
     <Drawer anchor="right" open={open} onClose={onClose}>
       <div className="kl-drawer-notify">

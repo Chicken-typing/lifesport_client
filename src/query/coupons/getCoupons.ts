@@ -12,6 +12,7 @@ export interface ICoupons {
   status: string;
   data: [
     {
+      id: number;
       code: string;
       percent_off: number;
       amount_off: number;
@@ -29,13 +30,25 @@ export const fetchCoupons = async ({
 
   const data: ICoupons = await request.request({
     method: 'GET',
-    url: '/feedback',
+    url: '/coupons/list',
   });
   return data;
 };
 
 export const useCouponsQuery = (options: any): UseQueryResult<ICoupons, Error> => {
-  return useQuery(['Feedback', { ...options }], fetchCoupons, {
+  return useQuery(['Coupons', { ...options }], fetchCoupons, {
     retry: 1,
   });
+};
+
+const mutationSendCoupons = async (data: { code: string; emails: string[] }) => {
+  return await request.request({
+    method: 'POST',
+    url: '/coupons/send',
+    data: data,
+  });
+};
+
+export const useSendCouponMutation = () => {
+  return useMutation((data: { code: string; emails: string[] }) => mutationSendCoupons(data));
 };

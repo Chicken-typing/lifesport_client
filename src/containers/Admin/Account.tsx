@@ -1,6 +1,7 @@
 import AdminLayout from '@/adminLayout';
 import { tokens } from '@/adminLayout/theme';
-import { mockDataTeam } from '@components/compound/Admin/constants';
+import { useSendCouponMutation } from '@/query/coupons/getCoupons';
+import { useDeleteMutation, useRoleMutation } from '@/query/role/roleMutation';
 import Introduce from '@components/compound/Admin/Introduce';
 import { Button } from '@components/primitive';
 import AdminPanelSettingsOutlinedIcon from '@mui/icons-material/AdminPanelSettingsOutlined';
@@ -11,21 +12,22 @@ import {
   Dialog,
   DialogActions,
   DialogTitle,
+  Input,
   ToggleButton,
   ToggleButtonGroup,
   Tooltip,
   Typography,
   useTheme,
 } from '@mui/material';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
 import { DataGrid } from '@mui/x-data-grid';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import request from '@utils/request';
-import { useState } from 'react';
-import { map } from 'lodash';
+import { useQuery } from '@tanstack/react-query';
 import { cookieStorage } from '@utils/cookieStorage';
 import { decodeToken } from '@utils/decode';
-import { decode } from 'punycode';
-import { useRoleMutation, useDeleteMutation } from '@/query/role/roleMutation';
+import request from '@utils/request';
+import { isEmpty, map } from 'lodash';
+import { ChangeEvent, useState } from 'react';
 import { toast } from 'react-toastify';
 
 type IAccount = 'all' | 'admin' | 'customer';
@@ -39,11 +41,14 @@ const Account = () => {
     id: '',
     role: '',
   });
+  const [selectionEmail, setSelectionEmail] = useState<any>([]);
   const [openDialog, setOpenDialog] = useState<boolean>(false);
+  const [code, setCode] = useState<string>('');
   const token = cookieStorage.getAccessTokenInfo();
   const decoded = decodeToken(token || '');
   const { mutateAsync: updateMutation } = useRoleMutation();
   const { mutateAsync: deleteMutation } = useDeleteMutation();
+  const { mutateAsync: sendCouponMutation } = useSendCouponMutation();
 
   const fetchUsers = async () => {
     const data: any = await request.request({
@@ -116,6 +121,23 @@ const Account = () => {
           theme: 'colored',
         }),
       );
+  };
+
+  const handleSendCoupons = (code: string) => {
+    sendCouponMutation({ code: code, emails: selectionEmail }).then((response: any) => {
+      if (response?.status === 'success') {
+        toast.success('Sent Coupons Successfully', {
+          position: 'top-center',
+          hideProgressBar: true,
+          theme: 'colored',
+        });
+      }
+    });
+  };
+
+  const handleChangeEventCode = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const newValue = event.target.value;
+    setCode(newValue);
   };
 
   const columns: any[] = [
@@ -261,6 +283,56 @@ const Account = () => {
           </Button>
         </DialogActions>
       </Dialog>
+
+      {/* Dialog for send coupons */}
+      <Dialog
+        open={openDialog}
+        onClose={handleCloseDialog}
+        aria-labelledby="responsive-dialog-title"
+        className="dialog-delete"
+        classes={{
+          root: 'dialog-root',
+          container: 'dialog-container',
+          paper: 'dialog-paper',
+        }}
+      >
+        <DialogTitle className="dialog-title" id="responsive-dialog-title">
+          {'SEND COUPONS TO CUSTOMERS'}
+        </DialogTitle>
+
+        <DialogContent>
+          <Input
+            required
+            value={code}
+            onChange={handleChangeEventCode}
+            placeholder="Input the code event"
+          />
+        </DialogContent>
+        <DialogContent>
+          <DialogContentText className="dialog-context">
+            {map(selectionEmail, (item, idx) => (
+              <div key={idx}>{item}</div>
+            ))}
+          </DialogContentText>
+        </DialogContent>
+
+        <DialogActions>
+          <Button
+            onClick={() => {
+              handleCloseDialog();
+              handleSendCoupons(code);
+            }}
+            autoFocus
+            style={{ flex: '1' }}
+          >
+            Ok
+          </Button>
+          <Button autoFocus onClick={handleCloseDialog} style={{ flex: '1' }}>
+            Cancel
+          </Button>
+        </DialogActions>
+      </Dialog>
+
       <div className="kl-admin-account">
         <Box display="flex" m="20px" flexDirection="column" width="100%">
           {/* HEADER */}
@@ -301,15 +373,15 @@ const Account = () => {
               color="green-500"
               fullWidth
               onClick={() => setOpenDialog(true)}
-              // disabled={isEmpty(selection)}
+              disabled={isEmpty(selectionEmail)}
               className="button"
               style={{
                 width: '30px',
                 marginLeft: 'auto',
               }}
             >
-              <Tooltip title="Edit Status" placement="left" arrow>
-                <i className="fa-light fa-pen-to-square" />
+              <Tooltip title="Send Coupons" placement="left" arrow>
+                <i className="fa-light fa-ticket" />
               </Tooltip>
             </Button>
           </div>
@@ -345,9 +417,20 @@ const Account = () => {
           >
             <DataGrid
               hideFooter
+              checkboxSelection={type === 'customer'}
               rows={filterOrdersByType(users?.user_lists || [], type)}
               columns={columns}
               loading={isLoading}
+              onRowSelectionModelChange={(params) => {
+                const newSelectionState = params.map((selectedRowId) => {
+                  const selectedEmail = users?.user_lists?.find(
+                    (item: any) => item.id === selectedRowId,
+                  );
+                  return selectedEmail ? selectedEmail?.email : selectedEmail?.email;
+                });
+
+                setSelectionEmail(newSelectionState);
+              }}
             />
           </Box>
         </Box>

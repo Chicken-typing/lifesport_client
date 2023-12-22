@@ -170,7 +170,7 @@ const Products = () => {
                 <div className="kl-container content">
                   <ul className="row wrapper">
                     {!isLoading && !isError && isEmpty(products?.items) && (
-                      <li className="col-12 empty-result">Không có sản phẩm</li>
+                      <li className="col-12 empty-result">No products were found</li>
                     )}
 
                     {!isLoading && !isError

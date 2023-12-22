@@ -18,11 +18,15 @@ import { useRouter } from 'next/router';
 import { Tooltip } from '@components/compound';
 import { useEventMutation } from '@/query/products/eventMutation';
 import { toast } from 'react-toastify';
+import { NULL } from 'sass';
 
 const Products = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const [selection, setSelection] = useState<any>([]);
+  const [selection, setSelection] = useState<any>({
+    id: '',
+    name: '',
+  });
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [openEvent, setOpenEvent] = useState<boolean>(false);
   const [code, setCode] = useState<string>('');
@@ -47,7 +51,7 @@ const Products = () => {
       align: 'left',
     },
     {
-      field: 'primary_pric',
+      field: 'primary_price',
       headerName: 'Price',
       flex: 1,
       renderCell: ({ row: { primary_price } }: any) => {
@@ -70,22 +74,43 @@ const Products = () => {
         return <Typography sx={{ ml: '5px' }}>{brand.toUpperCase()}</Typography>;
       },
     },
+    // {
+    //   field: 'is_achieve',
+    //   headerName: 'Achieved',
+    //   flex: 1,
+    //   renderCell: ({ row: { is_achieve } }: any) => {
+    //     return <Typography sx={{ ml: '5px' }}>{is_achieve}</Typography>;
+    //   },
+    // },
+    {
+      field: 'is_achieve',
+      headerName: 'Achieved',
+      flex: 1,
+    },
     {
       field: 'action',
       headerName: 'Action',
       flex: 1,
-      renderCell: ({ row: { access } }: any) => {
+      renderCell: ({ row: { id, name } }: any) => {
         return (
           <div className="action-group">
-            <Button color="green-500" fullWidth className="button">
-              <i className="fa-regular fa-pen-to-square"></i>
+            <Button
+              onClick={() => {
+                setSelection({ id: id, name: name });
+                setOpenDialog(true);
+              }}
+              color="green-500"
+              fullWidth
+              className="button"
+            >
+              <i className="fa-regular fa-trash" />
             </Button>
           </div>
         );
       },
     },
   ];
-
+  console.log(selection);
   const handleCloseDialog = () => setOpenDialog(false);
   const handleCloseEvent = () => setOpenEvent(false);
 
@@ -95,7 +120,7 @@ const Products = () => {
         const response: any = await request.request({
           method: 'POST',
           url: '/products/admin/delete',
-          data: { ids: map(selection, (item) => item?.id) },
+          data: { product_id: selection?.id },
         });
 
         if (isEqual(response?.status, 'success')) router.reload();
@@ -182,6 +207,9 @@ const Products = () => {
           </DialogTitle>
           <DialogContent>
             <Input
+              classes={{
+                root: 'input-root',
+              }}
               required
               value={code}
               onChange={handleChangeEvent}
@@ -210,9 +238,8 @@ const Products = () => {
           </DialogTitle>
           <DialogContent>
             <DialogContentText className="dialog-context">
-              {map(selection, (item) => (
-                <div>{item.name}</div>
-              ))}
+              {selection?.name}
+              {selection?.id}
             </DialogContentText>
           </DialogContent>
           <DialogActions>
@@ -331,24 +358,23 @@ const Products = () => {
             }}
           >
             <DataGrid
-              checkboxSelection
               hideFooter
               rows={products?.items || []}
               columns={columns}
               loading={isLoading}
               // onStateChange={handleChange}
-              onRowSelectionModelChange={(params) => {
-                const newSelectionState = params.map((selectedRowId) => {
-                  const selectedOrder: any = products?.items.find(
-                    (order) => order.id === selectedRowId,
-                  );
-                  return selectedOrder
-                    ? { id: Number(selectedRowId), name: selectedOrder.name }
-                    : { id: Number(selectedRowId), name: selectedOrder.name };
-                });
+              // onRowSelectionModelChange={(params) => {
+              //   const newSelectionState = params.map((selectedRowId) => {
+              //     const selectedOrder: any = products?.items.find(
+              //       (order) => order.id === selectedRowId,
+              //     );
+              //     return selectedOrder
+              //       ? { id: Number(selectedRowId), name: selectedOrder.name }
+              //       : { id: Number(selectedRowId), name: selectedOrder.name };
+              //   });
 
-                setSelection(newSelectionState);
-              }}
+              //   setSelection(newSelectionState);
+              // }}
             />
           </Box>
         </Box>

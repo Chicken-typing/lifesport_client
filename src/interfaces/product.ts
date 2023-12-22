@@ -36,6 +36,7 @@ export interface IProduct {
   color: string[];
   avg_rate: string;
   comments: IComment[];
+  is_achieve: boolean;
 }
 
 export interface IComment {

@@ -5,7 +5,7 @@ import { addProduct } from '@/store/cart/slice';
 import { useAppDispatch } from '@/store/hooks';
 import { MODALS } from '@/store/modals/constants';
 import { openModal } from '@/store/modals/slice';
-import { CommentCard, ProductSlides } from '@components/compound';
+import { CommentCard, ProductSlides, Rating } from '@components/compound';
 import { Badge, Button, KaImage, Label, Link } from '@components/primitive';
 import CommentForm from '@containers/Blog/CommentForm';
 import Radio from '@mui/material/Radio';
@@ -158,14 +158,18 @@ const Product = () => {
 
                       {map(
                         flatMapDepth(
-                          map(product?.item, (item, idx) => (
-                            <Badge
-                              key={idx}
-                              className="badge"
-                              label={item?.quantity ? t('status.second') : t('status.third')}
-                              color={item?.quantity ? 'primary' : 'danger'}
-                            />
-                          )),
+                          map(product?.item, (item, idx) =>
+                            !item?.is_achieve ? (
+                              <Badge
+                                key={idx}
+                                className="badge"
+                                label={item?.quantity ? t('status.second') : t('status.third')}
+                                color={item?.quantity ? 'primary' : 'danger'}
+                              />
+                            ) : (
+                              <Badge key={idx} className="badge" label="Achieved" color="danger" />
+                            ),
+                          ),
                         ),
                       )}
                     </div>
@@ -179,15 +183,20 @@ const Product = () => {
                       {flatMapDepth(map(product?.item, (item) => item.comments)).some(
                         (comment) => comment === null,
                       )
-                        ? '0 Review'
+                        ? '0 review'
                         : `${size(
                             flatMapDepth(map(product?.item, (item) => item.comments)),
-                          )} Reviews`}
-                      |
+                          )} reviews`}
                     </span>
-                    <span className="number">SKU: HCMUTE2023</span>
+                    <Rating readOnly value={Number(product?.item[0]?.avg_rate)} />
                   </div>
-
+                  <p className="description">
+                    Vinfast Theon S is an upgraded version of Theon, Vinfast Theon S electric
+                    motorbike brings a new breeze to the 2022 electric motorbike market with
+                    outstanding capacity and strong performance, not inferior to other models.
+                    gasoline. With groundbreaking changes, Theon S 2022 promises to bring new and
+                    superior experiences to customers.
+                  </p>
                   {/* <p className="description">{product?.shortDescription}</p> */}
 
                   {flatMapDepth(
@@ -255,89 +264,108 @@ const Product = () => {
                     <span style={{ marginRight: '20px', fontSize: '20px', fontWeight: '400' }}>
                       {t('color')}
                     </span>
-                    {map(flatMapDepth(map(product?.item, (item) => item?.color)), (color, idx) => (
-                      <Radio
-                        {...controlProps(color)}
-                        color="secondary"
-                        sx={{
-                          marginRight: '10px',
+                    <div className="wrapper-color">
+                      {map(
+                        flatMapDepth(map(product?.item, (item) => item?.color)),
+                        (color, idx) => (
+                          // <Radio
+                          //   {...controlProps(color)}
+                          //   color="secondary"
+                          //   sx={{
+                          //     marginRight: '10px',
 
-                          '& .MuiTouchRipple-root': {
-                            backgroundColor: `#${color}`,
-                          },
-                          '& .MuiSvgIcon-root': {
-                            height: 20,
-                            width: 20,
-                          },
-                          ' &.Mui-checked': {
-                            color: `#${color}`,
-                            padding: '0',
+                          //     '& .MuiTouchRipple-root': {
+                          //       backgroundColor: `#${color}`,
+                          //     },
+                          //     '& .MuiSvgIcon-root': {
+                          //       height: 20,
+                          //       width: 20,
+                          //     },
+                          //     ' &.Mui-checked': {
+                          //       color: `#${color}`,
+                          //       padding: '0',
 
-                            '&.Mui-checked .MuiTouchRipple-root': {
-                              backgroundColor: 'unset',
-                              // height: 30,
-                              // width: 30,
-                            },
-                            ' .MuiSvgIcon-root': {
-                              backgroundColor: 'unset',
-                              height: 45,
-                              width: 45,
-                            },
-                          },
-                        }}
-                      />
-                    ))}
+                          //       '&.Mui-checked .MuiTouchRipple-root': {
+                          //         backgroundColor: 'unset',
+                          //         // height: 30,
+                          //         // width: 30,
+                          //       },
+                          //       ' .MuiSvgIcon-root': {
+                          //         backgroundColor: 'unset',
+                          //         height: 45,
+                          //         width: 45,
+                          //       },
+                          //     },
+                          //   }}
+                          // />
+
+                          <span
+                            key={idx}
+                            onClick={() => setSelectedValue(color)}
+                            className={classNames('option-color', {
+                              '-active': color === selectedValue,
+                            })}
+                          >
+                            <span className="color" style={{ background: `#${color}` }}></span>
+                          </span>
+                        ),
+                      )}
+                    </div>
                   </div>
 
-                  {get(product?.item[0], 'quantity', 0) !== 0 && (
-                    <div className="quantity kl-product-quantity">
-                      <Label className="label">{t('quantity')}</Label>
+                  {!product?.item[0]?.is_achieve && (
+                    <>
+                      {get(product?.item[0], 'quantity', 0) !== 0 && (
+                        <div className="quantity kl-product-quantity">
+                          <Label className="label">{t('quantity')}</Label>
 
-                      <div className="action">
-                        <button onClick={handleMinus} className="button">
-                          -
-                        </button>
-                        <input
-                          value={quantity}
-                          onBlur={handleBlurQuantity}
-                          onChange={handleChangeQuantity}
-                          type="number"
-                          className="input"
-                        />
-                        <button onClick={handlePlus} className="button">
-                          +
-                        </button>
-                      </div>
-                    </div>
+                          <div className="action">
+                            <button onClick={handleMinus} className="button">
+                              -
+                            </button>
+                            <input
+                              value={quantity}
+                              onBlur={handleBlurQuantity}
+                              onChange={handleChangeQuantity}
+                              type="number"
+                              className="input"
+                            />
+                            <button onClick={handlePlus} className="button">
+                              +
+                            </button>
+                          </div>
+                        </div>
+                      )}
+
+                      <Button
+                        className="add"
+                        color="primary"
+                        disabled={product?.item[0]?.quantity === 0}
+                        fullWidth
+                        startAdornment={<i className="fa-light fa-bag-shopping fa-xl" />}
+                        onClick={() => {
+                          dispatch(
+                            addProduct({
+                              quantity: quantity,
+                              product: {
+                                id: product?.item[0]?.id || 0,
+                                name: product?.item[0]?.name || '',
+                                price: product?.item[0]?.sale_off
+                                  ? product?.item[0]?.sale_off
+                                  : product?.item[0]?.price || 0,
+                                quantity: product?.item[0]?.quantity || 0,
+                                thumbnail: product?.item[0]?.images[0] || '',
+                                color: selectedValue,
+                              },
+                            }),
+                          );
+                          toast.success('Product is added to cart', { position: 'top-center' });
+                        }}
+                      >
+                        {t('add')}
+                      </Button>
+                    </>
                   )}
-
-                  <Button
-                    className="add"
-                    color="primary"
-                    disabled={product?.item[0]?.quantity === 0}
-                    fullWidth
-                    startAdornment={<i className="fa-light fa-bag-shopping fa-xl" />}
-                    onClick={() => {
-                      dispatch(
-                        addProduct({
-                          quantity: quantity,
-                          product: {
-                            id: product?.item[0]?.id || 0,
-                            name: product?.item[0]?.name || '',
-                            price: product?.item[0]?.sale_off
-                              ? product?.item[0]?.sale_off
-                              : product?.item[0]?.price || 0,
-                            quantity: product?.item[0]?.quantity || 0,
-                            thumbnail: product?.item[0]?.images[0] || '',
-                            color: selectedValue,
-                          },
-                        }),
-                      );
-                      toast.success('Product is added to cart', { position: 'top-center' });
-                    }}
-                  >
-                    {t('add')}
-                  </Button>
 
                   <div className="footer">
                     <span className="label">Brand: </span>

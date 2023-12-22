@@ -302,6 +302,9 @@ const Account = () => {
 
         <DialogContent>
           <Input
+            classes={{
+              root: 'input-root',
+            }}
             required
             value={code}
             onChange={handleChangeEventCode}

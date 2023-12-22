@@ -29,9 +29,13 @@
       }
     }
 
+    > .wrapper > .right {
+      box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15);
+      border-radius: 8px;
+    }
+
     > .wrapper > .right > .content {
-      position: sticky;
-      top: 10px;
+      margin-top: 25px;
     }
 
     > .wrapper > .right > .content > .header {
@@ -72,23 +76,30 @@
     > .wrapper > .right > .content > .rating {
       @include flex-center-ver;
       padding-bottom: 16px;
-      border-bottom: 1px solid $color-light-gray;
+
       gap: 6px;
-      margin-bottom: 10px;
+    }
+
+    > .wrapper > .right > .content > .description {
+      font-size: medium;
+      padding: 0;
+      @include truncate-multiline-new(3);
     }
 
     > .wrapper > .right > .content > .rating > .count,
     .wrapper > .right > .content > .rating > .number {
       font-size: $fs-normal;
       color: $color-gray-500;
-    }
-
-    > .wrapper > .right > .content > .description {
-      padding-block: 16px;
+      padding-right: 8px;
+      border-right: 1px solid $color-light-gray;
     }
 
     > .wrapper > .right > .content > .price {
+      display: block;
       font-size: 24px;
+      border-top: 1px solid $color-light-gray;
+      padding-top: 12px;
+      margin-top: 20px;
     }
 
     > .wrapper > .right > .content > .add {
@@ -581,5 +592,29 @@
 }
 
 .ks-product-weight {
-  margin-top: 30px;
+  margin-top: 15px;
+  @include flex-center-ver;
+
+  > .wrapper-color {
+    display: flex;
+    @include flex-center-ver;
+  }
+  > .wrapper-color > .option-color {
+    @include circle(40px);
+    @include flex-center;
+    cursor: pointer;
+    flex: 1;
+    margin: 0 8px;
+    box-sizing: content-box;
+    border: 2px solid transparent;
+    padding: 4px;
+    &.-active {
+      border: 2px solid #1464f4;
+      padding: 4px;
+    }
+  }
+  > .wrapper-color > .option-color > .color {
+    @include circle(100%);
+    display: block;
+  }
 }

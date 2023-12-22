@@ -98,7 +98,7 @@ export const ProductCard: FC<IProductCardProps> = ({ data, isLoading = false }) 
                   </>
                 ) : (
                   <span className="primitive">
-                    {(data?.price || 0 / 100).toLocaleString('en-US', {
+                    {((data?.price && data?.price / 100) || 0).toLocaleString('en-US', {
                       style: 'currency',
                       currency: 'USD',
                       minimumFractionDigits: 2,

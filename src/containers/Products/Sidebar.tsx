@@ -106,7 +106,7 @@ const Sidebar: FC<ISidebarProps> = ({ variant }) => {
                 <div
                   className="item"
                   onClick={() => {
-                    router.push({ query: { ...query, brand: value, page: 1 } }, undefined, {
+                    router.push({ query: { brand: value, page: 1 } }, undefined, {
                       shallow: true,
                     });
                   }}

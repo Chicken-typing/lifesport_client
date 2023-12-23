@@ -11,7 +11,6 @@ const Coupons = () => {
 
   const { data: coupons, isFetching: isLoading } = useCouponsQuery({});
 
-  console.log(coupons?.data);
   const columns: any[] = [
     { field: 'id', headerName: 'ID' },
     {

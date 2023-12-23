@@ -19,6 +19,7 @@ import MenuBottom from './MenuBottom';
 import { toast } from 'react-toastify';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { fetchOrderTemp } from '@/query/order/get-OrderTemp';
+import { getCartList } from '@/store/cart/slice';
 
 interface IKsLayoutProps {
   children: ReactNode;
@@ -51,6 +52,7 @@ const KsLayout: FC<IKsLayoutProps> = ({
   const router = useRouter();
   const queryClient = useQueryClient();
   const token = cookieStorage?.getAccessTokenInfo();
+  const dispatch = useAppDispatch();
 
   // useEffect(() => {
   //   document.documentElement.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
@@ -71,6 +73,13 @@ const KsLayout: FC<IKsLayoutProps> = ({
   if (token) {
     queryClient.invalidateQueries(['OrderTemp']);
   }
+
+  useEffect(() => {
+    const cart = localStorage.getItem('carts');
+    if (cart) {
+      dispatch(getCartList(JSON.parse(cart)));
+    }
+  });
 
   return (
     <>

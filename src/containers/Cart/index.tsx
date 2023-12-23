@@ -155,6 +155,9 @@ const Cart = () => {
                             color={color}
                             disabled={quantity === quantityItem}
                           />
+                          <span style={{ display: 'flex', color: 'red', justifyContent: 'center' }}>
+                            {'3 product left'}
+                          </span>
                         </td>
                         <td className="total _style-rows">
                           {(total / 100).toLocaleString('en-US', {

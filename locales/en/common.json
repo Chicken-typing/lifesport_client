@@ -32,6 +32,14 @@
         {
           "title": "HONDA",
           "route": "/products/list?brand=honda"
+        },
+        {
+          "title": "ALLY",
+          "route": "/products/list?brand=ally"
+        },
+        {
+          "title": "VESPA",
+          "route": "/products/list?brand=vespa"
         }
       ]
     },

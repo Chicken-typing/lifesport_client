@@ -36,13 +36,6 @@ const Home = () => {
   const best_seller = products?.items.filter((item) => item.sold > 1);
   const sales = products?.items.filter((item) => item.percent_off);
 
-  useEffect(() => {
-    const cart = localStorage.getItem('carts');
-    if (cart) {
-      dispatch(getCartList(JSON.parse(cart)));
-    }
-  });
-
   return (
     <KsLayout title="Home">
       <div className="kl-home">

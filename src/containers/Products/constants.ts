@@ -3,7 +3,6 @@ export const CATEGORIES = [
   { label: 'Honda', value: 'honda' },
   { label: 'Dibao', value: 'dibao' },
   { label: 'Ally', value: 'ally' },
-  { label: 'Xmen', value: 'xmen' },
   { label: 'Vespa', value: 'vespa' },
 ];
 

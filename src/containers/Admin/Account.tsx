@@ -365,7 +365,7 @@ const Account = () => {
           <div
             className="function"
             style={{
-              display: type !== 'all' ? 'block' : 'none',
+              display: type === 'customer' ? 'block' : 'none',
               gap: '6px',
               width: 'fit-content',
               marginLeft: 'auto',

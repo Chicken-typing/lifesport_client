@@ -79,7 +79,7 @@ const KsLayout: FC<IKsLayoutProps> = ({
     if (cart) {
       dispatch(getCartList(JSON.parse(cart)));
     }
-  });
+  }, [dispatch]);
 
   return (
     <>

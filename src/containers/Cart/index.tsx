@@ -32,6 +32,7 @@ const Cart = () => {
   const { data: products } = useProductsQuery({});
   const router = useRouter();
   const recommend = products?.items.filter((item) => item.sold > 2);
+
   useEffect(() => {
     const getCart = async () => {
       try {
@@ -46,7 +47,7 @@ const Cart = () => {
       }
     };
     getCart();
-  }, []);
+  }, [dispatch]);
 
   const handleCheckout = () => {
     const data: ICheckout = {

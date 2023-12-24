@@ -8,7 +8,6 @@ import { openModal } from '@/store/modals/slice';
 import { ProductSlides } from '@components/compound';
 import Quantity from '@components/compound/Quantity';
 import { Button, KaImage, Link } from '@components/primitive';
-import { IProduct } from '@interfaces/product';
 import { Skeleton } from '@mui/material';
 import { changeColor } from '@utils/changeColor';
 import { cookieStorage } from '@utils/cookieStorage';
@@ -19,7 +18,7 @@ import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { ICheckout } from '../../interfaces/checkout';
 import { useCheckoutMutation } from '../../query/checkout/checkoutMutation';
-import { INTERESTED } from './constant';
+import { clearCart } from '@/store/cart/slice';
 
 const Cart = () => {
   const dispatch = useAppDispatch();
@@ -85,7 +84,9 @@ const Cart = () => {
               position: 'top-center',
             });
           }
+          dispatch(clearCart());
         })
+
         .catch((error: any) => console.log(error));
     } else {
       toast.error('You should login to checkout', { position: 'top-center' });
@@ -154,11 +155,24 @@ const Cart = () => {
                             quantity={quantity}
                             id={id}
                             color={color}
-                            disabled={quantity === quantityItem}
+                            disabled={quantityItem - quantity - 2 === 0 || quantity >= 5}
                           />
-                          <span style={{ display: 'flex', color: 'red', justifyContent: 'center' }}>
-                            {'3 product left'}
-                          </span>
+                          {quantity >= 5 && (
+                            <span
+                              style={{ display: 'flex', color: 'red', justifyContent: 'center' }}
+                            >
+                              Maximum 5 products.
+                            </span>
+                          )}
+                          {quantity < 5 && quantityItem - quantity <= 7 && (
+                            <span
+                              style={{ display: 'flex', color: 'red', justifyContent: 'center' }}
+                            >
+                              {quantityItem - quantity - 2 > 0
+                                ? `${quantityItem - quantity - 2} Product Left`
+                                : 'Count In Stock'}
+                            </span>
+                          )}
                         </td>
                         <td className="total _style-rows">
                           {(total / 100).toLocaleString('en-US', {

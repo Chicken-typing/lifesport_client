@@ -163,7 +163,7 @@ const Product = () => {
                               <Badge
                                 key={idx}
                                 className="badge"
-                                label={item?.quantity ? t('status.second') : t('status.third')}
+                                label={item?.quantity > 2 ? t('status.second') : t('status.third')}
                                 color={item?.quantity ? 'primary' : 'danger'}
                               />
                             ) : (
@@ -268,37 +268,6 @@ const Product = () => {
                       {map(
                         flatMapDepth(map(product?.item, (item) => item?.color)),
                         (color, idx) => (
-                          // <Radio
-                          //   {...controlProps(color)}
-                          //   color="secondary"
-                          //   sx={{
-                          //     marginRight: '10px',
-
-                          //     '& .MuiTouchRipple-root': {
-                          //       backgroundColor: `#${color}`,
-                          //     },
-                          //     '& .MuiSvgIcon-root': {
-                          //       height: 20,
-                          //       width: 20,
-                          //     },
-                          //     ' &.Mui-checked': {
-                          //       color: `#${color}`,
-                          //       padding: '0',
-
-                          //       '&.Mui-checked .MuiTouchRipple-root': {
-                          //         backgroundColor: 'unset',
-                          //         // height: 30,
-                          //         // width: 30,
-                          //       },
-                          //       ' .MuiSvgIcon-root': {
-                          //         backgroundColor: 'unset',
-                          //         height: 45,
-                          //         width: 45,
-                          //       },
-                          //     },
-                          //   }}
-                          // />
-
                           <span
                             key={idx}
                             onClick={() => setSelectedValue(color)}
@@ -315,7 +284,7 @@ const Product = () => {
 
                   {!product?.item[0]?.is_achieve && (
                     <>
-                      {get(product?.item[0], 'quantity', 0) !== 0 && (
+                      {get(product?.item[0], 'quantity', 0) > 2 && (
                         <div className="quantity kl-product-quantity">
                           <Label className="label">{t('quantity')}</Label>
 
@@ -325,12 +294,19 @@ const Product = () => {
                             </button>
                             <input
                               value={quantity}
-                              onBlur={handleBlurQuantity}
+                              readOnly
                               onChange={handleChangeQuantity}
                               type="number"
                               className="input"
                             />
-                            <button onClick={handlePlus} className="button">
+                            <button
+                              disabled={
+                                get(product?.item[0], 'quantity', 0) - quantity === 2 ||
+                                quantity === 5
+                              }
+                              onClick={handlePlus}
+                              className="button"
+                            >
                               +
                             </button>
                           </div>
@@ -340,7 +316,10 @@ const Product = () => {
                       <Button
                         className="add"
                         color="primary"
-                        disabled={product?.item[0]?.quantity === 0}
+                        disabled={
+                          product?.item[0]?.quantity === 0 ||
+                          get(product?.item[0], 'quantity', 0) - quantity < 2
+                        }
                         fullWidth
                         startAdornment={<i className="fa-light fa-bag-shopping fa-xl" />}
                         onClick={() => {

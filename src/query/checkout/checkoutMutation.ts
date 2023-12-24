@@ -1,5 +1,5 @@
 import { API_ENDPOINTS } from '@/utils/api-endpoints';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import request from '@utils/request';
 
 interface PriceData {
@@ -36,5 +36,11 @@ const mutationCheckout = async (data: { email: string; products: Product[] }) =>
 };
 
 export const useCheckoutMutation = () => {
-  return useMutation((data: { email: string; products: Product[] }) => mutationCheckout(data));
+  const queryClient = useQueryClient();
+
+  return useMutation((data: { email: string; products: Product[] }) => mutationCheckout(data), {
+    onSuccess: () => {
+      queryClient.invalidateQueries([API_ENDPOINTS.PRODUCT]);
+    },
+  });
 };

@@ -136,13 +136,22 @@ const cartSlice = createSlice({
         return updateCart;
       }
     },
+
+    clearCart: (state) => {
+      localStorage.removeItem('carts');
+      return initialState;
+    },
   },
 
   extraReducers: (builder) => {
     builder.addCase(HYDRATE, (state, action: any) => ({
       ...(state || {}),
-      ...(action?.payload?.cart || {}),
+      ...(action?.payload?.cart || []),
     }));
+    builder.addCase(clearCart, (state) => {
+      localStorage.removeItem('carts');
+      return initialState;
+    });
   },
 });
 
@@ -154,6 +163,7 @@ export const {
   decrement,
   changeQuantity,
   blurQuantity,
+  clearCart,
 } = cartSlice.actions;
 
 export default cartSlice;

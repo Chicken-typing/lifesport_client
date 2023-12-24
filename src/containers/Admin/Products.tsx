@@ -91,7 +91,7 @@ const Products = () => {
       field: 'action',
       headerName: 'Action',
       flex: 1,
-      renderCell: ({ row: { id, name } }: any) => {
+      renderCell: ({ row: { id, name, is_achieve } }: any) => {
         return (
           <div className="action-group">
             <Button
@@ -102,6 +102,7 @@ const Products = () => {
               color="green-500"
               fullWidth
               className="button"
+              disabled={is_achieve}
             >
               <i className="fa-regular fa-trash" />
             </Button>
@@ -110,7 +111,6 @@ const Products = () => {
       },
     },
   ];
-  console.log(selection);
   const handleCloseDialog = () => setOpenDialog(false);
   const handleCloseEvent = () => setOpenEvent(false);
 
@@ -311,20 +311,6 @@ const Products = () => {
               <Tooltip title="Update Product" placement="bottom" arrow>
                 <i className="fa-light fa-pen-to-square" />
               </Tooltip>
-            </Button>
-
-            <Button
-              color="green-500"
-              fullWidth
-              disabled={isEmpty(selection)}
-              className="button"
-              onClick={() => setOpenDialog(true)}
-              style={{
-                width: '30px',
-                marginLeft: 'auto',
-              }}
-            >
-              <i className="fa-regular fa-trash" />
             </Button>
           </div>
 

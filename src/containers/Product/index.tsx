@@ -191,11 +191,7 @@ const Product = () => {
                     <Rating readOnly value={Number(product?.item[0]?.avg_rate)} />
                   </div>
                   <p className="description">
-                    Vinfast Theon S is an upgraded version of Theon, Vinfast Theon S electric
-                    motorbike brings a new breeze to the 2022 electric motorbike market with
-                    outstanding capacity and strong performance, not inferior to other models.
-                    gasoline. With groundbreaking changes, Theon S 2022 promises to bring new and
-                    superior experiences to customers.
+                    {flatMapDepth(map(product?.item, (item) => item.description))}
                   </p>
                   {/* <p className="description">{product?.shortDescription}</p> */}
 
@@ -399,7 +395,7 @@ const Product = () => {
 
           <div className="panes">
             <div className="pane" hidden={activeTab !== 0}>
-              <p>{map(flatMapDepth(map(product?.item, (item) => item.description)))}</p>
+              <p>{flatMapDepth(map(product?.item, (item) => item.description))}</p>
             </div>
             <div className="pane" hidden={activeTab !== 1}>
               {!isEmpty(flatMapDepth(map(product?.item, (item) => item?.comments))) && (

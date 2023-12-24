@@ -191,7 +191,9 @@ const Product = () => {
                     <Rating readOnly value={Number(product?.item[0]?.avg_rate)} />
                   </div>
                   <p className="description">
-                    {flatMapDepth(map(product?.item, (item) => item.description))}
+                    {flatMapDepth(
+                      map(product?.item, (item) => item.description.replaceAll('&#39;', "'")),
+                    )}
                   </p>
                   {/* <p className="description">{product?.shortDescription}</p> */}
 
@@ -395,7 +397,11 @@ const Product = () => {
 
           <div className="panes">
             <div className="pane" hidden={activeTab !== 0}>
-              <p>{flatMapDepth(map(product?.item, (item) => item.description))}</p>
+              <p>
+                {flatMapDepth(
+                  map(product?.item, (item) => item.description.replaceAll('&#39;', "'")),
+                )}
+              </p>
             </div>
             <div className="pane" hidden={activeTab !== 1}>
               {!isEmpty(flatMapDepth(map(product?.item, (item) => item?.comments))) && (

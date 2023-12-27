@@ -43,8 +43,8 @@ const mutationUpdateStatus = async (data: IUpdate[]) => {
 export const useUpdateStatusMutation = () => {
   const queryClient = useQueryClient();
   return useMutation((data: IUpdate[]) => mutationUpdateStatus(data), {
-    // onSuccess: () => {
-    //   queryClient.invalidateQueries(['fetchInvoices']);
-    // },
+    onSuccess: () => {
+      queryClient.invalidateQueries(['fetchInvoices']);
+    },
   });
 };

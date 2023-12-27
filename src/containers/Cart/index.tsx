@@ -131,10 +131,7 @@ const Cart = () => {
                             <i className="fa-light fa-xmark icon" />
                           </button>
                         </td>
-                        <td
-                          className="thumbnail  _style-rows"
-                          onClick={() => dispatch(openModal({ view: MODALS.CART }))}
-                        >
+                        <td className="thumbnail  _style-rows">
                           <KaImage className="image" src={thumbnail} alt="" />
                         </td>
                         <td className="name _style-rows">
@@ -200,11 +197,8 @@ const Cart = () => {
                       idx,
                     ) => (
                       <tr className="rows" key={`cart-product-${idx}`}>
-                        <td
-                          className="thumbnail _style-rows"
-                          onClick={() => dispatch(openModal({ view: MODALS.CART }))}
-                        >
-                          <KaImage className="image" src={thumbnail[0]} alt="" />
+                        <td className="thumbnail _style-rows">
+                          <KaImage className="image" src={thumbnail} alt="" />
                         </td>
                         <td className="remove _style-rows">
                           <button

@@ -50,10 +50,10 @@ const Quantity: FC<IQuantityProps> = ({
         </button>
         <input
           value={quantity}
+          readOnly
           type="number"
           className="input"
           onChange={handleChangeQuantity(id, color)}
-          onBlur={handleBlurQuantity(id, color)}
         />
         <button
           disabled={disabled}

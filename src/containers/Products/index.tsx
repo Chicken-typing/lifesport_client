@@ -83,12 +83,12 @@ const Products = () => {
               <section className="kl-products-filters">
                 <div className="kl-container content">
                   <div className="sorts">
-                    {/* <div className="actions">
+                    <div className="actions">
                       <button onClick={() => setOpen(true)} className="filter">
                         <i className="fa-regular fa-sliders-simple icon" />
                         <strong className="text">Filter</strong>
                       </button>
-                      <div className="sort">
+                      {/* <div className="sort">
                         <FormControl>
                           <Select
                             value={sort}
@@ -137,8 +137,8 @@ const Products = () => {
                             ))}
                           </Select>
                         </FormControl>
-                      </div>
-                    </div> */}
+                      </div> */}
+                    </div>
 
                     <div className="info">
                       <p className="text">Showing {size(products?.items) || 0} results</p>
@@ -146,25 +146,6 @@ const Products = () => {
                   </div>
                 </div>
               </section>
-
-              {/* <section className="kl-products-result-filter">
-                <div className="kl-container content">
-                  <div className="row wrapper">
-                    {isEmpty(products?.items) ? (
-                      <div className="col-12 empty-result">Empty Result</div>
-                    ) : (
-                      map(products?.items?.slice(START, END), (item, idx) => (
-                        <div
-                          className="col-12 col-md-4 col-lg-4 item"
-                          key={`product-result-${idx}`}
-                        >
-                          <ProductCard data={item} />
-                        </div>
-                      ))
-                    )}
-                  </div>
-                </div>
-              </section> */}
 
               <section className="kl-products-result-filter">
                 <div className="kl-container content">

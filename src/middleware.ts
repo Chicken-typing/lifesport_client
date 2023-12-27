@@ -9,7 +9,7 @@ export function middleware(req: NextRequest) {
 
   if (url.pathname === '/products') {
     url.pathname = '/products/list';
-    return NextResponse.redirect(new URL(url.href)); // Sử dụng `new URL` để tạo URL tuyệt đối.
+    return NextResponse.redirect(new URL(url.href));
   }
 
   if (

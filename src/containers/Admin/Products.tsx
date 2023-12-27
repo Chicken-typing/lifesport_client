@@ -153,6 +153,25 @@ const Products = () => {
     importProduct();
   };
 
+  const handleExportProduct = () => {
+    const importProduct = async () => {
+      try {
+        const response: any = await request.request({
+          method: 'GET',
+          url: '/products/admin/export',
+        });
+
+        if (isEqual(response?.status, 'success')) {
+          toast.success('Export Successfully', { position: 'top-center' });
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    importProduct();
+  };
+
   const handleUpdateProduct = () => {
     const updateProduct = async () => {
       try {
@@ -176,6 +195,7 @@ const Products = () => {
     const newValue = event.target.value;
     setCode(newValue);
   };
+
   const handleApplyEvent = () => {
     applyEvent({ code })
       .then((response: any) => {
@@ -295,6 +315,21 @@ const Products = () => {
             >
               <Tooltip title="Import Product" placement="bottom" arrow>
                 <i className="fa-regular fa-plus" />
+              </Tooltip>
+            </Button>
+
+            <Button
+              color="green-500"
+              fullWidth
+              className="button"
+              onClick={handleExportProduct}
+              style={{
+                width: '30px',
+                marginLeft: 'auto',
+              }}
+            >
+              <Tooltip title="Export Product" placement="bottom" arrow>
+                <i className="fa-regular fa-down-from-line" />
               </Tooltip>
             </Button>
 

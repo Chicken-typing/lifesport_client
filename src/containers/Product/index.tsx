@@ -290,10 +290,10 @@ const Product = () => {
                               className="input"
                             />
                             <button
-                              disabled={
-                                get(product?.item[0], 'quantity', 0) - quantity === 2 ||
-                                quantity === 5
-                              }
+                              // disabled={
+                              //   get(product?.item[0], 'quantity', 0) - quantity === 2 ||
+                              //   quantity === 5
+                              // }
                               onClick={handlePlus}
                               className="button"
                             >

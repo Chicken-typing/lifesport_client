@@ -152,16 +152,10 @@ const Cart = () => {
                             quantity={quantity}
                             id={id}
                             color={color}
-                            disabled={quantityItem - quantity - 2 === 0 || quantity >= 5}
+                            disabled={quantityItem - quantity - 2 === 0}
                           />
-                          {quantity >= 5 && (
-                            <span
-                              style={{ display: 'flex', color: 'red', justifyContent: 'center' }}
-                            >
-                              Maximum 5 products.
-                            </span>
-                          )}
-                          {quantity < 5 && quantityItem - quantity <= 7 && (
+
+                          {quantityItem - quantity <= 7 && (
                             <span
                               style={{ display: 'flex', color: 'red', justifyContent: 'center' }}
                             >

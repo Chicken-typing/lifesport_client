@@ -7,7 +7,7 @@ import { breakpoints } from '@/utils/constants';
 import { routes } from '@/utils/routes';
 import { ProductSlides } from '@components/compound';
 import { Button, Link } from '@components/primitive';
-import { map } from 'lodash';
+import { isEmpty, map } from 'lodash';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
@@ -33,7 +33,7 @@ const Home = () => {
 
   const router = useRouter();
 
-  const best_seller = products?.items.filter((item) => item.sold > 1);
+  const best_seller = products?.items.filter((item) => item.sold > 5);
   const sales = products?.items.filter((item) => item.percent_off);
 
   return (
@@ -121,26 +121,28 @@ const Home = () => {
           </div>
         </section>
 
-        <section className="kl-home-products">
-          <div className="kl-container content">
-            <div className="header">
-              <h2 className="title">On Sales</h2>
-              <div className="readmore -bottom">
-                <Link
-                  href={routes.PRODUCTS}
-                  className="action"
-                  title=""
-                  underline
-                  color="primary"
-                  rightIcon={<i className="fa-regular fa-chevron-right icon" />}
-                >
-                  {t('best_seller.action')}
-                </Link>
+        {!isEmpty(sales) && (
+          <section className="kl-home-products">
+            <div className="kl-container content">
+              <div className="header">
+                <h2 className="title">On Sales</h2>
+                <div className="readmore -bottom">
+                  <Link
+                    href={routes.PRODUCTS}
+                    className="action"
+                    title=""
+                    underline
+                    color="primary"
+                    rightIcon={<i className="fa-regular fa-chevron-right icon" />}
+                  >
+                    {t('best_seller.action')}
+                  </Link>
+                </div>
               </div>
+              <ProductSlides products={sales || []} isLoading={isLoading} />
             </div>
-            <ProductSlides products={sales || []} isLoading={isLoading} />
-          </div>
-        </section>
+          </section>
+        )}
 
         <section className="kl-home-testimonials">
           <div className="kl-container content">
@@ -187,30 +189,6 @@ const Home = () => {
           </div>
         </section>
 
-        {/* {blogs?.items.length !== 0 && (
-          <section className="kl-home-blogs">
-            <div className="kl-container content">
-              <div className="header">
-                <h2 className="title">{t('blog.title')}</h2>
-                <div className="viewmore -bottom">
-                  <Link
-                    href="/"
-                    className="action"
-                    title=""
-                    underline
-                    color="primary"
-                    rightIcon={<i className="fa-regular fa-chevron-right icon" />}
-                  >
-                    {t('blog.action')}
-                  </Link>
-                </div>
-              </div>
-
-              <BlogSlide blogs={blogs?.items || []} />
-            </div>
-          </section>
-        )} */}
-
         <section className="kl-home-trailer">
           <span className="overlay" />
           <div className="content">
@@ -220,11 +198,7 @@ const Home = () => {
                 {t('trailer.first')} <br />
                 {t('trailer.second')}
               </h2>
-              {/* <ul className="description">
-                <li className="item">** Phục hồi chức năng vận động do tai biến mạch máu não **</li>
-                <li className="item">** Gai cột sóng, thoát vị đĩa đệm, thoái hóa đốt sống **</li>
-                <li className="item">** Đau vai cổ gáy, thần kinh tọa, tê bì chân tay **</li>
-              </ul> */}
+
               <Button
                 className="button"
                 variant="outlined"

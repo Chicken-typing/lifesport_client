@@ -7,9 +7,7 @@ import { useEffect } from 'react';
 function Success() {
   const queryClient = useQueryClient();
 
-  useEffect(() => {
-    queryClient.invalidateQueries(['OrderTemp']);
-  }, [queryClient]);
+  queryClient.invalidateQueries(['OrderTemp']);
 
   return (
     <div className="content-success">

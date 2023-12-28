@@ -30,11 +30,9 @@ const Products = () => {
 
   const {
     data: products,
-    isFetching: isLoading,
+    isLoading: isLoading,
     isError,
   } = useProductsQuery({ brand, s, r: `${min},${max}` });
-
-  console.log(products, isError);
 
   const { t } = useTranslation('products');
   const [open, setOpen] = useState<boolean>(false);
@@ -152,27 +150,28 @@ const Products = () => {
               <section className="kl-products-result-filter">
                 <div className="kl-container content">
                   <ul className="row wrapper">
+                    {isLoading &&
+                      times(4, (idx) => (
+                        <li className="col-12 col-md-4 col-lg-4 item" key={`product-result-${idx}`}>
+                          <ProductCard isLoading />
+                        </li>
+                      ))}
+
                     {!isLoading && !isError && isEmpty(products?.items) && (
                       <li className="col-12 empty-result">No products were found</li>
                     )}
 
-                    {!isLoading && !isError
-                      ? map(products?.items?.slice(START, END), (item, idx) => (
-                          <li
-                            className="col-12 col-md-4 col-lg-4 item"
-                            key={`product-result-${idx}`}
-                          >
-                            <ProductCard data={item} />
-                          </li>
-                        ))
-                      : times(4, (idx) => (
-                          <li
-                            className="col-12 col-md-4 col-lg-4 item"
-                            key={`product-result-${idx}`}
-                          >
-                            <ProductCard isLoading />
-                          </li>
-                        ))}
+                    {!isLoading && isError && (
+                      <li className="col-12 empty-result">No products were found</li>
+                    )}
+
+                    {!isLoading &&
+                      !isError &&
+                      map(products?.items?.slice(START, END), (item, idx) => (
+                        <li className="col-12 col-md-4 col-lg-4 item" key={`product-result-${idx}`}>
+                          <ProductCard data={item} />
+                        </li>
+                      ))}
                   </ul>
                 </div>
               </section>

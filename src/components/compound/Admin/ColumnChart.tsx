@@ -3,6 +3,7 @@ import { Column, ColumnConfig } from '@ant-design/plots';
 import { useRevenueQuery } from '../../../query/statistics/get-statistics';
 import { format, parseISO } from 'date-fns';
 import { Interval, IStatus } from '@interfaces/statistics';
+import { map } from 'lodash';
 
 function ColumnChart({ interval, status }: { interval: Interval; status: IStatus }) {
   const {
@@ -32,7 +33,7 @@ function ColumnChart({ interval, status }: { interval: Interval; status: IStatus
 
   //convert revenue from string to number
   const convertRevenueToNumber = (data: any) => {
-    return data.map((item: any) => ({
+    return map(data, (item: any) => ({
       revenue_interval: formatDate(item.revenue_interval, interval),
       revenue: Number(item.revenue / 100),
     }));

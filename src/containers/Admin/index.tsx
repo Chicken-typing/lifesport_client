@@ -72,99 +72,6 @@ const Admin = () => {
             gridTemplateRows="repeat(auto, 1fr)"
           >
             {/* ROW 1 */}
-            {/* <Box
-              display="grid"
-              gridColumn="span 4"
-              gridRow="span 1"
-              gridTemplateColumns="repeat(4, 1fr)"
-              gridAutoRows="140px"
-              gap="20px"
-              sx={{
-                '@media (max-width: 768px)': {
-                  gridTemplateColumns: 'repeat(2, 1fr)',
-                  gridRow: 'span 2',
-                },
-                '@media (max-width: 480px)': {
-                  gridTemplateColumns: '1fr',
-                  gridRow: 'span 4',
-                },
-              }}
-            >
-              <Box
-                sx={{
-                  paddingInline: '10px',
-                  gridColumn: 'span 1',
-                  backgroundColor: colors.primary[400],
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <StatBox
-                  title={String(size(invoices?.order_lists))}
-                  subtitle="Total Transaction"
-                  progress="0.75"
-                  increase="+14%"
-                  icon={<ReceiptIcon sx={{ color: colors.greenAccent[600], fontSize: '26px' }} />}
-                />
-              </Box>
-              <Box
-                sx={{
-                  paddingInline: '10px',
-                  gridColumn: 'span 1',
-                  backgroundColor: colors.primary[400],
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <StatBox
-                  title="431,225"
-                  subtitle="Sales Obtained"
-                  progress="0.50"
-                  increase="+21%"
-                  icon={
-                    <PointOfSaleIcon sx={{ color: colors.greenAccent[600], fontSize: '26px' }} />
-                  }
-                />
-              </Box>
-              <Box
-                sx={{
-                  paddingInline: '10px',
-                  gridColumn: 'span 1',
-                  backgroundColor: colors.primary[400],
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <StatBox
-                  title="32,441"
-                  subtitle="People"
-                  progress="0.30"
-                  increase="+5%"
-                  icon={<PeopleIcon sx={{ color: colors.greenAccent[600], fontSize: '26px' }} />}
-                />
-              </Box>
-              <Box
-                sx={{
-                  paddingInline: '10px',
-                  gridColumn: 'span 1',
-                  backgroundColor: colors.primary[400],
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <StatBox
-                  title="1,325,134"
-                  subtitle="Traffic Received"
-                  progress="0.80"
-                  increase="+43%"
-                  icon={<TrafficIcon sx={{ color: colors.greenAccent[600], fontSize: '26px' }} />}
-                />
-              </Box>
-            </Box> */}
 
             {/* ROW 2 */}
             <Box
@@ -343,34 +250,6 @@ const Admin = () => {
                 {<PieChart time={time} />}
               </Box>
             </Box>
-
-            {/* <Box
-              sx={{
-                gridColumn: 'span 4',
-                gridRow: 'span 2',
-                backgroundColor: colors.primary[400],
-              }}
-            >
-              <Typography variant="h5" fontWeight="600" sx={{ padding: '30px 30px 0 30px' }}>
-                Sales Quantity
-              </Typography>
-              <Box height="250px" mt="-20px"></Box>
-            </Box> */}
-            {/* <Box
-              sx={{
-                gridColumn: 'span 4',
-                gridRow: 'span 2',
-                backgroundColor: colors.primary[400],
-                padding: '30px',
-              }}
-            >
-              <Typography variant="h5" fontWeight="600" sx={{ marginBottom: '15px' }}>
-                Geography Based Traffic
-              </Typography>
-              <Box height="200px">
-                <GeographyChart isDashboard={true} />
-              </Box>
-            </Box> */}
           </Box>
         </Box>
       </div>

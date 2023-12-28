@@ -43,6 +43,7 @@ const Account = () => {
   });
   const [selectionEmail, setSelectionEmail] = useState<any>([]);
   const [openDialog, setOpenDialog] = useState<boolean>(false);
+  const [openDialogAdmin, setOpenDialogAdmin] = useState<boolean>(false);
   const [code, setCode] = useState<string>('');
   const token = cookieStorage.getAccessTokenInfo();
   const decoded = decodeToken(token || '');
@@ -82,6 +83,8 @@ const Account = () => {
   };
 
   const handleCloseDialog = () => setOpenDialog(false);
+
+  const handleCloseDialogAdmin = () => setOpenDialogAdmin(false);
 
   const handleEditRole = (id: string, role: string) => {
     updateMutation({ id: id, role: role === 'admin' ? 'customer' : 'admin' })
@@ -208,7 +211,7 @@ const Account = () => {
               <Button
                 onClick={() => {
                   setSelection({ id, role });
-                  setOpenDialog(true);
+                  setOpenDialogAdmin(true);
                 }}
                 color="green-500"
                 fullWidth
@@ -254,9 +257,10 @@ const Account = () => {
 
   return (
     <AdminLayout title="Account List">
+      {/* Dialog for delete admin*/}
       <Dialog
-        open={openDialog}
-        onClose={handleCloseDialog}
+        open={openDialogAdmin}
+        onClose={handleCloseDialogAdmin}
         aria-labelledby="responsive-dialog-title"
         className="dialog-delete"
         classes={{
@@ -271,14 +275,14 @@ const Account = () => {
         <DialogActions>
           <Button
             onClick={() => {
-              handleDeleteAdmin(selection?.id, selection?.role), handleCloseDialog();
+              handleDeleteAdmin(selection?.id, selection?.role), handleCloseDialogAdmin();
             }}
             autoFocus
             style={{ flex: '1' }}
           >
             Ok
           </Button>
-          <Button autoFocus onClick={handleCloseDialog} style={{ flex: '1' }}>
+          <Button autoFocus onClick={handleCloseDialogAdmin} style={{ flex: '1' }}>
             Cancel
           </Button>
         </DialogActions>

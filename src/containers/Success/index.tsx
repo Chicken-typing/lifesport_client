@@ -13,7 +13,7 @@ function Success() {
 
   return (
     <KsLayout title="Success">
-      <div className="content-success">
+      <div style={{ marginBottom: '50px' }} className="content-success">
         <Background />
 
         <Link className="button" title="" href="/">

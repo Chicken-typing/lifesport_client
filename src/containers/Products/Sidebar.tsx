@@ -25,7 +25,6 @@ const Sidebar: FC<ISidebarProps> = ({ variant }) => {
   ]);
   const [priceRange, setPriceRange] = useState<number[]>([min, max]);
   useEffect(() => {
-    // Đảo ngược giá trị minPrice và maxPrice nếu minPrice lớn hơn maxPrice
     setPriceRange((prev) => {
       return min > max ? [max, min] : [min, max];
     });
@@ -44,45 +43,6 @@ const Sidebar: FC<ISidebarProps> = ({ variant }) => {
       !options.includes(key) ? [...options, key] : options.filter((option) => option !== key),
     );
   };
-
-  //   checked,
-  //   value,
-  //   name,
-  //   arr,
-  // }: {
-  //   checked: boolean;
-  //   value: string;
-  //   name: string;
-  //   arr: string | string[];
-  // }) => {
-  //   if (name === 'price' && checked) {
-  //     const [newMinPrice, newMaxPrice] = value.split(',');
-  //     setPriceRange([Number(newMinPrice), Number(newMaxPrice)]);
-  //   }
-  //   if (!checked) {
-  //     if (isArray(arr)) {
-  //       const index = arr.indexOf(value);
-  //       if (index !== -1) arr.splice(index, 1);
-  //     }
-  //     return router.push({
-  //       query: {
-  //         ...query,
-  //         [name]: [...(isArray(arr) ? arr : [])],
-  //         page: 1,
-  //       },
-  //     });
-  //   } else {
-  //     router.push({
-  //       query: {
-  //         ...query,
-  //         page: 1,
-  //         [name]: checked ? [value as string, ...(isArray(arr) ? arr : [arr])] : [],
-  //         minPrice: name === 'price' ? priceRange[0] : minPrice,
-  //         maxPrice: name === 'price' ? priceRange[1] : maxPrice,
-  //       },
-  //     });
-  //   }
-  // };
 
   const { t } = useTranslation('products');
 
@@ -134,7 +94,7 @@ const Sidebar: FC<ISidebarProps> = ({ variant }) => {
           <div className="kl-products-sidebar-price">
             <Slider
               min={75000}
-              max={1000000}
+              max={900000}
               className="slider"
               getAriaLabel={() => 'Minimum distance'}
               value={priceRange}

@@ -5,7 +5,7 @@ import { Button, KaImage } from '@components/primitive';
 import { routes } from '@utils/routes';
 import { map, size, isEmpty } from 'lodash';
 import { useRouter } from 'next/router';
-import { removeProduct } from '@/store/cart/slice';
+import { clearCart, removeProduct } from '@/store/cart/slice';
 import { selectTotal } from '../../../store/cart/selector';
 import { Drawer } from '@mui/material';
 import { useCheckoutMutation } from '@/query/checkout/checkoutMutation';
@@ -61,9 +61,16 @@ const CartDrawer = ({ open, onClose }: { open: boolean; onClose: () => void }) =
     if (token) {
       checkoutMutation(data)
         .then(async (response: any) => {
-          const url = await response?.url;
-          onClose();
-          window.open(url, '_blank');
+          if (response?.status === 'success') {
+            const url = await response?.url;
+            onClose();
+            window.open(url, '_blank');
+          } else {
+            toast.error('There are currently not enough products in stock, please understand', {
+              position: 'top-center',
+            });
+          }
+          dispatch(clearCart());
         })
         .catch((error: any) => console.log(error));
     } else {

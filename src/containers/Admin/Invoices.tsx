@@ -313,7 +313,7 @@ function Invoices() {
               onRowSelectionModelChange={(params) => {
                 const newSelectionState: IUpdate[] = params.map((selectedRowId) => {
                   const selectedOrder = invoices?.order_lists.find(
-                    (order) => order.id === selectedRowId,
+                    (order) => order?.id === selectedRowId,
                   );
                   return selectedOrder
                     ? { id: Number(selectedRowId), deliver: !selectedOrder.outbound }

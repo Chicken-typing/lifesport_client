@@ -276,9 +276,9 @@ const Admin = () => {
                   </Typography>
                 </Box>
                 {!isEmpty(invoices?.order_lists) &&
-                  invoices?.order_lists.map((transaction, i) => (
+                  invoices?.order_lists?.map((transaction, i) => (
                     <Box
-                      key={`${transaction.id}-${i}`}
+                      key={`${transaction?.id}-${i}`}
                       display="flex"
                       justifyContent="space-between"
                       alignItems="center"
@@ -287,9 +287,9 @@ const Admin = () => {
                     >
                       <Box flex="1.25">
                         <Typography color={colors.greenAccent[500]} variant="h5" fontWeight="600">
-                          {transaction.id}
+                          {transaction?.id}
                         </Typography>
-                        <Typography color={colors.grey[100]}>{transaction.name}</Typography>
+                        <Typography color={colors.grey[100]}>{transaction?.name}</Typography>
                       </Box>
 
                       <Box flex="1" color={colors.grey[100]}>

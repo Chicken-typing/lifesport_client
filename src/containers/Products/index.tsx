@@ -34,6 +34,8 @@ const Products = () => {
     isError,
   } = useProductsQuery({ brand, s, r: `${min},${max}` });
 
+  console.log(products, isError);
+
   const { t } = useTranslation('products');
   const [open, setOpen] = useState<boolean>(false);
 

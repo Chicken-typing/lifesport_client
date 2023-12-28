@@ -21,7 +21,7 @@ import Testimonial from './Testimonial';
 import { format, isValid, parseISO, parse } from 'date-fns';
 
 const Home = () => {
-  const { data: products, isFetching: isLoading } = useProductsQuery({});
+  const { data: products, isLoading: isLoading } = useProductsQuery({});
   const { data: feedbacks, isFetching } = useFeedback({});
   const dispatch = useAppDispatch();
 

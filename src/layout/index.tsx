@@ -58,21 +58,9 @@ const KsLayout: FC<IKsLayoutProps> = ({
   //   document.documentElement.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   // }, [router.pathname]);
 
-  const fetchOrderTemp = async () => {
-    const data: any = await request.request({
-      method: 'GET',
-      url: '/order/temp-orders',
-    });
-    return data;
-  };
-
-  const { data: order, isFetching: isLoading } = useQuery(['OrderTemp', {}], fetchOrderTemp, {
-    retry: 1,
-  });
-
-  if (token) {
-    queryClient.invalidateQueries(['OrderTemp']);
-  }
+  // if (token) {
+  //   queryClient.invalidateQueries(['OrderTemp']);
+  // }
 
   useEffect(() => {
     const cart = localStorage.getItem('carts');
@@ -91,10 +79,7 @@ const KsLayout: FC<IKsLayoutProps> = ({
         openGraph={og}
       />
 
-      <ManagedModal />
-
       <Header />
-      <ManagedDrawer />
 
       {hasPageHeader && (
         <PageHeader

@@ -18,8 +18,6 @@ import { useRouter } from 'next/router';
 import { Tooltip } from '@components/compound';
 import { useEventMutation } from '@/query/products/eventMutation';
 import { toast } from 'react-toastify';
-import { NULL } from 'sass';
-
 const Products = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);

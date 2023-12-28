@@ -72,9 +72,6 @@ const ResetPassword: FC<ICreateAccount> = ({ className, data }) => {
       <h3 className="header">{t('createAccount')}</h3>
       <div className="group">
         <Label isRequired className="label">
-          {t('name')}
-        </Label>
-        <Label isRequired className="label">
           {t('password')}
         </Label>
         <GroupInput

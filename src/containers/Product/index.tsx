@@ -64,20 +64,19 @@ const Product = () => {
     }
   };
   const handlePlus = () => {
-    const currenQuantity = product?.item[0]?.quantity || 0;
-
+    const currenQuantity = get(product?.item, '[0].quantity', 0);
     setQuantity(quantity < currenQuantity ? quantity + 1 : currenQuantity);
   };
 
-  const handleBlurQuantity = (e: FocusEvent<HTMLInputElement>) => {
-    const value = Number(e.target.value || 0);
-    const currenQuantity = product?.item[0]?.quantity || 0;
+  // const handleBlurQuantity = (e: FocusEvent<HTMLInputElement>) => {
+  //   const value = Number(e.target.value || 0);
+  //   const currenQuantity = product?.item[0]?.quantity || 0;
 
-    if (value > currenQuantity) {
-      setQuantity(currenQuantity);
-    }
-    if (!value || value <= 0) return setQuantity(1);
-  };
+  //   if (value > currenQuantity) {
+  //     setQuantity(currenQuantity);
+  //   }
+  //   if (!value || value <= 0) return setQuantity(1);
+  // };
 
   const handleChangeQuantity = (e: ChangeEvent<HTMLInputElement>) => {
     setQuantity(Number(e.target.value));
@@ -288,10 +287,7 @@ const Product = () => {
                               className="input"
                             />
                             <button
-                              // disabled={
-                              //   get(product?.item[0], 'quantity', 0) - quantity === 2 ||
-                              //   quantity === 5
-                              // }
+                              disabled={get(product?.item[0], 'quantity', 0) - quantity === 2}
                               onClick={handlePlus}
                               className="button"
                             >
@@ -306,7 +302,7 @@ const Product = () => {
                         color="primary"
                         disabled={
                           get(product?.item, '[0].quantity', 0) === 0 ||
-                          get(product?.item, '[0].quantity', 0) - quantity < 2
+                          get(product?.item, '[0].quantity', 0) - quantity === 2
                         }
                         fullWidth
                         startAdornment={<i className="fa-light fa-bag-shopping fa-xl" />}

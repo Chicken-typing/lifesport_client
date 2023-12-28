@@ -107,7 +107,7 @@ export const ProductCard: FC<IProductCardProps> = ({ data, isLoading = false }) 
                 )}
               </p>
 
-              <div className="buy">
+              {/* <div className="buy">
                 <Button
                   className="button"
                   iconOnly
@@ -127,7 +127,7 @@ export const ProductCard: FC<IProductCardProps> = ({ data, isLoading = false }) 
                     <i className="fa-light fa-bag-shopping icon" />
                   </Tooltip>
                 </Button>
-              </div>
+              </div> */}
             </div>
             <div className="sold">{`Sold: ${data?.sold}`}</div>
           </>

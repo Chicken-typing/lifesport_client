@@ -41,6 +41,7 @@ export const useCheckoutMutation = () => {
   return useMutation((data: { email: string; products: Product[] }) => mutationCheckout(data), {
     onSuccess: () => {
       queryClient.invalidateQueries([API_ENDPOINTS.PRODUCT]);
+      queryClient.invalidateQueries(['OrderTemp']);
     },
   });
 };

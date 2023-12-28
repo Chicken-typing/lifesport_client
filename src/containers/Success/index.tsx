@@ -1,21 +1,23 @@
 import React from 'react';
-import { Button, KaImage, Link } from '@components/primitive';
+import { Link } from '@components/primitive';
 import Background from '@svg/bg-home-new.svg';
 import { useQueryClient } from '@tanstack/react-query';
+import { useEffect } from 'react';
 
 function Success() {
   const queryClient = useQueryClient();
-  const handleFetch = () => {
+
+  useEffect(() => {
     queryClient.invalidateQueries(['OrderTemp']);
-  };
+  }, [queryClient]);
+
   return (
     <div className="content-success">
       <Background />
-      <Button onClick={handleFetch}>
-        <Link className="button" title="" href="/">
-          Back to Home
-        </Link>
-      </Button>
+
+      <Link className="button" title="" href="/">
+        Back to Home
+      </Link>
     </div>
   );
 }

@@ -72,14 +72,7 @@ const Products = () => {
         return <Typography sx={{ ml: '5px' }}>{brand.toUpperCase()}</Typography>;
       },
     },
-    // {
-    //   field: 'is_achieve',
-    //   headerName: 'Achieved',
-    //   flex: 1,
-    //   renderCell: ({ row: { is_achieve } }: any) => {
-    //     return <Typography sx={{ ml: '5px' }}>{is_achieve}</Typography>;
-    //   },
-    // },
+
     {
       field: 'is_achieve',
       headerName: 'Achieved',
@@ -286,6 +279,29 @@ const Products = () => {
               marginBottom: '10px',
             }}
           >
+            {/* Open google sheet */}
+            <Button
+              color="green-500"
+              fullWidth
+              className="button"
+              onClick={() =>
+                window.open(
+                  'https://docs.google.com/spreadsheets/d/17d3bpi6VsJU4_cWGMQZIqTfdnA1AUc3ty51RtIg4xQo/edit#gid=0',
+                  '_blank',
+                )
+              }
+              style={{
+                width: '30px',
+                marginLeft: 'auto',
+              }}
+            >
+              <Tooltip title="Open Google Sheet" placement="bottom" arrow>
+                <i className="fa-regular fa-file-spreadsheet" />
+              </Tooltip>
+            </Button>
+
+            {/* Button apply event */}
+
             <Button
               color="green-500"
               fullWidth
@@ -300,6 +316,8 @@ const Products = () => {
                 <i className="fa-regular fa-gift" />
               </Tooltip>
             </Button>
+
+            {/* Button import Product */}
 
             <Button
               color="green-500"
@@ -316,6 +334,8 @@ const Products = () => {
               </Tooltip>
             </Button>
 
+            {/* Button export Product */}
+
             <Button
               color="green-500"
               fullWidth
@@ -330,6 +350,8 @@ const Products = () => {
                 <i className="fa-regular fa-down-from-line" />
               </Tooltip>
             </Button>
+
+            {/* Button update Product */}
 
             <Button
               color="green-500"

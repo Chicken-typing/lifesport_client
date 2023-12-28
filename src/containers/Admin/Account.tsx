@@ -75,10 +75,10 @@ const Account = () => {
       return users;
     }
     if (type === 'admin') {
-      return users.filter((user: any) => user.role !== 'customer');
+      return users.filter((user: any) => user?.role !== 'customer');
     }
     if (type === 'customer') {
-      return users.filter((user: any) => user.role === 'customer');
+      return users.filter((user: any) => user?.role === 'customer');
     }
   };
 
@@ -222,7 +222,6 @@ const Account = () => {
             </div>
           );
         } else {
-          // Nếu không phải là admin, bạn có thể render một phần tử rỗng hoặc null
           return null;
         }
       },

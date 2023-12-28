@@ -7,10 +7,11 @@ import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { Accordion } from '../Accordion';
 import { changeColor } from '@utils/changeColor';
+import { cookieStorage } from '@utils/cookieStorage';
 
 const NotifyDrawer = ({ open, onClose }: { open: boolean; onClose: () => void }) => {
   const { data: order } = useOrderTempQuery({});
-
+  const token = cookieStorage.getAccessTokenInfo();
   const [end, setEnd] = useState<number[]>([]);
   const [timeRemaining, setTimeRemaining] = useState<string[]>([]);
   const [lastNotificationTime, setLastNotificationTime] = useState<number | null>(null);
@@ -106,7 +107,7 @@ const NotifyDrawer = ({ open, onClose }: { open: boolean; onClose: () => void })
           </div>
 
           <div className="content">
-            {size(order?.data) !== 0 ? (
+            {token && size(order?.data) !== 0 ? (
               map(order?.data, (item, idx) => (
                 <Accordion
                   disabled={expiredItems.includes(idx)}

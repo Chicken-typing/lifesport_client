@@ -42,8 +42,8 @@ function PieChart({ time }: { time: DateRange<Dayjs> }) {
   const config: PieConfig = {
     appendPadding: 10,
     data: map(datas, (item) => ({
-      type: item.brand.toUpperCase(),
-      value: parseInt(item.total_sale_brand),
+      type: item?.brand?.toUpperCase(),
+      value: parseInt(item?.total_sale_brand),
     })),
     angleField: 'value',
     colorField: 'type',

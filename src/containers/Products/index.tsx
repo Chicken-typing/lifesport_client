@@ -21,7 +21,7 @@ const Products = () => {
 
   const limit = Number(query?.limit || LIMIT.PRODUCTS_FILTER);
   const brand = String(query?.brand || undefined);
-  const s = String(query.s) || undefined;
+  const s = String(query?.s) || undefined;
   const min = Number(query?.min || 75000);
   const max = Number(query?.max || 900000);
 

@@ -166,7 +166,7 @@ export default function MidMenu({ openHeader }: { openHeader: () => void }) {
               <span className="icon">
                 <i className="fa-light fa-cart-xmark fa-xl"></i>
               </span>
-              <span className="quantity">{`(${size(order?.data)})`}</span>
+              <span className="quantity">{token ? `(${size(order?.data)})` : `(${0})`}</span>
             </button>
 
             <button className="btn" onClick={() => setOpenCart(true)}>

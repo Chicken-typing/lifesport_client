@@ -84,11 +84,6 @@ export const MENU_BOTTOM = [
     className: 'fa-regular fa-magnifying-glass',
     title: 'Search',
   },
-  {
-    route: routes.CART,
-    className: 'fa-regular fa-heart',
-    title: 'Wishlist',
-  },
 ];
 
 export const MENU_CURRENCY = [

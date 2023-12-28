@@ -2,7 +2,7 @@ import { Button, KaImage } from '@components/primitive';
 import classNames from 'classnames';
 import { FC } from 'react';
 import { useSwiperSlide } from 'swiper/react';
-
+import { useRouter } from 'next/router';
 interface ISlideProps {
   image: string;
   title: string;
@@ -12,6 +12,7 @@ interface ISlideProps {
 
 const Slide: FC<ISlideProps> = ({ image, title, caption, color }) => {
   const swiperSlide = useSwiperSlide();
+  const router = useRouter();
 
   return (
     <div
@@ -54,6 +55,7 @@ const Slide: FC<ISlideProps> = ({ image, title, caption, color }) => {
           <div className="kl-home-slide-button _overflow-hidden">
             <Button
               color="light"
+              onClick={() => router.push('/products/list')}
               className={classNames(`action _delay _translateY-hidden`, {
                 '_translateY-show': swiperSlide.isActive,
               })}

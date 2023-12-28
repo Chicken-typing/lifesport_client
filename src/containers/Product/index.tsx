@@ -35,7 +35,7 @@ const Product = () => {
   const {
     data: product,
     isError: isErrorProductDetail,
-    isFetching: isLoadingProductDetail,
+    isLoading: isLoadingProductDetail,
   } = useProductQuery({ id });
 
   const { data: products } = useProductsQuery({});
@@ -53,7 +53,9 @@ const Product = () => {
   ];
 
   const recommend = products?.items.filter(
-    (item) => item.brand === product?.item[0]?.brand && item.id !== product?.item[0]?.id,
+    (item) =>
+      item?.brand === get(product?.item, '[0].brand', '') &&
+      item?.id !== get(product?.item, '[0].id', 0),
   );
 
   const handleMinus = () => {
@@ -82,15 +84,11 @@ const Product = () => {
   };
 
   useEffect(() => {
-    if (!product?.item[0]?.color[0]) {
+    if (!get(product?.item, '[0].color[0]', '')) {
       return;
     }
-    setSelectedValue(product?.item[0]?.color[0] || '');
+    setSelectedValue(get(product?.item, '[0].color[0]', ''));
   }, [product]);
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedValue(event.target.value);
-  };
 
   return (
     <KsLayout title="Sản phẩm" hasPageHeader breadcrumbs={breadcrumbs}>
@@ -116,7 +114,7 @@ const Product = () => {
                           view: MODALS.LIGHT_BOX,
                           lightBoxData: {
                             defaultActive: idx,
-                            images: flatMapDepth(map(product?.item, (item) => item.images)),
+                            images: flatMapDepth(map(product?.item, (item) => item?.images)),
                           },
                         }),
                       );
@@ -134,7 +132,7 @@ const Product = () => {
                       {map(
                         flatMapDepth(
                           map(product?.item, (item, idx) =>
-                            item.percent_off ? (
+                            item?.percent_off ? (
                               <Badge
                                 key={idx}
                                 className="badge"
@@ -167,31 +165,31 @@ const Product = () => {
                     </div>
                   </div>
 
-                  <h1 className="name">{flatMapDepth(map(product?.item, (item) => item.name))}</h1>
+                  <h1 className="name">{flatMapDepth(map(product?.item, (item) => item?.name))}</h1>
 
                   <div className="rating">
                     {/* <Rating value={Number(Math.ceil(product?.item?.rating || 5))} readOnly /> */}
                     <span className="count">
-                      {flatMapDepth(map(product?.item, (item) => item.comments)).some(
+                      {flatMapDepth(map(product?.item, (item) => item?.comments)).some(
                         (comment) => comment === null,
                       )
                         ? '0 review'
                         : `${size(
-                            flatMapDepth(map(product?.item, (item) => item.comments)),
+                            flatMapDepth(map(product?.item, (item) => item?.comments)),
                           )} reviews`}
                     </span>
-                    <Rating readOnly value={Number(product?.item[0]?.avg_rate)} />
+                    <Rating readOnly value={Number(get(product?.item, '[0].avg_rate', 0))} />
                   </div>
                   <p className="description">
                     {flatMapDepth(
-                      map(product?.item, (item) => item.description.replaceAll('&#39;', "'")),
+                      map(product?.item, (item) => item?.description?.replaceAll('&#39;', "'")),
                     )}
                   </p>
                   {/* <p className="description">{product?.shortDescription}</p> */}
 
                   {flatMapDepth(
                     map(product?.item, (item) =>
-                      item.percent_off ? (
+                      item?.percent_off ? (
                         <>
                           <span
                             className="price sale-after"
@@ -200,7 +198,7 @@ const Product = () => {
                             {`${map(
                               flatMapDepth(
                                 map(product?.item, (item) =>
-                                  (item.sale_off / 100).toLocaleString('en-US', {
+                                  (item?.sale_off / 100).toLocaleString('en-US', {
                                     style: 'currency',
                                     currency: 'USD',
                                     minimumFractionDigits: 2,
@@ -222,7 +220,7 @@ const Product = () => {
                             {`${map(
                               flatMapDepth(
                                 map(product?.item, (item) =>
-                                  (item.price / 100).toLocaleString('en-US', {
+                                  (item?.price / 100).toLocaleString('en-US', {
                                     style: 'currency',
                                     currency: 'USD',
                                     minimumFractionDigits: 2,
@@ -237,7 +235,7 @@ const Product = () => {
                           {`${map(
                             flatMapDepth(
                               map(product?.item, (item) =>
-                                (item.price / 100).toLocaleString('en-US', {
+                                (item?.price / 100).toLocaleString('en-US', {
                                   style: 'currency',
                                   currency: 'USD',
                                   minimumFractionDigits: 2,
@@ -272,9 +270,9 @@ const Product = () => {
                     </div>
                   </div>
 
-                  {!product?.item[0]?.is_achieve && (
+                  {!get(product?.item, '[0].is_achieve') && (
                     <>
-                      {get(product?.item[0], 'quantity', 0) > 2 && (
+                      {get(product?.item, '[0].quantity', 0) > 2 && (
                         <div className="quantity kl-product-quantity">
                           <Label className="label">{t('quantity')}</Label>
 
@@ -307,8 +305,8 @@ const Product = () => {
                         className="add"
                         color="primary"
                         disabled={
-                          product?.item[0]?.quantity === 0 ||
-                          get(product?.item[0], 'quantity', 0) - quantity < 2
+                          get(product?.item, '[0].quantity', 0) === 0 ||
+                          get(product?.item, '[0].quantity', 0) - quantity < 2
                         }
                         fullWidth
                         startAdornment={<i className="fa-light fa-bag-shopping fa-xl" />}
@@ -317,13 +315,13 @@ const Product = () => {
                             addProduct({
                               quantity: quantity,
                               product: {
-                                id: product?.item[0]?.id || 0,
-                                name: product?.item[0]?.name || '',
-                                price: product?.item[0]?.sale_off
-                                  ? product?.item[0]?.sale_off
-                                  : product?.item[0]?.price || 0,
-                                quantity: product?.item[0]?.quantity || 0,
-                                thumbnail: product?.item[0]?.images[0] || '',
+                                id: get(product?.item, '[0].id', 0),
+                                name: get(product?.item, '[0].name', ''),
+                                price: get(product?.item, '[0].sale_off', 0)
+                                  ? get(product?.item, '[0].sale_off', 0)
+                                  : get(product?.item, '[0].price', 0),
+                                quantity: get(product?.item, '[0].quantity', 0),
+                                thumbnail: get(product?.item, '[0].images[0]', ''),
                                 color: selectedValue,
                               },
                             }),
@@ -339,7 +337,7 @@ const Product = () => {
                   <div className="footer">
                     <span className="label">Brand: </span>
                     <Link href="/" title="">
-                      {map(flatMapDepth(map(product?.item, (item) => item.brand.toUpperCase())))}
+                      {map(flatMapDepth(map(product?.item, (item) => item?.brand?.toUpperCase())))}
                     </Link>
                     <br />
                     <br />
@@ -375,11 +373,11 @@ const Product = () => {
             >
               <span className="actions">
                 <span>
-                  {flatMapDepth(map(product?.item, (item) => item.comments)).some(
+                  {flatMapDepth(map(product?.item, (item) => item?.comments)).some(
                     (comment) => comment === null,
                   )
                     ? `0 ${t('review.title3')}`
-                    : `${size(flatMapDepth(map(product?.item, (item) => item.comments)))} ${t(
+                    : `${size(flatMapDepth(map(product?.item, (item) => item?.comments)))} ${t(
                         'review.title2',
                       )}`}
                 </span>
@@ -391,7 +389,7 @@ const Product = () => {
             <div className="pane" hidden={activeTab !== 0}>
               <p>
                 {flatMapDepth(
-                  map(product?.item, (item) => item.description.replaceAll('&#39;', "'")),
+                  map(product?.item, (item) => item?.description?.replaceAll('&#39;', "'")),
                 )}
               </p>
             </div>
@@ -401,12 +399,12 @@ const Product = () => {
                   {map(
                     flatMapDepth(map(product?.item, (item) => item?.comments)),
                     (commentData, idx) => {
-                      if (commentData && commentData.rate !== null) {
+                      if (commentData && commentData?.rate !== null) {
                         const data = {
-                          rate: commentData.rate,
-                          comment: commentData.comment,
-                          created_at: commentData.created_at,
-                          user_name: commentData.user_name,
+                          rate: commentData?.rate,
+                          comment: commentData?.comment,
+                          created_at: commentData?.created_at,
+                          user_name: commentData?.user_name,
                         };
 
                         return (
@@ -423,7 +421,7 @@ const Product = () => {
               )}
 
               <CommentForm
-                product_id={product?.item[0]?.id ? product?.item[0]?.id : 0}
+                product_id={get(product?.item, '[0].id', 0)}
                 rating
                 valueRating={0}
                 className="kl-product-review"

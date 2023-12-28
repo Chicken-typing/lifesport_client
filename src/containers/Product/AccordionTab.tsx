@@ -5,7 +5,7 @@ import CommentForm from '@containers/Blog/CommentForm';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { COMMENTS, INFORMATION } from './constants';
-import { isEmpty, map, size, flatMapDepth, filter, isNull } from 'lodash';
+import { isEmpty, map, size, flatMapDepth, get } from 'lodash';
 
 const AccordionTab = () => {
   const [expanded, setExpanded] = useState<number>(0);
@@ -84,7 +84,7 @@ const AccordionTab = () => {
         </div>
 
         <CommentForm
-          product_id={product?.item[0]?.id ? product?.item[0]?.id : 0}
+          product_id={get(product?.item, '[0].id', 0)}
           rating
           valueRating={0}
           className="kl-product-review"

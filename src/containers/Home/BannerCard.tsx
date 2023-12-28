@@ -18,13 +18,13 @@ const BannerCard: FC<IBannerProps> = ({ data, action, size, className }) => {
       style={{ color: color || 'unset' }}
     >
       <div className="wrapper">
-        <Link href="/" title="" className="link">
+        <Link href="/products/list" title="" className="link">
           <KaImage src={image || ''} alt={title} objectFit="cover" className="image" />
         </Link>
         <div className="info">
           <div className="inner">
             <h2 className="title">
-              <Link href="" title="" className="link">
+              <Link href="/products/list" title="" className="link">
                 {title}
               </Link>
             </h2>
@@ -32,7 +32,7 @@ const BannerCard: FC<IBannerProps> = ({ data, action, size, className }) => {
             <p className="description">{description}</p>
 
             <Link
-              href="/"
+              href="/products/list"
               title={title}
               color={color}
               size="sm"

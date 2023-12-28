@@ -31,69 +31,71 @@ const NotifyDrawer = ({ open, onClose }: { open: boolean; onClose: () => void })
   };
 
   useEffect(() => {
-    const intervalIds: NodeJS.Timeout[] = [];
+    if (token) {
+      const intervalIds: NodeJS.Timeout[] = [];
 
-    const updateTimeRemaining = () => {
-      const updatedTimeRemaining = map(order?.data, (item) =>
-        calculateTimeRemaining(item?.expires_at),
-      );
-      setTimeRemaining(updatedTimeRemaining);
-    };
+      const updateTimeRemaining = () => {
+        const updatedTimeRemaining = map(order?.data, (item) =>
+          calculateTimeRemaining(item?.expires_at),
+        );
+        setTimeRemaining(updatedTimeRemaining);
+      };
 
-    const handleNotification = (remainingTime: string, index: number) => {
-      const [minutes, seconds] = remainingTime.split('m ');
-      const remainingTimeInSeconds = parseInt(minutes, 10) * 60 + parseInt(seconds, 10);
+      const handleNotification = (remainingTime: string, index: number) => {
+        const [minutes, seconds] = remainingTime.split('m ');
+        const remainingTimeInSeconds = parseInt(minutes, 10) * 60 + parseInt(seconds, 10);
 
-      if (
-        remainingTime.endsWith('0s') &&
-        remainingTimeInSeconds % 300 === 0 &&
-        remainingTimeInSeconds !== lastNotificationTime
-      ) {
-        toast.info(`Order ${index + 1}: ${remainingTimeInSeconds / 60} minutes left!`, {
-          position: 'top-center',
-        });
-        setLastNotificationTime(remainingTimeInSeconds);
-      }
-
-      if (remainingTime === '1m 0s') {
-        toast.info(`Order ${index + 1}: has 1 minute left!`, { position: 'top-center' });
-      }
-      if (remainingTime === '0m 0s') {
-        toast.info(`Order ${index + 1}: is expired!`, { position: 'top-center' });
-        setLastNotificationTime(null);
-        setEnd((prevExpiredItems) => [...prevExpiredItems, index]);
-
-        setTimeout(() => {
-          setExpiredItems((prevExpiredItems) => [...prevExpiredItems, index]);
-        }, 15000);
-      }
-    };
-
-    updateTimeRemaining();
-
-    map(order?.data, (item, index) => {
-      const intervalId = setInterval(() => {
-        const remainingTime = calculateTimeRemaining(item?.expires_at);
-        setTimeRemaining((prevTimeRemaining) => {
-          const updatedTimeRemaining = [...prevTimeRemaining];
-          updatedTimeRemaining[index] = remainingTime;
-          return updatedTimeRemaining;
-        });
-
-        handleNotification(remainingTime, index);
-
-        if (remainingTime === '0m 0s') {
-          clearInterval(intervalId);
+        if (
+          remainingTime.endsWith('0s') &&
+          remainingTimeInSeconds % 300 === 0 &&
+          remainingTimeInSeconds !== lastNotificationTime
+        ) {
+          toast.info(`Order ${index + 1}: ${remainingTimeInSeconds / 60} minutes left!`, {
+            position: 'top-center',
+          });
+          setLastNotificationTime(remainingTimeInSeconds);
         }
-      }, 1000);
 
-      intervalIds.push(intervalId);
-    });
+        if (remainingTime === '1m 0s') {
+          toast.info(`Order ${index + 1}: has 1 minute left!`, { position: 'top-center' });
+        }
+        if (remainingTime === '0m 0s') {
+          toast.info(`Order ${index + 1}: is expired!`, { position: 'top-center' });
+          setLastNotificationTime(null);
+          setEnd((prevExpiredItems) => [...prevExpiredItems, index]);
 
-    return () => {
-      intervalIds.forEach((id) => clearInterval(id));
-    };
-  }, [order?.data, lastNotificationTime]);
+          setTimeout(() => {
+            setExpiredItems((prevExpiredItems) => [...prevExpiredItems, index]);
+          }, 15000);
+        }
+      };
+
+      updateTimeRemaining();
+
+      map(order?.data, (item, index) => {
+        const intervalId = setInterval(() => {
+          const remainingTime = calculateTimeRemaining(item?.expires_at);
+          setTimeRemaining((prevTimeRemaining) => {
+            const updatedTimeRemaining = [...prevTimeRemaining];
+            updatedTimeRemaining[index] = remainingTime;
+            return updatedTimeRemaining;
+          });
+
+          handleNotification(remainingTime, index);
+
+          if (remainingTime === '0m 0s') {
+            clearInterval(intervalId);
+          }
+        }, 1000);
+
+        intervalIds.push(intervalId);
+      });
+
+      return () => {
+        intervalIds.forEach((id) => clearInterval(id));
+      };
+    }
+  }, [order?.data, lastNotificationTime, token]);
 
   return (
     <Drawer anchor="right" open={open} onClose={onClose}>

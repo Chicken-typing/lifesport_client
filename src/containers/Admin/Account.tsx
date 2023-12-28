@@ -425,7 +425,7 @@ const Account = () => {
               columns={columns}
               loading={isLoading}
               onRowSelectionModelChange={(params) => {
-                const newSelectionState = params.map((selectedRowId) => {
+                const newSelectionState = map(params, (selectedRowId) => {
                   const selectedEmail = users?.user_lists?.find(
                     (item: any) => item.id === selectedRowId,
                   );

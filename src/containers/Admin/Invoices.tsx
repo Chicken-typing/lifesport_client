@@ -311,7 +311,7 @@ function Invoices() {
               loading={isLoading}
               // onStateChange={handleChange}
               onRowSelectionModelChange={(params) => {
-                const newSelectionState: IUpdate[] = params.map((selectedRowId) => {
+                const newSelectionState: IUpdate[] = map(params, (selectedRowId) => {
                   const selectedOrder = invoices?.order_lists?.find(
                     (order) => order?.id === selectedRowId,
                   );

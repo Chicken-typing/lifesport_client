@@ -26,7 +26,7 @@ import dayjs, { Dayjs } from 'dayjs';
 import dynamic from 'next/dynamic';
 import { FC, useState } from 'react';
 import { useInvoicesQuery } from '@/query/invoices/get-invoices';
-import { isEmpty, size } from 'lodash';
+import { isEmpty, size, map } from 'lodash';
 import { format } from 'date-fns';
 const Admin = () => {
   const theme = useTheme();
@@ -183,7 +183,7 @@ const Admin = () => {
                   </Typography>
                 </Box>
                 {!isEmpty(invoices?.order_lists) &&
-                  invoices?.order_lists?.map((transaction, i) => (
+                  map(invoices?.order_lists, (transaction, i) => (
                     <Box
                       key={`${transaction?.id}-${i}`}
                       display="flex"

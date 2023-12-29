@@ -10,6 +10,8 @@ import { Badge, Button, KaImage, Label, Link } from '@components/primitive';
 import CommentForm from '@containers/Blog/CommentForm';
 import Radio from '@mui/material/Radio';
 import Skeleton from '@mui/material/Skeleton';
+import { cookieStorage } from '@utils/cookieStorage';
+import { decodeToken } from '@utils/decode';
 import { routes } from '@utils/routes';
 import classNames from 'classnames';
 import { flatMapDepth, isEmpty, map, size, get } from 'lodash';
@@ -31,6 +33,10 @@ const Product = () => {
   const dispatch = useAppDispatch();
 
   const { t } = useTranslation('detail');
+
+  const token = cookieStorage?.getAccessTokenInfo();
+  const decoded = decodeToken(token || '');
+  const role = decoded?.role;
 
   const {
     data: product,
@@ -302,7 +308,8 @@ const Product = () => {
                         color="primary"
                         disabled={
                           get(product?.item, '[0].quantity', 0) === 0 ||
-                          get(product?.item, '[0].quantity', 0) - quantity === 2
+                          get(product?.item, '[0].quantity', 0) - quantity === 2 ||
+                          role !== 'customer'
                         }
                         fullWidth
                         startAdornment={<i className="fa-light fa-bag-shopping fa-xl" />}

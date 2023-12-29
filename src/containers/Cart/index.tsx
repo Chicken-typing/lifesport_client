@@ -277,7 +277,12 @@ const Cart = () => {
                   </tr>
                 </tbody>
               </table>
-              <Button isLoading={loadingMutation} onClick={handleCheckout} className="btn">
+              <Button
+                disabled={decoded?.role !== 'customer'}
+                isLoading={loadingMutation}
+                onClick={handleCheckout}
+                className="btn"
+              >
                 Proceed To Checkout
               </Button>
             </div>

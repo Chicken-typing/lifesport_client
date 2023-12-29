@@ -26,6 +26,8 @@ const CommentForm: FC<ICommentFormProp> = ({
   const [value, setValue] = useState<number>(valueRating as number | 0);
   const [text, setText] = useState<string>('');
   const token = cookieStorage?.getAccessTokenInfo();
+  const decoded = decodeToken(token || '');
+  const role = decoded?.role;
   const [disabled, setDisabled] = useState<boolean>(false);
   const { mutateAsync: reviewMutation, isLoading } = useReviewMutation();
 
@@ -102,7 +104,7 @@ const CommentForm: FC<ICommentFormProp> = ({
           color="primary"
           className="button"
           isLoading={isLoading}
-          disabled={value === null || value === 0}
+          disabled={value === null || value === 0 || role !== 'customer'}
         >
           {t('review.button')}
         </Button>

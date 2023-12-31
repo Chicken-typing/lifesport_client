@@ -110,9 +110,9 @@ const Admin = () => {
                     <Typography variant="h5" fontWeight="600" color={colors.grey[100]}>
                       Revenue Generated
                     </Typography>
-                    <Typography variant="h3" fontWeight="bold" color={colors.greenAccent[500]}>
+                    {/* <Typography variant="h3" fontWeight="bold" color={colors.greenAccent[500]}>
                       $59,342.32
-                    </Typography>
+                    </Typography> */}
                   </Box>
 
                   <Box sx={{ minWidth: 120 }}>

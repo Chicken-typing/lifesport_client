@@ -90,7 +90,7 @@ const Products = () => {
                 setSelection({ id: id, name: name });
                 setOpenDialog(true);
               }}
-              color="green-500"
+              color={is_achieve ? 'danger' : 'green-500'}
               fullWidth
               className="button"
               disabled={is_achieve}

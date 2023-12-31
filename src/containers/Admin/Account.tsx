@@ -238,7 +238,10 @@ const Account = () => {
           return (
             <div className="action-group">
               <Button
-                onClick={() => handleEditRole(id, role)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleEditRole(id, role);
+                }}
                 color="green-500"
                 fullWidth
                 className="button"

@@ -3,12 +3,18 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  position: relative;
 
   .button {
+    position: absolute;
     padding: 10px;
     background-color: $color-primary;
     color: white;
     border-radius: 10px;
-    margin-top: 40px;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
   }
 }

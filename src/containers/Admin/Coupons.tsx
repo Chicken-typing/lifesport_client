@@ -15,7 +15,7 @@ const Coupons = () => {
     { field: 'id', headerName: 'ID' },
     {
       field: 'code',
-      headerName: 'Name',
+      headerName: 'Code',
       type: 'string',
       cellClassName: 'name-column--cell',
       flex: 1,

@@ -40,17 +40,27 @@ export default function MidMenu({ openHeader }: { openHeader: () => void }) {
   const [openNotify, setOpenNotify] = useState<boolean>(false);
   const [openCart, setOpenCart] = useState<boolean>(false);
 
-  const handleSearch = (e: FormEvent<HTMLFormElement>) => {
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const handleSearch = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!searchValue) return;
 
-    router.push({
-      pathname: routes.PRODUCTS,
-      query: {
-        s: searchValue,
-      },
-    });
+    try {
+      setLoading(true);
+
+      await router.push({
+        pathname: routes.PRODUCTS,
+        query: {
+          s: searchValue,
+        },
+      });
+    } catch (error) {
+      console.error('Error during search:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -132,7 +142,7 @@ export default function MidMenu({ openHeader }: { openHeader: () => void }) {
               fadePlaceholderShown
               value={searchValue}
               endAdornment={
-                <Button type="submit" className="btn">
+                <Button isLoading={loading} type="submit" className="btn">
                   {t('mid_menu.search.submit')}
                 </Button>
               }

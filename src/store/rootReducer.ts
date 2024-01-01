@@ -6,8 +6,8 @@ import contactUsSlice from './contactUs/slice';
 import homeSlice from './home/slice';
 import modalSlice from './modals/slice';
 import drawerSlice from './drawers/slice';
-import cartSlice from './cart/slice';
 import userSlice from './user/slice';
+import cartUserSlice from './cartUser/slice';
 
 export const rootReducer = combineReducers({
   [appSlice.name]: appSlice.reducer,
@@ -17,6 +17,6 @@ export const rootReducer = combineReducers({
   [homeSlice.name]: homeSlice.reducer,
   [modalSlice.name]: modalSlice.reducer,
   [drawerSlice.name]: drawerSlice.reducer,
-  [cartSlice.name]: cartSlice.reducer,
   [userSlice.name]: userSlice.reducer,
+  [cartUserSlice.name]: cartUserSlice.reducer,
 });

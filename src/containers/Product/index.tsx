@@ -1,26 +1,26 @@
 import KsLayout from '@/layout';
 import { useProductQuery } from '@/query/products/get-product';
 import { useProductsQuery } from '@/query/products/get-products';
-import { addProduct } from '@/store/cart/slice';
+
 import { useAppDispatch } from '@/store/hooks';
 import { MODALS } from '@/store/modals/constants';
 import { openModal } from '@/store/modals/slice';
 import { CommentCard, ProductSlides, Rating } from '@components/compound';
 import { Badge, Button, KaImage, Label, Link } from '@components/primitive';
 import CommentForm from '@containers/Blog/CommentForm';
-import Radio from '@mui/material/Radio';
 import Skeleton from '@mui/material/Skeleton';
 import { cookieStorage } from '@utils/cookieStorage';
 import { decodeToken } from '@utils/decode';
 import { routes } from '@utils/routes';
 import classNames from 'classnames';
-import { flatMapDepth, isEmpty, map, size, get } from 'lodash';
+import { flatMapDepth, get, isEmpty, map, size } from 'lodash';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
-import { ChangeEvent, FocusEvent, ReactNode, useEffect, useState } from 'react';
+import { ChangeEvent, ReactNode, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import AccordionTab from './AccordionTab';
 import { SHARE } from './constants';
+import { addCart, incrementCart, decrementCart } from '@/store/cartUser/slice';
 
 const Product = () => {
   const [quantity, setQuantity] = useState<number>(1);
@@ -315,18 +315,10 @@ const Product = () => {
                         startAdornment={<i className="fa-light fa-bag-shopping fa-xl" />}
                         onClick={() => {
                           dispatch(
-                            addProduct({
-                              quantity: quantity,
-                              product: {
-                                id: get(product?.item, '[0].id', 0),
-                                name: get(product?.item, '[0].name', ''),
-                                price: get(product?.item, '[0].sale_off', 0)
-                                  ? get(product?.item, '[0].sale_off', 0)
-                                  : get(product?.item, '[0].price', 0),
-                                quantity: get(product?.item, '[0].quantity', 0),
-                                thumbnail: get(product?.item, '[0].images[0]', ''),
-                                color: selectedValue,
-                              },
+                            addCart({
+                              id: get(product?.item, '[0].id', 0),
+                              qty: quantity,
+                              color: selectedValue,
                             }),
                           );
                           toast.success('Product is added to cart', { position: 'top-center' });

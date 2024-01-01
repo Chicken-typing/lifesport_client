@@ -1,25 +1,16 @@
-import { login } from '@/store/user/slice';
 import { PageHeader } from '@components/compound';
 import { cookieStorage } from '@utils/cookieStorage';
-import request from '@utils/request';
-import jwt from 'jsonwebtoken';
 import { NextSeo } from 'next-seo';
 import { OpenGraph } from 'next-seo/lib/types';
 import { useRouter } from 'next/router';
 import { FC, ReactNode, useEffect } from 'react';
-import { IUser } from '../interfaces/user';
-import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { API_ENDPOINTS } from '../utils/api-endpoints';
+import { useAppDispatch } from '../store/hooks';
 import Footer from './Footer';
 import Header from './Header';
-import ManagedDrawer from './ManagedDrawer';
-import ManagedModal from './ManagedModal';
 import MenuBottom from './MenuBottom';
 
-import { toast } from 'react-toastify';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { fetchOrderTemp } from '@/query/order/get-OrderTemp';
-import { getCartList } from '@/store/cart/slice';
+import { getCarts } from '@/store/cartUser/slice';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface IKsLayoutProps {
   children: ReactNode;
@@ -63,9 +54,9 @@ const KsLayout: FC<IKsLayoutProps> = ({
   // }
 
   useEffect(() => {
-    const cart = localStorage.getItem('carts');
+    const cart = localStorage.getItem('cartUser');
     if (cart) {
-      dispatch(getCartList(JSON.parse(cart)));
+      dispatch(getCarts(JSON.parse(cart)));
     }
   }, [dispatch]);
 

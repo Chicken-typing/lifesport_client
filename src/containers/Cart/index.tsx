@@ -1,43 +1,59 @@
 import KsLayout from '@/layout';
+import { useCartQuery } from '@/query/carts/getCarts';
 import { useProductsQuery } from '@/query/products/get-products';
-import { selectCart, selectTotal } from '@/store/cart/selector';
-import { getCartList, removeProduct } from '@/store/cart/slice';
+import { selectCarts } from '@/store/cartUser/selector';
+import { getCarts, removeCart, clearCart } from '@/store/cartUser/slice';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { MODALS } from '@/store/modals/constants';
-import { openModal } from '@/store/modals/slice';
 import { ProductSlides } from '@components/compound';
 import Quantity from '@components/compound/Quantity';
 import { Button, KaImage, Link } from '@components/primitive';
+import { IQueryResultCart } from '@interfaces/app';
+import { ICheckout } from '@interfaces/checkout';
 import { Skeleton } from '@mui/material';
 import { changeColor } from '@utils/changeColor';
 import { cookieStorage } from '@utils/cookieStorage';
 import { decodeToken } from '@utils/decode';
-import { isEmpty, map, times } from 'lodash';
+import { isEmpty, map, size, times } from 'lodash';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { ICheckout } from '../../interfaces/checkout';
 import { useCheckoutMutation } from '../../query/checkout/checkoutMutation';
-import { clearCart } from '@/store/cart/slice';
 
 const Cart = () => {
   const dispatch = useAppDispatch();
-  const carts = useAppSelector(selectCart);
-  const subTotal = useAppSelector(selectTotal);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const token = cookieStorage?.getAccessTokenInfo();
   const decoded = decodeToken(token || '');
+
   const { mutateAsync: checkoutMutation, isLoading: loadingMutation } = useCheckoutMutation();
   const { data: products } = useProductsQuery({});
   const router = useRouter();
   const recommend = products?.items.filter((item) => item.sold > 2);
 
+  // query cart
+  const getCartUser = useAppSelector(selectCarts);
+  const getIdCart: string = map(getCartUser, (item) => item?.id).join(',');
+  const { data: cartsInfo } = useCartQuery({ products: getIdCart });
+
+  const getCartItem = [] as unknown as IQueryResultCart['data'];
+  getCartUser.map((item: any) => {
+    cartsInfo?.data.forEach((product) => {
+      if (item.id === product.id) {
+        if (Number(product.quantity) - item.qty >= 2) {
+          getCartItem.push({ ...item, ...product });
+        } else {
+          toast.error(`${product.name} is out of stock`);
+        }
+      }
+    });
+  });
+
   useEffect(() => {
     const getCart = async () => {
       try {
-        const cart = await localStorage.getItem('carts');
+        const cart = await localStorage.getItem('cartUser');
         if (cart) {
-          dispatch(getCartList(JSON.parse(cart)));
+          dispatch(getCarts(JSON.parse(cart)));
         }
         setIsLoading(false);
       } catch (error) {
@@ -48,26 +64,29 @@ const Cart = () => {
     getCart();
   }, [dispatch]);
 
+  const subTotal = map(getCartItem, (item) => item.price * item.qty);
+  console.log('sub', subTotal);
+
   const handleCheckout = () => {
     const data: ICheckout = {
       email: decoded?.email,
-      products: map(carts, (item) => {
+      products: map(getCartItem, (item) => {
         return {
-          id: item?.product?.id,
+          id: item?.id,
           line_item: {
-            quantity: item?.quantity,
+            quantity: Number(item?.quantity),
             price_data: {
               currency: 'usd',
               product_data: {
-                name: item?.product?.name,
-                images: [item?.product?.thumbnail],
+                name: item?.name,
+                images: [item?.thumbnail],
                 metadata: {
-                  color: item?.product?.color,
-                  product_id: item?.product?.id,
+                  color: item?.color,
+                  product_id: item?.id,
                 },
                 tax_code: 'txcd_99999999',
               },
-              unit_amount: item?.product?.price,
+              unit_amount: item?.price,
             },
           },
         };
@@ -97,7 +116,7 @@ const Cart = () => {
     <KsLayout title="Giỏ hàng">
       <div className="kl-cart kl-container">
         <h2 className="heading">Cart</h2>
-        {!isLoading && !isEmpty(carts) ? (
+        {!isLoading && !isEmpty(getCartUser) ? (
           <div className="row wrapper">
             <div className="col-12 col-xl-8 product">
               <table className="kl-cart-table">
@@ -112,134 +131,112 @@ const Cart = () => {
                   </tr>
                 </thead>
                 <tbody className="content">
-                  {map(
-                    carts,
-                    (
-                      {
-                        product: { name, price, thumbnail, id, quantity: quantityItem, color },
-                        quantity,
-                        total,
-                      },
-                      idx,
-                    ) => (
-                      <tr className="rows" key={`cart-product-${idx}`}>
-                        <td className="remove _style-rows">
-                          <button
-                            onClick={() => dispatch(removeProduct({ id, color }))}
-                            className="btn"
-                          >
-                            <i className="fa-light fa-xmark icon" />
-                          </button>
-                        </td>
-                        <td className="thumbnail  _style-rows">
-                          <KaImage className="image" src={thumbnail} alt="" />
-                        </td>
-                        <td className="name _style-rows">
-                          <Link href="" title="" className="link">
-                            {name}
-                          </Link>
-                          <div>color: {changeColor(color)}</div>
-                        </td>
-                        <td className="price _style-rows">
-                          {(price / 100).toLocaleString('en-US', {
-                            style: 'currency',
-                            currency: 'USD',
-                            minimumFractionDigits: 2,
-                          })}
-                        </td>
-                        <td className="quantity _style-rows">
-                          <Quantity
-                            quantity={quantity}
-                            id={id}
-                            color={color}
-                            disabled={quantityItem - quantity - 2 === 0}
-                          />
+                  {map(getCartItem, (item, idx) => (
+                    <tr className="rows" key={`cart-product-${idx}`}>
+                      <td className="remove _style-rows">
+                        <button
+                          onClick={() => dispatch(removeCart({ id: item?.id, color: item?.color }))}
+                          className="btn"
+                        >
+                          <i className="fa-light fa-xmark icon" />
+                        </button>
+                      </td>
+                      <td className="thumbnail  _style-rows">
+                        <KaImage className="image" src={item?.thumbnail} alt="" />
+                      </td>
+                      <td className="name _style-rows">
+                        <Link href="" title="" className="link">
+                          {item?.name}
+                        </Link>
+                        <div>color: {changeColor(item?.color || '')}</div>
+                      </td>
+                      <td className="price _style-rows">
+                        {(item?.price / 100).toLocaleString('en-US', {
+                          style: 'currency',
+                          currency: 'USD',
+                          minimumFractionDigits: 2,
+                        })}
+                      </td>
+                      <td className="quantity _style-rows">
+                        <Quantity
+                          quantity={Number(item?.qty)}
+                          id={item?.id}
+                          color={item?.color || ''}
+                          disabled={Number(item?.quantity) - item.qty <= 2}
+                        />
 
-                          {quantityItem - quantity <= 7 && (
-                            <span
-                              style={{ display: 'flex', color: 'red', justifyContent: 'center' }}
-                            >
-                              {quantityItem - quantity - 2 > 0
-                                ? `${quantityItem - quantity - 2} Product Left`
-                                : 'Count In Stock'}
-                            </span>
-                          )}
-                        </td>
-                        <td className="total _style-rows">
-                          {(total / 100).toLocaleString('en-US', {
-                            style: 'currency',
-                            currency: 'USD',
-                            minimumFractionDigits: 2,
-                          })}
-                        </td>
-                      </tr>
-                    ),
-                  )}
+                        {Number(item?.quantity) - item.qty <= 7 && (
+                          <span style={{ display: 'flex', color: 'red', justifyContent: 'center' }}>
+                            {Number(item?.quantity) - item.qty - 2 > 0
+                              ? `${Number(item?.quantity) - item.qty - 2} Product Left`
+                              : 'Count In Stock'}
+                          </span>
+                        )}
+                      </td>
+                      <td className="total _style-rows">
+                        {((item?.price * item.qty) / 100).toLocaleString('en-US', {
+                          style: 'currency',
+                          currency: 'USD',
+                          minimumFractionDigits: 2,
+                        })}
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
 
               <table className="kl-cart-responsive">
                 <tbody className="content">
-                  {map(
-                    carts,
-                    (
-                      {
-                        product: { name, price, thumbnail, color, id, quantity: quantityItem },
-                        quantity,
-                        total,
-                      },
-                      idx,
-                    ) => (
-                      <tr className="rows" key={`cart-product-${idx}`}>
-                        <td className="thumbnail _style-rows">
-                          <KaImage className="image" src={thumbnail} alt="" />
-                        </td>
-                        <td className="remove _style-rows">
-                          <button
-                            onClick={() => dispatch(removeProduct({ id, color }))}
-                            className="btn"
-                          >
-                            <i className="fa-light fa-xmark icon" />
-                          </button>
-                        </td>
-                        <td className="name _style-rows _style-flex">
-                          <Link href="" title="" className="link">
-                            {name}
-                          </Link>
-                        </td>
-                        <div>color: {changeColor(color)}</div>
-                        <td className="price _style-rows _style-flex">
-                          <span className="title -text-sm">PRICE: </span>
-                          <span className="cost">
-                            {(price / 100).toLocaleString('en-US', {
-                              style: 'currency',
-                              currency: 'USD',
-                              minimumFractionDigits: 2,
-                            })}
-                          </span>
-                        </td>
-                        <td className="quantity _style-rows _style-flex">
-                          <span className="title -text-sm">QUANTITY: </span>
-                          <Quantity
-                            quantity={quantity}
-                            id={id}
-                            color={color}
-                            disabled={quantity === quantityItem}
-                          />
-                        </td>
-                        <td className="total _style-rows _style-flex">
-                          <span className="title -text-sm">SUBTOTAL: </span>
-                          <span className="cost">
-                            {(total / 100).toLocaleString('en-US', {
-                              style: 'currency',
-                              currency: 'USD',
-                              minimumFractionDigits: 2,
-                            })}
-                          </span>
-                        </td>
-                      </tr>
-                    ),
-                  )}
+                  {map(getCartItem, (item, idx) => (
+                    <tr className="rows" key={`cart-product-${idx}`}>
+                      <td className="thumbnail _style-rows">
+                        <KaImage className="image" src={item?.thumbnail} alt="" />
+                      </td>
+                      <td className="remove _style-rows">
+                        <button
+                          onClick={() => dispatch(removeCart({ id: item?.id, color: item?.color }))}
+                          className="btn"
+                        >
+                          <i className="fa-light fa-xmark icon" />
+                        </button>
+                      </td>
+                      <td className="name _style-rows _style-flex">
+                        <Link href="" title="" className="link">
+                          {name}
+                        </Link>
+                      </td>
+                      <div>color: {changeColor(item?.color)}</div>
+                      <td className="price _style-rows _style-flex">
+                        <span className="title -text-sm">PRICE: </span>
+                        <span className="cost">
+                          {(item?.price / 100).toLocaleString('en-US', {
+                            style: 'currency',
+                            currency: 'USD',
+                            minimumFractionDigits: 2,
+                          })}
+                        </span>
+                      </td>
+                      <td className="quantity _style-rows _style-flex">
+                        <span className="title -text-sm">QUANTITY: </span>
+                        <Quantity
+                          quantity={item?.qty}
+                          id={item?.id}
+                          color={item?.color}
+                          disabled={Number(item?.quantity) - item.qty <= 2}
+                        />
+                      </td>
+                      <td className="total _style-rows _style-flex">
+                        <span className="title -text-sm">SUBTOTAL: </span>
+                        <span className="cost">
+                          {((item?.price * item.qty) / 100).toLocaleString('en-US', {
+                            style: 'currency',
+                            currency: 'USD',
+                            minimumFractionDigits: 2,
+                          })}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>
@@ -311,6 +308,19 @@ const Cart = () => {
             )}
           </div>
         )}
+
+        {isEmpty(getCartUser) ||
+          (size(getCartUser) === 0 && (
+            <div className="loading">
+              <div className="empty">
+                <i className="fa-sharp fa-light fa-cart-xmark fa-2xl icon" />
+                <p className="title">Your Cart is empty!</p>
+                <Button onClick={() => router.push({ pathname: '/' })} className="button">
+                  Return To Shop
+                </Button>
+              </div>
+            </div>
+          ))}
 
         <h2 className="title">You may be interested...</h2>
         <ProductSlides products={recommend || []} />

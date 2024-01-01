@@ -1,24 +1,23 @@
 import KsLayout from '@/layout';
 import { useFeedback } from '@/query/feedback/getFeedback';
 import { useProductsQuery } from '@/query/products/get-products';
-import { getCartList } from '@/store/cart/slice';
 import { useAppDispatch } from '@/store/hooks';
 import { breakpoints } from '@/utils/constants';
 import { routes } from '@/utils/routes';
 import { ProductSlides } from '@components/compound';
 import { Button, Link } from '@components/primitive';
+import { format, parse } from 'date-fns';
 import { isEmpty, map } from 'lodash';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { Autoplay, EffectFade, Navigation, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import BannerCard from './BannerCard';
-import { IHomeBanner, SLIDES, TESTIMONIALS } from './constants';
+import { IHomeBanner, SLIDES } from './constants';
 import Slide from './Slide';
 import Testimonial from './Testimonial';
-import { format, isValid, parseISO, parse } from 'date-fns';
 
 const Home = () => {
   const { data: products, isLoading: isLoading } = useProductsQuery({});

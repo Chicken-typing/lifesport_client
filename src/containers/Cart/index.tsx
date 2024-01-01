@@ -33,7 +33,7 @@ const Cart = () => {
   // query cart
   const getCartUser = useAppSelector(selectCarts);
   const getIdCart: string = map(getCartUser, (item) => item?.id).join(',');
-  const { data: cartsInfo } = useCartQuery({ products: getIdCart });
+  const { data: cartsInfo, isFetching: loadingCart } = useCartQuery({ products: getIdCart });
 
   const getCartItem = [] as unknown as IQueryResultCart['data'];
   getCartUser.map((item: any) => {
@@ -111,7 +111,7 @@ const Cart = () => {
     <KsLayout title="Giỏ hàng">
       <div className="kl-cart kl-container">
         <h2 className="heading">Cart</h2>
-        {!isLoading && !isEmpty(getCartUser) ? (
+        {!loadingCart && !isEmpty(getCartUser) ? (
           <div className="row wrapper">
             <div className="col-12 col-xl-8 product">
               <table className="kl-cart-table">
@@ -285,7 +285,7 @@ const Cart = () => {
           </div>
         ) : (
           <div className="loading">
-            {isLoading ? (
+            {loadingCart ? (
               <div className="wrapper">
                 {times(3, (idx) => (
                   <div className="skeleton" key={`skeleton-${idx}`}>
@@ -308,7 +308,7 @@ const Cart = () => {
           </div>
         )}
 
-        {isEmpty(getCartUser) ||
+        {/* {isEmpty(getCartUser) ||
           (size(getCartUser) === 0 && (
             <div className="loading">
               <div className="empty">
@@ -319,7 +319,7 @@ const Cart = () => {
                 </Button>
               </div>
             </div>
-          ))}
+          ))} */}
 
         <h2 className="title">You may be interested...</h2>
         <ProductSlides products={recommend || []} />

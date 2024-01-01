@@ -39,11 +39,7 @@ const Cart = () => {
   getCartUser.map((item: any) => {
     cartsInfo?.data.forEach((product) => {
       if (item.id === product.id) {
-        if (Number(product.quantity) - item.qty >= 2) {
-          getCartItem.push({ ...item, ...product });
-        } else {
-          toast.error(`${product.name} is out of stock`);
-        }
+        getCartItem.push({ ...item, ...product });
       }
     });
   });
@@ -65,7 +61,6 @@ const Cart = () => {
   }, [dispatch]);
 
   const subTotal = map(getCartItem, (item) => item.price * item.qty);
-  console.log('sub', subTotal);
 
   const handleCheckout = () => {
     const data: ICheckout = {
@@ -148,7 +143,7 @@ const Cart = () => {
                         <Link href="" title="" className="link">
                           {item?.name}
                         </Link>
-                        <div>color: {changeColor(item?.color || '')}</div>
+                        <div>color: {changeColor(item?.color)}</div>
                       </td>
                       <td className="price _style-rows">
                         {(item?.price / 100).toLocaleString('en-US', {
@@ -159,7 +154,11 @@ const Cart = () => {
                       </td>
                       <td className="quantity _style-rows">
                         <Quantity
-                          quantity={Number(item?.qty)}
+                          quantity={
+                            Number(item?.qty) < Number(item?.quantity)
+                              ? Number(item?.qty)
+                              : Number(item?.quantity)
+                          }
                           id={item?.id}
                           color={item?.color || ''}
                           disabled={Number(item?.quantity) - item.qty <= 2}

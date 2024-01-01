@@ -3,7 +3,7 @@ import { Column, ColumnConfig } from '@ant-design/plots';
 import { useRevenueQuery } from '../../../query/statistics/get-statistics';
 import { format, parseISO } from 'date-fns';
 import { Interval, IStatus } from '@interfaces/statistics';
-import { map } from 'lodash';
+import { map, size } from 'lodash';
 
 function ColumnChart({ interval, status }: { interval: Interval; status: IStatus }) {
   const {
@@ -44,11 +44,16 @@ function ColumnChart({ interval, status }: { interval: Interval; status: IStatus
     return data.slice().reverse();
   };
 
+  const getLast10Days = (data: any[]) => {
+    return data.slice(size(data) - 10, size(data));
+  };
+
   const columnData = revenues?.data ? convertRevenueToNumber(revenues?.data) : [];
   const reversedData = reverseArray(columnData);
-
+  const last10DaysData = getLast10Days(reversedData);
+  console.log(reversedData);
   const config: ColumnConfig = {
-    data: reversedData,
+    data: last10DaysData,
     xField: 'revenue_interval',
     yField: 'revenue',
     label: {

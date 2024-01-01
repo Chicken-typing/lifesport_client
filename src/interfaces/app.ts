@@ -175,3 +175,17 @@ export interface IQueryResultOrderTemp {
     },
   ];
 }
+
+export interface IQueryResultCart {
+  data: [
+    {
+      id: number;
+      name: string;
+      quantity: string;
+      thumbnail: string;
+      price: number;
+      color: string;
+      qty: number;
+    },
+  ];
+}

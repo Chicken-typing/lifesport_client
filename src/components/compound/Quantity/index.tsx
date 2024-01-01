@@ -1,14 +1,8 @@
-import {
-  increment,
-  decrement,
-  removeProduct,
-  changeQuantity,
-  blurQuantity,
-} from '@/store/cart/slice';
 import { useAppDispatch } from '@/store/hooks';
 import { ChangeEvent, FC, FocusEvent } from 'react';
 import classNames from 'classnames';
 import { Label } from '@components/primitive';
+import { incrementCart, decrementCart, removeCart } from '@/store/cartUser/slice';
 
 interface IQuantityProps {
   quantity: number;
@@ -27,14 +21,14 @@ const Quantity: FC<IQuantityProps> = ({
 }) => {
   const dispatch = useAppDispatch();
 
-  const handleBlurQuantity = (id: number, color: string) => (e: FocusEvent<HTMLInputElement>) => {
-    dispatch(blurQuantity({ quantity: Number(e.target.value), id: id, color: color }));
-  };
+  // const handleBlurQuantity = (id: number, color: string) => (e: FocusEvent<HTMLInputElement>) => {
+  //   dispatch(blurQuantity({ quantity: Number(e.target.value), id: id, color: color }));
+  // };
 
-  const handleChangeQuantity =
-    (id: number, color: string) => (e: ChangeEvent<HTMLInputElement>) => {
-      dispatch(changeQuantity({ quantity: Number(e.target.value), id: id, color: color }));
-    };
+  // const handleChangeQuantity =
+  //   (id: number, color: string) => (e: ChangeEvent<HTMLInputElement>) => {
+  //     dispatch(changeQuantity({ quantity: Number(e.target.value), id: id, color: color }));
+  //   };
 
   return (
     <div className="quantity kl-quantity">
@@ -43,22 +37,16 @@ const Quantity: FC<IQuantityProps> = ({
         <button
           className="button"
           onClick={() =>
-            dispatch(quantity > 1 ? decrement({ id, color }) : removeProduct({ id, color }))
+            dispatch(quantity > 1 ? decrementCart({ id, color }) : removeCart({ id, color }))
           }
         >
           -
         </button>
-        <input
-          value={quantity}
-          readOnly
-          type="number"
-          className="input"
-          onChange={handleChangeQuantity(id, color)}
-        />
+        <input value={quantity} readOnly type="number" className="input" />
         <button
           disabled={disabled}
           className={classNames('button', { '-disabled': disabled })}
-          onClick={() => (quantity > 0 ? dispatch(increment({ id, color })) : (quantity = 1))}
+          onClick={() => (quantity > 0 ? dispatch(incrementCart({ id, color })) : (quantity = 1))}
         >
           +
         </button>

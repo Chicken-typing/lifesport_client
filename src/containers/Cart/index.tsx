@@ -111,7 +111,7 @@ const Cart = () => {
     <KsLayout title="Giỏ hàng">
       <div className="kl-cart kl-container">
         <h2 className="heading">Cart</h2>
-        {!loadingCart && !isEmpty(getCartUser) ? (
+        {!loadingCart && !isEmpty(getCartUser) && !isEmpty(getCartItem) ? (
           <div className="row wrapper">
             <div className="col-12 col-xl-8 product">
               <table className="kl-cart-table">

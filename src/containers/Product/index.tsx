@@ -309,7 +309,8 @@ const Product = () => {
                         disabled={
                           get(product?.item, '[0].quantity', 0) === 0 ||
                           get(product?.item, '[0].quantity', 0) - quantity === 2 ||
-                          role !== 'customer'
+                          role === 'master_admin' ||
+                          role === 'admin'
                         }
                         fullWidth
                         startAdornment={<i className="fa-light fa-bag-shopping fa-xl" />}

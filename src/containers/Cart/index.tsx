@@ -38,8 +38,8 @@ const Cart = () => {
   const getCartItem = [] as unknown as IQueryResultCart['data'];
   getCartUser.map((item: any, index) => {
     let temp = item;
-    cartsInfo?.data.forEach((product) => {
-      if (item.id === product.id) {
+    cartsInfo?.data?.forEach((product) => {
+      if (item?.id === product?.id) {
         if (product?.is_achieve) {
           toast.error(`${product?.name} is out stock`);
           temp = difference(temp, [temp[index]]);
@@ -66,7 +66,7 @@ const Cart = () => {
     getCart();
   }, [dispatch]);
 
-  const subTotal = map(getCartItem, (item) => item.price * item.qty);
+  const subTotal = map(getCartItem, (item) => item?.price * item?.qty);
 
   const handleCheckout = () => {
     const data: ICheckout = {
@@ -167,19 +167,19 @@ const Cart = () => {
                           }
                           id={item?.id}
                           color={item?.color || ''}
-                          disabled={Number(item?.quantity) - item.qty <= 2}
+                          disabled={Number(item?.quantity) - item?.qty <= 2}
                         />
 
-                        {Number(item?.quantity) - item.qty <= 7 && (
+                        {Number(item?.quantity) - item?.qty <= 7 && (
                           <span style={{ display: 'flex', color: 'red', justifyContent: 'center' }}>
-                            {Number(item?.quantity) - item.qty - 2 > 0
-                              ? `${Number(item?.quantity) - item.qty - 2} Product Left`
+                            {Number(item?.quantity) - item?.qty - 2 > 0
+                              ? `${Number(item?.quantity) - item?.qty - 2} Product Left`
                               : 'Count In Stock'}
                           </span>
                         )}
                       </td>
                       <td className="total _style-rows">
-                        {((item?.price * item.qty) / 100).toLocaleString('en-US', {
+                        {((item?.price * item?.qty) / 100).toLocaleString('en-US', {
                           style: 'currency',
                           currency: 'USD',
                           minimumFractionDigits: 2,
@@ -227,13 +227,13 @@ const Cart = () => {
                           quantity={item?.qty}
                           id={item?.id}
                           color={item?.color}
-                          disabled={Number(item?.quantity) - item.qty <= 2}
+                          disabled={Number(item?.quantity) - item?.qty <= 2}
                         />
                       </td>
                       <td className="total _style-rows _style-flex">
                         <span className="title -text-sm">SUBTOTAL: </span>
                         <span className="cost">
-                          {((item?.price * item.qty) / 100).toLocaleString('en-US', {
+                          {((item?.price * item?.qty) / 100).toLocaleString('en-US', {
                             style: 'currency',
                             currency: 'USD',
                             minimumFractionDigits: 2,

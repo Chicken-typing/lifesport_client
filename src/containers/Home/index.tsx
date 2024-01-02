@@ -32,8 +32,8 @@ const Home = () => {
 
   const router = useRouter();
 
-  const best_seller = products?.items.filter((item) => item.sold > 5);
-  const sales = products?.items.filter((item) => item.percent_off);
+  const best_seller = products?.items?.filter((item) => item.sold > 5);
+  const sales = products?.items?.filter((item) => item.percent_off);
 
   return (
     <KsLayout title="Home">

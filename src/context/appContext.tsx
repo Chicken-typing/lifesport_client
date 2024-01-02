@@ -24,28 +24,28 @@ export const AppContextProvider = ({ children }: any) => {
   const [theme, colorMode] = useMode();
   const decoded = decodeToken(token || '');
 
-  useEffect(() => {
-    if (isEmpty(token)) {
-      return;
-    }
+  // useEffect(() => {
+  //   if (isEmpty(token)) {
+  //     return;
+  //   }
 
-    if (token) {
-      const fetchUser = async () => {
-        try {
-          setIsLoading(true);
-          const data: { user_infos: IUser } = await request.get(API_ENDPOINTS.USERINFO, {});
-          dispatch(login(data.user_infos));
-          setIsLoading(false);
-        } catch (error) {
-          setIsLoading(false);
-        }
-      };
+  //   if (token) {
+  //     const fetchUser = async () => {
+  //       try {
+  //         setIsLoading(true);
+  //         // const data: { user_infos: IUser } = await request.get(API_ENDPOINTS.USERINFO, {});
+  //         // dispatch(login(data.user_infos));
+  //         setIsLoading(false);
+  //       } catch (error) {
+  //         setIsLoading(false);
+  //       }
+  //     };
 
-      fetchUser();
-    } else {
-      setIsLoading(false);
-    }
-  }, [token, dispatch]);
+  //     fetchUser();
+  //   } else {
+  //     setIsLoading(false);
+  //   }
+  // }, [token, dispatch]);
 
   const contextValues = { isLoading, token, decoded };
 

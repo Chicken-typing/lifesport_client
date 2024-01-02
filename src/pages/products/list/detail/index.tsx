@@ -8,17 +8,17 @@ const index = () => {
   return <Product />;
 };
 
-export const getServerSideProps: GetServerSideProps = async (context: any) => {
-  const queryClient = new QueryClient();
-  const id = Number(context?.query?.id || undefined);
+// export const getServerSideProps: GetServerSideProps = async (context: any) => {
+//   const queryClient = new QueryClient();
+//   const id = Number(context?.query?.id || undefined);
 
-  await queryClient.prefetchQuery([API_ENDPOINTS.PRODUCT, { id }], fetchProduct);
+//   await queryClient.prefetchQuery([API_ENDPOINTS.PRODUCT, { id }], fetchProduct);
 
-  return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-    },
-  };
-};
+//   return {
+//     props: {
+//       dehydratedState: dehydrate(queryClient),
+//     },
+//   };
+// };
 
 export default index;

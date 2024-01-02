@@ -30,6 +30,7 @@ const Product = () => {
   const router = useRouter();
   const { query } = router;
   const id = String(query?.id) || '';
+
   const dispatch = useAppDispatch();
 
   const { t } = useTranslation('detail');

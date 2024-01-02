@@ -11,7 +11,7 @@ const AccordionTab = () => {
   const [expanded, setExpanded] = useState<number>(0);
   const router = useRouter();
   const { query } = router;
-  const id = Number(query?.id) || 0;
+  const id = String(query?.id) || '';
   const {
     data: product,
     isError: isErrorProductDetail,
@@ -84,7 +84,7 @@ const AccordionTab = () => {
         </div>
 
         <CommentForm
-          product_id={get(product?.item, '[0].id', 0)}
+          product_id={get(product?.item, '[0].id', '')}
           rating
           valueRating={0}
           className="kl-product-review"

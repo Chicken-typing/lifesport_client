@@ -14,9 +14,6 @@ export interface IProductCardProps {
 }
 
 export const ProductCard: FC<IProductCardProps> = ({ data, isLoading = false }) => {
-  const router = useRouter();
-  const dispatch = useAppDispatch();
-
   return (
     <div className={classNames('ks-product-card', { '-loading': isLoading })}>
       <div className="thumbnail">
@@ -27,7 +24,7 @@ export const ProductCard: FC<IProductCardProps> = ({ data, isLoading = false }) 
               href={{
                 pathname: routes.PRODUCT,
                 query: {
-                  id: data?.id,
+                  id: data?.id?.split('-')[2],
                 },
               }}
               className="images"
@@ -68,7 +65,7 @@ export const ProductCard: FC<IProductCardProps> = ({ data, isLoading = false }) 
                 href={{
                   pathname: routes.PRODUCT,
                   query: {
-                    id: data?.id,
+                    id: data?.id.split('-')[2],
                   },
                 }}
               >

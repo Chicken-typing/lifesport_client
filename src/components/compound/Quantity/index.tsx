@@ -6,7 +6,7 @@ import { incrementCart, decrementCart, removeCart } from '@/store/cartUser/slice
 
 interface IQuantityProps {
   quantity: number;
-  id: number;
+  id: string;
   color: string;
   disabled?: boolean;
   hasLabel?: boolean;

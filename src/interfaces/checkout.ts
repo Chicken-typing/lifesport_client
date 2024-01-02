@@ -6,7 +6,7 @@ export interface PriceData {
     images: string[];
     metadata: {
       color: string;
-      product_id: number;
+      product_id: string;
     };
     tax_code: string;
   };
@@ -19,7 +19,7 @@ export interface LineItem {
 }
 
 export interface Product {
-  id: number;
+  id: string;
   line_item: LineItem;
 }
 

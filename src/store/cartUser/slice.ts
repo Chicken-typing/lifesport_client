@@ -5,7 +5,7 @@ import { IProduct } from '@interfaces/product';
 import { map, filter, findIndex } from 'lodash';
 
 interface PayloadType {
-  id: number;
+  id: string;
   qty: number;
   color: string;
 }
@@ -29,7 +29,7 @@ const cartUserSlice = createSlice({
       }
       localStorage.setItem('cartUser', JSON.stringify(state));
     },
-    removeCart: (state, action: PayloadAction<{ id: number; color: string }>) => {
+    removeCart: (state, action: PayloadAction<{ id: string; color: string }>) => {
       let newCart = filter(
         state,
         (item) => item.id !== action.payload.id || item.color !== action.payload.color,
@@ -38,7 +38,7 @@ const cartUserSlice = createSlice({
       return newCart;
     },
 
-    incrementCart: (state, action: PayloadAction<{ id: number; color: string }>) => {
+    incrementCart: (state, action: PayloadAction<{ id: string; color: string }>) => {
       const updateCart = map(state, (item) =>
         item.id === action.payload.id && item.color === action.payload.color
           ? {
@@ -51,7 +51,7 @@ const cartUserSlice = createSlice({
       return updateCart;
     },
 
-    decrementCart: (state, action: PayloadAction<{ id: number; color: string }>) => {
+    decrementCart: (state, action: PayloadAction<{ id: string; color: string }>) => {
       const updateCart = map(state, (item) =>
         item.id === action.payload.id && item.color === action.payload.color
           ? {

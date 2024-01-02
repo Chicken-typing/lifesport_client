@@ -13,7 +13,7 @@ export interface ICommentFormProp {
   className?: string;
   rating?: boolean;
   valueRating?: number;
-  product_id: number;
+  product_id: string;
 }
 
 const CommentForm: FC<ICommentFormProp> = ({

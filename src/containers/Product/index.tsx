@@ -29,7 +29,8 @@ const Product = () => {
 
   const router = useRouter();
   const { query } = router;
-  const id = Number(query?.id) || 0;
+  const id = String(query?.id) || '';
+
   const dispatch = useAppDispatch();
 
   const { t } = useTranslation('detail');
@@ -61,7 +62,7 @@ const Product = () => {
   const recommend = products?.items?.filter(
     (item) =>
       item?.brand === get(product?.item, '[0].brand', '') &&
-      item?.id !== get(product?.item, '[0].id', 0),
+      item?.id !== get(product?.item, '[0].id', ''),
   );
 
   const handleMinus = () => {
@@ -73,16 +74,6 @@ const Product = () => {
     const currenQuantity = get(product?.item, '[0].quantity', 0);
     setQuantity(quantity < currenQuantity ? quantity + 1 : currenQuantity);
   };
-
-  // const handleBlurQuantity = (e: FocusEvent<HTMLInputElement>) => {
-  //   const value = Number(e.target.value || 0);
-  //   const currenQuantity = product?.item[0]?.quantity || 0;
-
-  //   if (value > currenQuantity) {
-  //     setQuantity(currenQuantity);
-  //   }
-  //   if (!value || value <= 0) return setQuantity(1);
-  // };
 
   const handleChangeQuantity = (e: ChangeEvent<HTMLInputElement>) => {
     setQuantity(Number(e.target.value));
@@ -113,17 +104,17 @@ const Product = () => {
                     alt={image || ''}
                     objectFit="contain"
                     key={`product-image-${idx}`}
-                    onClick={() => {
-                      dispatch(
-                        openModal({
-                          view: MODALS.LIGHT_BOX,
-                          lightBoxData: {
-                            defaultActive: idx,
-                            images: flatMapDepth(map(product?.item, (item) => item?.images)),
-                          },
-                        }),
-                      );
-                    }}
+                    // onClick={() => {
+                    //   dispatch(
+                    //     openModal({
+                    //       view: MODALS.LIGHT_BOX,
+                    //       lightBoxData: {
+                    //         defaultActive: idx,
+                    //         images: flatMapDepth(map(product?.item, (item) => item?.images)),
+                    //       },
+                    //     }),
+                    //   );
+                    // }}
                   />
                 ))
               )}
@@ -317,7 +308,7 @@ const Product = () => {
                         onClick={() => {
                           dispatch(
                             addCart({
-                              id: get(product?.item, '[0].id', 0),
+                              id: get(product?.item, '[0].id', ''),
                               qty: quantity,
                               color: selectedValue,
                             }),
@@ -417,7 +408,7 @@ const Product = () => {
               )}
 
               <CommentForm
-                product_id={get(product?.item, '[0].id', 0)}
+                product_id={get(product?.item, '[0].id', '')}
                 rating
                 valueRating={0}
                 className="kl-product-review"

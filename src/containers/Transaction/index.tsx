@@ -34,10 +34,10 @@ function Transaction() {
       return orders;
     }
     if (type === 'inbound') {
-      return orders.filter((order) => order.outbound === false);
+      return orders?.filter((order) => order.outbound === false);
     }
     if (type === 'outbound') {
-      return orders.filter((order) => order.outbound === true);
+      return orders?.filter((order) => order.outbound === true);
     }
   };
 

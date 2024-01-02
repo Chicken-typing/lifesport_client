@@ -40,7 +40,7 @@ const Sidebar: FC<ISidebarProps> = ({ variant }) => {
 
   const handleToggleCollapse = (key: string) => {
     setOptions(
-      !options.includes(key) ? [...options, key] : options.filter((option) => option !== key),
+      !options.includes(key) ? [...options, key] : options?.filter((option) => option !== key),
     );
   };
 

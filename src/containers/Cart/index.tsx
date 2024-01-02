@@ -13,7 +13,7 @@ import { Skeleton } from '@mui/material';
 import { changeColor } from '@utils/changeColor';
 import { cookieStorage } from '@utils/cookieStorage';
 import { decodeToken } from '@utils/decode';
-import { isEmpty, map, size, times } from 'lodash';
+import { isEmpty, map, size, times, difference } from 'lodash';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
@@ -28,7 +28,7 @@ const Cart = () => {
   const { mutateAsync: checkoutMutation, isLoading: loadingMutation } = useCheckoutMutation();
   const { data: products } = useProductsQuery({});
   const router = useRouter();
-  const recommend = products?.items.filter((item) => item.sold > 2);
+  const recommend = products?.items?.filter((item) => item.sold > 2);
 
   // query cart
   const getCartUser = useAppSelector(selectCarts);
@@ -36,10 +36,16 @@ const Cart = () => {
   const { data: cartsInfo, isFetching: loadingCart } = useCartQuery({ products: getIdCart });
 
   const getCartItem = [] as unknown as IQueryResultCart['data'];
-  getCartUser.map((item: any) => {
+  getCartUser.map((item: any, index) => {
+    let temp = item;
     cartsInfo?.data.forEach((product) => {
       if (item.id === product.id) {
-        getCartItem.push({ ...item, ...product });
+        if (product?.is_achieve) {
+          toast.error(`${product?.name} is out stock`);
+          temp = difference(temp, [temp[index]]);
+        } else {
+          getCartItem.push({ ...temp, ...product });
+        }
       }
     });
   });

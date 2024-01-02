@@ -58,7 +58,7 @@ const Product = () => {
     </p>,
   ];
 
-  const recommend = products?.items.filter(
+  const recommend = products?.items?.filter(
     (item) =>
       item?.brand === get(product?.item, '[0].brand', '') &&
       item?.id !== get(product?.item, '[0].id', 0),

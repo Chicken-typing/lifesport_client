@@ -186,6 +186,7 @@ export interface IQueryResultCart {
       price: number;
       color: string;
       qty: number;
+      is_achieve: boolean;
     },
   ];
 }

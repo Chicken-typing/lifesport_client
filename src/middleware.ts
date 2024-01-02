@@ -7,10 +7,10 @@ export function middleware(req: NextRequest) {
   const token = req.cookies.get('access-token');
   const decoded = decodeToken(token || '');
 
-  if (url.pathname === '/products') {
-    url.pathname = '/products/list';
-    return NextResponse.redirect(new URL(url.href));
-  }
+  // if (url.pathname === '/products') {
+  //   url.pathname = '/products/list';
+  //   return NextResponse.redirect(new URL(url.href));
+  // }
 
   if (
     (!token && url.pathname.includes('/admin')) ||

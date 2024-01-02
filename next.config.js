@@ -47,6 +47,16 @@ const nextConfig = nextTranslate({
     return config;
   },
 
+  async redirects() {
+    return [
+      {
+        source: '/products',
+        destination: '/products/list',
+        permanent: true,
+      },
+    ];
+  },
+
   generateBuildId: () => nextBuildId({ dir: __dirname }),
 
   output: 'standalone',

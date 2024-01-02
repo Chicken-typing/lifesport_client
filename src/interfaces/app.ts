@@ -68,7 +68,7 @@ export interface IQueryResultInvoices {
           color: string;
           quantity: number;
           amount_tax: number;
-          product_id: number;
+          product_id: string;
           amount_total: number;
           product_name: string;
           amount_discount: number;
@@ -109,7 +109,7 @@ export interface IOrders {
       color: string;
       quantity: number;
       amount_tax: number;
-      product_id: number;
+      product_id: string;
       image: string;
       amount_total: number;
       product_name: string;
@@ -134,7 +134,7 @@ export interface ResponseCheckout {
   url: string;
   temp_order: [
     {
-      id: number;
+      id: string;
       user_id: string;
       checkout_id: number;
       checkout_link: string;
@@ -145,7 +145,7 @@ export interface ResponseCheckout {
         {
           color: string;
           quantity: number;
-          product_id: number;
+          product_id: string;
           checkout_id: number;
         },
       ];
@@ -179,7 +179,7 @@ export interface IQueryResultOrderTemp {
 export interface IQueryResultCart {
   data: [
     {
-      id: number;
+      id: string;
       name: string;
       quantity: string;
       thumbnail: string;

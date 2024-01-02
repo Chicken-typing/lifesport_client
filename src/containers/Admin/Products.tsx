@@ -135,6 +135,7 @@ const Products = () => {
 
         if (isEqual(response?.status, 'success')) {
           toast.success('Add Product Successfully', { position: 'top-center' });
+          router.reload();
         }
       } catch (error) {
         console.log(error);
@@ -154,6 +155,7 @@ const Products = () => {
 
         if (isEqual(response?.status, 'success')) {
           toast.success('Export Successfully', { position: 'top-center' });
+          router.reload();
         }
       } catch (error) {
         console.log(error);
@@ -173,6 +175,7 @@ const Products = () => {
 
         if (isEqual(response?.status, 'success')) {
           toast.success('Update Product Successfully', { position: 'top-center' });
+          router.reload();
         }
       } catch (error) {
         console.log(error);

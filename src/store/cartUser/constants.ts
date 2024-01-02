@@ -1,5 +1,5 @@
 export interface CartDetail {
-  id: number;
+  id: string;
   qty: number;
   color: string;
 }

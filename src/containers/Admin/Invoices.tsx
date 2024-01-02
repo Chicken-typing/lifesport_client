@@ -65,7 +65,7 @@ export interface IOrders {
       color: string;
       quantity: number;
       amount_tax: number;
-      product_id: number;
+      product_id: string;
       amount_total: number;
       product_name: string;
       amount_discount: number;
@@ -90,7 +90,7 @@ function Invoices() {
 
   const handleCellClick = (params: any, event?: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const orderId = params.id;
-    const order = invoices?.order_lists.find((item) => item.id === orderId);
+    const order = invoices?.order_lists?.find((item) => item.id === orderId);
 
     if (order) {
       setSelectedOrder(order);

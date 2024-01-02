@@ -10,7 +10,7 @@ interface PriceData {
     images: string[];
     metadata: {
       color: string;
-      product_id: number;
+      product_id: string;
     };
     tax_code: string;
   };
@@ -23,7 +23,7 @@ interface LineItem {
 }
 
 interface Product {
-  id: number;
+  id: string;
   line_item: LineItem;
 }
 

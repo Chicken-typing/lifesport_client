@@ -88,56 +88,6 @@ const Products = () => {
                         <i className="fa-regular fa-sliders-simple icon" />
                         <strong className="text">Filter</strong>
                       </button>
-                      {/* <div className="sort">
-                        <FormControl>
-                          <Select
-                            value={sort}
-                            onChange={(e) =>
-                              router.push({
-                                query: {
-                                  ...query,
-                                  sort: e.target.value,
-                                },
-                              })
-                            }
-                            input={<Input disableUnderline className="select-input" />}
-                          >
-                            {map(SORT_ITEMS, (it, idx) => (
-                              <MenuItem value={it.value} key={`soft-item-${idx}`}>
-                                {it.name}
-                              </MenuItem>
-                            ))}
-                          </Select>
-                        </FormControl>
-                      </div>
-
-                      <div className="show">
-                        <span className="text">Show</span>
-                        <FormControl>
-                          <Select
-                            value={limit}
-                            onChange={(e) =>
-                              router.push({
-                                query: {
-                                  ...query,
-                                  limit: e.target.value,
-                                },
-                              })
-                            }
-                            input={<Input disableUnderline className="select-input" />}
-                          >
-                            {map(SHOW_ITEMS, (it, idx) => (
-                              <MenuItem
-                                className="kl-products-menu-item"
-                                value={it.value}
-                                key={`show-item-${idx}`}
-                              >
-                                {it.name}
-                              </MenuItem>
-                            ))}
-                          </Select>
-                        </FormControl>
-                      </div> */}
                     </div>
 
                     <div className="info">

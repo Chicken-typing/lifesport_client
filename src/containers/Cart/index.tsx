@@ -314,19 +314,6 @@ const Cart = () => {
           </div>
         )}
 
-        {/* {isEmpty(getCartUser) ||
-          (size(getCartUser) === 0 && (
-            <div className="loading">
-              <div className="empty">
-                <i className="fa-sharp fa-light fa-cart-xmark fa-2xl icon" />
-                <p className="title">Your Cart is empty!</p>
-                <Button onClick={() => router.push({ pathname: '/' })} className="button">
-                  Return To Shop
-                </Button>
-              </div>
-            </div>
-          ))} */}
-
         <h2 className="title">You may be interested...</h2>
         <ProductSlides products={recommend || []} />
       </div>

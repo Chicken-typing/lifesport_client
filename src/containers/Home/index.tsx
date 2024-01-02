@@ -99,26 +99,28 @@ const Home = () => {
           </div>
         </section>
 
-        <section className="kl-home-products">
-          <div className="kl-container content">
-            <div className="header">
-              <h2 className="title">{t('best_seller.title')}</h2>
-              <div className="readmore -bottom">
-                <Link
-                  href={routes.PRODUCTS}
-                  className="action"
-                  title=""
-                  underline
-                  color="primary"
-                  rightIcon={<i className="fa-regular fa-chevron-right icon" />}
-                >
-                  {t('best_seller.action')}
-                </Link>
+        {!isEmpty(best_seller) && (
+          <section className="kl-home-products">
+            <div className="kl-container content">
+              <div className="header">
+                <h2 className="title">{t('best_seller.title')}</h2>
+                <div className="readmore -bottom">
+                  <Link
+                    href={routes.PRODUCTS}
+                    className="action"
+                    title=""
+                    underline
+                    color="primary"
+                    rightIcon={<i className="fa-regular fa-chevron-right icon" />}
+                  >
+                    {t('best_seller.action')}
+                  </Link>
+                </div>
               </div>
+              <ProductSlides products={best_seller || []} isLoading={isLoading} />
             </div>
-            <ProductSlides products={best_seller || []} isLoading={isLoading} />
-          </div>
-        </section>
+          </section>
+        )}
 
         {!isEmpty(sales) && (
           <section className="kl-home-products">

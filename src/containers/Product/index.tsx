@@ -407,7 +407,7 @@ const Product = () => {
               )}
 
               <CommentForm
-                product_id={get(product?.item, '[0].id', 0)}
+                product_id={get(product?.item, '[0].id', '')}
                 rating
                 valueRating={0}
                 className="kl-product-review"

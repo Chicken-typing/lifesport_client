@@ -75,7 +75,7 @@ const Cart = () => {
         return {
           id: item?.id,
           line_item: {
-            quantity: Number(item?.quantity),
+            quantity: Number(item?.qty),
             price_data: {
               currency: 'usd',
               product_data: {

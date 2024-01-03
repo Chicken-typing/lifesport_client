@@ -100,13 +100,11 @@ const Cart = () => {
         };
       }),
     };
-    const randomNumber = Math.floor(Math.random() * 10);
-    // setTimeout(() => {
 
-    // }, randomNumber);
     if (token) {
       checkoutMutation(data)
         .then(async (response: any) => {
+          console.log(response);
           if (response?.status === 'success') {
             const url = await response?.url;
             window.open(url, '_blank');
@@ -218,7 +216,7 @@ const Cart = () => {
                       </td>
                       <td className="name _style-rows _style-flex">
                         <Link href="" title="" className="link">
-                          {name}
+                          {item?.name}
                         </Link>
                       </td>
                       <div>color: {changeColor(item?.color)}</div>

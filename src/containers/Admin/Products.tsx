@@ -42,7 +42,12 @@ const Products = () => {
 
   const router = useRouter();
 
-  const { data: products, isFetching: isLoading, isError } = useProductAdminQuery({});
+  const {
+    data: products,
+    isFetching: isLoading,
+    isError,
+    refetch: refetchProduct,
+  } = useProductAdminQuery({});
   const { mutateAsync: applyEvent } = useEventMutation();
 
   const columns: any[] = [
@@ -126,7 +131,7 @@ const Products = () => {
           data: { product_id: selection?.id },
         });
 
-        if (isEqual(response?.status, 'success')) router.reload();
+        if (isEqual(response?.status, 'success')) refetchProduct();
       } catch (error) {
         console.log(error);
       }
@@ -147,7 +152,9 @@ const Products = () => {
 
         if (isEqual(response?.status, 'success')) {
           toast.success('Add Product Successfully', { position: 'top-center' });
-          router.reload();
+          refetchProduct();
+        } else {
+          toast.error(response?.message, { position: 'top-center' });
         }
       } catch (error) {
         console.log(error);
@@ -167,7 +174,9 @@ const Products = () => {
 
         if (isEqual(response?.status, 'success')) {
           toast.success('Export Successfully', { position: 'top-center' });
-          router.reload();
+          refetchProduct();
+        } else {
+          toast.error(response?.message, { position: 'top-center' });
         }
       } catch (error) {
         console.log(error);
@@ -187,7 +196,9 @@ const Products = () => {
 
         if (isEqual(response?.status, 'success')) {
           toast.success('Update Product Successfully', { position: 'top-center' });
-          router.reload();
+          refetchProduct();
+        } else {
+          toast.error(response?.message, { position: 'top-center' });
         }
       } catch (error) {
         console.log(error);

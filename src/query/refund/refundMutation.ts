@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import request from '@utils/request';
 
 const mutationRefund = async (data: { order_id: string; message: string }) => {
@@ -10,5 +10,10 @@ const mutationRefund = async (data: { order_id: string; message: string }) => {
 };
 
 export const useRefundMutation = () => {
-  return useMutation((data: { order_id: string; message: string }) => mutationRefund(data));
+  const queryClient = useQueryClient();
+  return useMutation((data: { order_id: string; message: string }) => mutationRefund(data), {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['fetchInvoicesUser']);
+    },
+  });
 };

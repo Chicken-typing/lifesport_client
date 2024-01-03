@@ -115,7 +115,7 @@ export interface IOrders {
   invoice_pdf: string;
   invoice_link: string;
   status: string;
-  created_at: string;
+  required_refund_at: string;
 }
 export interface IQueryResultUserInvoices {
   order_lists: IOrders[];

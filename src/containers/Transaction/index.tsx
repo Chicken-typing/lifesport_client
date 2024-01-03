@@ -22,7 +22,7 @@ import {
 import { changeColor } from '@utils/changeColor';
 import { cookieStorage } from '@utils/cookieStorage';
 import { decodeToken } from '@utils/decode';
-import { format } from 'date-fns';
+import { format, parseISO, isValid } from 'date-fns';
 import { isEmpty, map } from 'lodash';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
@@ -32,6 +32,7 @@ import { GroupTextarea } from '@components/compound';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { useRefundMutation } from '@/query/refund/refundMutation';
+import { toast } from 'react-toastify';
 
 function Transaction() {
   const router = useRouter();
@@ -65,8 +66,6 @@ function Transaction() {
 
   const [open, openchange] = useState<boolean>(false);
   const [selection, setSelection] = useState<string>('');
-  const getResponse = [];
-  const getDetailRefund = [];
 
   const functionopenpopup = (id: string) => {
     openchange(true);
@@ -76,7 +75,6 @@ function Transaction() {
     openchange(false);
   };
 
-  // console.log(filteredOrders);
   //Formik form
   const { values, errors, touched, setFieldValue, resetForm, handleSubmit, setFieldTouched } =
     useFormik({
@@ -90,7 +88,11 @@ function Transaction() {
       }),
       onSubmit: (e) => {
         refundMutation({ order_id: selection, message: e.message }).then((response: any) => {
-          console.log(response);
+          toast.success('Send refund successfully, please wait response!', {
+            position: 'top-center',
+          });
+          closepopup();
+          resetForm();
         });
       },
     });
@@ -234,6 +236,19 @@ function Transaction() {
                         </p>
                       </div>
 
+                      {!isEmpty(item?.status) && !isEmpty(item?.required_refund_at) && (
+                        <div className="third">
+                          <p className="sub info">Status: {item?.status}</p>
+                          <p className="shipping-cost info">
+                            Refund At:{' '}
+                            {isValid(parseISO(item?.required_refund_at))
+                              ? format(parseISO(item?.required_refund_at), 'dd/MM/yyyy')
+                              : 'Invalid Date'}
+                          </p>
+                          <p className="total info"></p>
+                        </div>
+                      )}
+
                       <div className="fourth">
                         <Button className="btn">
                           <Link className="link" title="" href={item?.invoice_pdf}>
@@ -247,7 +262,11 @@ function Transaction() {
                           View Invoices Link
                         </Button>
                         {status === 'outbound' ? (
-                          <Button onClick={() => functionopenpopup(item?.id)} className="btn1">
+                          <Button
+                            disabled={!isEmpty(item?.status)}
+                            onClick={() => functionopenpopup(item?.id)}
+                            className="btn1"
+                          >
                             Refund Product
                           </Button>
                         ) : (

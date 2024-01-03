@@ -103,25 +103,7 @@ const Coupons = () => {
               },
             }}
           >
-            <DataGrid
-              hideFooter
-              rows={coupons?.data || []}
-              columns={columns}
-              loading={isLoading}
-              // onStateChange={handleChange}
-              // onRowSelectionModelChange={(params) => {
-              //   const newSelectionState = params.map((selectedRowId) => {
-              //     const selectedOrder: any = products?.items.find(
-              //       (order) => order.id === selectedRowId,
-              //     );
-              //     return selectedOrder
-              //       ? { id: Number(selectedRowId), name: selectedOrder.name }
-              //       : { id: Number(selectedRowId), name: selectedOrder.name };
-              //   });
-
-              //   setSelection(newSelectionState);
-              // }}
-            />
+            <DataGrid hideFooter rows={coupons?.data || []} columns={columns} loading={isLoading} />
           </Box>
         </Box>
       </div>

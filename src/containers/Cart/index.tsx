@@ -100,25 +100,27 @@ const Cart = () => {
         };
       }),
     };
+    const randomNumber = Math.floor(Math.random() * 10);
+    setTimeout(() => {
+      if (token) {
+        checkoutMutation(data)
+          .then(async (response: any) => {
+            if (response?.status === 'success') {
+              const url = await response?.url;
+              window.open(url, '_blank');
+            } else {
+              toast.error('There are currently not enough products in stock, please understand', {
+                position: 'top-center',
+              });
+            }
+            dispatch(clearCart());
+          })
 
-    if (token) {
-      checkoutMutation(data)
-        .then(async (response: any) => {
-          if (response?.status === 'success') {
-            const url = await response?.url;
-            window.open(url, '_blank');
-          } else {
-            toast.error('There are currently not enough products in stock, please understand', {
-              position: 'top-center',
-            });
-          }
-          dispatch(clearCart());
-        })
-
-        .catch((error: any) => console.log(error));
-    } else {
-      toast.error('You should login to checkout', { position: 'top-center' });
-    }
+          .catch((error: any) => console.log(error));
+      } else {
+        toast.error('You should login to checkout', { position: 'top-center' });
+      }
+    }, randomNumber);
   };
 
   return (

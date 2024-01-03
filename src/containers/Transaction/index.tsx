@@ -4,7 +4,21 @@ import { Accordion } from '@components/compound';
 import LoadingScreen from '@components/compound/LoadingScreen';
 import { Button, KaImage, Link } from '@components/primitive';
 import { IOrders } from '@interfaces/app';
-import { FormControl, MenuItem, Select, SelectChangeEvent } from '@mui/material';
+import {
+  Dialog,
+  DialogTitle,
+  FormControl,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+  IconButton,
+  Stack,
+  DialogActions,
+  TextField,
+  FormControlLabel,
+  Checkbox,
+  DialogContent,
+} from '@mui/material';
 import { changeColor } from '@utils/changeColor';
 import { cookieStorage } from '@utils/cookieStorage';
 import { decodeToken } from '@utils/decode';
@@ -13,6 +27,11 @@ import { isEmpty, map } from 'lodash';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useInvoicesUserQuery } from '../../query/invoices/get-userInvoices';
+import CloseIcon from '@mui/icons-material/Close';
+import { GroupTextarea } from '@components/compound';
+import * as Yup from 'yup';
+import { useFormik } from 'formik';
+import { useRefundMutation } from '@/query/refund/refundMutation';
 
 function Transaction() {
   const router = useRouter();
@@ -23,10 +42,12 @@ function Transaction() {
   const id = decoded?.id;
   const [status, setStatus] = useState<TypeInvoices>('all');
 
-  const handleChange = (event: SelectChangeEvent) => {
+  const handleChangeType = (event: SelectChangeEvent) => {
     setStatus(event.target.value as TypeInvoices);
   };
   const { data: invoices, isFetching } = useInvoicesUserQuery({ id, type: status });
+
+  const { mutateAsync: refundMutation, isLoading } = useRefundMutation();
 
   const filterOrdersByType = (orders: IOrders[], type: TypeInvoices) => {
     if (type === 'all') {
@@ -42,15 +63,113 @@ function Transaction() {
 
   const filteredOrders = filterOrdersByType(invoices?.order_lists || [], status);
 
+  const [open, openchange] = useState<boolean>(false);
+  const [selection, setSelection] = useState<string>('');
+  const getResponse = [];
+  const getDetailRefund = [];
+
+  const functionopenpopup = (id: string) => {
+    openchange(true);
+    setSelection(id);
+  };
+  const closepopup = () => {
+    openchange(false);
+  };
+
+  // console.log(filteredOrders);
+  //Formik form
+  const { values, errors, touched, setFieldValue, resetForm, handleSubmit, setFieldTouched } =
+    useFormik({
+      initialValues: {
+        message: '',
+      },
+      validationSchema: Yup.object().shape({
+        message: Yup.string()
+          .required('Message is required')
+          .max(150, 'Just only write 150 characters'),
+      }),
+      onSubmit: (e) => {
+        refundMutation({ order_id: selection, message: e.message }).then((response: any) => {
+          console.log(response);
+        });
+      },
+    });
+
+  const handleChange = ({ name, value }: { name: string; value: string | number }) => {
+    setFieldValue(name, value);
+  };
+
+  const handleBlur = ({ name }: { name: string }) => {
+    setFieldTouched(name);
+  };
+
   return (
     <KsLayout title="Transaction">
       <div className="kl-transaction">
+        {/* Modal Refund */}
+        <div className="modal" style={{ textAlign: 'center' }}>
+          <Dialog
+            classes={{
+              root: 'transaction-root',
+              container: 'transaction-container',
+              paper: 'transaction-paper',
+            }}
+            // fullScreen
+            open={open}
+            onClose={closepopup}
+            maxWidth="sm"
+            fullWidth
+          >
+            <DialogTitle textAlign="center">
+              Reason for Refund{' '}
+              <IconButton onClick={closepopup} style={{ float: 'right' }}>
+                <CloseIcon color="primary"></CloseIcon>
+              </IconButton>{' '}
+            </DialogTitle>
+            <DialogContent>
+              {/* <DialogContentText>Do you want remove this user?</DialogContentText> */}
+              <form
+                style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}
+                onSubmit={handleSubmit}
+              >
+                <GroupTextarea
+                  className="group"
+                  placeholder="Enter your message...."
+                  name="message"
+                  onBlur={handleBlur}
+                  fadePlaceholderShown
+                  value={values.message}
+                  error={errors.message}
+                  touched={touched.message}
+                  onChange={handleChange}
+                />
+
+                <Button
+                  type="submit"
+                  color="primary"
+                  className="button"
+                  // onClick={() => handleSubmit}
+                  // backgroundHover="dark"
+                  // isLoading={isLoading}
+                  // disabled={isLoading}
+                >
+                  Send Your Message
+                </Button>
+              </form>
+            </DialogContent>
+            <DialogActions>
+              {/* <Button color="success" variant="contained">Yes</Button>
+                    <Button onClick={closepopup} color="error" variant="contained">Close</Button> */}
+            </DialogActions>
+          </Dialog>
+        </div>
+
         <h2 className="title">Transaction History</h2>
         <div className="selection">
           <FormControl sx={{ m: 1, minWidth: 120 }}>
             <Select
               value={status}
-              onChange={handleChange}
+              onChange={handleChangeType}
               displayEmpty
               inputProps={{ 'aria-label': 'Without label' }}
             >
@@ -127,7 +246,13 @@ function Transaction() {
                         >
                           View Invoices Link
                         </Button>
-                        <div className="temp"></div>
+                        {status === 'outbound' ? (
+                          <Button onClick={() => functionopenpopup(item?.id)} className="btn1">
+                            Refund Product
+                          </Button>
+                        ) : (
+                          <div className="temp"></div>
+                        )}
                       </div>
                     </div>
 

@@ -1,19 +1,18 @@
-import React, { useState } from 'react';
-import { Accordion } from '@components/compound';
-import { useInvoicesUserQuery } from '../../query/invoices/get-userInvoices';
-import { useRouter } from 'next/router';
+import KsLayout from '@/layout';
 import { TypeInvoices } from '@/query/invoices/get-invoices';
+import { Accordion } from '@components/compound';
+import LoadingScreen from '@components/compound/LoadingScreen';
+import { Button, KaImage, Link } from '@components/primitive';
+import { IOrders } from '@interfaces/app';
+import { FormControl, MenuItem, Select, SelectChangeEvent } from '@mui/material';
+import { changeColor } from '@utils/changeColor';
 import { cookieStorage } from '@utils/cookieStorage';
 import { decodeToken } from '@utils/decode';
-import { map, size, isEmpty } from 'lodash';
-import { Button, KaImage, Link } from '@components/primitive';
-import KsLayout from '@/layout';
-import Skeleton from '@mui/material/Skeleton';
-import { changeColor } from '@utils/changeColor';
 import { format } from 'date-fns';
-import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
-import { IQueryResultUserInvoices, IOrders } from '@interfaces/app';
-import LoadingScreen from '@components/compound/LoadingScreen';
+import { isEmpty, map } from 'lodash';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
+import { useInvoicesUserQuery } from '../../query/invoices/get-userInvoices';
 
 function Transaction() {
   const router = useRouter();
@@ -34,10 +33,10 @@ function Transaction() {
       return orders;
     }
     if (type === 'inbound') {
-      return orders?.filter((order) => order.outbound === false);
+      return orders?.filter((order) => order?.outbound === false);
     }
     if (type === 'outbound') {
-      return orders?.filter((order) => order.outbound === true);
+      return orders?.filter((order) => order?.outbound === true);
     }
   };
 
@@ -66,7 +65,7 @@ function Transaction() {
             map(filteredOrders, (item) => (
               <Accordion
                 className="accordion"
-                key={item.id}
+                key={item?.id}
                 title={`${format(new Date(Number(item?.paid_at) * 1000), 'dd/MM/yyyy')}`}
               >
                 <div className="wrap">

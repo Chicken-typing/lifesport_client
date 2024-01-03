@@ -105,7 +105,7 @@ const Products = () => {
               color={is_achieve ? 'danger' : 'green-500'}
               fullWidth
               className="button"
-              disabled={is_achieve}
+              disabled={is_achieve || !checked}
             >
               <i className="fa-regular fa-trash" />
             </Button>
@@ -365,6 +365,7 @@ const Products = () => {
             {/* Button apply event */}
 
             <Button
+              disabled={!checked}
               color="green-500"
               fullWidth
               className="button"
@@ -416,6 +417,7 @@ const Products = () => {
             {/* Button update Product */}
 
             <Button
+              disabled={!checked}
               color="green-500"
               fullWidth
               className="button"

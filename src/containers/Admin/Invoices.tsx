@@ -316,8 +316,8 @@ function Invoices() {
                     (order) => order?.id === selectedRowId,
                   );
                   return selectedOrder
-                    ? { id: Number(selectedRowId), deliver: !selectedOrder.outbound }
-                    : { id: Number(selectedRowId), deliver: false };
+                    ? { id: String(selectedRowId), deliver: !selectedOrder.outbound }
+                    : { id: String(selectedRowId), deliver: false };
                 });
 
                 setSelection(newSelectionState);

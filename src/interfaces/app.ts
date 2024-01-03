@@ -120,7 +120,7 @@ export interface IQueryResultUserInvoices {
 }
 
 export interface IUpdate {
-  id: number;
+  id: string;
   deliver: boolean;
 }
 

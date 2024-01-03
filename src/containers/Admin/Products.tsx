@@ -286,8 +286,8 @@ const Products = () => {
           </DialogTitle>
           <DialogContent>
             <DialogContentText className="dialog-context">
-              {selection?.name}
-              {selection?.id}
+              <Typography>{`Name: ${selection?.name}`}</Typography>
+              <Typography>{`ID: ${selection?.id}`}</Typography>
             </DialogContentText>
           </DialogContent>
           <DialogActions>
@@ -317,24 +317,29 @@ const Products = () => {
             }}
           >
             {/* Toggle maintain */}
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                marginRight: '50px',
-              }}
-              className="maintain"
-            >
-              <Typography>Off</Typography>
-              <Switch
-                color="warning"
-                checked={checked}
-                onChange={handleChangeMaintain}
-                inputProps={{ 'aria-label': 'controlled' }}
-              />
-              <Typography>On</Typography>
-            </div>
+
+            <Tooltip title="Maintain Website">
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginRight: '50px',
+                }}
+                className="maintain"
+              >
+                <Typography>Off</Typography>
+
+                <Switch
+                  color="warning"
+                  checked={checked}
+                  onChange={handleChangeMaintain}
+                  inputProps={{ 'aria-label': 'controlled' }}
+                />
+
+                <Typography>On</Typography>
+              </div>
+            </Tooltip>
 
             {/* Open google sheet */}
             <Button

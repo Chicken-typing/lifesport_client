@@ -86,6 +86,12 @@ const Product = () => {
     setSelectedValue(get(product?.item, '[0].color[0]', ''));
   }, [product]);
 
+  useEffect(() => {
+    if (product?.status === 'error' && product?.url) {
+      window.open(product?.url, '_self');
+    }
+  }, [product?.status, product?.url]);
+
   return (
     <KsLayout title="Sản phẩm" hasPageHeader breadcrumbs={breadcrumbs}>
       <div className="kl-product kl-container">

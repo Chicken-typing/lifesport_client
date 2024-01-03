@@ -3,7 +3,16 @@ import { tokens } from '@/adminLayout/theme';
 import { useProductAdminQuery } from '@/query/products/get-products';
 import Introduce from '@components/compound/Admin/Introduce';
 import { Button } from '@components/primitive';
-import { Box, useTheme, TextField, Input, Typography } from '@mui/material';
+import {
+  Box,
+  useTheme,
+  TextField,
+  Input,
+  Typography,
+  Stack,
+  Switch,
+  SwitchProps,
+} from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import { useState, useEffect, ChangeEvent } from 'react';
 import { isEmpty, isEqual, map } from 'lodash';
@@ -18,6 +27,8 @@ import { useRouter } from 'next/router';
 import { Tooltip } from '@components/compound';
 import { useEventMutation } from '@/query/products/eventMutation';
 import { toast } from 'react-toastify';
+import { useMaintainQuery, useMaintainMutation } from '@/query/maintain/getMaintain';
+
 const Products = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -28,6 +39,7 @@ const Products = () => {
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [openEvent, setOpenEvent] = useState<boolean>(false);
   const [code, setCode] = useState<string>('');
+
   const router = useRouter();
 
   const { data: products, isFetching: isLoading, isError } = useProductAdminQuery({});
@@ -202,6 +214,28 @@ const Products = () => {
       });
   };
 
+  //Handle Maintain
+
+  const { data: maintain, isFetching: loadingMaintain } = useMaintainQuery({});
+  const { mutateAsync: maintainMutation, isLoading: maintaining } = useMaintainMutation();
+  const [checked, setChecked] = useState<boolean>();
+
+  useEffect(() => {
+    if (maintain?.data) {
+      setChecked(maintain?.data?.is_maintained);
+    }
+  }, [maintain?.data]);
+
+  const handleChangeMaintain = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newChecked = event.target.checked;
+    setChecked(newChecked);
+    maintainMutation({ is_maintained: newChecked }).then((response: any) => {
+      if (response?.status === 'success') {
+        toast.success('Updated maintainace mode.', { position: 'top-center' });
+      }
+    });
+  };
+
   return (
     <AdminLayout title="Account List">
       <div className="kl-admin-products">
@@ -282,6 +316,26 @@ const Products = () => {
               marginBottom: '10px',
             }}
           >
+            {/* Toggle maintain */}
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginRight: '50px',
+              }}
+              className="maintain"
+            >
+              <Typography>Off</Typography>
+              <Switch
+                color="warning"
+                checked={checked}
+                onChange={handleChangeMaintain}
+                inputProps={{ 'aria-label': 'controlled' }}
+              />
+              <Typography>On</Typography>
+            </div>
+
             {/* Open google sheet */}
             <Button
               color="green-500"
@@ -406,19 +460,6 @@ const Products = () => {
               rows={products?.items || []}
               columns={columns}
               loading={isLoading}
-              // onStateChange={handleChange}
-              // onRowSelectionModelChange={(params) => {
-              //   const newSelectionState = params.map((selectedRowId) => {
-              //     const selectedOrder: any = products?.items.find(
-              //       (order) => order.id === selectedRowId,
-              //     );
-              //     return selectedOrder
-              //       ? { id: Number(selectedRowId), name: selectedOrder.name }
-              //       : { id: Number(selectedRowId), name: selectedOrder.name };
-              //   });
-
-              //   setSelection(newSelectionState);
-              // }}
             />
           </Box>
         </Box>

@@ -11,7 +11,7 @@ import { isEmpty, map } from 'lodash';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { Autoplay, EffectFade, Navigation, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import BannerCard from './BannerCard';
@@ -34,6 +34,12 @@ const Home = () => {
 
   const best_seller = products?.items?.filter((item) => item.sold > 5);
   const sales = products?.items?.filter((item) => item.percent_off);
+
+  useEffect(() => {
+    if (products?.status === 'error' && products?.url) {
+      window.open(products?.url, '_self');
+    }
+  }, [products?.status, products?.url]);
 
   return (
     <KsLayout title="Home">

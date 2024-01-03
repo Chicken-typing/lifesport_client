@@ -9,7 +9,7 @@ import { routes } from '@utils/routes';
 import { ceil, isEmpty, map, size, times } from 'lodash';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
-import { ReactNode, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { IHomeBanner } from '../Home/constants';
 import Sidebar from './Sidebar';
 
@@ -52,6 +52,12 @@ const Products = () => {
     description: t('banner.description'),
     color: t('banner.color'),
   };
+
+  useEffect(() => {
+    if (products?.status === 'error' && products?.url) {
+      window.open(products?.url, '_self');
+    }
+  }, [products?.status, products?.url]);
 
   return (
     <KsLayout

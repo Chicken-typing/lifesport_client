@@ -36,7 +36,7 @@ import { IUpdate } from '@interfaces/app';
 import { changeColor } from '@utils/changeColor';
 
 export interface IOrders {
-  id: number;
+  id: string;
   payment_intent: string;
   shipping_method: string;
   email: string;

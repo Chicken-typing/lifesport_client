@@ -192,10 +192,17 @@ const Admin = () => {
                       borderBottom={`4px solid ${colors.primary[500]}`}
                       p="15px"
                     >
-                      <Box flex="1.25">
-                        <Typography color={colors.greenAccent[500]} variant="h5" fontWeight="600">
-                          {transaction?.id}
-                        </Typography>
+                      <Box maxWidth="45%" flex="1.25">
+                        <div style={{ maxWidth: '90%' }} className="id-invoices">
+                          <Typography
+                            noWrap
+                            color={colors.greenAccent[500]}
+                            variant="h5"
+                            fontWeight="600"
+                          >
+                            {transaction?.id}
+                          </Typography>
+                        </div>
                         <Typography color={colors.grey[100]}>{transaction?.name}</Typography>
                       </Box>
 

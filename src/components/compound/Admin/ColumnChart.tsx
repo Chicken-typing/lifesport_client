@@ -44,16 +44,11 @@ function ColumnChart({ interval, status }: { interval: Interval; status: IStatus
     return data.slice().reverse();
   };
 
-  const getLast10Days = (data: any[]) => {
-    return data.slice(size(data) - 10, size(data));
-  };
-
   const columnData = revenues?.data ? convertRevenueToNumber(revenues?.data) : [];
   const reversedData = reverseArray(columnData);
-  const last10DaysData = getLast10Days(reversedData);
 
   const config: ColumnConfig = {
-    data: last10DaysData,
+    data: reversedData,
     xField: 'revenue_interval',
     yField: 'revenue',
     label: {

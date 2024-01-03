@@ -35,13 +35,17 @@ const Cart = () => {
   const getIdCart: string = map(getCartUser, (item) => item?.id).join(',');
   const { data: cartsInfo, isFetching: loadingCart } = useCartQuery({ products: getIdCart });
 
-  console.log('info', cartsInfo);
+  useEffect(() => {
+    if (cartsInfo?.status === 'error' && cartsInfo?.url) {
+      window.open(cartsInfo?.url, '_self');
+    }
+  }, [cartsInfo?.status, cartsInfo?.url]);
+
   const getCartItem = [] as unknown as IQueryResultCart['data'];
   getCartUser.map((item: any, index) => {
     let temp = item;
-    console.log('temp', temp);
+
     cartsInfo?.data?.forEach((product) => {
-      console.log('product', product);
       if (item?.id === product?.id) {
         if (product?.is_achieve) {
           toast.error(`${product?.name} is out stock`);

@@ -9,19 +9,14 @@ export interface IQueryOptionsList {
 
 export interface IQueryResultList<T> {
   items: T[];
-  total: number;
+  status: string;
+  url: string;
 }
 
 export interface IQueryResultDetail<T> {
   item: T[];
-}
-
-export interface IQueryResultDetail<T> {
-  items: T[];
-}
-
-export interface IQueryResultDetail<T> {
-  data: T;
+  status: string;
+  url: string;
 }
 
 export interface IQueryResultStatistics {
@@ -39,7 +34,7 @@ export interface IQueryResultInvoices {
   messaage: string;
   order_lists: [
     {
-      id: number;
+      id: string;
       payment_intent: string;
       shipping_method: string;
       email: string;
@@ -80,7 +75,7 @@ export interface IQueryResultInvoices {
 }
 
 export interface IOrders {
-  id: number;
+  id: string;
   payment_intent: string;
   shipping_method: string;
   email: string;
@@ -158,6 +153,8 @@ export interface IQueryResultOrderTemp {
 }
 
 export interface IQueryResultCart {
+  status: string;
+  url: string;
   data: [
     {
       id: string;
@@ -170,4 +167,14 @@ export interface IQueryResultCart {
       is_achieve: boolean;
     },
   ];
+}
+
+export interface IQueryMaintain {
+  status: string;
+  data: {
+    id: number;
+    is_maintained: boolean;
+    did_at: string;
+    released_at: string;
+  };
 }

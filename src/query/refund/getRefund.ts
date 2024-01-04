@@ -27,19 +27,22 @@ export const useRefundListQuery = (options: any): UseQueryResult<IQueryListRefun
   });
 };
 
-// const mutationUpdateMaintain = async (data: { is_maintained: boolean }) => {
-//   return await request.request({
-//     method: 'PUT',
-//     url: '/system/maintain',
-//     data: data,
-//   });
-// };
+const mutationConfirmRefund = async (data: { order_id: string; confirmed: boolean }) => {
+  return await request.request({
+    method: 'PUT',
+    url: '/order/admin/refund/confirm',
+    data: data,
+  });
+};
 
-// export const useMaintainMutation = () => {
-//   const queryClient = useQueryClient();
-//   return useMutation((data: { is_maintained: boolean }) => mutationUpdateMaintain(data), {
-//     onSuccess: () => {
-//       queryClient.invalidateQueries(['fetchMaintain']);
-//     },
-//   });
-// };
+export const useConfirmRefundMutation = () => {
+  const queryClient = useQueryClient();
+  return useMutation(
+    (data: { order_id: string; confirmed: boolean }) => mutationConfirmRefund(data),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['fetchRefundList']);
+      },
+    },
+  );
+};

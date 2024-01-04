@@ -2,12 +2,24 @@ import AdminLayout from '@/adminLayout';
 import { tokens } from '@/adminLayout/theme';
 import { useCouponsQuery } from '@/query/coupons/getCoupons';
 import Introduce from '@components/compound/Admin/Introduce';
-import { Box, ToggleButton, ToggleButtonGroup, useTheme } from '@mui/material';
+import {
+  Box,
+  Dialog,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  ToggleButton,
+  ToggleButtonGroup,
+  useTheme,
+  Typography,
+  DialogActions,
+} from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
-import { useRefundListQuery } from '@/query/refund/getRefund';
+import { useRefundListQuery, useConfirmRefundMutation } from '@/query/refund/getRefund';
 import { map } from 'lodash';
 import { useState } from 'react';
 import { Button } from '@components/primitive';
+import { toast } from 'react-toastify';
 
 type StatusRefund = 'pending' | 'refunded';
 
@@ -16,8 +28,19 @@ const Refund = () => {
   const colors = tokens(theme.palette.mode);
 
   const { data: refund, isFetching: isLoading } = useRefundListQuery({});
+  const { mutateAsync: confirmRefund } = useConfirmRefundMutation();
 
   const [status, setStatus] = useState<StatusRefund>('pending');
+
+  const [selection, setSelection] = useState<string>('');
+
+  const [openDialog, setOpenDialog] = useState<boolean>(false);
+
+  const [diaglogDecline, setDialogDecline] = useState<boolean>(false);
+
+  const handleCloseDialog = () => setOpenDialog(false);
+
+  const handleCloseDialogDecline = () => setDialogDecline(false);
 
   const handleChangeStatus = (event: React.MouseEvent<HTMLElement>, newAlignment: StatusRefund) => {
     if (newAlignment !== null) {
@@ -33,7 +56,22 @@ const Refund = () => {
       return refund?.filter((item: any) => item?.status === 'refunded');
     }
   };
+
   const getRowId = (row: any) => row?.order_id;
+
+  const handleConfirmRefund = () => {
+    confirmRefund({ order_id: selection, confirmed: true }).then((response: any) => {
+      toast.success('confirmed successfully!');
+      handleCloseDialog();
+    });
+  };
+
+  const handleDeclineRefund = () => {
+    confirmRefund({ order_id: selection, confirmed: false }).then((response: any) => {
+      toast.success('Decline successfully!');
+      handleCloseDialogDecline();
+    });
+  };
 
   const columns: any[] = [
     { field: 'order_id', headerName: 'Order ID' },
@@ -80,18 +118,26 @@ const Refund = () => {
       field: 'action',
       headerName: 'Action',
       flex: 1,
-      renderCell: ({ row: { id, role } }: any) => {
+      renderCell: ({ row: { order_id } }: any) => {
         return (
           <div className="action-group">
-            <Button onClick={() => {}} color="green-500" fullWidth className="button">
+            <Button
+              onClick={() => {
+                setSelection(order_id);
+                setOpenDialog(true);
+              }}
+              color="green-500"
+              fullWidth
+              className="button"
+            >
               <i className="fa-regular fa-pen-to-square"></i>
             </Button>
 
             <Button
-              // onClick={() => {
-              //   setSelection({ id, role });
-              //   setOpenDialogAdmin(true);
-              // }}
+              onClick={() => {
+                setSelection(order_id);
+                setDialogDecline(true);
+              }}
               color="green-500"
               fullWidth
               className="button"
@@ -107,6 +153,65 @@ const Refund = () => {
   return (
     <AdminLayout title="Refund List">
       <div className="kl-admin-products">
+        {/* Dialog for confirm */}
+        <Dialog
+          open={openDialog}
+          onClose={handleCloseDialog}
+          aria-labelledby="responsive-dialog-title"
+          className="dialog-delete"
+          classes={{
+            root: 'dialog-root',
+            container: 'dialog-container',
+            paper: 'dialog-paper',
+          }}
+        >
+          <DialogTitle className="dialog-title" id="responsive-dialog-title">
+            {'Do you want to confirm refund?'}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText className="dialog-context">
+              <Typography>{`Order ID: ${selection}`}</Typography>
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleConfirmRefund} autoFocus style={{ flex: '1' }}>
+              Ok
+            </Button>
+            <Button autoFocus onClick={handleCloseDialog} style={{ flex: '1' }}>
+              Cancel
+            </Button>
+          </DialogActions>
+        </Dialog>
+
+        {/* Dialog for decline */}
+        <Dialog
+          open={diaglogDecline}
+          onClose={handleCloseDialogDecline}
+          aria-labelledby="responsive-dialog-title"
+          className="dialog-delete"
+          classes={{
+            root: 'dialog-root',
+            container: 'dialog-container',
+            paper: 'dialog-paper',
+          }}
+        >
+          <DialogTitle className="dialog-title" id="responsive-dialog-title">
+            {'Do you want to decline refund?'}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText className="dialog-context">
+              <Typography>{`Order ID: ${selection}`}</Typography>
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleDeclineRefund} autoFocus style={{ flex: '1' }}>
+              Ok
+            </Button>
+            <Button autoFocus onClick={handleCloseDialogDecline} style={{ flex: '1' }}>
+              Cancel
+            </Button>
+          </DialogActions>
+        </Dialog>
         <Box display="flex" m="20px" flexDirection="column" width="100%">
           {/* HEADER */}
           <Box display="flex" justifyContent="flex-start" alignItems="center">

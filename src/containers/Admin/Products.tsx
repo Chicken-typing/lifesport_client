@@ -165,7 +165,7 @@ const Products = () => {
   };
 
   const handleExportProduct = () => {
-    const importProduct = async () => {
+    const exportProduct = async () => {
       try {
         const response: any = await request.request({
           method: 'GET',
@@ -183,7 +183,7 @@ const Products = () => {
       }
     };
 
-    importProduct();
+    exportProduct();
   };
 
   const handleUpdateProduct = () => {

@@ -48,7 +48,7 @@ function Transaction() {
   };
   const { data: invoices, isFetching } = useInvoicesUserQuery({ id, type: status });
 
-  const { mutateAsync: refundMutation, isLoading } = useRefundMutation();
+  const { mutateAsync: refundMutation, isLoading: loadingRefund } = useRefundMutation();
 
   const filterOrdersByType = (orders: IOrders[], type: TypeInvoices) => {
     if (type === 'all') {
@@ -150,10 +150,9 @@ function Transaction() {
                   type="submit"
                   color="primary"
                   className="button"
-                  // onClick={() => handleSubmit}
                   // backgroundHover="dark"
-                  // isLoading={isLoading}
-                  // disabled={isLoading}
+                  isLoading={loadingRefund}
+                  disabled={loadingRefund}
                 >
                   Send Your Message
                 </Button>

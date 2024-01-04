@@ -11,6 +11,7 @@ import ReceiptOutlinedIcon from '@mui/icons-material/ReceiptOutlined';
 import Item from './Item';
 import { tokens } from './theme';
 import LoyaltyIcon from '@mui/icons-material/Loyalty';
+import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 
 interface IDrawerAdmin {
   open: boolean;
@@ -62,6 +63,7 @@ const DrawerAdmin = ({ open, onCloseDrawer }: IDrawerAdmin) => {
               <Item title="Managed Product" to="/admin/products" icon={<ContactsOutlinedIcon />} />
               <Item title="Invoices Balances" to="/admin/invoices" icon={<ReceiptOutlinedIcon />} />
               <Item title="Managed Coupons" to="/admin/coupons" icon={<LoyaltyIcon />} />
+              <Item title="Managed Refund" to="/admin/return-refund" icon={<SwapHorizIcon />} />
             </Box>
           </Menu>
         </Box>

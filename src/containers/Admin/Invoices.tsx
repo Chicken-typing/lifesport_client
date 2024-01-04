@@ -104,10 +104,10 @@ function Invoices() {
       return orders;
     }
     if (type === 'inbound') {
-      return orders.filter((order) => order.outbound === false);
+      return orders?.filter((order) => order.outbound === false);
     }
     if (type === 'outbound') {
-      return orders.filter((order) => order.outbound === true);
+      return orders?.filter((order) => order.outbound === true);
     }
   };
 
@@ -196,7 +196,7 @@ function Invoices() {
   };
 
   return (
-    <AdminLayout title="Account List">
+    <AdminLayout title="Invoices List">
       <div className="kl-admin-invoices">
         <Dialog
           open={openDialog}

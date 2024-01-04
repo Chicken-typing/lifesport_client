@@ -29,7 +29,7 @@ export const useInvoicesUserQuery = (options: {
   id: string;
   type: TypeInvoices;
 }): UseQueryResult<IQueryResultUserInvoices, Error> => {
-  return useQuery(['fetchInvoices', { ...options }], fetchInvoices, {
+  return useQuery(['fetchInvoicesUser', { ...options }], fetchInvoices, {
     retry: 1,
   });
 };

@@ -101,10 +101,9 @@ const Cart = () => {
       }),
     };
 
-    if (token) {
+    if (token && decoded?.role === 'customer') {
       checkoutMutation(data)
         .then(async (response: any) => {
-          console.log(response);
           if (response?.status === 'success') {
             const url = await response?.url;
             window.open(url, '_blank');

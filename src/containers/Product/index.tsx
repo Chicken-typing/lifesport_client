@@ -305,7 +305,7 @@ const Product = () => {
                         color="primary"
                         disabled={
                           get(product?.item, '[0].quantity', 0) === 0 ||
-                          get(product?.item, '[0].quantity', 0) - quantity <= 2 ||
+                          get(product?.item, '[0].quantity', 0) - quantity < 2 ||
                           role === 'master_admin' ||
                           role === 'admin'
                         }

@@ -108,6 +108,8 @@ const Cart = () => {
           if (response?.status === 'success') {
             const url = await response?.url;
             window.open(url, '_blank');
+          } else if (response?.status === 'error' && response?.url) {
+            window.open(response?.url, '_self');
           } else {
             toast.error('There are currently not enough products in stock, please understand', {
               position: 'top-center',

@@ -184,9 +184,10 @@ function Transaction() {
           {!isFetching ? (
             map(filteredOrders, (item) => (
               <Accordion
+                tag={item?.status}
                 className="accordion"
                 key={item?.id}
-                title={`${format(new Date(Number(item?.paid_at) * 1000), 'dd/MM/yyyy')}`}
+                title={`${format(new Date(Number(item?.paid_at) * 1000), 'dd/MM/yyyy')} `}
               >
                 <div className="wrap">
                   <ul className="products-temp">
